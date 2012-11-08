@@ -1,0 +1,16 @@
+$def with (form)
+
+$var class = "login"
+<div class="login-form">
+    <a href="/" class="ui-dialog-titlebar-close ui-corner-all" role="button">
+        <span class="ui-icon ui-icon-closethick">$_("Close")</span>
+    </a>
+    <form action="/login" method="post">
+        <p><strong>$_("Login")</strong></p>
+        $if not flash.is_empty():
+            <div class="wrong">$:flash.render()</div>
+        $:form.render()
+        <p class="small right info"><a href="/password_reset">$_("Reset forgotten password")</a></p>
+        <p><button type="submit">$_("Log in")</button></p>
+    </form>
+</div>

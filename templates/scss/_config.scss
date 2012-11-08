@@ -1,0 +1,56 @@
+$default-border-radius: 4px;
+$sprite-default-size: 20px;
+
+$black: rgb(0, 0, 0);
+$white: rgb(255, 255, 255);
+$link: rgb(0, 110, 255);
+$hover: rgb(0, 0, 195);
+$wrong: #ea3d45;
+
+$grey30: darken(white, 30%);
+$grey40: darken(white, 40%);
+$grey60: darken(white, 60%);
+$grey80: darken(white, 80%);
+
+
+
+$bg-green: rgb(255, 255, 234);
+$bg-blue: rgb(239, 250, 255);
+$bg-grey: rgb(237, 237, 237);
+$bg-red: rgb(255, 229, 204);
+
+$default-box-shadow-h-offset: 2px;
+$default-box-shadow-v-offset: 2px;
+$default-box-shadow-blur: 9px;
+$default-box-shadow-spread: false;
+$default-box-shadow-color: rgba(88, 88, 88, 0.6);
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+%cf:before,
+%cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+%cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+
+@import "compass/css3";

@@ -1,0 +1,11 @@
+$def with (form)
+
+$var class = "login"
+<div class="login-form ">
+    <form action="/password_reset" method="post">
+        <p><strong>$_("Password reset")</strong></p>
+        $:form.render()
+        <p class="small info">$_("For example: name@example.com. Will send you link to reset your password.")</p>
+        <p><button type="submit">$_("Send")</button></p>
+    </form>
+</div>

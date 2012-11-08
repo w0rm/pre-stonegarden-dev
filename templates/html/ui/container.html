@@ -1,0 +1,18 @@
+$def with(name, block, blocks, page, is_template=False, has_columns=False)
+$code:
+    if is_template:
+        inner_blocks = [b for b in blocks if b.block_id is None and b.page_id is None and b.container == name]
+    else:
+        inner_blocks = [b for b in blocks if b.block_id == block.id and b.container == name]
+<div data-container="$name" class="container level${block.level} ${has_columns and "has_columns" or ""} ${is_template and "is_template" or ""}">
+$if inner_blocks:
+    $for b in inner_blocks:
+        $:render.ui.block(b, blocks, page)
+$elif auth.get_user():
+    <div class="placeholder" data-template="richtext" data-role="admin,editor">
+        <p>$_("This text is not written yet.") <strong>$_("Click to write the text.")</strong><br>
+           $_("Do not worry, such placeholder texts are not visible on the public website until you edit them.")</p>
+    </div>
+$else:
+    <p><!-- Empty container --></p>
+</div>

@@ -1,0 +1,56 @@
+$def with (page_form, page=None)
+$require_js("pages")
+
+$# Navigation
+<div class="ui-toolbar">
+    <div class="ui-toolbar-left">
+        <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
+        <span class="ui-toolbar-separator"></span>
+        <span class="breadcrumbs">
+            <a href="/a/sitemap">$_("Sitemap")</a> →
+            $if page:
+                $page.name
+                $var page = page
+            $else:
+                $_("New page")
+        </span>
+    </div>
+    <div class="ui-toolbar-right">
+        <a class="ui-storage-newpage ui-toolbar-item-text" href="/a/pages/new"><span class="ui-icon ui-icon-edzo-page-add"></span>$_("Create page")</a>
+    </div>
+</div>
+<div class="ui-toolbar-spacer"></div>
+
+
+$# Page
+<div class="admin-page">
+    <div class="admin-left-column-wrapper">
+        <div class="admin-left-column">
+            <div class="wrapper">
+                <div class="padding-block">
+                    $if page:
+                        <h1>$_("Page properties")</h1>
+                        $var page = page
+                        <form action="$link_to("pages", page, "edit")" method="post">
+                    $else:
+                        <h1>$_("New page")</h1>
+                        <form action="/a/pages/new" method="post">
+                    
+                    $:page_form.render(["name"])
+                    <p class="small info">$_( "Short name for navigation menu" )</p>
+                    $:page_form.render(["title"])
+                    <p class="small info">$_( "Browser title" )</p>
+                    $:page_form.render(x=2)
+                    <p><button type="submit">$_("Save")</button></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside class="admin-right-column">
+        <h3>Подсказки</h3>
+        <p>Выключите опцию «Показывать на сайте» для страниц над которыми работаете и они будут недоступны посетителям сайта.</p>
+        <p>Чтобы страница была доступна по ссылке, но не показывалась в навигации, отключи- те опцию «Показывать в навигации»</p>
+    </aside>
+</div>
+

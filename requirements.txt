@@ -1,0 +1,7 @@
+web.py
+PIL
+MySQLdb
+python-dateutil
+pytils
+babel
+BeautifulSoup

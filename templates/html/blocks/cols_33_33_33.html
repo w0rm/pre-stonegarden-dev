@@ -1,0 +1,12 @@
+$def with(block, blocks, page)
+<div class="cols">
+    <div class="col col_33">
+        $:render.ui.container("primary", block, blocks, page)
+    </div>
+    <div class="col col_33">
+        $:render.ui.container("secondary1", block, blocks, page)
+    </div>
+    <div class="col col_33">
+        $:render.ui.container("secondary2", block, blocks, page)
+    </div>
+</div>

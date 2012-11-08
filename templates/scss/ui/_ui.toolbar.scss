@@ -1,0 +1,91 @@
+/*
+*  Toolbar 
+*
+*/
+
+.ui-toolbar-item {
+    @extend .ui-contextmenu-item;
+    @extend .ui-corner-all;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 0 0 32px 32px;
+    text-decoration: none;
+    color: $black;
+    .ui-icon {
+        position: absolute;
+        left: 6px;
+        top: 50%;
+        margin-top: -10px;
+    }
+    &:hover {
+        color: $black;
+        background: $grey60;
+        & > .ui-icon, & > a > .ui-icon { background-image: url("../img/ui-icons_ffffff.png"); }
+    }
+}
+
+.ui-toolbar-item-text {
+    @extend .ui-toolbar-item;
+    padding: 0 6px 0 32px;
+}
+
+.ui-toolbar-separator {
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    border-right: 1px dotted $grey60;
+    margin: 0 5px;
+}
+
+.ui-toolbar {
+    line-height: 32px;
+    @include box-shadow;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 5px 0;
+    z-index: 30;
+    overflow: hidden;
+    @include background(linear-gradient(top, #e4e4e3, #cdcecd));
+    border-bottom: 1px solid #d8d8d7;
+    .ui-toolbar-item {
+        &:hover, &.ui-state-active, &.active {
+            background-color: $white;
+            & > .ui-icon, & > a > .ui-icon { background-image: image_url("../img/ui-icons_330066.png"); }
+        }
+        &:hover {
+            background-color: $bg-blue;
+        }
+    }
+    &.ui-toolbar-inner {
+      @include box-shadow(none);
+      position: static;
+      padding: 0;
+      background: none;
+    }
+}
+
+.ui-toolbar-spacer { 
+    height: 70px; /*to space from the top bar*/
+}
+
+
+.ui-dialog  .ui-gradient {
+    @include background(linear-gradient(top, #e4e4e3, #cdcecd));
+    input { border-color: $white };
+}
+
+.ui-toolbar-right {
+    float: right;
+    padding-right: 20px;
+}
+
+.ui-toolbar-left {
+    float: left;
+    padding-left: 20px;
+}
+
+
+

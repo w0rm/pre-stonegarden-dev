@@ -1,0 +1,210 @@
+# coding: utf-8
+"""
+Provides helper methods to template
+"""
+import os
+import re
+import pytils
+import json
+import datetime
+import web
+from web import template, ctx, storage, form
+from config import config
+from base import flash, auth, db
+from modules.translation import _, n_
+from modules import smartypants
+from modules.images import resize_image
+from modules.sanitizer import sanitize
+from dateutil import parser, tz
+
+TZ_LOCAL = tz.tzlocal()
+TZ_UTC = tz.tzutc()
+
+
+# TODO: move this out of template
+REPLACE_LINKS_RE = re.compile("href=[\"']/to/(?P<page_id>\d+)[\"']")
+
+
+def replace_links_match(match):
+    page_id = match.group("page_id")
+    try:
+        page = db.select("pages", locals(),
+                         where="id=$page_id AND NOT is_deleted")[0]
+        return 'href="%s"' % page.path
+    except IndexError:
+        return 'href="#"'
+
+
+def replace_links(input_content):
+    if input_content:
+        return REPLACE_LINKS_RE.sub(replace_links_match, input_content)
+    else:
+        return input_content
+
+# END TODO
+
+
+def datify(dtime=None, format=u"%x %H:%M", convert_to_utc=False, lang=None):
+    if dtime is None:
+        return ""
+    if not type(dtime) in (datetime.datetime, datetime.date):
+        dtime = parser.parse(dtime)
+    if convert_to_utc:
+        dtime = dtime.replace(tzinfo=TZ_LOCAL).astimezone(tz=TZ_UTC)
+        return dtime.strftime(format)
+    elif (lang or web.ctx.lang) == "ru":
+        return pytils.dt.ru_strftime(
+            web.safeunicode(format),
+            inflected=True,
+            date=dtime,
+        )
+    else:
+        return dtime.strftime(format)
+
+
+def smarty(text, lang=None):
+    if lang is None:
+        return smartypants.smartyPants(text, web.ctx.lang)
+    else:
+        return smartypants.smartyPants(text, lang)
+
+
+def asset_url(filename="", version=True):
+    """Returns link to static file"""
+    if filename.startswith("http") or filename.startswith("/"):
+        return filename
+    else:
+        if config.static_url:
+            return_url = "http://" + config.static_url
+        else:
+            return_url = ctx.home + "/static"
+        if filename:
+            return_url += "/" + filename
+            if version:
+                return_url += "?" + config.asset_version
+        return return_url
+
+
+def image_url(image_id, filename, extension, sizes, size):
+    if image_id and filename:
+        try:
+            if not sizes or not size in sizes.split(","):
+                resize_image(image_id, filename, extension, size)
+            return asset_url("i/" + filename + "_" + size + extension,
+                             version=False)
+        except:
+            pass
+    return asset_url("img/broken_" + size + ".png")
+
+
+def require_asset(tag, url, scope=None, **attrs):
+    if not "assets" in ctx:
+        ctx.assets = []
+    ctx.assets.append(storage(tag=tag, url=url, scope=scope, attrs=attrs))
+
+
+def require_css(*urls, **attrs):
+    for url in urls:
+        if config.environment == "production":
+            url += ".min"
+        url += ".css"
+        require_asset("css", "css/" + url, **attrs)
+
+
+def require_js(*urls, **attrs):
+    for url in reversed(urls):
+        if config.environment == "production":
+            url += ".min"
+        url += ".js"
+        require_asset("js", "js/" + url, **attrs)
+
+
+def asset_urls(tag="js"):
+    if not "assets" in ctx:
+        return []
+    else:
+        return reversed([asset_url(a.url) for a in
+                        filter(lambda b: tag == b.tag or
+                        tag == "all", ctx.assets)])
+
+
+def defloatify(num):
+    if int(num) == num:
+        return int(num)
+    else:
+        return num
+
+
+def link_to(obj_type, obj=None, method=None, **kw):
+    link = "/a/" + obj_type
+    if obj is not None:
+        link += "/" + str(obj.id)
+    if method:
+        link += "/" + method
+    return web.url(link, **kw)
+
+
+def render_block(name):
+    return getattr(render_partial.blocks, name)
+
+# TODO: Fix language
+
+
+def filesize(doc):
+    if doc.filesize:
+        return unicode(doc.filesize / 1024) + u" кб"
+    else:
+        return u"0 кб"
+
+
+def describe_extension(doc):
+    if doc.filetype == "image":
+        return _("Images")
+    elif doc.filetype == "folder":
+        return _("Folders")
+    elif doc.extension in (".txt|.rtf|.rtf|.doc|.docx|.odt|"
+                           ".odc|.odp|.pdf|.ppt|.xls|.xlsx"):
+        return _("Documents")
+    elif doc.extension in ".zip|.rar|.tar|.gz|.bz|.tgz|.arj|.7z":
+        return _("Archives")
+    else:
+        return _("Files")
+
+
+template_globals = {
+    'link_to': link_to,
+    'flash': flash,
+    'require_asset': require_asset,
+    'require_js': require_js,
+    'require_css': require_css,
+    'asset_url': asset_url,
+    'image_url': image_url,
+    'asset_urls': asset_urls,
+    'auth': auth,
+    'config': config,
+    'defloatify': defloatify,
+    'datify': datify,
+    'url': web.url,
+    'get_plural': pytils.numeral.get_plural,
+    'choose_plural': pytils.numeral.choose_plural,
+    'sanitize': sanitize,
+    'smarty': smarty,
+    'str': unicode,
+    'to_json': json.dumps,
+    'ctx': ctx,
+    '_': _,
+    'n_': n_,
+    'render_block': render_block,
+    'image_url': image_url,
+    'describe_extension': describe_extension,
+    'replace_links': replace_links,
+    'filesize': filesize,
+    'changequery': web.changequery,
+}
+
+render_partial = template.render(config.template_dir, globals=template_globals)
+render = template.render(config.template_dir, globals=template_globals,
+                         base="layout")
+render_email = template.render(config.template_dir + "/email",
+                               globals=template_globals, base="layout")
+template_globals.update(render=render_partial)

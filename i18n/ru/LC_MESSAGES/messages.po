@@ -1,0 +1,728 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2011 Andrey Kuzmin
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: andreivk@gmail.com\n"
+"POT-Creation-Date: 2012-09-17 14:35+0400\n"
+"PO-Revision-Date: 2012-09-17 14:38+0400\n"
+"Last-Translator: Andrey Kuzmin <unsoundscapes@gmail.com>\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+"X-Generator: Poedit 1.5.3\n"
+
+#: urbansystem/config.py:90
+msgid "Administrator"
+msgstr "Администратор"
+
+#: urbansystem/config.py:91
+msgid "Editor"
+msgstr "Редактор"
+
+#: urbansystem/config.py:92
+msgid "User"
+msgstr "Пользователь"
+
+#: urbansystem/config.py:94
+msgid "Main page"
+msgstr "Главная страница"
+
+#: urbansystem/config.py:95
+msgid "Inner page"
+msgstr "Внутренняя страница"
+
+#: urbansystem/config.py:96
+msgid "50% + 50%"
+msgstr "50% + 50%"
+
+#: urbansystem/config.py:97
+msgid "67% + 33%"
+msgstr "67% + 33%"
+
+#: urbansystem/config.py:98
+msgid "33% + 67%"
+msgstr "33% + 67%"
+
+#: urbansystem/config.py:99
+msgid "33% + 33% + 33%"
+msgstr "33% + 33% + 33%"
+
+#: urbansystem/config.py:100
+msgid "25% + 50% + 25%"
+msgstr "25% + 50% + 25%"
+
+#: urbansystem/config.py:101
+msgid "HTML code"
+msgstr "HTML код"
+
+#: urbansystem/config.py:102
+msgid "Rich text"
+msgstr "Форматный текст"
+
+#: urbansystem/config.py:103 urbansystem/templates/html/ui/insert.html:14
+msgid "Navigation"
+msgstr "Навигация"
+
+#: urbansystem/config.py:104
+msgid "Subnavigation"
+msgstr "Поднавигация"
+
+#: urbansystem/config.py:105
+msgid "Siblings navigation"
+msgstr "Навигация по уровню"
+
+#: urbansystem/config.py:106
+msgid "Breadcrumbs"
+msgstr "Хлебные крошки"
+
+#: urbansystem/config.py:108
+msgid "Main column"
+msgstr "Главная колонка"
+
+#: urbansystem/config.py:109
+msgid "Secondary column 1"
+msgstr "Второстепенная колонка 1"
+
+#: urbansystem/config.py:110
+msgid "Secondary column 2"
+msgstr "Второстепенная колонка 2"
+
+#: urbansystem/config.py:111
+msgid "Secondary column 3"
+msgstr "Второстепенная колонка 3"
+
+#: urbansystem/config.py:112
+msgid "Site header"
+msgstr "Шапка сайта"
+
+#: urbansystem/config.py:113
+msgid "Site footer"
+msgstr "Подвал сайта"
+
+#: urbansystem/config.py:114
+msgid "Subpage header"
+msgstr "Шапка внутренней страницы"
+
+#: urbansystem/config.py:116
+msgid "Original"
+msgstr "Оригинал"
+
+#: urbansystem/config.py:117
+msgid "Thumbnail"
+msgstr "Превью"
+
+#: urbansystem/config.py:118
+msgid "Small"
+msgstr "Маленький"
+
+#: urbansystem/config.py:119
+msgid "Medium"
+msgstr "Средний"
+
+#: urbansystem/config.py:120
+msgid "Large"
+msgstr "Большой"
+
+#: urbansystem/template.py:213
+msgid "Images"
+msgstr "Изображения"
+
+#: urbansystem/template.py:215
+msgid "Folders"
+msgstr "Каталоги"
+
+#: urbansystem/template.py:217
+msgid "Documents"
+msgstr "Документы"
+
+#: urbansystem/template.py:219
+msgid "Archives"
+msgstr "Архивы"
+
+#: urbansystem/template.py:221
+msgid "Files"
+msgstr "Файлы"
+
+#: urbansystem/controller/auth.py:15
+msgid ""
+"We've sent you the link to reset your password. Please check your email."
+msgstr ""
+"Мы отправили вам письмо со ссылкой для сброса пароля. Пожалуйста, проверьте "
+"свою почту."
+
+#: urbansystem/controller/auth.py:16
+msgid ""
+"It seems that the link is outdated or incorect. You may create another one "
+"<a href=\"/password_reset\">here</a>."
+msgstr ""
+"Похоже ссылка, по которой вы перешли просроченная или неправильная. Вы "
+"можете создать ещё  одну <a href=\"/password_reset\">здесь</a>."
+
+#: urbansystem/controller/auth.py:17
+msgid "Password was changed. You've been automatically logged in."
+msgstr "Пароль был успешно изменён. Вы автоматически зашли на сайт."
+
+#: urbansystem/controller/auth.py:18
+#, python-format
+msgid "New user in system: %s."
+msgstr "Новый пользователь в системе: %s."
+
+#: urbansystem/controller/auth.py:19
+#, python-format
+msgid "User detailes changed: %s."
+msgstr "Изменение анкеты пользователя: %s."
+
+#: urbansystem/controller/auth.py:20
+#, python-format
+msgid "User was deleted. <a href=\"%s\">Undo delete?</a>"
+msgstr "Пользователь был удалён. <a href=\"%s\">Отменить удаление?</a>"
+
+#: urbansystem/controller/auth.py:21
+#, python-format
+msgid "User deleted: %s."
+msgstr "Удаление пользователя: %s."
+
+#: urbansystem/controller/auth.py:22
+msgid "User was  restored."
+msgstr "Пользователь был восстановлен."
+
+#: urbansystem/controller/auth.py:23
+#, python-format
+msgid "User restored: %s."
+msgstr "Восстановление пользователя: %s."
+
+#: urbansystem/controller/auth.py:24
+msgid "Self delete forbidden."
+msgstr "Невозможно удалить собственный профайл."
+
+#: urbansystem/controller/auth.py:25
+msgid "User with this email doesn't exist."
+msgstr "Пользователя с таким адресом не существует."
+
+#: urbansystem/controller/auth.py:29 urbansystem/controller/auth.py:35
+#: urbansystem/controller/auth.py:45
+msgid "Email"
+msgstr "Эл. почта"
+
+#: urbansystem/controller/auth.py:30
+msgid "Password"
+msgstr "Пароль"
+
+#: urbansystem/controller/auth.py:39
+msgid "New password"
+msgstr "Новый пароль"
+
+#: urbansystem/controller/auth.py:40
+msgid "Repeat"
+msgstr "Повторите"
+
+#: urbansystem/controller/auth.py:46 urbansystem/controller/pages.py:17
+msgid "Name"
+msgstr "Имя"
+
+#: urbansystem/controller/auth.py:47
+msgid "Role"
+msgstr "Роль"
+
+#: urbansystem/controller/auth.py:48
+msgid "Is active"
+msgstr "Активен"
+
+#: urbansystem/controller/blocks.py:42 urbansystem/controller/documents.py:24
+#: urbansystem/controller/pages.py:28 urbansystem/static/js/blocks.js:177
+#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:21
+#: urbansystem/static/js/documents.min.js:1
+msgid "Show on site"
+msgstr "Показывать на сайте"
+
+#: urbansystem/controller/buildings.py:127
+msgid "Not implemented yet."
+msgstr "Пока не реализовано."
+
+#: urbansystem/controller/documents.py:19
+msgid "Cannot download this document"
+msgstr "Невозможно скачать этот документ"
+
+#: urbansystem/controller/documents.py:278
+#: urbansystem/controller/documents.py:302
+msgid "Cannot edit or delete system files and folders."
+msgstr "Невозможно изменить или удалить системные файл и каталог."
+
+#: urbansystem/controller/pages.py:18 urbansystem/static/js/documents.js:21
+#: urbansystem/static/js/documents.min.js:1
+msgid "Title"
+msgstr "Название"
+
+#: urbansystem/controller/pages.py:20
+msgid "Parent"
+msgstr "Родитель"
+
+#: urbansystem/controller/pages.py:21
+msgid "Path"
+msgstr "Путь"
+
+#: urbansystem/controller/pages.py:25
+msgid "Page template"
+msgstr "Шаблон страницы"
+
+#: urbansystem/controller/pages.py:29
+msgid "Show in navigation"
+msgstr "Показывать в навигации"
+
+#: urbansystem/controller/pages.py:31 urbansystem/static/js/documents.js:21
+#: urbansystem/static/js/documents.min.js:1
+msgid "Description"
+msgstr "Описание"
+
+#: urbansystem/controller/pages.py:32
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+#: urbansystem/controller/pages.py:36
+msgid "CSS"
+msgstr "CSS"
+
+#: urbansystem/controller/pages.py:37
+msgid "Javascript"
+msgstr "Javascript"
+
+#: urbansystem/controller/pages.py:40
+msgid "Page access forbidden."
+msgstr "Доступ к странице запрещён."
+
+#: urbansystem/controller/pages.py:41
+msgid "Page was deleted."
+msgstr "Страница была удалена."
+
+#: urbansystem/controller/pages.py:42
+msgid "Cannot delete root page."
+msgstr "Невозможно удалить главную страницу."
+
+#: urbansystem/modules/form.py:147 urbansystem/modules/form.py:217
+msgid "placeholder"
+msgstr ""
+
+#: urbansystem/templates/html/auth/form.html:14
+#: urbansystem/templates/html/auth/list.html:14
+#: urbansystem/templates/html/ui/menu.html:43
+#: urbansystem/templates/html/ui/users.html:7
+msgid "Users"
+msgstr "Пользователи"
+
+#: urbansystem/templates/html/auth/form.html:19
+#: urbansystem/templates/html/auth/list.html:19
+msgid "Create user"
+msgstr "Создать пользователя"
+
+#: urbansystem/templates/html/auth/form.html:31
+msgid "Edit user"
+msgstr "Редактировать пользователя"
+
+#: urbansystem/templates/html/auth/form.html:34
+#: urbansystem/templates/html/auth/list.html:34
+#: urbansystem/templates/html/auth/reset_change.html:12
+#: urbansystem/templates/html/buildings/edit.html:133
+#: urbansystem/templates/html/buildings/new.html:113
+#: urbansystem/templates/html/contacts/form_edit.html:50
+#: urbansystem/templates/html/contacts/form_new.html:40
+#: urbansystem/templates/html/notes/form_.html:31
+#: urbansystem/templates/html/pages/edit_code.html:32
+#: urbansystem/templates/html/pages/form.html:48
+msgid "Save"
+msgstr "Сохранить"
+
+#: urbansystem/templates/html/auth/list.html:15
+#: urbansystem/templates/html/auth/list.html:31
+msgid "New user"
+msgstr "Новый пользователь"
+
+#: urbansystem/templates/html/auth/login.html:10
+#: urbansystem/static/js/documents.js:133
+#: urbansystem/static/js/documents.js:182
+#: urbansystem/static/js/documents.js:219
+#: urbansystem/static/js/documents.min.js:1
+msgid "Close"
+msgstr "Закрыть"
+
+#: urbansystem/templates/html/auth/login.html:13
+msgid "Login"
+msgstr "Вход"
+
+#: urbansystem/templates/html/auth/login.html:17
+msgid "Reset forgotten password"
+msgstr "Сбросить забытый пароль"
+
+#: urbansystem/templates/html/auth/login.html:18
+msgid "Log in"
+msgstr "Войти"
+
+#: urbansystem/templates/html/auth/reset_change.html:10
+#: urbansystem/templates/html/auth/reset_token.html:10
+msgid "Password reset"
+msgstr "Сброс пароля"
+
+#: urbansystem/templates/html/auth/reset_token.html:12
+msgid ""
+"For example: name@example.com. Will send you link to reset your password."
+msgstr "Например: name@example.com. Пришлём ссылку для сброса пароля."
+
+#: urbansystem/templates/html/auth/reset_token.html:13
+msgid "Send"
+msgstr "Отправить"
+
+#: urbansystem/templates/html/buildings/edit.html:73
+#: urbansystem/templates/html/buildings/edit.html:76
+#: urbansystem/templates/html/contacts/form_edit.html:28
+#: urbansystem/templates/html/contacts/form_edit.html:31
+#: urbansystem/static/js/blocks.js:254 urbansystem/static/js/blocks.js:260
+#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/buildings.js:28
+#: urbansystem/static/js/buildings.js:72 urbansystem/static/js/buildings.js:97
+#: urbansystem/static/js/buildings.min.js:1
+#: urbansystem/static/js/contacts.js:39 urbansystem/static/js/contacts.js:166
+#: urbansystem/static/js/contacts.js:191
+#: urbansystem/static/js/contacts.min.js:1
+#: urbansystem/static/js/documents.js:74 urbansystem/static/js/documents.js:84
+#: urbansystem/static/js/documents.min.js:1 urbansystem/static/js/notes.js:76
+#: urbansystem/static/js/notes.js:111 urbansystem/static/js/notes.min.js:1
+#: urbansystem/static/js/users.js:18 urbansystem/static/js/users.min.js:1
+msgid "Delete"
+msgstr "Удалить"
+
+#: urbansystem/templates/html/buildings/view.html:165
+#: urbansystem/templates/html/ui/documents.html:22
+msgid "Create folder"
+msgstr "Создать каталог"
+
+#: urbansystem/templates/html/contacts/form_edit.html:51
+#: urbansystem/templates/html/contacts/form_new.html:41
+#: urbansystem/templates/html/notes/form_.html:32
+#: urbansystem/static/js/admin.js:611 urbansystem/static/js/admin.min.js:1
+#: urbansystem/static/js/blocks.js:162 urbansystem/static/js/blocks.js:195
+#: urbansystem/static/js/blocks.js:266 urbansystem/static/js/blocks.js:300
+#: urbansystem/static/js/blocks.js:345 urbansystem/static/js/blocks.min.js:1
+#: urbansystem/static/js/buildings.js:46
+#: urbansystem/static/js/buildings.min.js:1
+#: urbansystem/static/js/contacts.js:57 urbansystem/static/js/contacts.js:93
+#: urbansystem/static/js/contacts.min.js:1
+#: urbansystem/static/js/documents.js:38 urbansystem/static/js/documents.js:90
+#: urbansystem/static/js/documents.min.js:1 urbansystem/static/js/notes.js:85
+#: urbansystem/static/js/notes.min.js:1
+msgid "Cancel"
+msgstr "Отменить"
+
+#: urbansystem/templates/html/pages/edit_code.html:14
+#: urbansystem/templates/html/pages/form.html:14
+#: urbansystem/templates/html/pages/tree.html:39
+msgid "Sitemap"
+msgstr "Карта сайта"
+
+#: urbansystem/templates/html/pages/edit_code.html:16
+#: urbansystem/templates/html/pages/edit_code.html:28
+#: urbansystem/templates/html/ui/menu.html:26
+msgid "Style and scripts"
+msgstr "Стили и код"
+
+#: urbansystem/templates/html/pages/edit_code.html:29
+#: urbansystem/templates/html/pages/tree.html:54
+#: urbansystem/templates/html/ui/menu.html:19
+msgid "Page"
+msgstr "Страница"
+
+#: urbansystem/templates/html/pages/form.html:19
+#: urbansystem/templates/html/pages/form.html:40
+msgid "New page"
+msgstr "Новая страница"
+
+#: urbansystem/templates/html/pages/form.html:23
+#: urbansystem/templates/html/pages/sitemap.html:32
+#: urbansystem/templates/html/ui/menu.html:29
+#: urbansystem/templates/html/ui/menu.html:31
+msgid "Create page"
+msgstr "Создать страницу"
+
+#: urbansystem/templates/html/pages/form.html:36
+#: urbansystem/templates/html/ui/menu.html:24
+msgid "Page properties"
+msgstr "Свойства страницы"
+
+#: urbansystem/templates/html/pages/form.html:44
+msgid "Short name for navigation menu"
+msgstr "Краткое, для навигации"
+
+#: urbansystem/templates/html/pages/form.html:46
+msgid "Browser title"
+msgstr "Будет отображаться в заголовке страницы в браузере"
+
+#: urbansystem/templates/html/pages/sitemap.html:29
+#: urbansystem/templates/html/pages/sitemap.html:43
+#: urbansystem/templates/html/ui/menu.html:33
+#: urbansystem/static/js/admin.js:603 urbansystem/static/js/admin.min.js:1
+msgid "Site map"
+msgstr "Карта сайта"
+
+#: urbansystem/templates/html/pages/tree.html:16
+msgid "Block"
+msgstr "Блок"
+
+#: urbansystem/templates/html/pages/tree.html:23
+msgid "Container"
+msgstr "Контейнер"
+
+#: urbansystem/templates/html/pages/tree.html:41
+#: urbansystem/templates/html/pages/tree.html:53
+#: urbansystem/templates/html/ui/menu.html:27
+msgid "Page tree"
+msgstr "Дерево страницы"
+
+#: urbansystem/templates/html/pages/tree.html:54
+msgid "template"
+msgstr "шаблон"
+
+#: urbansystem/templates/html/ui/container.html:17
+#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+msgid "This text is not written yet."
+msgstr "Здесь пока ничего нет."
+
+#: urbansystem/templates/html/ui/container.html:17
+#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+msgid "Click to write the text."
+msgstr "Нажмите и отредактируйте текст."
+
+#: urbansystem/templates/html/ui/container.html:18
+#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+msgid ""
+"Do not worry, such placeholder texts are not visible on the public website "
+"until you edit them."
+msgstr "Не беспокойтесь, на сайте такие пустые блоки не показываются."
+
+#: urbansystem/templates/html/ui/insert.html:9
+#: urbansystem/static/js/blocks.js:102 urbansystem/static/js/blocks.min.js:1
+msgid "Paste"
+msgstr "Вставить"
+
+#: urbansystem/templates/html/ui/insert.html:10
+msgid "Insert text"
+msgstr "Вставить текст"
+
+#: urbansystem/templates/html/ui/insert.html:24
+msgid "htmlcode"
+msgstr ""
+
+#: urbansystem/templates/html/ui/menu.html:8
+msgid "Buildings"
+msgstr "Дома"
+
+#: urbansystem/templates/html/ui/menu.html:16
+msgid "Staff and partners"
+msgstr "Сотрудники и партнёры"
+
+#: urbansystem/templates/html/ui/menu.html:37
+msgid "Are you sure to delete this page and its subpages?"
+msgstr "Вы уверены что хотите удалить эту страницу и все подстраницы?"
+
+#: urbansystem/templates/html/ui/menu.html:37
+msgid "Delete this page"
+msgstr "Удалить страницу"
+
+#: urbansystem/templates/html/ui/menu.html:41
+msgid "Storage"
+msgstr "Склад"
+
+#: urbansystem/templates/html/ui/menu.html:46
+msgid "User accounts"
+msgstr "Все пользователи"
+
+#: urbansystem/templates/html/ui/menu.html:48
+msgid "Logout"
+msgstr "Выход из системы"
+
+#: urbansystem/templates/html/ui/users.html:16
+msgid "Last visit"
+msgstr "Последнее посещение"
+
+#: urbansystem/static/js/admin.js:292 urbansystem/static/js/admin.js:308
+#: urbansystem/static/js/admin.js:732 urbansystem/static/js/admin.min.js:1
+#: urbansystem/static/js/documents.js:422
+#: urbansystem/static/js/documents.min.js:1
+msgid "Error"
+msgstr "Ошибка"
+
+#: urbansystem/static/js/admin.js:309 urbansystem/static/js/admin.min.js:1
+msgid "Network error."
+msgstr "Ошибка соединения с сервером."
+
+#: urbansystem/static/js/admin.js:424 urbansystem/static/js/admin.min.js:1
+msgid "Insert image"
+msgstr "Вставить изображение"
+
+#: urbansystem/static/js/admin.js:429 urbansystem/static/js/admin.min.js:1
+msgid "Sizes"
+msgstr "Размеры"
+
+#: urbansystem/static/js/admin.js:459 urbansystem/static/js/admin.min.js:1
+msgid "Insert"
+msgstr "Вставить"
+
+#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.min.js:1
+msgid "URL"
+msgstr "Ссылка"
+
+#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.js:545
+#: urbansystem/static/js/admin.min.js:1
+msgid "Hint"
+msgstr "Подсказка"
+
+#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.js:545
+#: urbansystem/static/js/admin.min.js:1
+msgid "Class"
+msgstr "Класс"
+
+#: urbansystem/static/js/admin.js:535 urbansystem/static/js/admin.min.js:1
+msgid "Hyperlink"
+msgstr "Гиперссылка"
+
+#: urbansystem/static/js/admin.js:545 urbansystem/static/js/admin.min.js:1
+msgid "Text"
+msgstr "Текст"
+
+#: urbansystem/static/js/admin.js:545 urbansystem/static/js/admin.min.js:1
+msgid "Link"
+msgstr "Ссылка"
+
+#: urbansystem/static/js/admin.js:554 urbansystem/static/js/admin.min.js:1
+msgid "Create"
+msgstr "Создать"
+
+#: urbansystem/static/js/admin.js:727 urbansystem/static/js/admin.min.js:1
+#: urbansystem/static/js/documents.js:417
+#: urbansystem/static/js/documents.min.js:1
+msgid "Processing"
+msgstr "Обработка"
+
+#: urbansystem/static/js/admin.js:743 urbansystem/static/js/admin.js:752
+#: urbansystem/static/js/admin.min.js:1 urbansystem/static/js/documents.js:433
+#: urbansystem/static/js/documents.js:441
+#: urbansystem/static/js/documents.min.js:1
+msgid "File upload error!"
+msgstr "Ошибка загрузки файла!"
+
+#: urbansystem/static/js/blocks.js:125 urbansystem/static/js/blocks.js:212
+#: urbansystem/static/js/blocks.min.js:1
+msgid "Columns"
+msgstr "Колонки"
+
+#: urbansystem/static/js/blocks.js:131 urbansystem/static/js/blocks.min.js:1
+msgid "No columns"
+msgstr "Без разделения"
+
+#: urbansystem/static/js/blocks.js:146 urbansystem/static/js/blocks.js:180
+#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:25
+#: urbansystem/static/js/documents.min.js:1
+msgid "Apply"
+msgstr "Применить"
+
+#: urbansystem/static/js/blocks.js:175 urbansystem/static/js/blocks.js:222
+#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:16
+#: urbansystem/static/js/documents.js:68
+#: urbansystem/static/js/documents.min.js:1
+msgid "Properties"
+msgstr "Свойства"
+
+#: urbansystem/static/js/blocks.js:177 urbansystem/static/js/blocks.min.js:1
+msgid "CSS class"
+msgstr "CSS class"
+
+#: urbansystem/static/js/blocks.js:229 urbansystem/static/js/blocks.min.js:1
+msgid "Container properties"
+msgstr "Свойства контейнера"
+
+#: urbansystem/static/js/blocks.js:239 urbansystem/static/js/blocks.min.js:1
+msgid "Copy"
+msgstr "Копировать"
+
+#: urbansystem/static/js/blocks.js:245 urbansystem/static/js/blocks.min.js:1
+msgid "Cut"
+msgstr "Вырезать"
+
+#: urbansystem/static/js/blocks.js:257 urbansystem/static/js/blocks.min.js:1
+msgid "Delete this block?"
+msgstr "Удалить этот блок?"
+
+#: urbansystem/static/js/blocks.js:257 urbansystem/static/js/blocks.min.js:1
+msgid "It will also delete all the nested blocks."
+msgstr "Вы также удалите все вложенные блоки."
+
+#: urbansystem/static/js/blocks.js:295 urbansystem/static/js/blocks.js:340
+#: urbansystem/static/js/blocks.min.js:1
+msgid "OK"
+msgstr "ОК"
+
+#: urbansystem/static/js/blocks.js:374 urbansystem/static/js/blocks.min.js:1
+#: urbansystem/static/js/buildings.js:69 urbansystem/static/js/buildings.js:94
+#: urbansystem/static/js/buildings.min.js:1
+#: urbansystem/static/js/contacts.js:160 urbansystem/static/js/contacts.js:188
+#: urbansystem/static/js/contacts.min.js:1 urbansystem/static/js/notes.js:108
+#: urbansystem/static/js/notes.min.js:1 urbansystem/static/js/users.js:15
+#: urbansystem/static/js/users.min.js:1
+msgid "Edit"
+msgstr "Редактировать"
+
+#: urbansystem/static/js/documents.js:77
+#: urbansystem/static/js/documents.min.js:1
+msgid "Delete this document?"
+msgstr "Удалить этот документ?"
+
+#: urbansystem/static/js/documents.js:77
+#: urbansystem/static/js/documents.min.js:1
+msgid "Deleting folder will also delete all nested documents."
+msgstr "Удаление каталога также удалит все вложенные документы."
+
+#: urbansystem/static/js/documents.js:120
+#: urbansystem/static/js/documents.js:169
+#: urbansystem/static/js/documents.js:172
+#: urbansystem/static/js/documents.min.js:1
+msgid "Copy link"
+msgstr "Скопировать ссылку"
+
+#: urbansystem/static/js/documents.js:123
+#: urbansystem/static/js/documents.min.js:1
+msgid "Copy download link"
+msgstr "Скопировать ссылку"
+
+#: urbansystem/static/js/documents.js:143
+#: urbansystem/static/js/documents.min.js:1
+msgid "Download"
+msgstr "Скачать"
+
+#: urbansystem/static/js/documents.js:214
+#: urbansystem/static/js/documents.min.js:1
+msgid "Image preview"
+msgstr "Просмотр изображения"
+
+#: urbansystem/static/js/documents.js:254
+#: urbansystem/static/js/documents.min.js:1
+msgid "Preview"
+msgstr "Посмотреть"
+
+#: urbansystem/static/js/documents.js:274
+#: urbansystem/static/js/documents.min.js:1
+msgid "Preview sizes"
+msgstr "Размеры"
+
+#: urbansystem/static/js/documents.js:388
+#: urbansystem/static/js/documents.min.js:1
+msgid "New folder"
+msgstr "Новый каталог"
+
+#: urbansystem/static/js/documents.js:412
+#: urbansystem/static/js/documents.min.js:1
+msgid "Uploading"
+msgstr "Загрузка"

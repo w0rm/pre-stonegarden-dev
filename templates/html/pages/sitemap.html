@@ -1,0 +1,45 @@
+$def with(pages)
+
+$code:
+    pages = list(pages)
+    root = next((p for p in pages if p.level == 0 and p.page_id is None), None)
+
+$def render_page(page, pages):
+    <a data-id="$page.id" href="$page.path" class="page-link">$page.name</a>
+    $code:
+        subpages = [p for p in pages if p.page_id == page.id]
+    $if subpages:
+        <ul>
+        $for p in subpages:
+            <li>$:render_page(p, pages)</li>
+        </ul>
+
+$# Navigation
+<div class="ui-toolbar">
+    <div class="ui-toolbar-left">
+        <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
+        <span class="ui-toolbar-separator"></span>
+        <span class="breadcrumbs">$_("Site map")</span>
+    </div>
+    <div class="ui-toolbar-right">
+        <a class="ui-storage-newpage ui-toolbar-item-text" href="/a/pages/new"><span class="ui-icon ui-icon-edzo-page-add"></span>$_("Create page")</a>
+    </div>
+</div>
+<div class="ui-toolbar-spacer"></div>
+
+$# Page
+<div class="admin-page">
+    <div class="admin-left-column-wrapper">
+        <div class="admin-left-column">
+            <div class="wrapper">
+                <div class="padding-block">
+                    <h1>$_("Site map")</h1>
+                    <div class="sitemap">
+                        $:render_page(root, pages)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside class="admin-right-column"></aside>
+</div>

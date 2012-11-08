@@ -1,0 +1,21 @@
+$def with(page, block, blocks)
+$var title = page.title
+$var meta_description = page.meta_description
+$var meta_keywords = page.meta_keywords
+$var page = page
+$var js_code = page.js_code
+$var css_code = page.css_code
+$var id = page.id
+$if auth.has_role("admin","editor"):
+    $require_js("vendor/tiny_mce/jquery.tinymce", "blocks")
+    $:render.ui.insert()
+
+<header>
+    $:render.ui.container("global_header", block, blocks,  page, is_template=True, has_columns=True)
+</header>
+<div class="$block.template">
+    $:render_block(block.template)(block, blocks, page)
+</div>
+<footer>
+    $:render.ui.container("global_footer", block, blocks,  page, is_template=True, has_columns=True)
+</footer>

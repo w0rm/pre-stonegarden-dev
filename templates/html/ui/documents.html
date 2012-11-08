@@ -1,0 +1,32 @@
+$def with(document)
+<div class="js-documents ui-storage" data-id="$document.id" data-document_id="$document.document_id">
+    <div class="ui-toolbar">
+        <div class="ui-toolbar-left">
+            <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
+            <span class="ui-toolbar-separator"></span>
+            <span class="js-documents-breadcrumbs">
+            $for p in document.path:
+                <a href="$link_to("documents", p)" data-id="$p.id">$p.title</a> →
+            $document.title
+            </span>
+        </div>
+        <div class="ui-toolbar-right">
+            <a class="js-documents-tile ui-toolbar-item active" href="#"><span class="ui-icon ui-icon-edzo-tile"></span></a>
+            <a class="js-documents-list ui-toolbar-item" href="#"><span class="ui-icon ui-icon-edzo-list"></span></a>
+            <span class="ui-toolbar-separator" data-role="admin,editor"></span>
+            <!--a href="#" class="js-documents-upload ui-toolbar-item-text">Загрузить</a-->
+            <a class="js-documents-newfolder ui-toolbar-item-text" href="#" data-role="admin,editor"><span class="ui-icon ui-icon-edzo-newfolder"></span>$_("Create folder")</a>
+            <!--span class="ui-toolbar-separator"></span>
+            <input type="text" class="ui-toolbar-search" value="Doesn't work yet" />
+            <a class="ui-storage-search ui-toolbar-item" href="#"><span class="ui-icon ui-icon-edzo-search"></span></a-->
+        </div>
+    </div>
+    <div class="js-documents-container ui-storage-container">
+        <ul class="ui-documents">
+        $for doc in document.folders:
+            $:render.ui.document(doc)
+        $for doc in document.documents:
+            $:render.ui.document(doc)
+        </ul>
+    </div>
+</div>

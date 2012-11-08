@@ -1,0 +1,105 @@
+@import "compass/reset";
+@import "config";
+@import "login";
+
+/* 
+*  Body styles
+*/
+html { font-size:100.01%; height: 100%; }
+body {
+  font-size: 75%;
+  line-height:1.5;
+  color: #222;
+  background: #fff;
+  font-family: Pragmatica, sans-serif;
+  min-height: 100%;
+}
+p, h1, h2, ul, h3, nav { margin: 10px 0; } /* should be rethought cause typography resets margins */
+a { color: $link; }
+a:hover { color: $hover; }
+sup{ position:relative;top:-.5em;; font-size:.5em;}
+header {
+    background: $bg-grey;
+    padding: 1px 20px 1px 40px;
+    margin-bottom: 30px;
+}
+footer {
+    @extend header;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+
+/*
+*
+* Flash should be hidden
+*/
+.js .flash { display: none; }
+
+
+/*
+*  Block styles
+*/
+.block, .fixed-block {
+  padding: 0 20px;
+  position: relative;
+  &.cols_33_33_33, &.cols_25_50_25, &.cols_50_50, 
+  &.cols_67_33, &.cols_33_67, &.cols_20_47_33, &.cols_25_25_25 {
+    padding: 0;
+  }
+  @include box-sizing( border-box );
+  @extend %cf;
+}
+
+/* Page blocks */
+.page, .subpage { margin: 0  20px 0 40px; }
+
+/* Navigation block */
+.navigation nav {
+    margin: 1.5em 0;
+    a, span {
+        margin-right: 15px;
+    }
+}
+
+/* Content block (richtext or htmlcode )*/
+.content { @import "typograhpy"; }
+
+
+/* Columns */
+.cols { @extend %cf; }
+.col {
+  float: left; 
+  @include box-sizing(border-box);
+  .right {
+    float: right;
+    text-align: right;
+  }
+  &.pad { 
+    padding: 5px;
+    .cols {
+      margin: 0 -5px;
+    }
+  }
+}
+.col_10 { width: 10%; }
+.col_20 { width: 20%; }
+.col_25 { width: 25%; }
+.col_33 { width: 33.3333%; }
+.col_50 { width: 50%; }
+.col_67 { width: 66.6666%; }
+.col_100 { width: 100%; }
+.col_wrapper { float: left; width: 100%; }
+.col_space_25 { margin: 0 25%; }
+.col_space_33 { margin: 0 33.3333%; }
+.col_space_20_25 { margin: 0 25% 0 20%; }
+.col_left_space_20 { margin-left: 20%; }
+.col_left_space_33 { margin-left: 33.3333%; }
+.col_left_space_50 { margin-left: 50%; }
+.col_right_space_67 { margin-right: 66.6666%; }
+.col_pull_20 { margin-left: -20%; }
+.col_pull_25 { margin-left: -25%; }
+.col_pull_33 { margin-left: -33.3333%; }
+.col_pull_50 { margin-left: -50%; }
+.col_pull_67 { margin-left: -66.6666%; }
+.col_pull_100 { margin-left: -100%; }

@@ -1,0 +1,16 @@
+$def with(users)
+$if users:
+    <h2>$_("Users")</h2>
+    <ul class="sg-listing">
+    $for u in users:
+        <li data-id="$u.id" class="ui-user ${u.is_active and "inactive" or ""}">
+            <div class="sg-listing-details">
+                <p><a href="$link_to("users", u, "edit")">$u.title</a></p>
+                <p class="small info">
+                    $_(config.labels[u.role]).
+                    $if u.last_login_at:
+                        <span title="$_("Last visit")">$datify(u.last_login_at)</span>.
+                </p>
+            </div>
+        </li>
+    </ul>

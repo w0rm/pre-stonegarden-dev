@@ -1,0 +1,89 @@
+/*
+*  Context menu
+*
+*/
+
+.ui-contextmenu {
+    @include transition-property(opacity);
+    @include transition-duration(0.5s);
+    @include transition-timing-function(ease-in-out);
+    @include transparent; 
+    height: 0; 
+    width: 0; 
+    overflow: hidden;
+    @extend .ui-corner-all;
+    position: absolute;
+    left: 100%;
+    top: -5px;
+    padding: 5px 0;
+    margin: 0;
+    line-height: 20px;
+    background: $white;
+    a, span {
+        display: block;
+        padding: 0 10px 0 15px;
+        text-decoration: none;
+        color: #000;
+    }
+}
+
+.ui-contextmenu-item {
+    white-space: nowrap;
+    position: relative;
+    text-align: left;
+    list-style-type: none;
+    &:hover, &.active {
+        background: $grey60;
+        > .ui-contextmenu { 
+            @include opaque; 
+            height: auto; 
+            width: auto; 
+            overflow: visible;
+        }
+        > a, > span {
+            color: #fff;
+        }
+    }
+}
+
+.ui-contextmenu-root {
+    position: absolute;
+    z-index: 1004;
+    &  > .ui-contextmenu {
+        overflow: visible;
+    }
+}
+
+.ui-contextmenu-separator {
+    list-style-type: none;
+    padding: 0;
+    border-bottom: 1px solid $bg-grey;
+    margin: 5px 0;
+}
+
+.ui-contextmenu-left {
+    &:hover, &.active {
+        .ui-contextmenu {
+            left: auto!important;
+            right: 100%;
+        }
+    }
+}
+
+.ui-contextmenu-top {
+    &:hover, &.active {
+        .ui-contextmenu {
+            top: auto!important;
+            bottom: -5px;
+        }
+    }
+}
+
+.ui-show-contextmenu {
+    @extend .ui-toolbar-item;
+    background: $bg-grey;
+    position: absolute;
+    z-index: 20;
+    left: -16px;
+    top: 6px;
+}

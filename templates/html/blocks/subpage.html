@@ -1,0 +1,13 @@
+$def with(block, blocks, page)
+<section>
+    <div class="cols ui-helper-clearfix">
+        <div class="col col_wrapper col_pull_33">
+            <div class="col_left_space_33">
+                $:render.ui.container("primary", block, blocks, page, has_columns=True)
+            </div>
+        </div>
+        <div class="col col_33">
+            $:render.ui.container("secondary1", block, blocks, page)
+        </div>
+    </div>
+</section>

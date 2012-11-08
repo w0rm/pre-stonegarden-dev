@@ -1,0 +1,8 @@
+$def with (user, password)
+$var Subject: Ваш аккаунт на сайте $ctx.home
+
+<p>Здравствуйте, $user.title.rstrip(".").</p>
+
+<p>Сведения о вашем аккаунте:</p>
+<p>имя пользователя: $user.email</p>
+<p>пароль: $password (изменить пароль можете по этой ссылке: <a href="${ctx.home}/password_reset?email=$user.email">${ctx.home}/password_reset?email=$user.email</a>)</p>

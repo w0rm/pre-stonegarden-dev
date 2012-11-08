@@ -1,0 +1,18 @@
+$def with (messages=None)
+
+$if messages:
+    <ul class="messages">
+    $for message in messages:
+        <li>
+            <a class="title" href="/messages/$message.id">$message.message.subject</a> 
+            <span class="last_login_at">Создано $message.created_at $message.message.headers.get("Reply-To")</span> 
+            $if message.sent_at:
+                <span class="last_login_at">Отправлено $message.sent_at
+                    $if type(message.message.to) == list:
+                        $", ".join(message.message.to)
+                    $else:
+                        $message.message.to
+                </span>
+                
+        </li>
+    </ul>

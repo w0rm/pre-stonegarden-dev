@@ -1,0 +1,18 @@
+$def with (message)
+$var title: Сообщение «$message.message.subject»
+$var link: messages
+
+<dl>
+    <dt>Создано</dt><dd>$message.created_at</dd>
+    $if message.sent_at:
+        <dt>Отправлено</dt><dd>$message.sent_at</dd>            
+    <dt>Кому</dt><dd>
+        $if type(message.message.to) == list:
+            $", ".join(message.message.to)
+        $else:
+            $message.message.to
+    </dd>
+    <dt>От кого</dt><dd>$message.message.headers.get('Reply-To', "Система")</dd>
+</dl>
+
+$:message.message.body

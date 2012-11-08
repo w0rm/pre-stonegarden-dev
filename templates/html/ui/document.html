@@ -1,0 +1,19 @@
+$def with(document)
+<li class="ui-document $document.filetype ${not document.is_published and "is_hidden" or ""} ${document.is_system and "is_system" or ""}"
+    data-filetype="$document.filetype" data-id="$document.id"
+    data-filename="$document.filename" data-position="$document.position">
+    $if document.filetype != "folder":
+        <div class="js-drag-handle ui-document-handle"></div>
+    <div class="ui-document-container $document.filetype">
+        $if document.filetype != "folder":
+            <span class="ui-document-extension"><em>$document.extension.strip(".")</em></span>
+            <span class="ui-document-info">$filesize(document), $datify(document.created_at)</span>
+
+        $if document.filetype == "image":
+            <img  src="$image_url(document.id, document.filename, document.extension, document.sizes, "t")"  />
+
+        <span class="ui-document-description">$describe_extension(document)</span>
+    </div>
+    <p class="ui-document-title">$document.title</p>
+    <p class="ui-document-content">$document.content</p>
+</li>
