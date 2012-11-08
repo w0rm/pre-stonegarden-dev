@@ -25,3 +25,13 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#Stonegarden
+._*
+*~
+siteconfig.py
+.htaccess
+.DS_Store
+.sass-cache
+upload/*
+static/i/*
