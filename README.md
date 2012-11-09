@@ -11,7 +11,13 @@ Simple CMS powered by web.py framework.
 4. Execute `python setup.py` to fill database with initial data
 5. Install node.js with coffeescript
 6. Install sass, compass and zurb-foundation rubygems
+7. Watch and compile coffee and scss files with `cake watch`
+8. Compile translations with `cake i18n:compile`
 
+
+## Running
+
+To run the website enter `python code.py`
 
 ## Node.js and coffeescript installation
 
@@ -27,4 +33,4 @@ Simple CMS powered by web.py framework.
 1. `cake watch` to watch and compile coffee and scss
 2. `cake i18n:extract` to extract strings from code
 3. `cake i18n:update` to update messages.po files
-4. `i18n:compile` to compile translations to messages.mo files
+4. `cake i18n:compile` to compile translations to messages.mo files
