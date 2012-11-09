@@ -11,7 +11,7 @@ $def with (page=None)
     <link rel="stylesheet" href="$asset_url("css/style.css")">
     $if auth.get_user():
         <link rel="stylesheet" href="$asset_url("css/admin.css")">
-        <script data-main="$asset_url("js/main.js", False)" src="$asset_url("js/vendor/require-2.1.1.js")"></script>
+        <script data-main="$asset_url("js/main.js", False)" src="$asset_url("vendor/js/require-2.1.1.js")"></script>
     <style>
         $:page.get("css_code", None)
     </style>

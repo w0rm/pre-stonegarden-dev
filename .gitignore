@@ -16,3 +16,4 @@ siteconfig.py
 upload/*
 static/i/*
 static/css/*
+static/js/*
