@@ -299,6 +299,7 @@
   $.fn.documents = function() {
     var is_uploading, navigate, root_id, _ref,
       _this = this;
+    if (!this.length) return this;
     is_uploading = false;
     root_id = (_ref = this.data("root_id")) != null ? _ref : 1;
     navigate = function(document_id) {

@@ -171,6 +171,9 @@ $.fn.call_doc = (f, args...) ->
 #
 $.fn.documents = ->
 
+  unless this.length
+    return this
+
   is_uploading = false
   root_id = (@data "root_id") ? 1
 

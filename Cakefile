@@ -14,6 +14,10 @@ task 'watch', 'Watches for changed source files and builds them (scss to css, co
   runCommand 'compass', 'watch', 'templates/scss'
   runCommand 'coffee', '-o', 'static/js', '-wc', 'templates/coffee'
 
+task 'compile', 'Builds source files (scss to css, coffee to js)', (options) ->
+  runCommand 'compass', 'compile', 'templates/scss'
+  runCommand 'coffee', '-o', 'static/js', '-c', 'templates/coffee'
+
 task 'i18n:extract', 'Exctracts messages for translation', (options) ->
   runCommand 'python', 'i18n/extract-messages.py'
 

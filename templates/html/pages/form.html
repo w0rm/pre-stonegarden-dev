@@ -1,5 +1,4 @@
 $def with (page_form, page=None)
-$require_js("pages")
 
 $# Navigation
 <div class="ui-toolbar">
@@ -35,7 +34,7 @@ $# Page
                     $else:
                         <h1>$_("New page")</h1>
                         <form action="/a/pages/new" method="post">
-                    
+
                     $:page_form.render(["name"])
                     <p class="small info">$_( "Short name for navigation menu" )</p>
                     $:page_form.render(["title"])

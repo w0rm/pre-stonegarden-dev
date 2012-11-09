@@ -77,7 +77,7 @@ def asset_url(filename="", version=True):
         if config.static_url:
             return_url = "http://" + config.static_url
         else:
-            return_url = ctx.home + "/static"
+            return_url = web.ctx.home + "/static"
         if filename:
             return_url += "/" + filename
             if version:
@@ -95,37 +95,6 @@ def image_url(image_id, filename, extension, sizes, size):
         except:
             pass
     return asset_url("img/broken_" + size + ".png")
-
-
-def require_asset(tag, url, scope=None, **attrs):
-    if not "assets" in ctx:
-        ctx.assets = []
-    ctx.assets.append(storage(tag=tag, url=url, scope=scope, attrs=attrs))
-
-
-def require_css(*urls, **attrs):
-    for url in urls:
-        if config.environment == "production":
-            url += ".min"
-        url += ".css"
-        require_asset("css", "css/" + url, **attrs)
-
-
-def require_js(*urls, **attrs):
-    for url in reversed(urls):
-        if config.environment == "production":
-            url += ".min"
-        url += ".js"
-        require_asset("js", "js/" + url, **attrs)
-
-
-def asset_urls(tag="js"):
-    if not "assets" in ctx:
-        return []
-    else:
-        return reversed([asset_url(a.url) for a in
-                        filter(lambda b: tag == b.tag or
-                        tag == "all", ctx.assets)])
 
 
 def defloatify(num):
@@ -174,12 +143,8 @@ def describe_extension(doc):
 template_globals = {
     'link_to': link_to,
     'flash': flash,
-    'require_asset': require_asset,
-    'require_js': require_js,
-    'require_css': require_css,
     'asset_url': asset_url,
     'image_url': image_url,
-    'asset_urls': asset_urls,
     'auth': auth,
     'config': config,
     'defloatify': defloatify,

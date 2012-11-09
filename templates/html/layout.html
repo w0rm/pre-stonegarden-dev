@@ -1,13 +1,4 @@
 $def with (page=None)
-$code:
-    if auth.get_user():
-        require_js("vendor/jquery-ui-1.8.23.custom", "vendor/jquery.notify-1.5", "admin")
-        require_asset("js", "/a/config.js")
-        require_css("admin")
-    else:
-        require_js("site")
-    js = asset_urls()
-    require_css("style")
 <!doctype html>
 <html class="no-js">
 <head>
@@ -17,10 +8,13 @@ $code:
     <meta name="description" content="$page.get("meta_description", None)">
     <meta name="keywords" content="$page.get("meta_keywords", None)">
     <link rel="shortcut icon" href="$asset_url("img/favicon.ico")" type="image/x-icon">
-    $for css_url in asset_urls("css"):
-        <link rel="stylesheet" href="$css_url">
-    <script src="$asset_url("js/vendor/modernizr-2.6.0.js")"></script>
-    <style>$:page.get("css_code", None)</style>
+    <link rel="stylesheet" href="$asset_url("css/style.css")">
+    $if auth.get_user():
+        <link rel="stylesheet" href="$asset_url("css/admin.css")">
+        <script data-main="$asset_url("js/main.js", False)" src="$asset_url("js/vendor/require-2.1.1.js")"></script>
+    <style>
+        $:page.get("css_code", None)
+    </style>
 </head>
 <body data-id="$page.get("id", None)" class="$page.get("class", None)" data-lang="$config.default_locale">
     $:flash.render()
@@ -28,28 +22,10 @@ $code:
 	$if auth.get_user():
 	    $:render.ui.menu(page.get("page", None))
 	    $:render.ui.notify()
+    $else:
+        <script src="$asset_url("js/public.js")"></script>
     <script>
-        Modernizr.load([
-            $if config.environment == "development":
-                '$asset_url("js/vendor/jquery-1.8.1.js")'
-            $else:
-                {
-                    load: '//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js',
-                    complete: function () {
-                        if ( !window.jQuery ) {
-                            Modernizr.load( '$asset_url("js/vendor/jquery-1.8.1.min.js")' );
-                        }
-                    }
-                }
-            $if js:
-                ,{ load: [ "$:{'","'.join(js)}" ] }
-            $# TODO: add proper analytics
-            $if config.analytics:
-                ,{ load: ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'}
-            ,{complete: function(){
-                $:page.get("js_code", None)
-            }}
-        ]);
+        $:page.get("js_code", None)
     </script>
 </body>
 </html>
