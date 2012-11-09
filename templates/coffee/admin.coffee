@@ -1,5 +1,5 @@
 
-timify = (time) -> 
+timify = (time) ->
   if time < 10
     "0" + time
   else
@@ -155,10 +155,10 @@ $.fn.datetimeInput = ->
       minutes = parseInt(minutesinput.val())
       hours = 0 unless hours
       minutes = 0 unless minutes
-      hours = 0 if hours < 0 
+      hours = 0 if hours < 0
       hours = 23 if hours > 23
       minutes = 0 if minutes < 0
-      minutes = 59 if minutes > 59    
+      minutes = 59 if minutes > 59
       datestring = $.datepicker.formatDate('yy-mm-dd', dateinput.datepicker("getDate"));
       dateinput.val datestring + " "+ timify(hours)  + ":" + timify(minutes) + ":00"
       hoursinput.val timify(hours)
@@ -324,18 +324,9 @@ config.tinymce =
   valid_elements: config.tinymce_valid_elements
   setup: (ed) -> ed.onInit.add (ed) -> ed.focus()
 
-config.notes_tinymce = $.extend {}, config.tinymce,
-  content_css: "/static/css/notes_tinymce.css"
-  plugins: "table,edzo,contextmenu,paste,fullscreen,visualchars,nonbreaking,inlinepopups,save,autosave"
-  auto_resize: false
-  height: 350
-  theme_advanced_buttons1: "undo,pastetext,save,bold,italic,|,bullist,numlist,|,link,unlink,anchor,image,|,removeformat,code"
-  theme_advanced_toolbar_location: "top"
-  valid_elements: config.notes_tinymce_valid_elements
-
 config.folder = "/a/documents" # saves current open folder in storage
 
-# TINYMCE PLUGINS 
+# TINYMCE PLUGINS
 window.openStorage = (ed, url) ->
   dialog = $("<div/>")
   node = ed.selection.getNode()
@@ -345,7 +336,7 @@ window.openStorage = (ed, url) ->
   img_src = `undefined`
   img_alt = `undefined`
   img_class = `undefined`
-  
+
   insert_image_size = (doc, k) -> (e) ->
     $.get "/a/documents/#{doc.data("id")}/image_size",
       size: k
@@ -358,10 +349,10 @@ window.openStorage = (ed, url) ->
     sizes = (size: k, settings: v for k, v of config.image).sort (a, b) ->
       a1 = a.settings[0] or 999999999
       b1 = b.settings[0] or 999999999
-      return 1 if a1 > b1 
+      return 1 if a1 > b1
       return -1 if a1 < b1
       return 0
-    
+
     [
       text: t_("Insert image")
       click: insert_image_size(doc, "m")
@@ -410,19 +401,19 @@ window.openStorage = (ed, url) ->
           ed.execCommand "mceRepaint"
           ed.focus()
       ]
-    
+
     dialog_wgt = dialog.dialog("widget")
     dialog_title = dialog_wgt.find(".ui-dialog-title").append($(data).find(".js-documents-breadcrumbs"))
     dialog_form = dialog_wgt.find(".ui-dialog-buttonpane").addClass("ui-gradient").append("<div class=\"small-padding-block\" style=\"overflow:hidden\">            \t    <p><label for=\"img_src\">" + t_("URL") + "</label><input id=\"img_src\" name=\"img_src\" class=\"fullwidth\" type=\"text\"/></p>            \t    <p style=\"white-space:nowrap;\"><label for=\"img_alt\">" + t_("Hint") + "</label><input id=\"img_alt\" name=\"img_alt\" type=\"text\" size=\"15\"/>             \t    <label class=\"before\" style=\"margin-left:10px;\" for=\"img_class\">" + t_("Class") + "</label><input id=\"img_class\" name=\"img_class\" type=\"text\" size=\"15\"/></p>            \t    </div>")
     img_src = dialog_wgt.find("input[name=img_src]")
     img_alt = dialog_wgt.find("input[name=img_alt]")
     img_class = dialog_wgt.find("input[name=img_class]")
-    
+
     if node and node.nodeName is "IMG"
       img_src.val $(node).attr("src")
       img_alt.val $(node).attr("alt")
       img_class.val $(node).attr("class")
-    
+
     dialog_wgt.on "click", ".js-documents-breadcrumbs a, .ui-document.folder", (e) ->
       e.preventDefault()
       link = $(this)
@@ -433,7 +424,7 @@ window.openStorage = (ed, url) ->
         contextmenu_button.detach()
         dialog.html $(data).find(".ui-documents")
         dialog_title.html $(data).find(".js-documents-breadcrumbs")
-    
+
     dialog.on "mouseenter", ".ui-document.image", (e) ->
       e.stopPropagation() # don't propagate this event to the parent blocks
       unless contextmenu_button.parent().is(this)
@@ -495,11 +486,11 @@ window.openLink = (ed, url) ->
           ed.dom.remove node, 1
           ed.selection.moveToBookmark i
         else
-          
+
           # Create new anchor elements
           unless node?
             ed.getDoc().execCommand "unlink", false, null
-            
+
             #tinyMCEPopup
             ed.execCommand "mceInsertLink", false, "#mce_temp_url#",
               skip_undo: 1
@@ -513,13 +504,13 @@ window.openLink = (ed, url) ->
           else
             ed.dom.setAttribs node, args
             $(node).html link_text.val()  if text_input
-          
+
           # Don't move caret if selection was image
           if node.childNodes.length isnt 1 or node.firstChild.nodeName isnt "IMG"
             ed.focus()
             ed.selection.select node
             ed.selection.collapse 0
-        
+
         #tinyMCEPopup.storeSelection();
         ed.focus()
         $(this).dialog "close"
@@ -586,7 +577,7 @@ $.fn.observe = (time, callback, startCallback) -> @each ->
 $.fn.restrict = -> @find("[data-role]").each ->
   $(this).remove() unless config.role in $(this).data("role").split(",")
 
-$(document).restrict()  
+$(document).restrict()
 
 
 #
@@ -605,7 +596,7 @@ window.restrict = (role...) -> (method) -> ->
     $imageDrop.find("img").attr("src", $imageDrop.data("empty_src"))
     $imageDrop.find("input[name=photo_id]").val("")
     $(this).addClass("hide")
-    
+
   $(document).on
     dragover: (e) ->
       dt = e.originalEvent.dataTransfer
@@ -664,18 +655,18 @@ window.restrict = (role...) -> (method) -> ->
       false
   ,
     ".js-image-drop"
-  
+
 )()
 
 # Search cache
 $.fn.filterItems = ->
-  
+
   normalizeSearch = (idx, el) ->
     if $(el).hasClass("js-search-phone")
       $(el).text().replace(/\D/g, '')
     else
       $(el).text().toLowerCase()
-  
+
   @map( (idx, el) ->
     element: $(el)
     search_fields: $(el).find(".js-search-field, .js-search-phone").map(normalizeSearch).get()
