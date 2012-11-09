@@ -7,6 +7,7 @@ import json
 import urllib
 from config import config
 from base import db, auth, flash
+from modules.utils import dthandler
 from modules.translation import _, N_
 from template import render, render_partial, link_to, image_url
 from modules.form import *
@@ -124,12 +125,13 @@ class DropUploadDocument:
                             folder,
                             where='document_id = $id AND NOT '
                                   'filetype = "folder" AND NOT is_deleted',
-                            what='MAX(position)+1 as n')[0].n or 1,
+                            what='MAX(position)+1 as n',
+                        )[0].n
 
                         file_id = db.insert(
                             "documents",
                             document_id=folder.id,
-                            position=position,
+                            position=position or 1,
                             filename=filename,
                             documents=(folder.documents + "," + str(folder.id)
                                        if folder.documents else folder.id),
