@@ -1,3 +1,6 @@
+# coding: utf-8
+import web
+from base import db
 
 
 def load_navigation(page):
