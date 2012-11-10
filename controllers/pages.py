@@ -5,7 +5,7 @@ import os
 import datetime
 import json
 from config import config
-from base import db, auth, flash, load_navigation
+from base import db, auth, flash
 from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, link_to
