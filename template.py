@@ -97,13 +97,6 @@ def image_url(image_id, filename, extension, sizes, size):
     return asset_url("img/broken_" + size + ".png")
 
 
-def defloatify(num):
-    if int(num) == num:
-        return int(num)
-    else:
-        return num
-
-
 def link_to(obj_type, obj=None, method=None, **kw):
     link = "/a/" + obj_type
     if obj is not None:
@@ -116,14 +109,9 @@ def link_to(obj_type, obj=None, method=None, **kw):
 def render_block(name):
     return getattr(render_partial.blocks, name)
 
-# TODO: Fix language
-
 
 def filesize(doc):
-    if doc.filesize:
-        return unicode(doc.filesize / 1024) + u" кб"
-    else:
-        return u"0 кб"
+    return unicode((doc.filesize or 0) / 1024) + u" " + _("kb")
 
 
 def describe_extension(doc):
@@ -147,7 +135,6 @@ template_globals = {
     'image_url': image_url,
     'auth': auth,
     'config': config,
-    'defloatify': defloatify,
     'datify': datify,
     'url': web.url,
     'get_plural': pytils.numeral.get_plural,
@@ -160,7 +147,6 @@ template_globals = {
     '_': _,
     'n_': n_,
     'render_block': render_block,
-    'image_url': image_url,
     'describe_extension': describe_extension,
     'replace_links': replace_links,
     'filesize': filesize,
