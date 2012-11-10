@@ -56,23 +56,3 @@ def create_application():
     if db.dbname == "mysql":
         app.add_processor(web.loadhook(timezone_hook))
     return app
-
-
-#
-#  TODO: remove it from here
-#
-def load_navigation(page):
-    web.ctx.nav = list(db.select("pages",
-        where="level=1 AND NOT is_deleted AND is_navigatable",
-        order="position ASC"))
-    web.ctx.children = list(db.select("pages", page,
-        where="page_id=$id AND NOT is_deleted AND is_navigatable",
-        order="position ASC"))
-    web.ctx.siblings = list(db.select("pages", page,
-        where="page_id=$page_id AND NOT is_deleted AND is_navigatable",
-        order="position ASC"))
-    if page.level > 0:
-        web.ctx.path = list(db.select("pages",
-            where="id in (%s) AND NOT is_deleted" % page.pages))
-    else:
-        web.ctx.path = []

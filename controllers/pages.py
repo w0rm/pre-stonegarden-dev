@@ -10,8 +10,8 @@ from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, link_to
 from modules.form import *
-from web import ctx
 from pytils.translit import slugify
+from models.pages import *
 
 pageForm = Form(
     Textbox("name", notnull, description=N_("Name"), size=30, maxlength=255),
@@ -39,66 +39,6 @@ pageCodeForm = Form(
 page_access_forbidden_text = N_("Page access forbidden.")
 page_deleted_text = N_("Page was deleted.")
 cannot_delete_root_text = N_("Cannot delete root page.")
-
-
-def join_path(path, slug=""):
-    return web.cond(path.endswith("/"), path, path + "/") + slug
-
-
-def unique_path(page, page_id=None):
-    if str(page_id) == "1":
-        return dict(path="/", slug="")
-    slug = slugify(page.slug or page.name)
-    parent_page = db.select("pages", page, where="id=$page_id")[0]
-    test_slug, i = slug, 1
-    try:
-        while True:
-            if not test_slug in config.reserved:
-                new_path = join_path(parent_page.path, test_slug)
-                test = db.select(
-                    "pages",
-                    locals(),
-                    where=("path=$new_path" +
-                           web.cond(page_id, " AND NOT id=$page_id", "")),
-                )[0]
-            test_slug = slug + "-" + str(i)
-            i += 1
-    except IndexError:
-        if parent_page.pages:
-            pages = parent_page.pages + "," + str(parent_page.id)
-        else:
-            pages = parent_page.id
-        return dict(
-            path=new_path,
-            slug=test_slug,
-            pages=pages,
-            level=parent_page.level + 1)
-
-
-def update_branch(page_id):
-    pages = db.select("pages", locals(),
-                      where="page_id=$page_id AND NOT is_deleted")
-    for page in pages:
-        db.update("pages", where="id=$id", vars=page,
-                  **unique_path(page, page.id))
-        update_branch(page.id)
-
-
-def delete_branch(page_id, deleted_at):
-    if str(page_id) == "1":
-        return
-    for page in db.select("pages", locals(),
-                          where="page_id=$page_id AND NOT is_deleted"):
-        delete_branch(page.id, deleted_at)
-    db.update("pages", where="id=$page_id AND NOT is_deleted", vars=locals(),
-              is_deleted=True, deleted_at=deleted_at)
-
-
-def dropdown_pages(page, pages):
-    return [(page.id, u"  " * page.level + u"• " + page.name)] + sum(
-        [dropdown_pages(p, pages) for p in pages if p.page_id == page.id],
-        [],
-    )
 
 
 class Sitemap:

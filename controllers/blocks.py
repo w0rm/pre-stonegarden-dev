@@ -5,7 +5,7 @@ import os
 import datetime
 import json
 from config import config
-from base import db, auth, flash, load_navigation
+from base import db, auth, flash
 from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, render_block
@@ -13,6 +13,7 @@ from template import link_to, smarty, sanitize
 from modules.form import *
 from web import ctx
 from pytils.translit import slugify
+from models.pages import load_navigation
 
 blockForm = web.form.Form(
     Textbox("block_id"),
