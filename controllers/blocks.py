@@ -14,6 +14,7 @@ from modules.form import *
 from web import ctx
 from pytils.translit import slugify
 from models.pages import load_navigation
+from models.blocks import *
 
 blockForm = web.form.Form(
     Textbox("block_id"),
@@ -45,121 +46,34 @@ blockSettingsForm = web.form.Form(
 )
 
 
-class NewBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self):
-        # page_id should be set
-        d = web.input(page_id=None, is_template=False)
-        block_form = blockForm(d)
-        if block_form.valid:
-            block = block_form.d
-            if not block.block_id and not d.is_template:
-                page_block = db.select(
-                    "blocks",
-                    d,
-                    what="id",
-                    where="page_id = $page_id AND block_id IS NULL AND NOT is_deleted",
-                    limit=1,
-                )[0]
-                block.block_id = page_block.id
-            if block.block_id:
-                parent = db.select("blocks", block, where="$block_id = id", limit=1)[0]
-                block.update(
-                    page_id=parent.page_id,
-                    blocks=parent.blocks + "," + str(parent.id) if parent.blocks else parent.id,
-                    level=parent.level + 1,
-                )
-                db.update(
-                    "blocks",
-                    where="block_id = $block_id AND container = $container AND position >= $position AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-            else:
-                block.level = 0
-                db.update(
-                    "blocks",
-                    where="container = $container AND position >= $position AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-            block_id = db.insert(
-                "blocks",
-                created_at=datetime.datetime.now(),
-                content_cached=smarty(sanitize(block.content)),
-                is_published=True,
-                **block)
-            raise web.seeother(link_to("blocks", block_id=block_id, page_id=d.page_id))
-        return "NOT OK"
-
-
-class GetBlock:
+class Block:
 
     @auth.restrict("admin", "editor")
     def GET(self, block_id, format):
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         if format == ".json":
             web.header("Content-Type", "application/json")
             return json.dumps(block, default=dthandler)
         else:
             # page_id should be set
             page_id = web.input(page_id=None).page_id
-            page = db.select("pages", locals(), where="id = $page_id AND NOT is_deleted")[0]
+            page = db.select("pages", locals(),
+                             where="id = $page_id AND NOT is_deleted")[0]
             load_navigation(page)
-            blocks = list(db.select(
+            blocks = db.select(
                 "blocks",
                 locals(),
-                where="(page_id IS NULL OR page_id=$page_id) AND NOT is_deleted",
+                where="(page_id IS NULL OR page_id=$page_id) "
+                      "AND NOT is_deleted",
                 order="position",
-            ))
+            ).list()
             return unicode(render_partial.ui.block(block, blocks, page))
 
-
-class GetBlocks:
-
     @auth.restrict("admin", "editor")
-    def GET(self):
-        d = web.input(page_id=None, block_id=None, container=None)
-        page = db.select("pages", d, where="id = $page_id AND NOT is_deleted")[0]
-        load_navigation(page)
-        page_blocks = list(db.select(
-            "blocks",
-            d,
-            where="(page_id IS NULL OR page_id=$page_id) AND NOT is_deleted",
-            order="position",
-        ))
-        if d.block_id:
-            block = db.select("blocks", d, where="id = $block_id AND NOT is_deleted", limit=1)[0]
-            if d.container:
-                blocks = list(db.select(
-                    "blocks",
-                    d,
-                    where="container = $container AND block_id = $block_id AND NOT is_deleted",
-                    order="position ASC",
-                ))
-            else:
-                blocks = [block]
-        else:
-            blocks = list(db.select(
-                "blocks",
-                d,
-                where="container = $container AND block_id is NULL AND NOT is_deleted",
-                order="position ASC",
-            ))
-        res = u""
-        for b in blocks:
-            res += unicode(render_partial.ui.block(b, page_blocks, page))
-        return res
-
-
-class EditBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
+    def PUT(self, block_id, format):
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         block_form = blockEditForm(web.input())
         if block_form.valid:
             db.update(
@@ -169,7 +83,142 @@ class EditBlock:
                 content_cached=smarty(sanitize(block_form.d.content)),
                 updated_at=datetime.datetime.now(),
                 **block_form.d)
-            raise web.seeother(link_to("blocks", block_id=block_id, page_id=page_id))
+            raise web.seeother(link_to(
+                "blocks", block_id=block_id, page_id=page_id))
+        return "NOT OK"
+
+    @auth.restrict("admin", "editor")
+    def DELETE(self, block_id, format):
+        block = get_block_by_id(block_id)
+        db.update(
+            "blocks",
+            where="id = $id AND NOT is_deleted",
+            vars=block,
+            is_deleted=1)
+        if block.block_id:
+            db.update(
+                "blocks",
+                where="block_id = $block_id AND container = $container "
+                      "AND position > $position AND NOT is_deleted",
+                vars=block,
+                position=web.SQLLiteral("position-1"),
+            )
+        else:
+            db.update(
+                "blocks",
+                where="container = $container AND position > $position "
+                      "AND NOT is_deleted",
+                vars=block,
+                position=web.SQLLiteral("position-1"),
+            )
+
+        if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            web.header("Content-Type", "application/json")
+            return json.dumps(dict(status=1))
+        else:
+            raise web.seeother(web.ctx.env.get('HTTP_REFERER', '/'))
+
+
+class Blocks:
+
+    @auth.restrict("admin", "editor")
+    def GET(self):
+        d = web.input(page_id=None, block_id=None, container=None)
+        page = db.select(
+            "pages",
+            d,
+            where="id = $page_id AND NOT is_deleted"
+        )[0]
+        load_navigation(page)
+        page_blocks = db.select(
+            "blocks",
+            d,
+            where="(page_id IS NULL OR page_id=$page_id) AND NOT is_deleted",
+            order="position",
+        ).list()
+        if d.block_id:
+            block = get_block_by_id(d.block_id)
+            if d.container:
+                blocks = db.select(
+                    "blocks",
+                    d,
+                    where="container = $container AND block_id = "
+                          "$block_id AND NOT is_deleted",
+                    order="position ASC",
+                ).list()
+            else:
+                blocks = [block]
+        else:
+            blocks = db.select(
+                "blocks",
+                d,
+                where="container = $container AND block_id is NULL "
+                      "AND NOT is_deleted",
+                order="position ASC",
+            ).list()
+        res = u""
+        for b in blocks:
+            res += unicode(render_partial.ui.block(b, page_blocks, page))
+        return res
+
+    @auth.restrict("admin", "editor")
+    def POST(self):
+        # page_id should be set
+        d = web.input(page_id=None, is_template=False)
+        block_form = blockForm(d)
+
+        if block_form.valid:
+            block = block_form.d
+
+            if not block.block_id and not d.is_template:
+                page_block = db.select(
+                    "blocks",
+                    d,
+                    what="id",
+                    where="page_id = $page_id AND block_id IS "
+                          "NULL AND NOT is_deleted",
+                    limit=1,
+                )[0]
+                block.block_id = page_block.id
+
+            if block.block_id:
+                parent = get_block_by_id(block.block_id)
+                if parent.blocks:
+                    parent_blocks = parent.blocks + "," + str(parent.id)
+                else:
+                    parent_blocks = str(parent.id)
+                block.update(
+                    page_id=parent.page_id,
+                    blocks=parent_blocks,
+                    level=parent.level + 1,
+                )
+                db.update(
+                    "blocks",
+                    where="block_id = $block_id AND container = $container "
+                          "AND position >= $position AND NOT is_deleted",
+                    vars=block,
+                    position=web.SQLLiteral("position+1"),
+                )
+            else:
+                block.level = 0
+                db.update(
+                    "blocks",
+                    where="container = $container AND position >= "
+                          "$position AND NOT is_deleted",
+                    vars=block,
+                    position=web.SQLLiteral("position+1"),
+                )
+
+            block_id = db.insert(
+                "blocks",
+                created_at=datetime.datetime.now(),
+                content_cached=smarty(sanitize(block.content)),
+                is_published=True,
+                **block)
+
+            raise web.seeother(link_to("blocks", block_id=block_id,
+                                       page_id=d.page_id))
+
         return "NOT OK"
 
 
@@ -179,7 +228,7 @@ class EditBlockTemplate:
     def POST(self, block_id):
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         block_form = blockTemplateForm(web.input())
         if block_form.valid:
             # Update block's template
@@ -190,42 +239,51 @@ class EditBlockTemplate:
                 updated_at=datetime.datetime.now(),
                 **block_form.d)
             # Select all orphaned blocks
-            orphans = list(db.select("blocks",
-                                     dict(
-                                     containers=config.containers[block_form.d.template],
-                                     block_id=block_id,
-                                     ),
-                                     where="$block_id = block_id AND NOT container IN $containers AND NOT is_deleted",
-                                     order="container, position"
-                                     ))
+            orphans = db.select(
+                "blocks",
+                dict(
+                    containers=config.containers[block_form.d.template],
+                    block_id=block_id,
+                ),
+                where="$block_id = block_id AND NOT container "
+                      "IN $containers AND NOT is_deleted",
+                order="container, position"
+            ).list()
             if len(orphans):
                 # Shift children position after the unwrapped block
                 if block.block_id:
                     db.update(
                         "blocks",
-                        where="block_id = $block_id AND container = $container AND position > $position AND NOT is_deleted",
+                        where="block_id = $block_id AND container = "
+                              "$container AND position > $position "
+                              "AND NOT is_deleted",
                         vars=block,
-                        position=web.SQLLiteral("position + %d" % len(orphans)),
+                        position=web.SQLLiteral("position + %d" %
+                                                len(orphans)),
                     )
                 else:
                     db.update(
                         "blocks",
-                        where="container = $container AND position > $position AND NOT is_deleted",
+                        where="container = $container "
+                              "AND position > $position "
+                              "AND NOT is_deleted",
                         vars=block,
-                        position=web.SQLLiteral("position + %d" % len(orphans)),
+                        position=web.SQLLiteral("position + %d" %
+                                                len(orphans)),
                     )
 
                 # Insert orphans to the parent container after the block
                 # TODO: recursively update block_id and level of subchildren
                 n = 0
                 for b in orphans:
-                    db.update("blocks", where="id = $id", vars=b,
-                              block_id=block.block_id,
-                              blocks=block.blocks,
-                              level=block.level,
-                              container=block.container,
-                              position=block.position + 1 + n,
-                              )
+                    db.update(
+                        "blocks", where="id = $id", vars=b,
+                        block_id=block.block_id,
+                        blocks=block.blocks,
+                        level=block.level,
+                        container=block.container,
+                        position=block.position + 1 + n,
+                    )
                     n += 1
             # Return all blocks from the container of our block
             if block.block_id:
@@ -250,7 +308,7 @@ class EditBlockSettings:
     def POST(self, block_id):
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         block_form = blockSettingsForm(web.input())
         if block_form.valid:
             db.update(
@@ -259,7 +317,8 @@ class EditBlockSettings:
                 vars=locals(),
                 updated_at=datetime.datetime.now(),
                 **block_form.d)
-            raise web.seeother(link_to("blocks", block_id=block_id, page_id=page_id))
+            raise web.seeother(link_to(
+                "blocks", block_id=block_id, page_id=page_id))
         return "NOT OK"
 
 
@@ -269,7 +328,7 @@ class WrapBlock:
     def POST(self, block_id):
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         block_form = blockTemplateForm(web.input())
         if block_form.valid:
             block_id = db.insert(
@@ -283,17 +342,24 @@ class WrapBlock:
                 position=block.position,
                 is_published=True,
                 **block_form.d)
+
+            if block.blocks:
+                parent_blocks = block.blocks + "," + str(block.id)
+            else:
+                parent_blocks = str(block.id)
+
             db.update(
                 "blocks",
                 where="$id = id",
                 vars=block,
                 block_id=block_id,
-                blocks=block.blocks + "," + str(block_id) if block.blocks else str(block_id),
+                blocks=parent_blocks,
                 level=block.level + 1,
                 container="primary",
                 position=1,
             )
-            raise web.seeother(link_to("blocks", block_id=block_id, page_id=page_id))
+            raise web.seeother(link_to(
+                "blocks", block_id=block_id, page_id=page_id))
         return "NOT OK"
 
 
@@ -303,29 +369,35 @@ class UnwrapBlock:
     def POST(self, block_id):
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="id = $block_id AND NOT is_deleted", limit=1)[0]
-        children = list(db.select(
+        block = get_block_by_id(block_id)
+        children = db.select(
             "blocks",
             block,
             where="block_id = $id AND NOT is_deleted",
             order="container, position",
-        ))
+        ).list()
 
-        # delete the block
-        db.update("blocks", where="id = $id AND NOT is_deleted", vars=block, is_deleted=1)
+        # Delete parent block
+        db.update(
+            "blocks",
+            where="id = $id AND NOT is_deleted",
+            vars=block,
+            is_deleted=1)
 
-        # shift children position after the unwrapped block
+        # Shift children position after the unwrapped block
         if block.block_id:
             db.update(
                 "blocks",
-                where="block_id = $block_id AND container = $container AND position > $position AND NOT is_deleted",
+                where="block_id = $block_id AND container = $container "
+                      "AND position > $position AND NOT is_deleted",
                 vars=block,
                 position=web.SQLLiteral("position - 1 + %d" % len(children)),
             )
         else:
             db.update(
                 "blocks",
-                where="container = $container AND position > $position AND NOT is_deleted",
+                where="container = $container AND "
+                      "position > $position AND NOT is_deleted",
                 vars=block,
                 position=web.SQLLiteral("position - 1 + %d" % len(children)),
             )
@@ -334,13 +406,14 @@ class UnwrapBlock:
         # TODO: recursively update block_id and level of subchildren
         n = 0
         for b in children:
-            db.update("blocks", where="id = $id", vars=b,
-                      block_id=block.block_id,
-                      blocks=block.blocks,
-                      level=block.level,
-                      container=block.container,
-                      position=n + block.position,
-                      )
+            db.update(
+                "blocks", where="id = $id", vars=b,
+                block_id=block.block_id,
+                blocks=block.blocks,
+                level=block.level,
+                container=block.container,
+                position=n + block.position,
+            )
             n += 1
         # return container contents
         if block.block_id:
@@ -365,7 +438,7 @@ class MoveBlock:
         d = web.input(duplicate=False, page_id=None)
         # page_id should be set
         page_id = web.input(page_id=None).page_id
-        block = db.select("blocks", locals(), where="id = $block_id AND NOT is_deleted", limit=1)[0]
+        block = get_block_by_id(block_id)
         web.ctx.session.buffer = web.storage(
             block=block,
             duplicate=d.duplicate,
@@ -378,7 +451,8 @@ class MoveBlock:
                 updated_at=datetime.datetime.now(),
                 is_published=False,
             )
-        raise web.seeother(link_to("blocks", block_id=block_id, page_id=d.page_id))
+        raise web.seeother(link_to(
+            "blocks", block_id=block_id, page_id=d.page_id))
 
 
 class PasteBlock:
@@ -397,24 +471,32 @@ class PasteBlock:
                     "blocks",
                     d,
                     what="id",
-                    where="page_id = $page_id AND block_id IS NULL AND NOT is_deleted",
+                    where="page_id = $page_id AND block_id IS NULL "
+                          "AND NOT is_deleted",
                     limit=1,
                 )[0]
                 block.block_id = page_block.id
 
             remembered_block = saved_buffer.block
-            same_container = remembered_block.container == block.container and remembered_block.block_id == block.block_id
+            same_container = (remembered_block.container == block.container
+                              and remembered_block.block_id == block.block_id)
 
             if block.block_id:
-                parent = db.select("blocks", block, where="$block_id = id", limit=1)[0]
+                parent = get_block_by_id(block.block_id)
+                if parent.blocks:
+                    parent_blocks = parent.blocks + "," + str(parent.id)
+                else:
+                    parent_blocks = str(parent.id)
+
                 block.update(
                     page_id=parent.page_id,
-                    blocks=parent.blocks + "," + str(parent.id) if parent.blocks else parent.id,
+                    blocks=parent_blocks,
                     level=parent.level + 1,
                 )
                 db.update(
                     "blocks",
-                    where="block_id = $block_id AND container = $container AND position >= $position AND NOT is_deleted",
+                    where="block_id = $block_id AND container = $container "
+                          "AND position >= $position AND NOT is_deleted",
                     vars=block,
                     position=web.SQLLiteral("position+1"),
                 )
@@ -422,7 +504,8 @@ class PasteBlock:
                 block.level = 0
                 db.update(
                     "blocks",
-                    where="container = $container AND position >= $position AND NOT is_deleted",
+                    where="container = $container AND position >= $position "
+                          "AND NOT is_deleted",
                     vars=block,
                     position=web.SQLLiteral("position+1"),
                 )
@@ -438,45 +521,24 @@ class PasteBlock:
                 remembered_block.pop("id")
                 remembered_block.id = db.insert("blocks", **remembered_block)
             else:
-                # shift all positions for the blocks after the block that we move
+                # Shift all positions for the blocks
+                # after the block that we move
                 if not same_container:
                     db.update(
                         "blocks",
-                        where="block_id = $block_id AND container = $container AND position >= $position AND NOT is_deleted",
+                        where="block_id = $block_id AND container = $container"
+                              " AND position >= $position AND NOT is_deleted",
                         vars=remembered_block,
                         position=web.SQLLiteral("position-1"),
                     )
                 remembered_block.update(
                     updated_at=datetime.datetime.now(),
                     **block)
-                db.update("blocks", where="id = $id", vars=remembered_block, **remembered_block)
-            raise web.seeother(link_to("blocks", block_id=remembered_block.id, page_id=d.page_id))
+                db.update(
+                    "blocks",
+                    where="id = $id",
+                    vars=remembered_block,
+                    **remembered_block)
+            raise web.seeother(link_to(
+                "blocks", block_id=remembered_block.id, page_id=d.page_id))
         return "NOT OK"
-
-
-class DeleteBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
-        block = db.select("blocks", locals(), where="$block_id = id AND NOT is_deleted", limit=1)[0]
-        db.update("blocks", where="id = $id AND NOT is_deleted", vars=block, is_deleted=1)
-        if block.block_id:
-            db.update(
-                "blocks",
-                where="block_id = $block_id AND container = $container AND position > $position AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position-1"),
-            )
-        else:
-            db.update(
-                "blocks",
-                where="container = $container AND position > $position AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position-1"),
-            )
-
-        if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-            web.header("Content-Type", "application/json")
-            return json.dumps(dict(status=1))
-        else:
-            raise web.seeother(web.ctx.env.get('HTTP_REFERER', '/'))
