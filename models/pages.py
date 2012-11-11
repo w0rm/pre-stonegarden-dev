@@ -3,6 +3,14 @@ import web
 from base import db
 
 
+def get_page_by_id(page_id):
+    return db.select(
+        "pages",
+        locals(),
+        where="id = $page_id AND NOT is_deleted",
+        limit=1)[0]
+
+
 def load_navigation(page):
     web.ctx.nav = db.select(
         "pages",

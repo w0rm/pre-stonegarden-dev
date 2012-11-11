@@ -12,6 +12,7 @@ from template import render, render_partial, link_to
 from modules.form import *
 from pytils.translit import slugify
 from models.pages import *
+from models.blocks import get_blocks_by_page_id, get_page_block_by_page_id
 
 pageForm = Form(
     Textbox("name", notnull, description=N_("Name"), size=30, maxlength=255),
@@ -56,8 +57,8 @@ class NewPage:
 
     @auth.restrict("admin", "editor")
     def GET(self):
-        pages = list(db.select("pages", where="NOT is_deleted",
-                               order="level, id"))
+        pages = db.select("pages", where="NOT is_deleted",
+                          order="level, id").list()
         page_form = pageForm()
         page_form.page_id.args = dropdown_pages(pages[0], pages)
         page_form.page_id.value = web.input(page_id="1").page_id
@@ -92,23 +93,17 @@ class EditPage:
 
     @auth.restrict("admin", "editor")
     def GET(self, page_id):
-        page = db.select("pages", locals(),
-                         where="id=$page_id AND NOT is_deleted")[0]
-        page.template = db.select(
-            "blocks",
-            page,
-            what="template",
-            where="page_id=$id AND block_id IS NULL",
-        )[0].template
+        page = get_page_by_id(page_id)
+        page.template = get_page_block_by_page_id(page_id).template
         page_form = pageForm()
         page_form.fill(page)
         if page_id != "1":
-            pages = list(db.select(
+            pages = db.select(
                 "pages",
                 locals(),
                 where="NOT id = $page_id AND NOT is_deleted",
                 order="level, id",
-            ))
+            ).list()
             page_form.page_id.args = dropdown_pages(pages[0], pages)
             page_form.slug.item_pre = (
                 '<span id="page_path">%s</span>' %
@@ -146,8 +141,7 @@ class EditPageCode:
 
     @auth.restrict("admin", "editor")
     def GET(self, page_id):
-        page = db.select("pages", locals(),
-                         where="id=$page_id AND NOT is_deleted")[0]
+        page = get_page_by_id(page_id)
         page_code_form = pageCodeForm()
         page_code_form.fill(page)
         return render.pages.edit_code(page_code_form, page)
@@ -171,14 +165,8 @@ class PageTree:
 
     @auth.restrict("admin", "editor")
     def GET(self, page_id):
-        page = db.select("pages", locals(),
-                         where="id=$page_id AND NOT is_deleted")[0]
-        blocks = list(db.select(
-            "blocks",
-            page,
-            where="page_id IS NULL OR page_id=$id AND NOT is_deleted",
-            order="container, position",
-        ))
+        page = get_page_by_id(page_id)
+        blocks = get_blocks_by_page_id(page_id)
         return render.pages.tree(page, blocks)
 
 
@@ -186,8 +174,7 @@ class PageInfo:
 
     @auth.restrict("admin", "editor")
     def GET(self, page_id):
-        page = db.select("pages", locals(),
-                         where="id=$page_id AND NOT is_deleted")[0]
+        page = get_page_by_id(page_id)
         web.header("Content-Type", "application/json")
         return json.dumps(dict(page), default=dthandler)
 
@@ -206,8 +193,7 @@ class ToPage:
 
     def GET(self, page_id):
         try:
-            page = db.select("pages", locals(),
-                             where="id=$page_id AND NOT is_deleted")[0]
+            page = get_page_by_id(page_id)
             if not page.is_published and not auth.get_user():
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             else:

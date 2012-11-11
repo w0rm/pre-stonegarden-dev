@@ -34,7 +34,7 @@ def get_blocks_by_page_id(page_id):
         locals(),
         where="(page_id IS NULL OR page_id=$page_id) "
         "AND NOT is_deleted",
-        order="position",
+        order="container, position",
     ).list()
 
 
