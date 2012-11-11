@@ -77,6 +77,8 @@ class Block:
             where="id = $id AND NOT is_deleted",
             vars=block,
             is_deleted=1)
+        # TODO: extract this into models/blocks.py
+        # this code shifts positions up
         if block.block_id:
             db.update(
                 "blocks",
@@ -361,6 +363,7 @@ class MoveBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
+        # TODO: Split this up onto CUT and COPY
         d = web.input(duplicate=False, page_id=None)
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
@@ -384,21 +387,17 @@ class PasteBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self):
-        # TODO for nested block update children recursively
+        # TODO: for nested block update children recursively
+        # TODO: Split this up onto MOVE and DUPLICATE?
         d = web.input(page_id=None, is_template=False)
         block_form = blockPasteForm(d)
         saved_buffer = web.ctx.session.pop("buffer", None)
         if block_form.valid and saved_buffer is not None:
             block = block_form.d
+
+            # TODO: set page block from JS, not here
             if not block.block_id and not d.is_template:
-                page_block = db.select(
-                    "blocks",
-                    d,
-                    what="id",
-                    where="page_id = $page_id AND block_id IS NULL "
-                          "AND NOT is_deleted",
-                    limit=1,
-                )[0]
+                page_block = get_page_block_by_page_id(d.page_id)
                 block.block_id = page_block.id
 
             remembered_block = saved_buffer.block
@@ -446,6 +445,8 @@ class PasteBlock:
                 # Shift all positions for the blocks
                 # after the block that we move
                 if not same_container:
+                    # TODO: extract this into models/blocks.py
+                    # this code shifts positions up
                     db.update(
                         "blocks",
                         where="block_id = $block_id AND container = $container"
