@@ -2,7 +2,11 @@ $def with(pages)
 
 $code:
     pages = list(pages)
-    root = next((p for p in pages if p.level == 0 and p.page_id is None), None)
+    root = None
+    for p in pages:
+        if p.level == 0 and p.page_id is None:
+            root = p
+            break
 
 $def render_page(page, pages):
     <a data-id="$page.id" href="$page.path" class="page-link">$page.name</a>

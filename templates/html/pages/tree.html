@@ -2,7 +2,11 @@ $def with(page, blocks)
 
 $code:
     blocks = list(blocks)
-    root = next((b for b in blocks if b.block_id is None and b.page_id == page.id), None)
+    root = None
+    for b in blocks:
+        if b.block_id is None and b.page_id == page.id:
+            root = b
+            break
 
 $var page = page
 
