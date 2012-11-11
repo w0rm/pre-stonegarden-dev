@@ -7,7 +7,7 @@ from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
 from template import render, render_partial, render_block
-from template import link_to, smarty, sanitize
+from template import link_to
 from modules.form import *
 from web import ctx
 from pytils.translit import slugify
@@ -25,8 +25,12 @@ blockForm = web.form.Form(
 
 blockPasteForm = web.form.Form(
     Textbox("block_id"),
-    Textbox("container"),
+    Textbox("container", notnull),
     Textbox("position", notnull),
+    # Validate presence of block in session
+    validators=[web.form.Validator(
+        N_("Buffer is empty."),
+        lambda form: get_block_from_session())]
 )
 
 blockEditForm = web.form.Form(
@@ -71,31 +75,7 @@ class Block:
 
     @auth.restrict("admin", "editor")
     def DELETE(self, block_id):
-        block = get_block_by_id(block_id)
-        db.update(
-            "blocks",
-            where="id = $id AND NOT is_deleted",
-            vars=block,
-            is_deleted=1)
-        # TODO: extract this into models/blocks.py
-        # this code shifts positions up
-        if block.block_id:
-            db.update(
-                "blocks",
-                where="block_id = $block_id AND container = $container "
-                      "AND position > $position AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position-1"),
-            )
-        else:
-            db.update(
-                "blocks",
-                where="container = $container AND position > $position "
-                      "AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position-1"),
-            )
-
+        delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")
         return '{"status":1}'
 
@@ -129,60 +109,16 @@ class Blocks:
         load_navigation(page)
         page_blocks = get_blocks_by_page_id(page.id)
         container_blocks = get_blocks_by_conainer(d.container, d.block_id)
-        res = u""
-        for b in container_blocks:
-            res += unicode(render_partial.ui.block(b, page_blocks, page))
-        return res
+        return u"".join(unicode(render_partial.ui.block(b, page_blocks, page))
+                        for b in container_blocks)
 
     @auth.restrict("admin", "editor")
     def POST(self):
-        d = web.input(page_id=None, is_template=False)
-        block_form = blockForm(d)
-
-        if block_form.valid:
-            block = block_form.d
-
-            if not block.block_id and not d.is_template:
-                page_block = get_page_block_by_page_id(d.page_id)
-                block.block_id = page_block.id
-
-            if block.block_id:
-                parent = get_block_by_id(block.block_id)
-                if parent.blocks:
-                    parent_blocks = parent.blocks + "," + str(parent.id)
-                else:
-                    parent_blocks = str(parent.id)
-                block.update(
-                    page_id=parent.page_id,
-                    blocks=parent_blocks,
-                    level=parent.level + 1,
-                )
-                db.update(
-                    "blocks",
-                    where="block_id = $block_id AND container = $container "
-                          "AND position >= $position AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-            else:
-                block.level = 0
-                db.update(
-                    "blocks",
-                    where="container = $container AND position >= "
-                          "$position AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-
-            block.id = db.insert(
-                "blocks",
-                created_at=datetime.datetime.now(),
-                content_cached=smarty(sanitize(block.content)),
-                is_published=True,
-                **block)
-
+        d = web.input(is_template=False, page_id=None)
+        block_form = blockForm()
+        if block_form.validates():
+            block = create_block(block_form.d, d.is_template, d.page_id)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
-
         return "NOT OK"
 
 
@@ -359,110 +295,44 @@ class UnwrapBlock:
         ))
 
 
-class MoveBlock:
+class CopyBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
-        # TODO: Split this up onto CUT and COPY
-        d = web.input(duplicate=False, page_id=None)
-        page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
-        web.ctx.session.buffer = web.storage(
-            block=block,
-            duplicate=d.duplicate,
-        )
-        if not d.duplicate:
-            db.update(
-                "blocks",
-                where="id = $block_id",
-                vars=locals(),
-                updated_at=datetime.datetime.now(),
-                is_published=False,
-            )
-        # Return cut/copied block
-        raise web.seeother(link_to("blocks", block, page_id=d.page_id))
+        save_block_in_session(block)
+        web.header("Content-Type", "application/json")
+        return '{"status":1}'
+
+
+class CutBlock:
+
+    @auth.restrict("admin", "editor")
+    def POST(self, block_id):
+        print "DELETE"
+        block = delete_block_by_id(block_id)
+        save_block_in_session(block)
+        web.header("Content-Type", "application/json")
+        return '{"status":1}'
 
 
 class PasteBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self):
-        # TODO: for nested block update children recursively
-        # TODO: Split this up onto MOVE and DUPLICATE?
+
         d = web.input(page_id=None, is_template=False)
-        block_form = blockPasteForm(d)
-        saved_buffer = web.ctx.session.pop("buffer", None)
-        if block_form.valid and saved_buffer is not None:
-            block = block_form.d
+        block_form = blockPasteForm()
 
-            # TODO: set page block from JS, not here
-            if not block.block_id and not d.is_template:
-                page_block = get_page_block_by_page_id(d.page_id)
-                block.block_id = page_block.id
+        if block_form.validates():
 
-            remembered_block = saved_buffer.block
-            same_container = (remembered_block.container == block.container
-                              and remembered_block.block_id == block.block_id)
+            # Retreive block from session
+            saved_block = get_block_from_session()
 
-            if block.block_id:
-                parent = get_block_by_id(block.block_id)
-                if parent.blocks:
-                    parent_blocks = parent.blocks + "," + str(parent.id)
-                else:
-                    parent_blocks = str(parent.id)
+            # Update block with form data
+            saved_block.update(block_form.d)
 
-                block.update(
-                    page_id=parent.page_id,
-                    blocks=parent_blocks,
-                    level=parent.level + 1,
-                )
-                db.update(
-                    "blocks",
-                    where="block_id = $block_id AND container = $container "
-                          "AND position >= $position AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-            else:
-                block.level = 0
-                db.update(
-                    "blocks",
-                    where="container = $container AND position >= $position "
-                          "AND NOT is_deleted",
-                    vars=block,
-                    position=web.SQLLiteral("position+1"),
-                )
-            remembered_block.update(page_id=None, is_deleted=0)
-            if saved_buffer.duplicate:
-                # Copy block
-                remembered_block.update(
-                    created_at=datetime.datetime.now(),
-                    updated_at=None,
-                    **block)
-                remembered_block.pop("id")
-                remembered_block.id = db.insert("blocks", **remembered_block)
-            else:
-                # Shift all positions for the blocks
-                # after the block that we move
-                if not same_container:
-                    # TODO: extract this into models/blocks.py
-                    # this code shifts positions up
-                    db.update(
-                        "blocks",
-                        where="block_id = $block_id AND container = $container"
-                              " AND position >= $position AND NOT is_deleted",
-                        vars=remembered_block,
-                        position=web.SQLLiteral("position-1"),
-                    )
-                remembered_block.update(
-                    updated_at=datetime.datetime.now(),
-                    **block)
-                db.update(
-                    "blocks",
-                    where="id = $id",
-                    vars=remembered_block,
-                    **remembered_block)
-            # Return moved block or newly created copied block
-            raise web.seeother(link_to("blocks", remembered_block,
-                                       page_id=d.page_id))
+            block = create_block(saved_block, d.is_template, d.page_id)
+            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
+
         return "NOT OK"

@@ -67,22 +67,31 @@ define ["jquery", "admin"], ($) ->
       , (response) =>
         inserter.next(".placeholder").remove() # remove placeholder
         inserter.after response.html # paste data
-        @remove() # remove paste trigger
-        $(".block.is_cut").each ->
-          # remove cutted block
-          container = $(this).parent(".container")
-          $(this).remove()
-          container.append placeholderHTML if container.children().not(".ui-insert").length is 0
+        # @remove() keep paste trigger
 
-    # Binds to the .block div that has to be moved/copied
-    move_block: (duplicate) ->
-      $.post "/a/blocks/#{@data("id")}/move",
-        duplicate: duplicate
+    # Binds to the .block div that has to be copied
+    copy_block: (duplicate) ->
+      $.post "/a/blocks/#{@data("id")}/copy",
         page_id: page_id
       , (response) =>
+        if insert.find(".js-paste-block").length is 0
+          insert.children(".ui-insert-menu").prepend """
+          <a class="ui-insert-default
+                    js-paste-block" href="#">#{t_("Paste")}
+          """
+
+    # Binds to the .block div that has to be cut
+    cut_block: (duplicate) ->
+      $.post "/a/blocks/#{@data("id")}/cut",
+        page_id: page_id
+      , (response) =>
+        # TODO: this is common with delete_block ajax callback
+        container = @parent(".container")
         contextmenu_button.detach()
-        @replaceWith response.html
-        @addClass "is_cut" unless duplicate
+        @remove()
+        if container.children().not(".ui-insert").length is 0
+          container.append placeholderHTML
+        # END TODO
         if insert.find(".js-paste-block").length is 0
           insert.children(".ui-insert-menu").prepend $("<a class=\"ui-insert-default js-paste-block\" href=\"#\"/>").text(t_("Paste"))
 
@@ -196,11 +205,11 @@ define ["jquery", "admin"], ($) ->
 
     # Block context menu items binds to the .block div that has to be deleted
     context_items: ->
-      block = this
-      container = block.parent(".container")
+      container = @parent(".container")
+      parent_block = container.closest(".block")
       items = []
 
-      if container.hasClass("has_columns") or container.closest(".block").length > 0 and container.closest(".block").data("template").substr(0, 4) is "cols"
+      if container.hasClass("has_columns") or parent_block.length > 0 and parent_block.data("template").substr(0, 4) is "cols"
         items.push
           text: t_("Columns") + "…"
           click: -> block.call_block "edit_columns"
@@ -210,19 +219,20 @@ define ["jquery", "admin"], ($) ->
         text: t_("Properties") + "…"
         click: -> block.call_block "edit_properties"
 
-      if container.closest(".block").length > 0 and container.closest(".block").data("template").substr(0, 4) is "cols"
+      if parent_block.length > 0 and parent_block.data("template").substr(0, 4) is "cols"
         items.push
           text: t_("Container properties") + "…"
-          click: -> container.closest(".block").call_block "edit_properties"
+          click: -> parent_block.call_block "edit_properties"
 
       items.push separator: true
-      items.push
-        text: t_("Copy")
-        click: -> block.call_block "move_block", true
 
       items.push
         text: t_("Cut")
-        click: -> block.call_block "move_block"
+        click: => @call_block "cut_block"
+
+      items.push
+        text: t_("Copy")
+        click: => @call_block "copy_block"
 
       items.push separator: true
       items.push

@@ -33,7 +33,8 @@ urls=(
     "/a/blocks/(\d+)/edit_settings", "controllers.blocks.EditBlockSettings",
     "/a/blocks/(\d+)/wrap", "controllers.blocks.WrapBlock",
     "/a/blocks/(\d+)/unwrap", "controllers.blocks.UnwrapBlock",
-    "/a/blocks/(\d+)/move", "controllers.blocks.MoveBlock",
+    "/a/blocks/(\d+)/copy", "controllers.blocks.CopyBlock",
+    "/a/blocks/(\d+)/cut", "controllers.blocks.CutBlock",
     "/a/blocks/paste", "controllers.blocks.PasteBlock",
 
     # Pages

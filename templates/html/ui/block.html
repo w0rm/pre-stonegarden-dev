@@ -1,12 +1,8 @@
 $def with(b, blocks, page)
-$code:
-    buffer = ctx.session.get("buffer", None)
-    if buffer is not None and b.id == buffer.block.id and not buffer.duplicate:
-        is_cut = "is_cut"
-    else:
-        is_cut = ""
 $if auth.get_user():
-    <div class="block $b.template $b.css_class ${b.is_published or "is_hidden"} $is_cut" data-id="$b.id" data-template="$b.template" data-position="$b.position" >
+    <div class="block $b.template $b.css_class ${not b.is_published and "is_hidden" or ""}"
+         data-id="$b.id" data-template="$b.template"
+         data-position="$b.position" >
         $:render_block(b.template)(b, blocks, page)
     </div>
 $elif b.is_published:
