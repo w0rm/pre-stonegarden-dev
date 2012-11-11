@@ -3,17 +3,15 @@
 import web
 import os
 import datetime
-import json
 from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
-from modules.utils import dthandler
 from template import render, render_partial, render_block
 from template import link_to, smarty, sanitize
 from modules.form import *
 from web import ctx
 from pytils.translit import slugify
-from models.pages import load_navigation
+from models.pages import load_navigation, get_page_by_id
 from models.blocks import *
 
 blockForm = web.form.Form(
@@ -49,29 +47,13 @@ blockSettingsForm = web.form.Form(
 class Block:
 
     @auth.restrict("admin", "editor")
-    def GET(self, block_id, format):
-        block = get_block_by_id(block_id)
-        if format == ".json":
-            web.header("Content-Type", "application/json")
-            return json.dumps(block, default=dthandler)
-        else:
-            # page_id should be set
-            page_id = web.input(page_id=None).page_id
-            page = db.select("pages", locals(),
-                             where="id = $page_id AND NOT is_deleted")[0]
-            load_navigation(page)
-            blocks = db.select(
-                "blocks",
-                locals(),
-                where="(page_id IS NULL OR page_id=$page_id) "
-                      "AND NOT is_deleted",
-                order="position",
-            ).list()
-            return unicode(render_partial.ui.block(block, blocks, page))
+    def GET(self, block_id):
+        page_id = web.input(page_id=None).page_id
+        web.header("Content-Type", "application/json")
+        return block_to_json(block_id, page_id)
 
     @auth.restrict("admin", "editor")
-    def PUT(self, block_id, format):
-        # page_id should be set
+    def PUT(self, block_id):
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         block_form = blockEditForm(web.input())
@@ -83,12 +65,12 @@ class Block:
                 content_cached=smarty(sanitize(block_form.d.content)),
                 updated_at=datetime.datetime.now(),
                 **block_form.d)
-            raise web.seeother(link_to(
-                "blocks", block_id=block_id, page_id=page_id))
+            raise web.seeother(link_to("blocks", block, page_id=page_id))
+
         return "NOT OK"
 
     @auth.restrict("admin", "editor")
-    def DELETE(self, block_id, format):
+    def DELETE(self, block_id):
         block = get_block_by_id(block_id)
         db.update(
             "blocks",
@@ -112,58 +94,46 @@ class Block:
                 position=web.SQLLiteral("position-1"),
             )
 
-        if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-            web.header("Content-Type", "application/json")
-            return json.dumps(dict(status=1))
-        else:
-            raise web.seeother(web.ctx.env.get('HTTP_REFERER', '/'))
+        web.header("Content-Type", "application/json")
+        return '{"status":1}'
+
+
+class EditBlockSettings:
+
+    @auth.restrict("admin", "editor")
+    def POST(self, block_id):
+        page_id = web.input(page_id=None).page_id
+        block = get_block_by_id(block_id)
+        block_form = blockSettingsForm(web.input())
+        if block_form.valid:
+            db.update(
+                "blocks",
+                where="$block_id = id",
+                vars=locals(),
+                updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+                **block_form.d)
+            raise web.seeother(link_to("blocks", block, page_id=page_id))
+        return "NOT OK"
 
 
 class Blocks:
 
     @auth.restrict("admin", "editor")
     def GET(self):
+        """Returns rendered blocks from specific container"""
+        # TODO: Perhaps avoid this or replace with proper json output
         d = web.input(page_id=None, block_id=None, container=None)
-        page = db.select(
-            "pages",
-            d,
-            where="id = $page_id AND NOT is_deleted"
-        )[0]
+        page = get_page_by_id(d.page_id)
         load_navigation(page)
-        page_blocks = db.select(
-            "blocks",
-            d,
-            where="(page_id IS NULL OR page_id=$page_id) AND NOT is_deleted",
-            order="position",
-        ).list()
-        if d.block_id:
-            block = get_block_by_id(d.block_id)
-            if d.container:
-                blocks = db.select(
-                    "blocks",
-                    d,
-                    where="container = $container AND block_id = "
-                          "$block_id AND NOT is_deleted",
-                    order="position ASC",
-                ).list()
-            else:
-                blocks = [block]
-        else:
-            blocks = db.select(
-                "blocks",
-                d,
-                where="container = $container AND block_id is NULL "
-                      "AND NOT is_deleted",
-                order="position ASC",
-            ).list()
+        page_blocks = get_blocks_by_page_id(page.id)
+        container_blocks = get_blocks_by_conainer(d.container, d.block_id)
         res = u""
-        for b in blocks:
+        for b in container_blocks:
             res += unicode(render_partial.ui.block(b, page_blocks, page))
         return res
 
     @auth.restrict("admin", "editor")
     def POST(self):
-        # page_id should be set
         d = web.input(page_id=None, is_template=False)
         block_form = blockForm(d)
 
@@ -171,14 +141,7 @@ class Blocks:
             block = block_form.d
 
             if not block.block_id and not d.is_template:
-                page_block = db.select(
-                    "blocks",
-                    d,
-                    what="id",
-                    where="page_id = $page_id AND block_id IS "
-                          "NULL AND NOT is_deleted",
-                    limit=1,
-                )[0]
+                page_block = get_page_block_by_page_id(d.page_id)
                 block.block_id = page_block.id
 
             if block.block_id:
@@ -209,15 +172,14 @@ class Blocks:
                     position=web.SQLLiteral("position+1"),
                 )
 
-            block_id = db.insert(
+            block.id = db.insert(
                 "blocks",
                 created_at=datetime.datetime.now(),
                 content_cached=smarty(sanitize(block.content)),
                 is_published=True,
                 **block)
 
-            raise web.seeother(link_to("blocks", block_id=block_id,
-                                       page_id=d.page_id))
+            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
 
         return "NOT OK"
 
@@ -226,7 +188,6 @@ class EditBlockTemplate:
 
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
-        # page_id should be set
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         block_form = blockTemplateForm(web.input())
@@ -285,40 +246,9 @@ class EditBlockTemplate:
                         position=block.position + 1 + n,
                     )
                     n += 1
-            # Return all blocks from the container of our block
-            if block.block_id:
-                raise web.seeother(link_to(
-                    "blocks",
-                    block_id=block.block_id,
-                    container=block.container,
-                    page_id=page_id,
-                ))
-            else:
-                raise web.seeother(link_to(
-                    "blocks",
-                    container=block.container,
-                    page_id=page_id,
-                ))
-        return "NOT OK"
+            # Return block with updated template
+            raise web.seeother(link_to("blocks", block, page_id=page_id))
 
-
-class EditBlockSettings:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
-        # page_id should be set
-        page_id = web.input(page_id=None).page_id
-        block = get_block_by_id(block_id)
-        block_form = blockSettingsForm(web.input())
-        if block_form.valid:
-            db.update(
-                "blocks",
-                where="$block_id = id",
-                vars=locals(),
-                updated_at=datetime.datetime.now(),
-                **block_form.d)
-            raise web.seeother(link_to(
-                "blocks", block_id=block_id, page_id=page_id))
         return "NOT OK"
 
 
@@ -326,7 +256,10 @@ class WrapBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
-        # page_id should be set
+        """
+        Creates new block and places current block in it.
+        Then redirects to newly created block.
+        """
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         block_form = blockTemplateForm(web.input())
@@ -358,8 +291,8 @@ class WrapBlock:
                 container="primary",
                 position=1,
             )
-            raise web.seeother(link_to(
-                "blocks", block_id=block_id, page_id=page_id))
+            raise web.seeother(
+                link_to("blocks", dict(id=block_id), page_id=page_id))
         return "NOT OK"
 
 
@@ -367,7 +300,6 @@ class UnwrapBlock:
 
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
-        # page_id should be set
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         children = db.select(
@@ -415,20 +347,14 @@ class UnwrapBlock:
                 position=n + block.position,
             )
             n += 1
-        # return container contents
-        if block.block_id:
-            raise web.seeother(link_to(
-                "blocks",
-                block_id=block.block_id,
-                container=block.container,
-                page_id=page_id,
-            ))  # block belongs to another block
-        else:
-            raise web.seeother(link_to(
-                "blocks",
-                container=block.container,
-                page_id=page_id,
-            ))  # block belongs to template
+
+        # Return container contents
+        raise web.seeother(link_to(
+            "blocks",
+            block_id=block.block_id,  # Isn't set if is None
+            container=block.container,
+            page_id=page_id,
+        ))
 
 
 class MoveBlock:
@@ -436,7 +362,6 @@ class MoveBlock:
     @auth.restrict("admin", "editor")
     def POST(self, block_id):
         d = web.input(duplicate=False, page_id=None)
-        # page_id should be set
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         web.ctx.session.buffer = web.storage(
@@ -451,8 +376,8 @@ class MoveBlock:
                 updated_at=datetime.datetime.now(),
                 is_published=False,
             )
-        raise web.seeother(link_to(
-            "blocks", block_id=block_id, page_id=d.page_id))
+        # Return cut/copied block
+        raise web.seeother(link_to("blocks", block, page_id=d.page_id))
 
 
 class PasteBlock:
@@ -460,7 +385,6 @@ class PasteBlock:
     @auth.restrict("admin", "editor")
     def POST(self):
         # TODO for nested block update children recursively
-        # page_id should be set
         d = web.input(page_id=None, is_template=False)
         block_form = blockPasteForm(d)
         saved_buffer = web.ctx.session.pop("buffer", None)
@@ -509,11 +433,9 @@ class PasteBlock:
                     vars=block,
                     position=web.SQLLiteral("position+1"),
                 )
-            remembered_block.update(
-                page_id=None,
-                is_deleted=0,
-            )
+            remembered_block.update(page_id=None, is_deleted=0)
             if saved_buffer.duplicate:
+                # Copy block
                 remembered_block.update(
                     created_at=datetime.datetime.now(),
                     updated_at=None,
@@ -539,6 +461,7 @@ class PasteBlock:
                     where="id = $id",
                     vars=remembered_block,
                     **remembered_block)
-            raise web.seeother(link_to(
-                "blocks", block_id=remembered_block.id, page_id=d.page_id))
+            # Return moved block or newly created copied block
+            raise web.seeother(link_to("blocks", remembered_block,
+                                       page_id=d.page_id))
         return "NOT OK"

@@ -13,9 +13,9 @@ define ["jquery", "admin"], ($) ->
         template: @data("template")
         is_template: container.hasClass("is_template") or `undefined`
         position: inserter.siblings(".block").index(inserter.prev(".block")) + 2
-      , (data) ->
+      , (response) ->
         container.children(".placeholder").remove()
-        inserter.after data
+        inserter.after response.html
 
     # Binds to the .fixed-block div that has edit controls in it
     create_block: ->
@@ -31,29 +31,29 @@ define ["jquery", "admin"], ($) ->
       $.post "/a/blocks/#{@data("id")}/edit_template",
         template: template
         page_id: page_id
-      , (data) =>
+      , (response) =>
         contextmenu_button.detach()
         insert.detach()
-        @parent(".container").html data
+        @replaceWith response.html
 
     # Binds to the .block div that columns have to be unwrapped
     unwrap_block: ->
       $.post "/a/blocks/#{@data("id")}/unwrap",
         page_id: page_id
-      , (data) =>
+      , (html) =>
         contextmenu_button.detach()
         insert.detach()
-        @parent(".container").html data
+        @parent(".container").html html
 
     # Binds to the .block div that has to be wrapped
     wrap_block: (template) ->
       $.post "/a/blocks/#{@data("id")}/wrap",
         template: template
         page_id: page_id
-      , (data) =>
+      , (response) =>
         insert.detach()
         contextmenu_button.detach()
-        @replaceWith data
+        @replaceWith response.html
 
     # Binds to ui that has triggered paste of this block, inserter is element after which block is pasted
     paste_block: (inserter) ->
@@ -64,9 +64,9 @@ define ["jquery", "admin"], ($) ->
         container: container.data("container")
         is_template: container.hasClass("is_template") or `undefined`
         position: inserter.siblings(".block").index(inserter.prev(".block")) + 2
-      , (data) =>
+      , (response) =>
         inserter.next(".placeholder").remove() # remove placeholder
-        inserter.after data # paste data
+        inserter.after response.html # paste data
         @remove() # remove paste trigger
         $(".block.is_cut").each ->
           # remove cutted block
@@ -79,9 +79,9 @@ define ["jquery", "admin"], ($) ->
       $.post "/a/blocks/#{@data("id")}/move",
         duplicate: duplicate
         page_id: page_id
-      , (data) =>
+      , (response) =>
         contextmenu_button.detach()
-        @replaceWith data
+        @replaceWith response.html
         @addClass "is_cut" unless duplicate
         if insert.find(".js-paste-block").length is 0
           insert.children(".ui-insert-menu").prepend $("<a class=\"ui-insert-default js-paste-block\" href=\"#\"/>").text(t_("Paste"))
@@ -91,27 +91,38 @@ define ["jquery", "admin"], ($) ->
       $.ajax
         url: "/a/blocks/#{@data("id")}",
         type: "DELETE",
-        success: (data) =>
+        success: (response) =>
           container = @parent(".container")
           contextmenu_button.detach()
           @remove()
-          container.append placeholderHTML if container.children().not(".ui-insert").length is 0
+          if container.children().not(".ui-insert").length is 0
+            container.append placeholderHTML
 
-    # Binds to the .block div that columns have to be changed
+    # Binds to the .block div that parent's columns have to be changed
     edit_columns: ->
-      block = this
-      container = block.parent(".container")
+      container = @parent ".container"
+      parent_block = container.closest(".block")
+
       options = $("<div/>")
       dialog = $("<div/>").attr("title", t_("Columns"))
-      has_columns = container.hasClass("has_columns")
-      in_columns = not has_columns and container.closest(".block").length > 0 and container.closest(".block").data("template").substr(0, 4) is "cols"
-      options.append $("<p/>").append($("<label class=\"after\"/>").append((if has_columns and not in_columns then $("<input type=\"radio\" name=\"template\" checked=\"checked\" />") else $("<input type=\"radio\" name=\"template\"/>")), $("<span class=\"ui-icon ui-icon-edzo-t-cols_100\"/>").css(
-        display: "inline-block"
-        "vertical-align": "text-bottom"
-      ), document.createTextNode(t_("No columns"))))
+      container_allows_columns = container.hasClass "has_columns"
+
+      in_columns = parent_block.data("template")?.substr(0, 4) is "cols"
+
+      options.append $("<p/>").append(
+        $("<label class=\"after\"/>").append(
+          (if container_allows_columns and not in_columns then $("<input type=\"radio\" name=\"template\" checked=\"checked\" />") else $("<input type=\"radio\" name=\"template\"/>")),
+          $("<span class=\"ui-icon ui-icon-edzo-t-cols_100\"/>").css(
+            display: "inline-block"
+            "vertical-align": "text-bottom"
+          ),
+          document.createTextNode(t_("No columns"))
+        )
+      )
+
       $.each config.container_blocks, (k, v) ->
         input = $("<input type=\"radio\" name=\"template\"/>").data("template", v)
-        input.attr "checked", true  if in_columns and container.closest(".block").data("template") is v
+        input.attr "checked", true  if in_columns and parent_block.data("template") is v
         options.append $("<p/>").append($("<label class=\"after\"/>").append(input, $("<span class=\"ui-icon\"/>").addClass("ui-icon-edzo-t-" + v).css(
           display: "inline-block"
           "vertical-align": "text-bottom"
@@ -120,47 +131,66 @@ define ["jquery", "admin"], ($) ->
       dialog.append(options).appendTo("body").dialog
         buttons: [
           text: t_("Apply")
-          click: ->
+          click: =>
             new_template = options.find("input:checked").data("template")
-            if has_columns
-              # We create columns
-              block.call_block "wrap_block", new_template  if new_template
-            else if in_columns
+            if in_columns
+              # Change parent block
               if new_template
-                container.closest(".block").call_block "update_template", new_template
+                parent_block.call_block "update_template", new_template
               else
-                container.closest(".block").call_block "unwrap_block"
-            $(this).dialog "close"
+                parent_block.call_block "unwrap_block"
+            else if container_allows_columns
+              # Wrap in newly created columns block
+              if new_template
+                @call_block "wrap_block", new_template
+            dialog.dialog "close"
         ,
           text: t_("Cancel")
-          click: ->
-            $(this).dialog "close"
+          click: => dialog.dialog "close"
         ]
 
     # Binds to the .block div that columns have to be changed
     edit_properties: ->
-      block = this
-      container = block.parent(".container")
+      container = @parent(".container")
       dialog = $("<div/>").attr("title", t_("Properties"))
-      $.get "/a/blocks/" + block.data("id") + ".json", (data) ->
-        dialog.append($("<div class=\"small-padding-block\">").append($("<p/>").append($("<label for=\"css_class\" />").text(t_("CSS class") + " "), $("<input id=\"css_class\" type=\"text\" name=\"css_class\" class=\"fullwidth\" />").val(data.css_class)), $("<p/>").append($("<label class=\"after\"/>").text(t_("Show on site")).prepend((if data.is_published is 1 then $("<input type=\"checkbox\" name=\"is_published\" checked=\"checked\" />") else $("<input type=\"checkbox\" name=\"is_published\" />")))))).appendTo("body").dialog(
+      $.get "/a/blocks/#{@data("id")}", (data) =>
+        block = data.block
+        dialog_html =
+          """
+          <div class="small-padding-block">
+            <p>
+              <label>
+                #{t_("CSS class")}
+              </label>
+              <input type="text" name="css_class" class="fullwidth"
+                     value="#{block.css_class || ""}" >
+            </p>
+            <p>
+              <label class="after">
+                <input type="checkbox" name="is_published"
+                       #{if block.is_published is 1 then "checked" else ""} >
+                #{t_("Show on site")}
+              </label>
+            </p>
+          </div>
+          """
+        dialog.html(dialog_html).appendTo("body").dialog(
           buttons: [
             text: t_("Apply")
-            click: ->
-              css_class = $.trim(dialog.find("input[name=css_class]").val())
-              is_published = dialog.find("input[name=is_published]").attr("checked") or `undefined`
-              $.post "/a/blocks/" + block.data("id") + "/edit_settings",
+            click: =>
+              css_class = $.trim(dialog.find("[name=css_class]").val())
+              is_published = dialog.find("[name=is_published]").attr("checked") or `undefined`
+              $.post "/a/blocks/#{@data("id")}/edit_settings",
                 css_class: css_class
                 is_published: is_published
                 page_id: page_id
-              , (data) ->
-                block.replaceWith data
+              , (response) =>
+                @replaceWith response.html
 
-              $(this).dialog "close"
+              dialog.dialog "close"
           ,
             text: t_("Cancel")
-            click: ->
-              $(this).dialog "close"
+            click: -> dialog.dialog "close"
           ]
         ).dialog("widget").find(".ui-dialog-title").addClass "small-padding-block"
 
