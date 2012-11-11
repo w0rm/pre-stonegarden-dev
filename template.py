@@ -28,9 +28,9 @@ REPLACE_LINKS_RE = re.compile("href=[\"']/to/(?P<page_id>\d+)[\"']")
 def replace_links_match(match):
     page_id = match.group("page_id")
     try:
-        page = db.select("pages", locals(),
+        page = db.select("pages", locals(), what="path",
                          where="id=$page_id AND NOT is_deleted")[0]
-        return 'href="%s"' % page.path
+        return 'href="%(path)s"' % page
     except IndexError:
         return 'href="#"'
 
@@ -100,10 +100,13 @@ def image_url(image_id, filename, extension, sizes, size):
 def link_to(obj_type, obj=None, method=None, **kw):
     link = "/a/" + obj_type
     if obj is not None:
-        link += "/" + str(obj.id)
+        link += "/" + str(obj.get("id"))
     if method:
         link += "/" + method
-    return web.url(link, **kw)
+
+    # Remove none values from kw
+    params = dict((k, v) for k, v in kw.iteritems() if v is not None)
+    return web.url(link, **params)
 
 
 def render_block(name):
