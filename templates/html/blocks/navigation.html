@@ -1,0 +1,9 @@
+$def with(block, blocks, page)
+$if ctx.nav:
+    <nav>
+    $for p in ctx.nav:
+        $if p.id == page.id:
+            <span>$p.name</span>
+        $else:
+            <a href="$p.path">$p.name</a>
+    </nav>

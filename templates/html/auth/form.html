@@ -1,0 +1,41 @@
+$def with (users, user_form, user)
+
+
+$# Navigation
+<div class="ui-toolbar">
+    <div class="ui-toolbar-left">
+        <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
+        <span class="ui-toolbar-separator"></span>
+        <span class="breadcrumbs">
+            $_("Users") →
+            $user.title
+        </span>
+    </div>
+    <div class="ui-toolbar-right">
+        <a class="ui-storage-newpage ui-toolbar-item-text" href="/a/users"><span class="ui-icon ui-icon-edzo-user-add"></span>$_("Create user")</a>
+    </div>
+</div>
+<div class="ui-toolbar-spacer"></div>
+
+
+$# Page
+<div class="admin-page">
+    <div class="admin-left-column-wrapper">
+        <div class="admin-left-column">
+            <div class="wrapper">
+                <div class="padding-block">
+                    <h1>$_("Edit user")</h1>
+                     <form action="$link_to("users", user, "edit")" method="post">
+                         $:user_form.render()
+                         <p><button type="submit">$_("Save")</button></p>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside class="admin-right-column">
+		$:render.ui.users(users)
+    </aside>
+</div>
+
+

@@ -2,36 +2,37 @@ import web
 import json
 from base import db
 from modules.utils import dthandler
-from template import render_block, smarty, sanitize
-from models.pages import load_page_data, get_page_by_id
+from template import render_partial, smarty, sanitize
+from models.pages import load_navigation, get_page_by_id
 
 
 def create_block(block, is_template=False, page_id=None):
     """Creates block from passed dict and returns it."""
 
-    # Set parent_id to page block id
+    # Set block_id to page block id
     # TODO: move it in javascript
-    if not block.get("parent_id") and not is_template:
+    if not block.get("block_id") and not is_template:
         parent = get_page_block_by_page_id(page_id)
-        block.parent_id = parent.id
+        block.block_id = parent.id
 
-    where = "position >= $position AND NOT is_deleted"
+    where = ("container = $container AND position >= $position "
+             "AND NOT is_deleted")
 
-    if block.get("parent_id"):
-        parent = get_block_by_id(block.parent_id)
-        if parent.ids:
-            parent_blocks = parent.ids + "," + str(parent.id)
+    if block.get("block_id"):
+        parent = get_block_by_id(block.block_id)
+        if parent.blocks:
+            parent_blocks = parent.blocks + "," + str(parent.id)
         else:
             parent_blocks = str(parent.id)
         block.update(
             page_id=parent.page_id,
-            ids=parent_blocks,
+            blocks=parent_blocks,
             level=parent.level + 1,
         )
-        where += " AND parent_id = $parent_id"
+        where += " AND block_id = $block_id"
     else:
         block.level = 0
-        where += " AND parent_id IS NULL"
+        where += " AND block_id IS NULL"
 
     # Shift blocks positions to free the place for new block
     db.update(
@@ -57,7 +58,8 @@ def delete_block_by_id(block_id):
     """Deletes block and returns deleted block."""
 
     block = get_block_by_id(block_id)
-    where = "position > $position AND NOT is_deleted"
+    where = ("container = $container AND position > $position "
+             "AND NOT is_deleted")
 
     db.update(
         "blocks",
@@ -66,9 +68,9 @@ def delete_block_by_id(block_id):
         is_deleted=1)
 
     if block.block_id:
-        where += " AND parent_id = $parent_id"
+        where += " AND block_id = $block_id"
     else:
-        where += " AND parent_id IS NULL"
+        where += " AND block_id IS NULL"
 
     # Shift positions of the blocks after deleted block
     db.update(
@@ -111,45 +113,36 @@ def get_page_block_by_page_id(page_id):
     return db.select(
         "blocks",
         locals(),
-        where="page_id = $page_id AND parent_id IS "
+        what="id",
+        where="page_id = $page_id AND block_id IS "
         "NULL AND NOT is_deleted",
         limit=1,
     )[0]
 
 
-def get_blocks(page_id=None):
-    """Returns all page blocks or all template blocks"""
+def get_blocks_by_page_id(page_id):
+    """Returns all page blocks and all template blocks"""
     return db.select(
         "blocks",
         locals(),
-        where="(page_id IS NULL OR page_id = $page_id) AND NOT is_deleted",
-        order="position",
+        where="(page_id IS NULL OR page_id=$page_id) "
+        "AND NOT is_deleted",
+        order="container, position",
     ).list()
 
 
-def build_block_tree(block, blocks):
-    block.blocks = [build_block_tree(b, blocks)
-                    for b in blocks if b.parent_id == block.id]
-    return block
+def get_blocks_by_conainer(container, block_id=None):
+    """Returns all blocks for specic container"""
 
+    where = "container = $container AND NOT is_deleted"
 
-def load_page_blocks(page_id):
-    """Preloads all blocks dict in ctx"""
-    blocks = get_blocks(page_id)
-    web.ctx.page_block = build_block_tree(
-        get_page_block_by_page_id(page_id),
-        blocks
-    )
-    web.ctx.template_blocks = web.storage(
-        (block.name, build_block_tree(block, blocks))
-        for block in blocks
-        if block.parent_id is None and block.page_id is None)
+    if block_id is None:
+        # For root template blocks
+        where += " AND block_id IS NULL"
+    else:
+        where += " AND block_id = $block_id"
 
-
-def get_blocks_by_parent_id(block_id=None):
-    """Returns all blocks for specific parent block"""
-    return db.select("blocks", locals(),
-                     where="parent_id = $block_id AND NOT is_deleted",
+    return db.select("blocks", locals(), where=where,
                      order="position ASC").list()
 
 
@@ -161,12 +154,8 @@ def block_to_json(block_id, page_id=None):
     result = dict(block=block)
     if page_id is not None:
         page = get_page_by_id(page_id)
-        load_page_data(page)
-        blocks = get_blocks()
-        result["html"] = unicode(
-            render_block(
-                build_block_tree(block, blocks)
-            )
-        )
+        load_navigation(page)
+        blocks = get_blocks_by_page_id(page.id)
+        result["html"] = unicode(render_partial.ui.block(block, blocks, page))
 
     return json.dumps(result, default=dthandler)

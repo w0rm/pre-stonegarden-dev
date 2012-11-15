@@ -1,0 +1,11 @@
+$def with(block, blocks, page)
+$if ctx.siblings:
+    <nav>
+        <ul>
+        $for p in ctx.siblings:
+            $if p.id == page.id:
+                <li><span>$p.name</span></li>
+            $else:
+                <li><a href="$p.path">$p.name</a></li>
+        </ul>
+    </nav>

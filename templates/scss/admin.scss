@@ -1,0 +1,128 @@
+@import "config";
+@import "admin/forms";
+@import "admin/typograhpy";
+@import "ui";
+.hide {
+  display: none;
+}
+
+body.storage {
+    overflow: auto;
+}
+body.debug {
+
+    /*
+    *  block numbers
+    */
+    .block[data-position]:before, .ui-document[data-position]:before {
+        content: attr(data-position);
+        position: absolute;
+        margin-left: -15px;
+        margin-top: 10px;
+        background: black;
+        color: white;
+        font: 9px/12px sans-serif;
+        text-align: center;
+        width: 12px;
+        height: 12px;
+        @include border-radius(6px);
+    }
+
+    /*
+    *  Container names
+    */
+    .container[data-container]:before {
+        content: attr(data-container);
+        position:absolute;
+        margin-top: -5px;
+        margin-left: 5px;
+        background: $grey80;
+        color: white;
+        font: 9px/12px sans-serif;
+        text-align: center;
+        height: 12px;
+        padding:0 6px;
+        @include border-radius(6px);
+    }
+
+    .container:hover{
+        @include box-shadow(rgba(88, 88, 88, 0.2) 2px 2px 10px);
+    }
+}
+
+.block, .fixed-block {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    min-height: 32px;
+}
+.container {
+    position: relative;
+    padding: 1px 0;
+    margin: 5px 0;
+}
+.placeholder {
+    @include opacity(.4);
+    padding: 0 20px;
+    background: $bg-green;
+    overflow: hidden;
+    cursor: pointer;
+    strong {
+        font-weight: bold;
+    }
+}
+.is_template .placeholder{ background: $bg-blue; }
+.is_hidden {
+    @include opacity(.5);
+    .block.is_hidden {
+        @include opaque;
+    }
+}
+
+
+.shadow {
+  @include box-shadow( 0 8px 6px -6px rgba(88, 88, 88, 0.6));
+  padding-bottom: 1px;
+}
+
+.highlight {
+  background: #ffffee;
+}
+
+.expose {
+  color: $grey40;
+}
+
+.admin-page {
+
+  @extend %cf;
+
+  padding: 0 20px 20px;
+
+
+  .info {
+    color: $grey60;
+    margin-top: -1.875em;
+  }
+  .wrapper { margin: 10px 20px; }
+  .admin-left-column-wrapper {
+      float: left;
+      width: 100%;
+      margin-left: -260px;
+  }
+  .admin-left-column { margin-left: 260px; }
+  .admin-right-column { float: right; width: 260px; }
+  .admin-left-aside {
+      position: absolute;
+      left: 30px;
+      width: 130px;
+  }
+}
+
+/* Should be moved to ui */
+.sitemap {
+    li { margin-left: 20px; }
+}
+
+
+
+

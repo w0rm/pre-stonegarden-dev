@@ -1,12 +1,12 @@
 $def with (form)
-<div class="row">
-    <div class="eight columns">
-	    <form action="" method="post">
-	        <h1>$_("Password reset")</h1>
-	        $:form.render()
-	        <p><button class="button" type="submit">$_("Save")</button></p>
-	    </form>
-	</div>
+
+$var class = "login"
+<div class="login-form ">
+    <form action="" method="post">
+        <p><strong>$_("Password reset")</strong></p>
+        $:form.render()
+        <p><button type="submit">$_("Save")</button></p>
+    </form>
 </div>
 
 

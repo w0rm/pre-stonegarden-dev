@@ -2,59 +2,146 @@
 import web
 from config import config
 from base import db, auth
-import json
+
 
 if __name__ == "__main__":
-
-    data = web.storage(json.loads(open("data.json", "r").read()))
-
     now = web.db.SQLLiteral("CURRENT_TIMESTAMP")
-
-    user = auth.create_user(
-        web.config.email_from,
-        **data.user
+    user = auth.create_user(web.config.email_from,
+        password="111111",
+        title=u"Adminstrator",
+        role="admin",
+        is_active=True,
     )
-
-    def insert_blocks(block, parent_id=None, page_id=None, level=0, ids=None):
-        blocks = block.pop("blocks", None)
-        block_id = db.insert(
-            "blocks",
-            user_id=user.id,
-            created_at=now,
-            page_id=page_id,
-            level=level,
-            parent_id=parent_id,
-            ids=ids,
-            is_published=True,
-            **block
-        )
-        if ids is None:
-            ids = str(block_id)
-        else:
-            ids += "," + str(block_id)
-        if blocks:
-            for b in blocks:
-                insert_blocks(b, block_id, page_id, level + 1, ids)
-
     # System root folder
-    db.insert(
-        "documents",
+    db.insert("documents",
+        id=1,
+        level=0,
         user_id=user.id,
+        title=u"Storage",
+        filetype="folder",
+        is_navigatable=True,
+        is_published=True,
+        is_system=True,
         created_at=now,
-        **data.documents_root
     )
 
-    for p in data.pages:
-        page_block = p.pop("block")
-        page_id = db.insert(
-            "pages",
-            is_published=False,
-            is_navigatable=True,
-            user_id=user.id,
-            created_at=now,
-            **p
-        )
-        insert_blocks(page_block, page_id=page_id)
-
-    for b in data.template_blocks:
-        insert_blocks(b)
+    # Main page
+    db.insert("pages",
+        id=1,
+        level=0,
+        user_id=user.id,
+        slug="",
+        path="/",
+        title="Index page",
+        name="Index page",
+        is_navigatable=True,
+        is_published=False,
+    )
+    db.insert("blocks",
+        id=1,
+        page_id=1,
+        level=0,
+        user_id=user.id,
+        template="page",
+        is_published=True,
+        created_at=now,
+    )
+    # Global header
+    db.insert("blocks",
+        id=2,
+        page_id=None,
+        container="global_header",
+        level=0,
+        user_id=user.id,
+        position=1,
+        template="cols_33_67",
+        is_published=True,
+        created_at=now,
+    )
+    db.insert("blocks",
+        id=3,
+        block_id=2,
+        blocks="2",
+        level=1,
+        user_id=user.id,
+        position=1,
+        is_published=True,
+        created_at=now,
+        template="richtext",
+        container="secondary1",
+        content=u'<p><a href="/"><strong>Stonegarden</strong></a></p>',
+        content_cached=u'''
+            <p><a href="/"><strong>Stonegarden</strong></a></p>''',
+    )
+    db.insert("blocks",
+        id=4,
+        block_id=2,
+        blocks="2",
+        level=1,
+        user_id=user.id,
+        position=1,
+        is_published=True,
+        created_at=now,
+        template="navigation",
+        container="primary",
+    )
+    db.insert("blocks",
+        id=5,
+        page_id=None,
+        container="global_footer",
+        level=0,
+        user_id=user.id,
+        position=1,
+        template="cols_67_33",
+        is_published=True,
+        created_at=now,
+    )
+    db.insert("blocks",
+        id=6,
+        block_id=5,
+        blocks="5",
+        level=1,
+        user_id=user.id,
+        position=1,
+        is_published=True,
+        created_at=now,
+        template="richtext",
+        container="secondary1",
+        content='<p>© Site Authors</p>',
+        content_cached='<p>© Site Authors</p>',
+    )
+    # Inner page
+    db.insert("pages",
+        id=2,
+        level=1,
+        page_id=1,
+        user_id=user.id,
+        pages="1",
+        slug="docs",
+        path="/docs",
+        title=u"Documentation",
+        name=u"Documentation",
+        is_navigatable=True,
+        is_published=False,
+    )
+    db.insert("blocks",
+        id=7,
+        page_id=2,
+        level=0,
+        user_id=user.id,
+        template="subpage",
+        is_published=True,
+        created_at=now,
+    )
+    db.insert("blocks",
+        id=8,
+        block_id=7,
+        blocks="7",
+        level=1,
+        user_id=user.id,
+        position=1,
+        is_published=True,
+        created_at=now,
+        template="breadcrumbs",
+        container="primary",
+    )

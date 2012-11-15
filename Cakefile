@@ -12,11 +12,11 @@ endsWith = (str, suffix) ->
 
 task 'watch', 'Watches for changed source files and builds them (scss to css, coffee to js)', (options) ->
   runCommand 'compass', 'watch', 'templates/scss'
-  #runCommand 'coffee', '-b', '-o', 'static/js', '-wc', 'templates/coffee'
+  runCommand 'coffee', '-b', '-o', 'static/js', '-wc', 'templates/coffee'
 
 task 'compile', 'Builds source files (scss to css, coffee to js)', (options) ->
   runCommand 'compass', 'compile', 'templates/scss'
-  #runCommand 'coffee', '-b', '-o', 'static/js', '-c', 'templates/coffee'
+  runCommand 'coffee', '-b', '-o', 'static/js', '-c', 'templates/coffee'
 
 task 'i18n:extract', 'Exctracts messages for translation', (options) ->
   runCommand 'python', 'i18n/extract-messages.py'

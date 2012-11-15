@@ -37,7 +37,7 @@ class Users:
     def GET(self):
         users = db.select("users", where="NOT is_deleted", order="id DESC")
         user_form = userForm()
-        return render.users.list(users, user_form)
+        return render.auth.list(users, user_form)
 
 
 class NewUser:
@@ -69,7 +69,7 @@ class EditUser:
         user = db.select("users", locals(), where="id=$user_id")[0]
         user_form = userForm()
         user_form.fill(user)
-        return render.users.form(users, user_form, user)
+        return render.auth.form(users, user_form, user)
 
     @auth.restrict("admin")
     def POST(self, user_id):

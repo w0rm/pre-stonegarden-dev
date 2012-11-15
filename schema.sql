@@ -1,9 +1,9 @@
-DROP TABLE `blocks`;
-DROP TABLE `pages`;
-DROP TABLE `messages`;
-DROP TABLE `sessions`;
-DROP TABLE `documents`;
-DROP TABLE `users`;
+#DROP TABLE `blocks`;
+#DROP TABLE `pages`;
+#DROP TABLE `messages`;
+#DROP TABLE `sessions`;
+#DROP TABLE `documents`;
+#DROP TABLE `users`;
 
 
 
@@ -51,13 +51,11 @@ CREATE TABLE pages (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	path VARCHAR(255),
 	slug VARCHAR(255),
-	parent_id INTEGER,
+	page_id INTEGER,
 	user_id INTEGER,
 	level INTEGER,
-	ids TEXT,
-	type VARCHAR(255),
+	pages TEXT,
 	position INTEGER,
-	size INTEGER,
 	name VARCHAR(255) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	js_code TEXT,
@@ -68,15 +66,13 @@ CREATE TABLE pages (
 	updated_at TIMESTAMP NULL,
 	published_at TIMESTAMP NULL,
 	deleted_at TIMESTAMP NULL,
-	is_system BOOL DEFAULT '0',
 	is_navigatable BOOL DEFAULT '0',
 	is_published BOOL DEFAULT '0',
 	is_deleted BOOL DEFAULT '0',
 	PRIMARY KEY (id),
 	UNIQUE (path),
-	FOREIGN KEY(parent_id) REFERENCES pages (id),
+	FOREIGN KEY(page_id) REFERENCES pages (id),
 	FOREIGN KEY(user_id) REFERENCES users (id),
-	CHECK (is_system IN (0, 1)),
 	CHECK (is_navigatable IN (0, 1)),
 	CHECK (is_published IN (0, 1)),
 	CHECK (is_deleted IN (0, 1))
@@ -87,27 +83,25 @@ CREATE TABLE pages (
 CREATE TABLE blocks (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	page_id INTEGER,
-	parent_id INTEGER,
+	block_id INTEGER,
 	user_id INTEGER,
-	ids TEXT,
+	blocks TEXT,
 	level INTEGER,
-	name VARCHAR(20) NULL,
+	container VARCHAR(255),
 	position INTEGER,
 	template VARCHAR(255),
-	type VARCHAR(255),
-	size INTEGER,
 	content TEXT,
-	content_cached TEXT,
+	params TEXT,
 	css_class TEXT,
+	content_cached TEXT,
 	created_at TIMESTAMP NULL,
 	updated_at TIMESTAMP NULL,
 	published_at TIMESTAMP NULL,
 	is_published BOOL DEFAULT '0',
 	is_deleted BOOL DEFAULT '0',
 	PRIMARY KEY (id),
-	UNIQUE (name),
 	FOREIGN KEY(page_id) REFERENCES pages (id),
-	FOREIGN KEY(parent_id) REFERENCES blocks (id),
+	FOREIGN KEY(block_id) REFERENCES blocks (id),
 	FOREIGN KEY(user_id) REFERENCES users (id),
 	CHECK (is_published IN (0, 1)),
 	CHECK (is_deleted IN (0, 1))
@@ -117,14 +111,14 @@ CREATE TABLE blocks (
 
 CREATE TABLE documents (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-	parent_id INTEGER,
+	document_id INTEGER,
 	user_id INTEGER,
-	ids TEXT,
+	documents TEXT,
 	level INTEGER,
 	position INTEGER,
 	title VARCHAR(512) NOT NULL,
 	content TEXT,
-	type VARCHAR(512) NOT NULL,
+	filetype VARCHAR(512) NOT NULL,
 	filename VARCHAR(512),
 	extension VARCHAR(4),
 	mimetype VARCHAR(512),
@@ -138,7 +132,7 @@ CREATE TABLE documents (
 	is_system BOOL DEFAULT '0',
 	is_deleted BOOL DEFAULT '0',
 	PRIMARY KEY (id),
-	FOREIGN KEY(parent_id) REFERENCES documents (id),
+	FOREIGN KEY(document_id) REFERENCES documents (id),
 	FOREIGN KEY(user_id) REFERENCES users (id),
 	CHECK (is_navigatable IN (0, 1)),
 	CHECK (is_published IN (0, 1)),

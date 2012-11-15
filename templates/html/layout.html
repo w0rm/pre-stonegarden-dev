@@ -18,11 +18,10 @@ $def with (page=None)
 </head>
 <body data-id="$page.get("id", None)" class="$page.get("class", None)" data-lang="$config.default_locale">
     $:flash.render()
-    $:page
-    $if auth.get_user():
-        $:render.ui.menu(page.get("page", None))
-        $#:render.ui.notify()
-        $#:render.ui.insert()
+	$:page
+	$if auth.get_user():
+	    $:render.ui.menu(page.get("page", None))
+	    $:render.ui.notify()
     $else:
         <script src="$asset_url("js/public.js")"></script>
     <script>

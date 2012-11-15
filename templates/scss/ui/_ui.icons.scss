@@ -1,0 +1,246 @@
+/* Icons
+----------------------------------*/
+
+/* states and images */
+
+.ui-icon {
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-image: url("../img/ui-icons_666666.png");
+}
+
+.ui-state-default .ui-icon, .ui-widget-content .ui-icon, .ui-widget-header .ui-icon {
+    background-image: url("../img/ui-icons_666666.png");
+}
+
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon, .ui-state-active .ui-icon {
+    background-image: url("../img/ui-icons_ffffff.png");
+}
+
+.ui-state-highlight .ui-icon, .ui-state-error .ui-icon, .ui-state-error-text .ui-icon {
+    background-image: url("../img/ui-icons_330066.png");
+}
+
+/* positioning */
+.ui-icon-carat-1-n { background-position: 0 0; }
+.ui-icon-carat-1-ne { background-position: -20px 0; }
+.ui-icon-carat-1-e { background-position: -40px 0; }
+.ui-icon-carat-1-se { background-position: -60px 0; }
+.ui-icon-carat-1-s { background-position: -80px 0; }
+.ui-icon-carat-1-sw { background-position: -100px 0; }
+.ui-icon-carat-1-w { background-position: -120px 0; }
+.ui-icon-carat-1-nw { background-position: -140px 0; }
+.ui-icon-carat-2-n-s { background-position: -160px 0; }
+.ui-icon-carat-2-e-w { background-position: -180px 0; }
+.ui-icon-triangle-1-n { background-position: 0 -20px; }
+.ui-icon-triangle-1-ne { background-position: -20px -20px; }
+.ui-icon-triangle-1-e { background-position: -40px -20px; }
+.ui-icon-triangle-1-se { background-position: -60px -20px; }
+.ui-icon-triangle-1-s { background-position: -80px -20px; }
+.ui-icon-triangle-1-sw { background-position: -100px -20px; }
+.ui-icon-triangle-1-w { background-position: -120px -20px; }
+.ui-icon-triangle-1-nw { background-position: -140px -20px; }
+.ui-icon-triangle-2-n-s { background-position: -160px -20px; }
+.ui-icon-triangle-2-e-w { background-position: -180px -20px; }
+.ui-icon-arrow-1-n { background-position: 0 -40px; }
+.ui-icon-arrow-1-ne { background-position: -20px -40px; }
+.ui-icon-arrow-1-e { background-position: -40px -40px; }
+.ui-icon-arrow-1-se { background-position: -60px -40px; }
+.ui-icon-arrow-1-s { background-position: -80px -40px; }
+.ui-icon-arrow-1-sw { background-position: -100px -40px; }
+.ui-icon-arrow-1-w { background-position: -120px -40px; }
+.ui-icon-arrow-1-nw { background-position: -140px -40px; }
+.ui-icon-arrow-2-n-s { background-position: -160px -40px; }
+.ui-icon-arrow-2-ne-sw { background-position: -180px -40px; }
+.ui-icon-arrow-2-e-w { background-position: -200px -40px; }
+.ui-icon-arrow-2-se-nw { background-position: -220px -40px; }
+.ui-icon-arrowstop-1-n { background-position: -240px -40px; }
+.ui-icon-arrowstop-1-e { background-position: -260px -40px; }
+.ui-icon-arrowstop-1-s { background-position: -280px -40px; }
+.ui-icon-arrowstop-1-w { background-position: -300px -40px; }
+.ui-icon-arrowthick-1-n { background-position: 0 -60px; }
+.ui-icon-arrowthick-1-ne { background-position: -20px -60px; }
+.ui-icon-arrowthick-1-e { background-position: -40px -60px; }
+.ui-icon-arrowthick-1-se { background-position: -60px -60px; }
+.ui-icon-arrowthick-1-s { background-position: -80px -60px; }
+.ui-icon-arrowthick-1-sw { background-position: -100px -60px; }
+.ui-icon-arrowthick-1-w { background-position: -120px -60px; }
+.ui-icon-arrowthick-1-nw { background-position: -140px -60px; }
+.ui-icon-arrowthick-2-n-s { background-position: -160px -60px; }
+.ui-icon-arrowthick-2-ne-sw { background-position: -180px -60px; }
+.ui-icon-arrowthick-2-e-w { background-position: -200px -60px; }
+.ui-icon-arrowthick-2-se-nw { background-position: -220px -60px; }
+.ui-icon-arrowthickstop-1-n { background-position: -240px -60px; }
+.ui-icon-arrowthickstop-1-e { background-position: -260px -60px; }
+.ui-icon-arrowthickstop-1-s { background-position: -280px -60px; }
+.ui-icon-arrowthickstop-1-w { background-position: -300px -60px; }
+.ui-icon-arrowreturnthick-1-w { background-position: 0 -80px; }
+.ui-icon-arrowreturnthick-1-n { background-position: -20px -80px; }
+.ui-icon-arrowreturnthick-1-e { background-position: -40px -80px; }
+.ui-icon-arrowreturnthick-1-s { background-position: -60px -80px; }
+.ui-icon-arrowreturn-1-w { background-position: -80px -80px; }
+.ui-icon-arrowreturn-1-n { background-position: -100px -80px; }
+.ui-icon-arrowreturn-1-e { background-position: -120px -80px; }
+.ui-icon-arrowreturn-1-s { background-position: -140px -80px; }
+.ui-icon-arrowrefresh-1-w { background-position: -160px -80px; }
+.ui-icon-arrowrefresh-1-n { background-position: -180px -80px; }
+.ui-icon-arrowrefresh-1-e { background-position: -200px -80px; }
+.ui-icon-arrowrefresh-1-s { background-position: -220px -80px; }
+.ui-icon-arrow-4 { background-position: 0 -100px; }
+.ui-icon-arrow-4-diag { background-position: -20px -100px; }
+.ui-icon-extlink { background-position: -40px -100px; }
+.ui-icon-newwin { background-position: -60px -100px; }
+.ui-icon-refresh { background-position: -80px -100px; }
+.ui-icon-shuffle { background-position: -100px -100px; }
+.ui-icon-transfer-e-w { background-position: -120px -100px; }
+.ui-icon-transferthick-e-w { background-position: -140px -100px; }
+.ui-icon-folder-collapsed { background-position: 0 -120px; }
+.ui-icon-folder-open { background-position: -20px -120px; }
+.ui-icon-document { background-position: -40px -120px; }
+.ui-icon-document-b { background-position: -60px -120px; }
+.ui-icon-note { background-position: -80px -120px; }
+.ui-icon-mail-closed { background-position: -100px -120px; }
+.ui-icon-mail-open { background-position: -120px -120px; }
+.ui-icon-suitcase { background-position: -140px -120px; }
+.ui-icon-comment { background-position: -160px -120px; }
+.ui-icon-person { background-position: -180px -120px; }
+.ui-icon-print { background-position: -200px -120px; }
+.ui-icon-trash { background-position: -220px -120px; }
+.ui-icon-locked { background-position: -240px -120px; }
+.ui-icon-unlocked { background-position: -260px -120px; }
+.ui-icon-bookmark { background-position: -280px -120px; }
+.ui-icon-tag { background-position: -300px -120px; }
+.ui-icon-home { background-position: 0 -140px; }
+.ui-icon-flag { background-position: -20px -140px; }
+.ui-icon-calendar { background-position: -40px -140px; }
+.ui-icon-cart { background-position: -60px -140px; }
+.ui-icon-pencil { background-position: -80px -140px; }
+.ui-icon-clock { background-position: -100px -140px; }
+.ui-icon-disk { background-position: -120px -140px; }
+.ui-icon-calculator { background-position: -140px -140px; }
+.ui-icon-zoomin { background-position: -160px -140px; }
+.ui-icon-zoomout { background-position: -180px -140px; }
+.ui-icon-search { background-position: -200px -140px; }
+.ui-icon-wrench { background-position: -220px -140px; }
+.ui-icon-gear { background-position: -240px -140px; }
+.ui-icon-heart { background-position: -260px -140px; }
+.ui-icon-star { background-position: -280px -140px; }
+.ui-icon-link { background-position: -300px -140px; }
+.ui-icon-cancel { background-position: 0 -160px; }
+.ui-icon-plus { background-position: -20px -160px; }
+.ui-icon-plusthick { background-position: -40px -160px; }
+.ui-icon-minus { background-position: -60px -160px; }
+.ui-icon-minusthick { background-position: -80px -160px; }
+.ui-icon-close { background-position: -100px -160px; }
+.ui-icon-closethick { background-position: -120px -160px; }
+.ui-icon-key { background-position: -140px -160px; }
+.ui-icon-lightbulb { background-position: -160px -160px; }
+.ui-icon-scissors { background-position: -180px -160px; }
+.ui-icon-clipboard { background-position: -200px -160px; }
+.ui-icon-copy { background-position: -220px -160px; }
+.ui-icon-contact { background-position: -240px -160px; }
+.ui-icon-image { background-position: -260px -160px; }
+.ui-icon-video { background-position: -280px -160px; }
+.ui-icon-script { background-position: -300px -160px; }
+.ui-icon-alert { background-position: 0 -180px; }
+.ui-icon-info { background-position: -20px -180px; }
+.ui-icon-notice { background-position: -40px -180px; }
+.ui-icon-help { background-position: -60px -180px; }
+.ui-icon-check { background-position: -80px -180px; }
+.ui-icon-bullet { background-position: -100px -180px; }
+.ui-icon-radio-off { background-position: -120px -180px; }
+.ui-icon-radio-on { background-position: -140px -180px; }
+.ui-icon-pin-w { background-position: -160px -180px; }
+.ui-icon-pin-s { background-position: -180px -180px; }
+.ui-icon-play { background-position: 0 -200px; }
+.ui-icon-pause { background-position: -20px -200px; }
+.ui-icon-seek-next { background-position: -40px -200px; }
+.ui-icon-seek-prev { background-position: -60px -200px; }
+.ui-icon-seek-end { background-position: -80px -200px; }
+.ui-icon-seek-start, .ui-icon-seek-first { background-position: -100px -200px; }
+.ui-icon-stop { background-position: -120px -200px; }
+.ui-icon-eject { background-position: -140px -200px; }
+.ui-icon-volume-off { background-position: -160px -200px; }
+.ui-icon-volume-on { background-position: -180px -200px; }
+.ui-icon-power { background-position: 0 -220px; }
+.ui-icon-signal-diag { background-position: -20px -220px; }
+.ui-icon-signal { background-position: -40px -220px; }
+.ui-icon-battery-0 { background-position: -60px -220px; }
+.ui-icon-battery-1 { background-position: -80px -220px; }
+.ui-icon-battery-2 { background-position: -100px -220px; }
+.ui-icon-battery-3 { background-position: -120px -220px; }
+.ui-icon-circle-plus { background-position: 0 -240px; }
+.ui-icon-circle-minus { background-position: -20px -240px; }
+.ui-icon-circle-close { background-position: -40px -240px; }
+.ui-icon-circle-triangle-e { background-position: -60px -240px; }
+.ui-icon-circle-triangle-s { background-position: -80px -240px; }
+.ui-icon-circle-triangle-w { background-position: -100px -240px; }
+.ui-icon-circle-triangle-n { background-position: -120px -240px; }
+.ui-icon-circle-arrow-e { background-position: -140px -240px; }
+.ui-icon-circle-arrow-s { background-position: -160px -240px; }
+.ui-icon-circle-arrow-w { background-position: -180px -240px; }
+.ui-icon-circle-arrow-n { background-position: -200px -240px; }
+.ui-icon-circle-zoomin { background-position: -220px -240px; }
+.ui-icon-circle-zoomout { background-position: -240px -240px; }
+.ui-icon-circle-check { background-position: -260px -240px; }
+.ui-icon-circlesmall-plus { background-position: 0 -260px; }
+.ui-icon-circlesmall-minus { background-position: -20px -260px; }
+.ui-icon-circlesmall-close { background-position: -40px -260px; }
+.ui-icon-squaresmall-plus { background-position: -60px -260px; }
+.ui-icon-squaresmall-minus { background-position: -80px -260px; }
+.ui-icon-squaresmall-close { background-position: -100px -260px; }
+.ui-icon-grip-dotted-vertical { background-position: 0 -280px; }
+.ui-icon-grip-dotted-horizontal { background-position: -20px -280px; }
+.ui-icon-grip-solid-vertical { background-position: -40px -280px; }
+.ui-icon-grip-solid-horizontal { background-position: -60px -280px; }
+.ui-icon-gripsmall-diagonal-se { background-position: -80px -280px; }
+.ui-icon-grip-diagonal-se { background-position: -100px -280px; }
+
+.ui-icon-edzo-menu { background-position: 0 -300px; }
+.ui-icon-edzo-page { background-position: -20px -300px; }
+.ui-icon-edzo-layout { background-position: -40px -300px; }
+.ui-icon-edzo-user { background-position: -60px -300px; }
+.ui-icon-edzo-props { background-position: -80px -300px; }
+.ui-icon-edzo-trash { background-position: -100px -300px; }
+.ui-icon-edzo-reload { background-position: -120px -300px; }
+.ui-icon-edzo-tile { background-position: -140px -300px; }
+.ui-icon-edzo-list { background-position: -160px -300px; }
+.ui-icon-edzo-download { background-position: -180px -300px; }
+.ui-icon-edzo-folder { background-position: -200px -300px; }
+.ui-icon-edzo-window { background-position: -220px -300px; }
+.ui-icon-edzo-newfolder { background-position: -240px -300px; }
+.ui-icon-edzo-tag { background-position: -260px -300px; }
+.ui-icon-edzo-search { background-position: -280px -300px; }
+
+.ui-icon-edzo-home { background-position: 0 -320px; }
+.ui-icon-edzo-page-add { background-position: -20px -320px; }
+.ui-icon-edzo-storage { background-position: -40px -320px; }
+.ui-icon-edzo-user-add { background-position: -60px -320px; }
+.ui-icon-edzo-settings { background-position: -80px -320px; }
+.ui-icon-edzo-lock { background-position: -100px -320px; }
+.ui-icon-edzo-t-cols_100 { background-position: -120px -320px; }
+.ui-icon-edzo-t-cols_50_50 { background-position: -140px -320px; }
+.ui-icon-edzo-t-cols_33_67 { background-position: -160px -320px; }
+.ui-icon-edzo-t-cols_67_33 { background-position: -180px -320px; }
+.ui-icon-edzo-t-cols_33_33_33 { background-position: -200px -320px; }
+.ui-icon-edzo-t-cols_25_50_25 { background-position: -220px -320px; }
+.ui-icon-edzo-t-cols_20_47_33 { background-position: -240px -320px; }
+.ui-icon-edzo-t-cols_25_25_25 { background-position: -260px -320px; }
+
+.ui-icon-edzo-alert { background-position: -280px -280px; }
+.ui-icon-edzo-progress { background: url("../img/loader.gif") no-repeat!important; }
+
+/* URBANSYSTEM */
+.ui-icon-edzo-map {background-position:0 -340px }
+.ui-icon-edzo-contacts {background-position:-20px -340px }
+.ui-icon-edzo-buildings {background-position: -40px -340px }
+
+.ui-icon-edzo-contact-add { background-position: -60px -340px; }
+.ui-icon-edzo-building-add { background-position: -80px -340px; }
+
+.ui-icon-edzo-sitemap { background-position: -100px -340px; }
+.ui-icon-edzo-locate { background-position: -120px -340px; }

@@ -17,6 +17,7 @@ from models.blocks import *
 blockForm = web.form.Form(
     Textbox("block_id"),
     Textbox("position", notnull),
+    Textbox("container"),
     Textbox("template"),
     Textbox("content"),
     Textbox("params"),
@@ -24,6 +25,7 @@ blockForm = web.form.Form(
 
 blockPasteForm = web.form.Form(
     Textbox("block_id"),
+    Textbox("container", notnull),
     Textbox("position", notnull),
     # Validate presence of block in session
     validators=[web.form.Validator(
@@ -99,6 +101,18 @@ class EditBlockSettings:
 class Blocks:
 
     @auth.restrict("admin", "editor")
+    def GET(self):
+        """Returns rendered blocks from specific container"""
+        # TODO: Perhaps avoid this or replace with proper json output
+        d = web.input(page_id=None, block_id=None, container=None)
+        page = get_page_by_id(d.page_id)
+        load_navigation(page)
+        page_blocks = get_blocks_by_page_id(page.id)
+        container_blocks = get_blocks_by_conainer(d.container, d.block_id)
+        return u"".join(unicode(render_partial.ui.block(b, page_blocks, page))
+                        for b in container_blocks)
+
+    @auth.restrict("admin", "editor")
     def POST(self):
         d = web.input(is_template=False, page_id=None)
         block_form = blockForm()
@@ -111,7 +125,7 @@ class Blocks:
 class EditBlockTemplate:
 
     @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
+    def POST(self, block_id):
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         block_form = blockTemplateForm(web.input())
@@ -179,7 +193,7 @@ class EditBlockTemplate:
 class WrapBlock:
 
     @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
+    def POST(self, block_id):
         """
         Creates new block and places current block in it.
         Then redirects to newly created block.
@@ -223,7 +237,7 @@ class WrapBlock:
 class UnwrapBlock:
 
     @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
+    def POST(self, block_id):
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
         children = db.select(

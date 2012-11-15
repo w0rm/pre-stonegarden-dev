@@ -1,9 +1,20 @@
-$def with()
-$var title = ctx.page.title
-$var meta_description = ctx.page.meta_description
-$var meta_keywords = ctx.page.meta_keywords
-$var page = ctx.page
-$var js_code = ctx.page.js_code
-$var css_code = ctx.page.css_code
-$var id = ctx.page.id
-$:render_block(ctx.page_block)
+$def with(page, block, blocks)
+$var title = page.title
+$var meta_description = page.meta_description
+$var meta_keywords = page.meta_keywords
+$var page = page
+$var js_code = page.js_code
+$var css_code = page.css_code
+$var id = page.id
+$if auth.has_role("admin","editor"):
+    $:render.ui.insert()
+
+<header>
+    $:render.ui.container("global_header", block, blocks,  page, is_template=True, has_columns=True)
+</header>
+<div class="$block.template">
+    $:render_block(block.template)(block, blocks, page)
+</div>
+<footer>
+    $:render.ui.container("global_footer", block, blocks,  page, is_template=True, has_columns=True)
+</footer>

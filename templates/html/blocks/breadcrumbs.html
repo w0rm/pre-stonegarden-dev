@@ -1,0 +1,7 @@
+$def with(block, blocks, page)
+$if ctx.path:
+    <p class="breadcrumbs">
+    $for p in ctx.path:
+        <a href="$p.path">$p.name</a> →
+    $page.name
+    </p>
