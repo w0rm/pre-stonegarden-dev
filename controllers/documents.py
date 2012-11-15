@@ -65,9 +65,9 @@ def delete_file(filename):
 def delete_document(document):
     db.update("documents", where="id = $id AND NOT is_deleted",
               vars=document, is_deleted=1)
-    if document.filetype == "folder":
+    if document.type == "folder":
         for doc in db.select("documents", document,
-                             where="document_id=$id AND NOT is_deleted"):
+                             where="parent_id=$id AND NOT is_deleted"):
             delete_document(doc)
 
 
@@ -116,39 +116,39 @@ class DropUploadDocument:
                 files = [files]
             for f in files:
                 if f.filename:
-                    filetype, encoding = mimetypes.guess_type(f.filename)
+                    mimetype, encoding = mimetypes.guess_type(f.filename)
                     with db.transaction():
                         filename, filesize = save_document(f.file)
 
                         position = db.select(
                             "documents",
                             folder,
-                            where='document_id = $id AND NOT '
-                                  'filetype = "folder" AND NOT is_deleted',
+                            where='parent_id = $id AND NOT '
+                                  'type = "folder" AND NOT is_deleted',
                             what='MAX(position)+1 as n',
                         )[0].n
 
                         file_id = db.insert(
                             "documents",
-                            document_id=folder.id,
+                            parent_id=folder.id,
                             position=position or 1,
                             filename=filename,
-                            documents=(folder.documents + "," + str(folder.id)
-                                       if folder.documents else folder.id),
+                            ids=(folder.ids + "," + str(folder.id)
+                                 if folder.ids else folder.id),
                             level=folder.level + 1,
                             created_at=datetime.datetime.now(),
                             title=get.filename or os.path.splitext(
                             f.filename)[0],
                             extension=os.path.splitext(f.filename)[1].lower(),
-                            mimetype=filetype,
-                            filetype=("image" if "image" in
-                                      filetype else "document"),
+                            mimetype=mimetype,
+                            type=("image" if "image" in
+                                  mimetype else "document"),
                             filesize=filesize,
                             is_published=True,
                         )
 
                     if get.upload == "image":
-                        if "image" in filetype:
+                        if "image" in mimetype:
                             raise web.seeother(
                                 web.url(
                                     "/a/documents/%d/image_size" % file_id,
@@ -157,7 +157,7 @@ class DropUploadDocument:
                                             json.dumps(dict(status=0)))
 
                     if get.obj_type in ("contacts", "buildings"):
-                        if "image" in filetype:
+                        if "image" in mimetype:
                             db.update(get.obj_type, where="id=$obj_id",
                                       vars=get, photo_id=file_id)
                             raise web.seeother(
@@ -183,13 +183,13 @@ class NewFolderDocument:
         web.header("Content-Type", "application/json")
         with db.transaction():
             document = web.storage(
-                document_id=get.document_id,
-                documents=(folder.documents + "," + str(folder.id)
-                           if folder.documents else folder.id),
+                parent_id=get.document_id,
+                ids=(folder.ids + "," + str(folder.id)
+                                  if folder.ids else folder.id),
                 level=folder.level + 1,
                 created_at=datetime.datetime.now(),
                 title=get.title,
-                filetype="folder",
+                type="folder",
                 is_published=True,
             )
             document.id = db.insert("documents", **document)
@@ -227,30 +227,30 @@ class GetDocument(object):
 
         document.path = db.select(
             "documents",
-            where="id in (%s) AND NOT is_deleted" % document.documents,
+            where="id in (%s) AND NOT is_deleted" % document.ids,
         ).list() if document.level > 0 else []
 
-        if document.filetype == "folder":
+        if document.type == "folder":
             document.folders = db.select(
                 "documents",
                 locals(),
-                where="document_id = $document_id AND "
-                      "filetype = 'folder' AND NOT is_deleted",
+                where="parent_id = $document_id AND "
+                      "type = 'folder' AND NOT is_deleted",
                 order="title",
             ).list()
             if "filter" in web.input():
                 document.documents = db.select(
                     "documents",
                     locals(),
-                    where="document_id = $document_id AND NOT filetype IN"
+                    where="parent_id = $document_id AND NOT type IN"
                           " ('folder','document') AND NOT is_deleted",
                     order="position").list()
             else:
                 document.documents = db.select(
                     "documents",
                     locals(),
-                    where="document_id = $document_id AND NOT "
-                          "filetype = 'folder' AND NOT is_deleted",
+                    where="parent_id = $document_id AND NOT "
+                          "type = 'folder' AND NOT is_deleted",
                     order="position").list()
             if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
                 return render_partial.ui.documents(document)
@@ -307,18 +307,18 @@ class OrderDocument:
             if document.position_new < int(document.position):
                 db.update(
                     "documents",
-                    where="document_id = $document_id AND position >= "
+                    where="parent_id = $document_id AND position >= "
                           "$position_new AND position < $position AND "
-                          "NOT is_deleted AND NOT filetype = 'folder' ",
+                          "NOT is_deleted AND NOT type = 'folder' ",
                     vars=document,
                     position=web.db.SQLLiteral("position+1"),
                 )
             if document.position_new > int(document.position):
                 db.update(
                     "documents",
-                    where="document_id = $document_id AND position > "
+                    where="parent_id = $document_id AND position > "
                           "$position AND position <= $position_new AND "
-                          "NOT is_deleted AND NOT filetype = 'folder'",
+                          "NOT is_deleted AND NOT type = 'folder'",
                     vars=document,
                     position=web.db.SQLLiteral("position-1"),
                 )
@@ -340,7 +340,7 @@ class EditDocumentSettings:
         document = db.select(
             "documents",
             locals(),
-            where="$document_id = id AND NOT is_deleted",
+            where="id = $document_id AND NOT is_deleted",
             limit=1)[0]
         if document.is_system:
             # cannot edit or delete system files and folders
@@ -350,7 +350,7 @@ class EditDocumentSettings:
         if document_form.valid:
             db.update(
                 "documents",
-                where="$document_id = id",
+                where="id = $document_id",
                 vars=locals(),
                 updated_at=datetime.datetime.now(),
                 **document_form.d)
@@ -366,7 +366,7 @@ class DeleteDocument:
         document = db.select(
             "documents",
             locals(),
-            where="$document_id = id AND NOT is_deleted",
+            where="id = $document_id AND NOT is_deleted",
             limit=1)[0]
 
         if document.is_system:
@@ -377,8 +377,8 @@ class DeleteDocument:
         # shift positions
         db.update(
             "documents",
-            where="document_id = $document_id AND position > $position AND "
-                  "NOT is_deleted AND NOT filetype = 'folder'",
+            where="parent_id = $parent_id AND position > $position AND "
+                  "NOT is_deleted AND NOT type = 'folder'",
             vars=document,
             position=web.SQLLiteral("position-1"),
         )
