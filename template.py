@@ -109,8 +109,18 @@ def link_to(obj_type, obj=None, method=None, **kw):
     return web.url(link, **params)
 
 
-def render_block(name):
-    return getattr(render_partial.blocks, name)
+def render_block(block):
+    return render_partial.blocks.block(
+        block,
+        getattr(render_partial.blocks, block.template)(block)
+    )
+
+
+def render_blocks(blocks):
+    return u"".join(
+        unicode(render_block(block))
+        for block in blocks
+    )
 
 
 def filesize(doc):
@@ -150,6 +160,7 @@ template_globals = {
     '_': _,
     'n_': n_,
     'render_block': render_block,
+    'render_blocks': render_blocks,
     'describe_extension': describe_extension,
     'replace_links': replace_links,
     'filesize': filesize,

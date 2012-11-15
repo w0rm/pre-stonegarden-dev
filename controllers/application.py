@@ -18,9 +18,6 @@ class Config:
         js_config = dict(
             (i, config[i]) for i in (
                 "page_blocks",
-                "container_blocks",
-                "content_blocks",
-                "containers",
                 "image",
                 "labels",
             )

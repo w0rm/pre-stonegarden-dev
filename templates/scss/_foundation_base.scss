@@ -42,7 +42,7 @@
 
 // Form Settings
 
-$formSpacing: 12px;
+// $formSpacing: 12px;
 
 // Tab Settings
 
@@ -77,17 +77,17 @@ $formSpacing: 12px;
 
 
 // Comment out this import if you are customizing you imports below
-//@import "foundation";
+@import "foundation";
 
 // ----------------------------------------
 // Import specific parts of Foundation by commenting the import "foundation"
 // and uncommenting what you want below. You must uncomment the following if customizing
 
 //@import "compass/css3";
-@import "foundation/settings";
-@import "foundation/functions/all";
+//@import "foundation/settings";
+//@import "foundation/functions/all";
 //@import "foundation/common/globals";
-@import "foundation/mixins/clearfix";
+//@import "foundation/mixins/clearfix";
 //@import "modular-scale";
 
 // Control which mixins you have access too
@@ -102,7 +102,7 @@ $formSpacing: 12px;
 
 // Must include the grid for any responsiveness
 
-@import "foundation/components/grid";
+//@import "foundation/components/grid";
 
 // Control which common styles get compiled
 

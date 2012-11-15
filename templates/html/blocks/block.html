@@ -1,0 +1,9 @@
+$def with(block, contents)
+$if auth.get_user():
+	<div class="$block.css_class js-block" data-id="$block.id">
+		$:contents
+	</div>
+$else:
+	<div class="$block.css_class">
+		$:contents
+	</div>
