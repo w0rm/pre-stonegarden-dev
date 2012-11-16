@@ -6,12 +6,11 @@ import datetime
 from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
-from template import render, render_partial, render_block
-from template import link_to
+from modules.restful_controller import RESTfulController
 from modules.form import *
+from template import render, render_partial, render_block, link_to
 from web import ctx
 from pytils.translit import slugify
-from models.pages import load_navigation, get_page_by_id
 from models.blocks import *
 
 blockForm = web.form.Form(
@@ -46,20 +45,29 @@ blockSettingsForm = web.form.Form(
 )
 
 
-class Block:
+class Blocks(RESTfulController):
 
     @auth.restrict("admin", "editor")
-    def GET(self, block_id):
+    def get(self, block_id):
         page_id = web.input(page_id=None).page_id
         web.header("Content-Type", "application/json")
         return block_to_json(block_id, page_id)
 
     @auth.restrict("admin", "editor")
-    def PUT(self, block_id):
+    def create(self):
+        d = web.input(is_template=False, page_id=None)
+        block_form = blockForm()
+        if block_form.validates():
+            block = create_block(block_form.d, d.is_template, d.page_id)
+            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
+        return "NOT OK"
+
+    @auth.restrict("admin", "editor")
+    def update(self, block_id):
         page_id = web.input(page_id=None).page_id
         block = get_block_by_id(block_id)
-        block_form = blockEditForm(web.input())
-        if block_form.valid:
+        block_form = blockEditForm()
+        if block_form.validates():
             db.update(
                 "blocks",
                 where="$block_id = id",
@@ -68,11 +76,10 @@ class Block:
                 updated_at=datetime.datetime.now(),
                 **block_form.d)
             raise web.seeother(link_to("blocks", block, page_id=page_id))
-
         return "NOT OK"
 
     @auth.restrict("admin", "editor")
-    def DELETE(self, block_id):
+    def delete(self, block_id):
         delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")
         return '{"status":1}'
@@ -93,18 +100,6 @@ class EditBlockSettings:
                 updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
                 **block_form.d)
             raise web.seeother(link_to("blocks", block, page_id=page_id))
-        return "NOT OK"
-
-
-class Blocks:
-
-    @auth.restrict("admin", "editor")
-    def POST(self):
-        d = web.input(is_template=False, page_id=None)
-        block_form = blockForm()
-        if block_form.validates():
-            block = create_block(block_form.d, d.is_template, d.page_id)
-            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         return "NOT OK"
 
 

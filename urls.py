@@ -27,8 +27,7 @@ urls=(
     "/a/documents/(\d+)/delete", "controllers.documents.DeleteDocument",
 
     # Blocks
-    "/a/blocks", "controllers.blocks.Blocks",
-    "/a/blocks/(\d+)", "controllers.blocks.Block",
+    r'/a/blocks(?:/(?P<resource_id>[0-9]+))?', "controllers.blocks.Blocks",
     "/a/blocks/(\d+)/edit_template", "controllers.blocks.EditBlockTemplate",
     "/a/blocks/(\d+)/edit_settings", "controllers.blocks.EditBlockSettings",
     "/a/blocks/(\d+)/wrap", "controllers.blocks.WrapBlock",

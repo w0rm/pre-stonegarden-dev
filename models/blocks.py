@@ -162,7 +162,8 @@ def block_to_json(block_id, page_id=None):
     if page_id is not None:
         page = get_page_by_id(page_id)
         load_page_data(page)
-        blocks = get_blocks()
+        load_page_blocks(page_id)
+        blocks = get_blocks(page_id)
         result["html"] = unicode(
             render_block(
                 build_block_tree(block, blocks)
