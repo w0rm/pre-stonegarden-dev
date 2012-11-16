@@ -171,50 +171,6 @@ class EditBlockTemplate:
         return "NOT OK"
 
 
-class WrapBlock:
-
-    @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
-        """
-        Creates new block and places current block in it.
-        Then redirects to newly created block.
-        """
-        page_id = web.input(page_id=None).page_id
-        block = get_block_by_id(block_id)
-        block_form = blockTemplateForm(web.input())
-        if block_form.valid:
-            block_id = db.insert(
-                "blocks",
-                created_at=datetime.datetime.now(),
-                page_id=block.page_id,
-                block_id=block.block_id,
-                blocks=block.blocks,
-                level=block.level,
-                container=block.container,
-                position=block.position,
-                is_published=True,
-                **block_form.d)
-
-            if block.blocks:
-                parent_blocks = block.blocks + "," + str(block.id)
-            else:
-                parent_blocks = str(block.id)
-
-            db.update(
-                "blocks",
-                where="$id = id",
-                vars=block,
-                block_id=block_id,
-                blocks=parent_blocks,
-                level=block.level + 1,
-                container="primary",
-                position=1,
-            )
-            raise web.seeother(
-                link_to("blocks", dict(id=block_id), page_id=page_id))
-        return "NOT OK"
-
-
 class UnwrapBlock:
 
     @auth.restrict("admin", "editor")
