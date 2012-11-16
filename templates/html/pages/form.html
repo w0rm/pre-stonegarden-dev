@@ -13,6 +13,7 @@ $def with (page_form, page=None)
         <p class="small info">$_( "Short name for navigation menu" )</p>
         $:page_form.render(["title"])
         <p class="small info">$_( "Browser title" )</p>
+        $#TODO: avoid x=2
         $:page_form.render(x=2)
         <p><button class="button" type="submit">$_("Save")</button></p>
         </form>
@@ -23,4 +24,3 @@ $def with (page_form, page=None)
         <p>Чтобы страница была доступна по ссылке, но не показывалась в навигации, отключи- те опцию «Показывать в навигации»</p>
     </aside>
 </div>
-
