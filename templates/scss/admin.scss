@@ -1,2 +1,9 @@
+@import "config";
 @import "stone_icon_font";
+@import "ui/sg.inserter";
 
+.block {
+  // Prevent collapsing margins
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
