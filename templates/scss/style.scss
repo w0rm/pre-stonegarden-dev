@@ -1,3 +1,15 @@
 @import "compass/reset";
 @import "config";
 @import "foundation_base";
+
+header {
+  margin-bottom: 20px;
+  padding-top: 20px;
+  background: #eee;
+}
+
+footer {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  background: #eee;
+}
