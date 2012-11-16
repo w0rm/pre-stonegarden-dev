@@ -15,21 +15,23 @@ class Config:
     @auth.restrict("admin", "editor", "user")
     def GET(self):
         web.header("Content-Type", "text/javascript; charset=utf-8")
-        js_config = dict(
-            (i, config[i]) for i in (
-                "page_blocks",
-                "image",
-                "labels",
-            )
+        conf = dict(
+            (i, config[i]) for i in ("page_blocks", "image", "labels")
         )
-        js_config["tinymce_valid_elements"] = config.sanitizer["tinymce_valid_elements"]
+        conf["tinymce_valid_elements"] = (
+            config.sanitizer["tinymce_valid_elements"])
         if auth.get_user():
-            js_config["role"] = auth.get_user().role
+            conf["role"] = auth.get_user().role
         else:
-            js_config["role"] = None
-        js_code = "var config = %s," % json.dumps(js_config)
+            conf["role"] = None
         try:
-            return js_code + "\ni18n = %s;" % json.dumps(
-                load_translation(config.default_locale)._catalog)
+            i18n = load_translation(config.default_locale)._catalog
         except:
-            return js_code + "\ni18n = {};"
+            i18n = {}
+
+        return render_partial.site.config(
+            json.dumps(
+                {"config": conf, "i18n": i18n},
+                sort_keys=True,
+                indent=2)
+        )
