@@ -43,6 +43,7 @@
 		{
 			"name": "global_header",
 			"template": "row",
+	        "is_system": true,
 			"position": 1,
 			"blocks": [
 				{
@@ -72,6 +73,7 @@
 		{
 			"name": "global_footer",
 			"template": "row",
+            "is_system": true,
 			"position": 1,
 			"blocks": [
 				{
