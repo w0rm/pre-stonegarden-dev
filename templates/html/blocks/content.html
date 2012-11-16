@@ -1,6 +1,4 @@
 $def with(block)
 $# Content block renders formatted content
 $# Type is html or wysiwyg
-<div class="content">
-    $:replace_links(block.content_cached)
-</div>
+$:replace_links(block.content_cached)

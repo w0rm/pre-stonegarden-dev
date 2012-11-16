@@ -1,14 +1,3 @@
 $def with(block)
 $# Column block renders column of inner blocks or placeholder
-$# Block type holds number of columns
-$code:
-	css_class = ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve")[block.size - 1]
-<div class="${css_class} columns">
-$if block.get("blocks"):
-    $:render_blocks(block.blocks)
-$elif auth.has_role("admin", "editor"):
-    <div class="placeholder js-placeholder">
-        <p>$_("This text is not written yet.") <strong>$_("Click to write the text.")</strong><br>
-           $_("Do not worry, such placeholder texts are not visible on the public website until you edit them.")</p>
-    </div>
-</div>
+$:render_blocks(block.blocks)
