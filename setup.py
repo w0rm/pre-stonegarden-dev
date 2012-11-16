@@ -26,6 +26,8 @@ if __name__ == "__main__":
             parent_id=parent_id,
             ids=ids,
             is_published=True,
+            created_at=now,
+            published_at=now,
             **block
         )
         if ids is None:
