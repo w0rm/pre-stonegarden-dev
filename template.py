@@ -117,10 +117,7 @@ def render_block(block):
 
 
 def render_blocks(blocks):
-    return u"".join(
-        unicode(render_block(block))
-        for block in blocks
-    )
+    return render_partial.blocks.blocks(blocks)
 
 
 def filesize(doc):
