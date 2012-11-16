@@ -1,0 +1,56 @@
+@import "compass/css3/font-face";
+
+@include font-face(
+  "StoneIcon",
+  font-files('stoneicon-regular.otf'),
+  null,
+  "normal",
+  "normal"
+);
+
+
+[class*="sg-ico-"]:before {
+  font-family: "StoneIcon";
+  font-weight: normal;
+  font-style: normal;
+  margin-right: .25em;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-smooth: always;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.sg-ico-empty:before{content: "\0061"; color: red!important;}
+.sg-ico-stone:before{content: "\e001"}
+.sg-ico-cursor:before{content: "\e002"}
+.sg-ico-page:before{content: "\e003"}
+.sg-ico-documents:before{content: "\e004"}
+.sg-ico-trash:before{content: "\e005"}
+.sg-ico-settings:before{content: "\e006"}
+.sg-ico-help:before{content: "\e007"}
+.sg-ico-published:before{content: "\e008"}
+.sg-ico-hidden:before{content: "\e009"}
+.sg-ico-calendar:before{content: "\e00a"}
+.sg-ico-login:before{content: "\e00b"}
+.sg-ico-search:before{content: "\e00c"}
+.sg-ico-comments:before{content: "\e00d"}
+.sg-ico-placemark:before{content: "\e00e"}
+.sg-ico-checked:before{content: "\e00f"}
+.sg-ico-menu:before{content: "\e010"}
+.sg-ico-menulist:before{content: "\e011"}
+.sg-ico-cols-2:before{content: "\e012"}
+.sg-ico-cols-3:before{content: "\e013"}
+.sg-ico-paste:before{content: "\e014"}
+.sg-ico-copy:before{content: "\e015"}
+.sg-ico-cut:before{content: "\e016"}
+.sg-ico-image:before{content: "\e017"}
+.sg-ico-gallery:before{content: "\e018"}
+.sg-ico-text:before{content: "\e019"}
+.sg-ico-plus-light:before{content: "\e01a"}
+.sg-ico-plus-bold:before{content: "\e01b"}
+.sg-ico-warning:before{content: "\e01c"}
+.sg-ico-download:before{content: "\e01d"}
+.sg-ico-arrow-r:before{content: "\e01e"}
+.sg-ico-exit:before{content: "\e01f"}
