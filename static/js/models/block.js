@@ -1,37 +1,13 @@
 define(["jquery"
       , "underscore"
       , "backbone"
-      , "stonegarden"], function ($, _, Backbone, sg) {
+      , "stonegarden"
+      , "utils"
+      , "models/blocks"], function ($, _, Backbone, sg) {
 
 
   var collections = sg.collections || (sg.collections = {})
     , models = sg.models || (sg.models = {});
-
-
-  collections.Blocks = Backbone.Collection.extend({
-
-    url: "/a/blocks",
-
-    model: function(attrs, options) {
-      switch (attrs.template) {
-        case "page":
-          model = new models.PageBlock(attrs, options);
-          break;
-        case "column":
-          model = new models.ColumnBlock(attrs, options);
-          break;
-        case "row":
-          model = new models.RowBlock(attrs, options);
-          break;
-        default:
-          model = new models.Block(attrs, options);
-          break;
-      }
-      model.parentBlock = this.parentBlock;
-      return model;
-    }
-
-  });
 
 
   models.Block = Backbone.Model.extend({
@@ -40,19 +16,103 @@ define(["jquery"
 
     initialize: function() {
       this.blocks = new collections.Blocks;
-      this.blocks.parentBlock = this;
       this.blocks.reset(this.get("blocks"));
+      this.blocks.each(function(block){
+        block.parentBlock = this;
+      }, this)
     },
 
-    getContextMenuItems: function() {
+    // State information
 
+    isContainer: function() {
+      return _.contains(["page", "column"], this.get("template"));
+    },
+
+    isSystem: function() {
+      return !!this.get("is_system");
+    },
+
+    hasParent: function() {
+      return !!this.parentBlock;
+    },
+
+    // Events needed to highlight block
+
+    highlight: function() {
+      this.trigger("highlight");
+    },
+
+    lowlight: function() {
+      this.trigger("lowlight");
+    },
+
+    // Contextmenu items
+
+    getContextMenu: function() {
+      var items = [];
+
+      items.push({
+        text: t_("Attributes"),
+        click: this.editAttributes
+      });
+
+      if (!this.isSystem() && !this.isContainer()) {
+        // System and container blocks cannot be deleted
+        items.push({
+          text: t_("Delete"),
+          click: this.delete
+        });
+      };
+
+      if (this.hasParent()) {
+        items.push(_.extend(
+          {text: t_("Parent")},
+          this.parentBlock.getContextMenu()
+        ))
+      };
+
+      return {
+        items: items,
+        context: this
+      };
+
+    },
+
+    delete: function() {
+      this.trigger("context:delete");
+    },
+
+    editAttributes: function() {
+      this.trigger("context:attributes");
     }
 
   });
 
 
+  var placeholderTemplate = '<div class="sg-placeholder js-placeholder"><p>' +
+    t_("This text is not written yet.") +
+    ' <strong>' + t_("Click to write the text.") + '</strong><br>' +
+    t_("Do not worry, such placeholder texts are not visible on the public website until you edit them.") +
+    '</p></div>';
+
+  models.WysiwygBlock = models.Block.extend({
+
+    defaults: {
+      type: "wysiwyg",
+      template: "content",
+      html: placeholderTemplate
+    }
+
+  });
+
   models.PageBlock = models.Block;
   models.RowBlock = models.Block;
-  models.ColumnBlock = models.Block;
+
+  models.ColumnBlock = models.Block.extend({
+    getContextMenu: function() {
+      return this.parentBlock.getContextMenu()
+    }
+
+  });
 
 });

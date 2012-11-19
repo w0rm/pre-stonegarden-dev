@@ -5,9 +5,4 @@ $# Is used internally from template.py render_blocks
 $if blocks:
     $for block in blocks:
         $:render_block(block)
-$elif auth.has_role("admin", "editor"):
-    <div class="placeholder js-placeholder">
-        <p>$_("This text is not written yet.") <strong>$_("Click to write the text.")</strong><br>
-           $_("Do not worry, such placeholder texts are not visible on the public website until you edit them.")</p>
-    </div>
 </div>

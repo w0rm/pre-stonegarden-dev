@@ -78,8 +78,22 @@
   }
 }
 
-.sg-show-contextmenu {
-  background: $bg-grey;
+.sg-contextmenu-show {
+  background: hsl(0, 0, 33%);
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  vertical-align: middle;
+  font-size: 16px;
+  text-decoration: none;
+  color: hsl(0, 0, 90%);
+  &:hover, &.sg-active {
+    color: #fff;
+    background: hsl(0, 0, 20%);
+  }
   position: absolute;
   z-index: 20;
   left: -16px;

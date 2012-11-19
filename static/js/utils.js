@@ -26,9 +26,27 @@ define(["jquery"
         }
       });
       return o;
+    },
+
+    translate: function(s) {
+      return (sg.i18n && sg.i18n[s]) ? sg.i18n[s] : s
+    },
+
+    guessBlockType: function(attrs) {
+      switch (attrs.template) {
+        case "page":
+          return "Page";
+        case "column":
+          return "Column";
+        case "row":
+          return "Row"
+        default:
+          return ""
+      }
     }
 
   });
 
+  window.t_ = utils.translate;
 
 });

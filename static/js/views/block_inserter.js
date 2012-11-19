@@ -19,6 +19,11 @@ define(["jquery"
 
     mousemoveEvent: function(e) {
       e.preventDefault();
+    },
+
+    render: function() {
+
+      return this;
     }
 
   });

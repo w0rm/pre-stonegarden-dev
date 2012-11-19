@@ -15,7 +15,8 @@ define(["jquery"
   views.Block = Backbone.View.extend({
 
     events: {
-      "mouseenter .js-block": "showContextMenu",
+      "mouseenter": "showContextMenu",
+      "mouseleave": "hideContextMenu",
       "mousemove .js-block": "attachInserter",
       "mousemove .js-placeholder": "attachInserter",
       "mouseleave .js-blocks": "detachInserter"
@@ -24,6 +25,16 @@ define(["jquery"
     initialize: function() {
       this.inserter = new views.BlockInserter;
       this.contextMenu = new views.ContextMenu({model: this.model});
+      this.model.on("highlight", this.highlight, this);
+      this.model.on("lowlight", this.lowlight, this);
+    },
+
+    highlight: function() {
+      this.$el.addClass("sg-block-highlight");
+    },
+
+    lowlight: function() {
+      this.$el.removeClass("sg-block-highlight");
     },
 
     render: function() {
@@ -31,6 +42,7 @@ define(["jquery"
 
       this.$blocks = this.$(".js-blocks");
 
+      // Append template blocks
       this.$(".js-template-block").each(function() {
         var $block = $(this)
           , block_name = $block.data("name")
@@ -42,21 +54,35 @@ define(["jquery"
           .render().$el.appendTo($block);
       });
 
-      this.model.blocks.each(function(block) {
-        this.$blocks.append(
-          new views.Block({
-            model: block,
-            el: block.get("html")
-          }).render().el
-        );
-      }, this);
+      if (this.model.blocks.length) {
+        // Append blocks
+        this.model.blocks.each(this.appendBlock, this);
+      } else if (this.model.isContainer()) {
+        // Show placeholder
+        this.placeholder = new models.WysiwygBlock;
+        this.placeholder.parentBlock = this.model;
+        this.appendBlock(this.placeholder);
+      }
 
       return this;
+    },
+
+    appendBlock: function(block) {
+      this.$blocks.append(
+        new views.Block({
+          model: block,
+          el: block.get("html")
+        }).render().el
+      );
     },
 
     showContextMenu: function(e) {
       e.stopPropagation()
       this.$el.prepend(this.contextMenu.render().el);
+    },
+
+    hideContextMenu: function(e) {
+      this.contextMenu.$el.detach()
     },
 
     attachInserter: function(e) {
