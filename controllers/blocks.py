@@ -12,6 +12,7 @@ from template import render, render_partial, render_block, link_to
 from web import ctx
 from pytils.translit import slugify
 from models.blocks import *
+from models.pages import get_page_by_id, load_page_data
 
 blockForm = web.form.Form(
     Textbox("block_id"),
@@ -50,8 +51,11 @@ class Blocks(RESTfulController):
     @auth.restrict("admin", "editor")
     def get(self, block_id):
         page_id = web.input(page_id=None).page_id
+        page = get_page_by_id(page_id)
+        load_page_data(page)
+        block = get_block_by_id(block_id)
         web.header("Content-Type", "application/json")
-        return block_to_json(block_id, page_id)
+        return block_to_json(block)
 
     @auth.restrict("admin", "editor")
     def create(self):
@@ -101,135 +105,6 @@ class EditBlockSettings:
                 **block_form.d)
             raise web.seeother(link_to("blocks", block, page_id=page_id))
         return "NOT OK"
-
-
-class EditBlockTemplate:
-
-    @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
-        page_id = web.input(page_id=None).page_id
-        block = get_block_by_id(block_id)
-        block_form = blockTemplateForm(web.input())
-        if block_form.valid:
-            # Update block's template
-            db.update(
-                "blocks",
-                where="$block_id = id",
-                vars=locals(),
-                updated_at=datetime.datetime.now(),
-                **block_form.d)
-            # Select all orphaned blocks
-            orphans = db.select(
-                "blocks",
-                dict(
-                    containers=config.containers[block_form.d.template],
-                    block_id=block_id,
-                ),
-                where="$block_id = block_id AND NOT container "
-                      "IN $containers AND NOT is_deleted",
-                order="container, position"
-            ).list()
-            if len(orphans):
-                # Shift children position after the unwrapped block
-                if block.block_id:
-                    db.update(
-                        "blocks",
-                        where="block_id = $block_id AND container = "
-                              "$container AND position > $position "
-                              "AND NOT is_deleted",
-                        vars=block,
-                        position=web.SQLLiteral("position + %d" %
-                                                len(orphans)),
-                    )
-                else:
-                    db.update(
-                        "blocks",
-                        where="container = $container "
-                              "AND position > $position "
-                              "AND NOT is_deleted",
-                        vars=block,
-                        position=web.SQLLiteral("position + %d" %
-                                                len(orphans)),
-                    )
-
-                # Insert orphans to the parent container after the block
-                # TODO: recursively update block_id and level of subchildren
-                n = 0
-                for b in orphans:
-                    db.update(
-                        "blocks", where="id = $id", vars=b,
-                        block_id=block.block_id,
-                        blocks=block.blocks,
-                        level=block.level,
-                        container=block.container,
-                        position=block.position + 1 + n,
-                    )
-                    n += 1
-            # Return block with updated template
-            raise web.seeother(link_to("blocks", block, page_id=page_id))
-
-        return "NOT OK"
-
-
-class UnwrapBlock:
-
-    @auth.restrict("admin", "editor")
-    def _POST(self, block_id):
-        page_id = web.input(page_id=None).page_id
-        block = get_block_by_id(block_id)
-        children = db.select(
-            "blocks",
-            block,
-            where="block_id = $id AND NOT is_deleted",
-            order="container, position",
-        ).list()
-
-        # Delete parent block
-        db.update(
-            "blocks",
-            where="id = $id AND NOT is_deleted",
-            vars=block,
-            is_deleted=1)
-
-        # Shift children position after the unwrapped block
-        if block.block_id:
-            db.update(
-                "blocks",
-                where="block_id = $block_id AND container = $container "
-                      "AND position > $position AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position - 1 + %d" % len(children)),
-            )
-        else:
-            db.update(
-                "blocks",
-                where="container = $container AND "
-                      "position > $position AND NOT is_deleted",
-                vars=block,
-                position=web.SQLLiteral("position - 1 + %d" % len(children)),
-            )
-
-        # Insert children to the parent container
-        # TODO: recursively update block_id and level of subchildren
-        n = 0
-        for b in children:
-            db.update(
-                "blocks", where="id = $id", vars=b,
-                block_id=block.block_id,
-                blocks=block.blocks,
-                level=block.level,
-                container=block.container,
-                position=n + block.position,
-            )
-            n += 1
-
-        # Return container contents
-        raise web.seeother(link_to(
-            "blocks",
-            block_id=block.block_id,  # Isn't set if is None
-            container=block.container,
-            page_id=page_id,
-        ))
 
 
 class CopyBlock:
