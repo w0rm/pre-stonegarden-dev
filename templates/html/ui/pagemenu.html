@@ -1,0 +1,30 @@
+$def with(page, edit_mode_on)
+<nav class="sg-pagemenu">
+    $if edit_mode_on:
+        <a class="sg-pagemenu-item sg-ico-cursor" href="$changequery(edit=1)" title="$_("Enter edit mode")"></a>
+    $else:
+        <a class="sg-pagemenu-item sg-ico-cursor sg-active" href="$changequery(edit=None)" title="$_("Exit edit mode")"></a>
+    <div class="sg-pagemenu-item">
+        <a class="sg-ico-page" href="$page.path" title="$_("Page")"></a>
+        <ul class="sg-contextmenu">
+            <li class="sg-contextmenu-item"><a href="$link_to("pages",page,"edit")">$_("Page properties")</a></li>
+            <li class="sg-contextmenu-item"><a href="$link_to("pages",page,"edit_code")">$_("Style and scripts")</a></li>
+            <li class="sg-contextmenu-separator"></li>
+            <li class="sg-contextmenu-item"><a href="$link_to("pages",page)">$_("Page tree")</a></li>
+            <li class="sg-contextmenu-item"><a href="/a/sitemap">$_("Site map")</a></li>
+            <li class="sg-contextmenu-item"><a href="/a/pages/new?page_id=$page.id">$_("Create page")</a></li>
+            <li class="sg-contextmenu-separator"></li>
+            <li class="sg-contextmenu-item"><a onclick="return confirm('$_("Are you sure to delete this page and its subpages?")');" href="$link_to("pages",page,"delete")">$_("Delete this page")</a></li>
+        </ul>
+    </div>
+    <div class="sg-pagemenu-item">
+        <span class="sg-ico-menu-list"></span>
+        <ul class="sg-contextmenu">
+            <li class="sg-contextmenu-item"><a href="/a/documents">$_("Storage")</a></li>
+            <li data-role="admin" class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$auth.get_user().title</a></li>
+            <li data-role="admin" class="sg-contextmenu-item"><a href="/a/users">$_("User accounts")</a></li>
+            <li data-role="admin" class="sg-contextmenu-separator"></li>
+            <li class="sg-contextmenu-item"><a href="/logout">$_("Logout")</a></li>
+        </ul>
+    </div>
+</nav>
