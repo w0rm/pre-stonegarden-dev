@@ -116,6 +116,10 @@ def render_block(block):
     )
 
 
+def render_template_block(block_name):
+    return render_partial.blocks.template_block(block_name)
+
+
 def render_blocks(blocks):
     return render_partial.blocks.blocks(blocks)
 
@@ -146,7 +150,6 @@ template_globals = {
     'auth': auth,
     'config': config,
     'datify': datify,
-    'url': web.url,
     'get_plural': pytils.numeral.get_plural,
     'choose_plural': pytils.numeral.choose_plural,
     'sanitize': sanitize,
@@ -157,10 +160,12 @@ template_globals = {
     '_': _,
     'n_': n_,
     'render_block': render_block,
+    'render_template_block': render_template_block,
     'render_blocks': render_blocks,
     'describe_extension': describe_extension,
     'replace_links': replace_links,
     'filesize': filesize,
+    'url': web.url,
     'changequery': web.changequery,
 }
 

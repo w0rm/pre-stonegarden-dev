@@ -15,7 +15,7 @@ define(["jquery"
     model: function(attrs, options) {
       switch (attrs.template) {
         case "page":
-          model = new models.ColumnBlock(attrs, options);
+          model = new models.PageBlock(attrs, options);
           break;
         case "column":
           model = new models.ColumnBlock(attrs, options);
@@ -27,6 +27,7 @@ define(["jquery"
           model = new models.Block(attrs, options);
           break;
       }
+      model.parentBlock = this.parentBlock;
       return model;
     }
 
@@ -39,15 +40,19 @@ define(["jquery"
 
     initialize: function() {
       this.blocks = new collections.Blocks;
+      this.blocks.parentBlock = this;
+      this.blocks.reset(this.get("blocks"));
     },
 
-    parse: function(response) {
-       if (response && response.blocks) {
-        this.blocks.reset(response.attachments, {silent: true});
-      }
-      return Backbone.Model.prototype.parse.call(this, response);
+    getContextMenuItems: function() {
+
     }
 
   });
+
+
+  models.PageBlock = models.Block;
+  models.RowBlock = models.Block;
+  models.ColumnBlock = models.Block;
 
 });

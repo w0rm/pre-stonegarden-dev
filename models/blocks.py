@@ -106,6 +106,13 @@ def get_block_by_id(block_id):
     )[0]
 
 
+def get_blocks_by_parent_id(block_id=None):
+    """Returns all blocks for specific parent block"""
+    return db.select("blocks", locals(),
+                     where="parent_id = $block_id AND NOT is_deleted",
+                     order="position ASC").list()
+
+
 def get_page_block_by_page_id(page_id):
     """Returns root block of the page"""
     return db.select(
@@ -117,57 +124,57 @@ def get_page_block_by_page_id(page_id):
     )[0]
 
 
-def get_blocks(page_id=None):
-    """Returns all page blocks or all template blocks"""
+def get_page_blocks_by_page_id(page_id):
+    """Returns all page blocks"""
     return db.select(
         "blocks",
         locals(),
-        where="(page_id IS NULL OR page_id = $page_id) AND NOT is_deleted",
+        where="(page_id = $page_id OR page_id IS NULL) AND NOT is_deleted",
         order="position",
     ).list()
 
 
-def build_block_tree(block, blocks):
-    block.blocks = [build_block_tree(b, blocks)
+def get_template_blocks():
+    """Returns all template blocks"""
+    return db.select(
+        "blocks",
+        where="page_id IS NULL AND NOT is_deleted",
+        order="position",
+    ).list()
+
+
+def build_block_tree(block, blocks, with_render=False):
+    if with_render:
+        block.html = unicode(render_block(block))
+    block.blocks = [build_block_tree(b, blocks, with_render)
                     for b in blocks if b.parent_id == block.id]
     return block
 
 
+def build_template_blocks_tree(with_render=False):
+    template_blocks = get_template_blocks()
+    return [build_block_tree(block, template_blocks, with_render=with_render)
+            for block in template_blocks if block.parent_id is None]
+
+
 def load_page_blocks(page_id):
-    """Preloads all blocks dict in ctx"""
-    blocks = get_blocks(page_id)
-    web.ctx.page_block = build_block_tree(
-        get_page_block_by_page_id(page_id),
-        blocks
-    )
-    web.ctx.template_blocks = web.storage(
-        (block.name, build_block_tree(block, blocks))
-        for block in blocks
-        if block.parent_id is None and block.page_id is None)
+    """Preloads all blocks in ctx"""
+    page_block = get_page_block_by_page_id(page_id)
+    page_blocks = get_page_blocks_by_page_id(page_id)
+    web.ctx.page_block = build_block_tree(page_block, page_blocks)
+    web.ctx.template_blocks = dict((v.name, v)
+                                   for v in build_template_blocks_tree())
 
 
-def get_blocks_by_parent_id(block_id=None):
-    """Returns all blocks for specific parent block"""
-    return db.select("blocks", locals(),
-                     where="parent_id = $block_id AND NOT is_deleted",
-                     order="position ASC").list()
+def template_blocks_to_json():
+    """Renders template blocks"""
+    return json.dumps(
+        build_template_blocks_tree(with_render=True),
+        default=dthandler, sort_keys=True, indent=2)
 
 
-def block_to_json(block_id, page_id=None):
-    """Renders block in JSON format.
-       If page_id is not None then adds html contents.
-    """
-    block = get_block_by_id(block_id)
-    result = dict(block=block)
-    if page_id is not None:
-        page = get_page_by_id(page_id)
-        load_page_data(page)
-        load_page_blocks(page_id)
-        blocks = get_blocks(page_id)
-        result["html"] = unicode(
-            render_block(
-                build_block_tree(block, blocks)
-            )
-        )
-
-    return json.dumps(result, default=dthandler)
+def block_to_json(block):
+    """Renders block in JSON format."""
+    page_blocks = get_page_blocks_by_page_id(block.page_id)
+    build_block_tree(block, page_blocks, with_render=True)
+    return json.dumps(block, default=dthandler, sort_keys=True, indent=2)

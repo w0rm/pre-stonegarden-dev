@@ -11,7 +11,8 @@ from modules.utils import dthandler
 from template import render, render_partial, link_to
 from modules.form import *
 from models.pages import *
-from models.blocks import load_page_blocks, get_page_block_by_page_id
+from models.blocks import (load_page_blocks, get_page_block_by_page_id,
+                           block_to_json, template_blocks_to_json)
 
 pageForm = Form(
     Textbox("name", notnull, description=N_("Name"), size=30, maxlength=255),
@@ -210,7 +211,15 @@ class ViewPage:
             if not page.is_published and not auth.get_user():
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             load_page_data(page)
-            load_page_blocks(page.id)
-            return render.pages.page()
+            if "edit" in web.input():
+                json_data = web.storage(
+                    page_block=block_to_json(
+                        get_page_block_by_page_id(page.id)),
+                    template_blocks=template_blocks_to_json()
+                )
+                return render.pages.page(json_data)
+            else:
+                load_page_blocks(page.id)
+                return render.pages.page()
         except IndexError:
             raise web.notfound()
