@@ -2,7 +2,7 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "./context_menu"], function ($, _, Backbone, sg) {
+      , "views/context_menu"], function ($, _, Backbone, sg) {
 
   var collections = sg.collections
     , models = sg.models
