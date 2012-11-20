@@ -62,7 +62,7 @@ define(["jquery"
             });
         if (block) {
           new views.Block({model: block, el: block.get("html")})
-            .on("block:contextmenu", self.hideContextMenu, self)
+            .on("block:contextmenu", self.propagateContextMenu, self)
             .render().$el.appendTo($block);
         }
       });
@@ -83,7 +83,7 @@ define(["jquery"
     appendBlock: function(block) {
       this.$blocks.append(
         new views.Block({model: block, el: block.get("html")})
-          .on("block:contextmenu", this.hideContextMenu, this)
+          .on("block:contextmenu", this.propagateContextMenu, this)
           .render().el
       );
     },
@@ -100,6 +100,10 @@ define(["jquery"
       if (this.model.hasContextMenu()) {
         this.contextMenu.$el.detach();
       }
+    },
+
+    propagateContextMenu: function(e) {
+      this.hideContextMenu();
       this.trigger("block:contextmenu");
     },
 
