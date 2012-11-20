@@ -62,6 +62,7 @@ define(["jquery"
             });
         if (block) {
           new views.Block({model: block, el: block.get("html")})
+            .on("block:contextmenu", self.hideContextMenu, self)
             .render().$el.appendTo($block);
         }
       });
@@ -81,20 +82,25 @@ define(["jquery"
 
     appendBlock: function(block) {
       this.$blocks.append(
-        new views.Block({
-          model: block,
-          el: block.get("html")
-        }).render().el
+        new views.Block({model: block, el: block.get("html")})
+          .on("block:contextmenu", this.hideContextMenu, this)
+          .render().el
       );
     },
 
     showContextMenu: function(e) {
-      e.stopPropagation()
-      this.$el.prepend(this.contextMenu.render().el);
+      if (this.model.hasContextMenu()) {
+        e.stopPropagation()
+        this.$el.prepend(this.contextMenu.render().el);
+        this.trigger("block:contextmenu");
+      }
     },
 
     hideContextMenu: function(e) {
-      this.contextMenu.$el.detach()
+      if (this.model.hasContextMenu()) {
+        this.contextMenu.$el.detach();
+      }
+      this.trigger("block:contextmenu");
     },
 
     attachInserter: function(e) {

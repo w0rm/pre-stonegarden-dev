@@ -79,6 +79,7 @@
 }
 
 .sg-contextmenu-show {
+  @include border-radius;
   background: hsl(0, 0, 33%);
   width: 32px;
   height: 32px;
@@ -96,6 +97,6 @@
   }
   position: absolute;
   z-index: 20;
-  left: -16px;
+  left: -32px;
   top: 6px;
 }

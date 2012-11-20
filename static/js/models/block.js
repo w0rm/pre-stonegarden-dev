@@ -39,6 +39,10 @@ define(["jquery"
 
     // Contextmenu items
 
+    hasContextMenu: function() {
+      return true;
+    },
+
     getContextMenu: function() {
       var items = [];
 
@@ -85,7 +89,6 @@ define(["jquery"
       this.trigger("block:lowlight");
     }
 
-
   });
 
 
@@ -95,14 +98,28 @@ define(["jquery"
       type: "wysiwyg",
       template: "content",
       html: $("#block-placeholder-template").html()
+    },
+
+    hasContextMenu: function() {
+      return !this.isNew();
     }
 
   });
 
-  models.PageBlock = models.Block;
+  models.PageBlock = models.Block.extend({
+    hasContextMenu: function() {
+      return false;
+    },
+  });
+
   models.RowBlock = models.Block;
 
   models.ColumnBlock = models.Block.extend({
+
+    hasContextMenu: function() {
+      return false;
+    },
+
     getContextMenu: function() {
       return this.parentBlock.getContextMenu()
     }
