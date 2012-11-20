@@ -36,15 +36,6 @@ define(["jquery"
       return !!this.parentBlock;
     },
 
-    // Events needed to highlight block
-
-    highlight: function() {
-      this.trigger("highlight");
-    },
-
-    lowlight: function() {
-      this.trigger("lowlight");
-    },
 
     // Contextmenu items
 
@@ -79,28 +70,31 @@ define(["jquery"
     },
 
     delete: function() {
-      this.trigger("context:delete");
+      this.trigger("block:delete");
     },
 
     editAttributes: function() {
-      this.trigger("context:attributes");
+      this.trigger("block:attributes");
+    },
+
+    highlight: function() {
+      this.trigger("block:highlight");
+    },
+
+    lowlight: function() {
+      this.trigger("block:lowlight");
     }
+
 
   });
 
-
-  var placeholderTemplate = '<div class="sg-placeholder js-placeholder"><p>' +
-    t_("This text is not written yet.") +
-    ' <strong>' + t_("Click to write the text.") + '</strong><br>' +
-    t_("Do not worry, such placeholder texts are not visible on the public website until you edit them.") +
-    '</p></div>';
 
   models.WysiwygBlock = models.Block.extend({
 
     defaults: {
       type: "wysiwyg",
       template: "content",
-      html: placeholderTemplate
+      html: $("#block-placeholder-template").html()
     }
 
   });

@@ -3,9 +3,7 @@ define(["jquery"
       , "backbone"
       , "stonegarden"], function ($, _, Backbone, sg) {
 
-  var collections = sg.collections
-    , models = sg.models
-    , views = sg.views || (sg.views = {});
+  var views = sg.views || (sg.views = {});
 
 
   views.ContextMenu = Backbone.View.extend({
@@ -38,19 +36,19 @@ define(["jquery"
               this.renderMenu(item)
             );
             $item.hover(
-              function(){ item.context.trigger("highlight"); },
-              function(){ item.context.trigger("lowlight"); }
+              function(){ item.context.highlight(); },
+              function(){ item.context.lowlight(); }
             );
           } else {
             $item.hover(
-              function(){ menu.context.trigger("highlight"); },
-              function(){ menu.context.trigger("lowlight"); }
+              function(){ menu.context.highlight(); },
+              function(){ menu.context.lowlight(); }
             );
             if (item.click) {
               $item.append(
                 $('<a href="#">' + item.text + '</a>').click(function(e){
                   e.preventDefault();
-                  item.click.call(item.context);
+                  item.click.call(menu.context);
                 })
               )
             } else {

@@ -15,6 +15,7 @@ $def with (page=None)
     <style>
         $:page.get("css_code")
     </style>
+    $:render.site.js_templates()
 </head>
 <body data-id="$page.get("id")" class="$page.get("class")">
     $:flash.render()

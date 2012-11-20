@@ -65,7 +65,7 @@ def delete_block_by_id(block_id):
         vars=block,
         is_deleted=1)
 
-    if block.block_id:
+    if block.parent_id:
         where += " AND parent_id = $parent_id"
     else:
         where += " AND parent_id IS NULL"

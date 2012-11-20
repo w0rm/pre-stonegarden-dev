@@ -2,8 +2,10 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/block_inserter"
       , "views/context_menu"
+      , "views/modal"
+      , "views/block_inserter"
+      , "views/block_delete"
       , "models/block"], function ($, _, Backbone, sg) {
 
 
@@ -25,16 +27,25 @@ define(["jquery"
     initialize: function() {
       this.inserter = new views.BlockInserter;
       this.contextMenu = new views.ContextMenu({model: this.model});
-      this.model.on("highlight", this.highlight, this);
-      this.model.on("lowlight", this.lowlight, this);
+      this.model
+        .on("block:highlight", this.highlightBlock, this)
+        .on("block:lowlight", this.lowlightBlock, this)
+        .on("block:delete", this.deleteBlock, this)
+        .on("destroy", this.remove, this)
     },
 
-    highlight: function() {
+    highlightBlock: function() {
       this.$el.addClass("sg-block-highlight");
     },
 
-    lowlight: function() {
+    lowlightBlock: function() {
       this.$el.removeClass("sg-block-highlight");
+    },
+
+    deleteBlock: function() {
+      new views.Modal({
+        contentView: new views.BlockDelete({model: this.model})
+      }).open()
     },
 
     render: function() {
@@ -49,9 +60,10 @@ define(["jquery"
           , block = sg.templateBlocks.find(function(b) {
               return b.get("name") === block_name
             });
-
-        new views.Block({model: block, el: block.get("html")})
-          .render().$el.appendTo($block);
+        if (block) {
+          new views.Block({model: block, el: block.get("html")})
+            .render().$el.appendTo($block);
+        }
       });
 
       if (this.model.blocks.length) {

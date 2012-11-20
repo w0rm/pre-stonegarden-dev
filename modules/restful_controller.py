@@ -32,6 +32,6 @@ class RESTfulController:
 
     def DELETE(self, resource_id=None):
         if resource_id is None:
-            return self.delete_collection(resource_id)
+            return self.delete_collection()
         else:
-            return self.delete()
+            return self.delete(resource_id)

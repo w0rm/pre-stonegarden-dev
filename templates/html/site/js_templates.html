@@ -1,0 +1,24 @@
+$if auth.get_user():
+    <script type="text/template" id="modal-template">
+        <a class="close-reveal-modal">&#215;</a>
+        <div class="js-content"></div>
+    </script>
+    <script type="text/template" id="block-delete-template">
+        <h2>$_("Delete this block?")</h2>
+        <p>$_("It will also delete all the nested blocks.")</p>
+        <p>
+            <button class="button js-ok">$_("Delete")</button>
+            <button class="button js-cancel">$_("Cancel")</button>
+        </p>
+    </script>
+    <script type="text/template" id="block-placeholder-template">
+        <div class="sg-placeholder js-placeholder">
+            <p>
+                $_("This text is not written yet.")
+                <strong>$_("Click to write the text.")</strong><br>
+            </p>
+            <p>
+                $_("Do not worry, such placeholder texts are not visible on the public website until you edit them.")
+            </p>
+        </div>
+    </script>
