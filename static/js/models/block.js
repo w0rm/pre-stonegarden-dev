@@ -44,7 +44,8 @@ define(["jquery"
     },
 
     getContextMenu: function() {
-      var items = [];
+      var items = []
+        , parentMenu;
 
       items.push({
         text: t_("Attributes"),
@@ -60,10 +61,13 @@ define(["jquery"
       };
 
       if (this.hasParent()) {
-        items.push(_.extend(
-          {text: t_("Parent")},
-          this.parentBlock.getContextMenu()
-        ))
+        parentMenu = this.parentBlock.getContextMenu();
+        if (parentMenu) {
+          items.push(_.extend(
+            {text: t_("Parent")},
+            parentMenu
+          ))
+        }
       };
 
       return {
@@ -110,6 +114,10 @@ define(["jquery"
     hasContextMenu: function() {
       return false;
     },
+
+    getContextMenu: function() {
+      return false
+    }
   });
 
   models.RowBlock = models.Block;
