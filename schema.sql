@@ -103,6 +103,7 @@ CREATE TABLE blocks (
 	updated_at TIMESTAMP NULL,
 	published_at TIMESTAMP NULL,
 	is_published BOOL DEFAULT '0',
+	is_system BOOL DEFAULT '0',
 	is_deleted BOOL DEFAULT '0',
 	PRIMARY KEY (id),
 	UNIQUE (name),
@@ -110,9 +111,9 @@ CREATE TABLE blocks (
 	FOREIGN KEY(parent_id) REFERENCES blocks (id),
 	FOREIGN KEY(user_id) REFERENCES users (id),
 	CHECK (is_published IN (0, 1)),
+	CHECK (is_system IN (0, 1)),
 	CHECK (is_deleted IN (0, 1))
 );
-
 
 
 CREATE TABLE documents (

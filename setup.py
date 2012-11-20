@@ -6,6 +6,12 @@ import json
 
 if __name__ == "__main__":
 
+    schema_commands = open("schema.sql", "r").read().split(";")
+
+    for cmd in schema_commands:
+        if cmd.strip():
+            db.query(cmd)
+
     data = web.storage(json.loads(open("data.json", "r").read()))
 
     now = web.db.SQLLiteral("CURRENT_TIMESTAMP")
@@ -20,7 +26,6 @@ if __name__ == "__main__":
         block_id = db.insert(
             "blocks",
             user_id=user.id,
-            created_at=now,
             page_id=page_id,
             level=level,
             parent_id=parent_id,
