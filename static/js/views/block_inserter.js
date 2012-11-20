@@ -11,6 +11,8 @@ define(["jquery"
 
     className: "sg-block-inserter js-inserter",
 
+    template: _.template($("#block-inserter-template").html()),
+
     events: {
       "mousemove": "mousemoveEvent"
     },
@@ -20,7 +22,7 @@ define(["jquery"
     },
 
     render: function() {
-
+      this.$el.html(this.template());
       return this;
     }
 

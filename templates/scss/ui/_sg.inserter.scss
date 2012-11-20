@@ -1,7 +1,75 @@
 
-.sg-block-inserter {
-  height: 0;
-  border-top: 1px dashed #ccc;
-  margin-bottom: -1px;
-}
+/*
+*  Insert content menu
+*/
 
+.sg-block-inserter {
+  position: absolute;
+  width: 100%;
+  margin-top: -5px;
+  height: 10px;
+
+  .sg-block-inserter-line {
+    zoom: 1;
+    overflow: hidden;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    border-bottom: 2px dashed $grey80;
+  }
+
+  .sg-block-inserter-menu {
+    @include border-radius;
+
+    @include transition(opacity 0.5s 0.3s ease-in-out);
+    @include transparent;
+
+    float: left;
+    position: relative;
+    left: -5px;
+    top: -5px;
+    z-index: 2;
+    white-space: nowrap;
+    height: 24px;
+    padding: 0 4px;
+    font: 12px/24px sans-serif;
+    background: $grey60;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 100%;
+      top: 7px;
+      height: 0;
+      border: 5px solid transparent;
+      border-right: none;
+      border-left-color: $grey60;
+    }
+
+    .sg-block-inserter-item {
+      @extend .sg-contextmenu-item;
+      float: left;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center!important;
+      cursor: pointer;
+      display: block;
+      vertical-align: middle;
+      font-size: 16px;
+      text-decoration: none;
+      color: hsl(0, 0, 90%);
+      &:hover, &.sg-active {
+        color: #fff;
+        background: hsl(0, 0, 20%)!important;
+      }
+    }
+
+  }
+  &:hover {
+    .sg-block-inserter-menu {
+      @include opaque;
+    }
+  }
+}
