@@ -8,18 +8,23 @@
   width: 100%;
   margin-top: -5px;
   height: 10px;
+  z-index: 2;
 
   .sg-block-inserter-line {
     zoom: 1;
     overflow: hidden;
-    margin-top: 5px;
+    margin-top: 4px;
     position: absolute;
     z-index: 1;
     width: 100%;
+
     border-bottom: 2px dashed $grey80;
   }
 
   .sg-block-inserter-menu {
+
+    z-index: 2;
+
     @include border-radius;
 
     @include transition(opacity 0.5s 0.3s ease-in-out);
@@ -28,7 +33,7 @@
     float: left;
     position: relative;
     left: -5px;
-    top: -5px;
+    top: -7px;
     z-index: 2;
     white-space: nowrap;
     height: 24px;

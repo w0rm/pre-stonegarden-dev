@@ -3,6 +3,7 @@
 @import "ui/sg.inserter";
 @import "ui/sg.contextmenu";
 @import "ui/sg.pagemenu";
+@import "ui/sg.placeholder";
 
 
 .block {
@@ -10,6 +11,10 @@
   padding-top: 1px;
   padding-bottom: 1px;
   // Allow context menu positioning
+  position: relative;
+}
+
+.js-blocks {
   position: relative;
 }
 
