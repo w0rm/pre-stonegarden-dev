@@ -8,9 +8,8 @@ define(["jquery"
       , "views/block_placeholder"], function ($, _, Backbone, sg) {
 
 
-  var collections = sg.collections
-    , models = sg.models
-    , views = sg.views || (sg.views = {});
+  var views = sg.views || (sg.views = {})
+    , utils = sg.utils;
 
 
   views.BlocksEditable = views.Blocks.extend({
@@ -22,10 +21,13 @@ define(["jquery"
     },
 
     initialize: function() {
-      this.inserter = new views.BlockInserter;
-      this.placeholder = new views.BlockPlaceholder;
+      this.inserter = (new views.BlockInserter)
+        .on("block:create", this.createBlock, this);
+      this.placeholder = (new views.BlockPlaceholder)
+        .on("block:create", this.createBlock, this);
       this.collection
         .on("remove", this.appendPlaceholder, this)
+        .on("add", this.detachPlaceholder, this);
     },
 
     render: function(){
@@ -54,8 +56,25 @@ define(["jquery"
 
     },
 
-    detachInserter: function(e) {
-      this.inserter.$el.detach()
+    detachPlaceholder: function() {
+      this.placeholder.$el.detach();
+      return this;
+    },
+
+    detachInserter: function() {
+      this.inserter.$el.detach();
+      return this;
+    },
+
+    createBlock: function(attrs) {
+      this.detachInserter();
+      this.detachPlaceholder();
+      _.extend(attrs, {
+        parent_id: this.collection.parentBlock.get("id")
+      });
+
+      console.log(utils.guessBlockType(attrs))
+
     }
 
   });
