@@ -3,7 +3,8 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "models/block"
-      , "views/form"], function ($, _, Backbone, sg) {
+      , "views/form"
+      , "jquery.tinymce"], function ($, _, Backbone, sg) {
 
   var views = sg.views;
 
@@ -37,6 +38,9 @@ define(["jquery"
 
     render: function() {
       this.$el.html(this.template(this.getTemplateAttributes()));
+      if (this.attrs.type === "wysiwyg") {
+        this.$("[name=content]").tinymce(sg.config.tinymce);
+      }
       return this;
     }
 
