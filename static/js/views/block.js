@@ -2,10 +2,11 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/context_menu"
+      , "views/contextmenu"
       , "views/modal"
       , "views/blocks"
       , "views/blocks_editable"
+      , "views/block_delete"
       , "models/block"], function ($, _, Backbone, sg) {
 
 
@@ -65,9 +66,6 @@ define(["jquery"
 
       // Render blocks
       if (this.model.isContainer()) {
-
-        console.log(this.model.get("template"))
-
         this.blocks = new views.BlocksEditable({
           el: this.$blocks,
           collection: this.model.blocks
@@ -75,7 +73,6 @@ define(["jquery"
           .on("block:contextmenu", this.propagateContextMenu, this)
           .render()
       } else if (this.model.blocks.length) {
-
         this.blocks = new views.Blocks({
           el: this.$blocks,
           collection: this.model.blocks
@@ -83,7 +80,6 @@ define(["jquery"
           .on("block:contextmenu", this.propagateContextMenu, this)
           .render()
       }
-
 
       return this;
     },
