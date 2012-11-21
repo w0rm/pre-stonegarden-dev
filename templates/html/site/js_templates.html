@@ -4,7 +4,7 @@ $if auth.get_user():
         <div class="js-content"></div>
     </script>
     <script type="text/template" id="block-delete-template">
-        <h2>$_("Delete this block?")</h2>
+        <h3>$_("Delete this block?")</h3>
         <p>$_("It will also delete all the nested blocks.")</p>
         <p>
             <button class="button js-ok">$_("Delete")</button>
@@ -33,6 +33,10 @@ $if auth.get_user():
                         <a class="js-create" data-template="nav"
                            data-type="root" href="#" >$_("Navigation")</a>
                     </li>
+                    <li class="sg-contextmenu-item">
+                        <a class="js-create" data-template="content"
+                           data-type="html" href="#" >$_("HTML code")</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -40,7 +44,26 @@ $if auth.get_user():
     </script>
     <script type="text/template" id="block-form-template">
         <form>
-            <textarea name="content"><%= block.content || "" %></textarea>
+            <p><textarea name="content"><%= block.content || "" %></textarea></p>
+            <p>
+                <button class="button" type="submit">$_("Save")</button>
+                <button class="button" type="reset">$_("Cancel")</button>
+            </p>
+        </form>
+    </script>
+    <script type="text/template" id="block-nav-form-template">
+        <form>
+            <h3>$_("Select navigation type")</h3>
+            <p>
+                <select name="type">
+                $for opt in config.nav_types:
+                    <option value="$opt"
+                            <%= block.type === "$opt" ? "selected" : "" %>
+                    >
+                        $_(config.labels[opt])
+                    </option>
+                </select>
+            </p>
             <p>
                 <button class="button" type="submit">$_("Save")</button>
                 <button class="button" type="reset">$_("Cancel")</button>

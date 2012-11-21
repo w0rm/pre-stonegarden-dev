@@ -45,19 +45,19 @@ config = web.storage(
         "m": [700, 700, False, True, False, 90, 0],
         "l": [1000, 1000, False, True, False, 90, 0],
     },
+    nav_types=["root", "children", "siblings", "breadcrumbs"],
     labels=dict(
         # User Roles
         admin=N_("Administrator"),
         editor=N_("Editor"),
         user=N_("User"),
-        # Blocks
-        page=N_("Main page"),
-        subpage=N_("Inner page"),
-        htmlcode=N_("HTML code"),
-        richtext=N_("Rich text"),
-        navigation=N_("Navigation"),
-        subnavigation=N_("Subnavigation"),
-        siblingsnavigation=N_("Siblings navigation"),
+        # Content blocks
+        html=N_("HTML code"),
+        wysiwyg=N_("Rich text"),
+        # Navigation blocks
+        root=N_("Navigation"),
+        children=N_("Subnavigation"),
+        siblings=N_("Siblings navigation"),
         breadcrumbs=N_("Breadcrumbs"),
         # Template block names
         global_header=N_("Site header"),

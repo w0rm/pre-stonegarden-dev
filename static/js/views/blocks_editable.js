@@ -6,7 +6,8 @@ define(["jquery"
       , "views/blocks"
       , "views/block_inserter"
       , "views/block_placeholder"
-      , "views/block_form"], function ($, _, Backbone, sg) {
+      , "views/block_form"
+      , "views/block_nav_form"], function ($, _, Backbone, sg) {
 
 
   var views = sg.views

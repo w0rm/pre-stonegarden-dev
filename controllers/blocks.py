@@ -21,6 +21,9 @@ blockForm = web.form.Form(
     Textbox("type"),
     # For content blocks
     Textbox("content"),
+    # For all blocks (settings)
+    Textbox("css_class"),
+    Checkbox("is_published"),
 )
 
 blockPasteForm = web.form.Form(
@@ -30,20 +33,6 @@ blockPasteForm = web.form.Form(
     validators=[web.form.Validator(
         N_("Buffer is empty."),
         lambda form: get_block_from_session())]
-)
-
-blockEditForm = web.form.Form(
-    Textbox("content"),
-    Textbox("params"),
-)
-
-blockTemplateForm = web.form.Form(
-    Textbox("template", notnull),  # TODO: check for the right value.
-)
-
-blockSettingsForm = web.form.Form(
-    Textbox("css_class"),
-    Checkbox("is_published", description=N_("Show on site"), value="ok"),
 )
 
 
@@ -88,24 +77,6 @@ class Blocks(RESTfulController):
         delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")
         return '{"status":1}'
-
-
-class EditBlockSettings:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
-        page_id = web.input(page_id=None).page_id
-        block = get_block_by_id(block_id)
-        block_form = blockSettingsForm(web.input())
-        if block_form.valid:
-            db.update(
-                "blocks",
-                where="$block_id = id",
-                vars=locals(),
-                updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
-                **block_form.d)
-            raise web.seeother(link_to("blocks", block, page_id=page_id))
-        return "NOT OK"
 
 
 class CopyBlock:
