@@ -17,6 +17,7 @@ define(["jquery"
     initialize: function() {
       this.blocks = new collections.Blocks;
       this.blocks.reset(this.get("blocks"));
+      this.blocks.parentBlock = this;
       this.blocks.each(function(block){
         block.parentBlock = this;
       }, this)
@@ -35,7 +36,6 @@ define(["jquery"
     hasParent: function() {
       return !!this.parentBlock;
     },
-
 
     // Contextmenu items
 
@@ -96,19 +96,7 @@ define(["jquery"
   });
 
 
-  models.WysiwygBlock = models.Block.extend({
-
-    defaults: {
-      type: "wysiwyg",
-      template: "content",
-      html: $("#block-placeholder-template").html()
-    },
-
-    hasContextMenu: function() {
-      return !this.isNew();
-    }
-
-  });
+  models.WysiwygBlock = models.Block;
 
   models.PageBlock = models.Block.extend({
     hasContextMenu: function() {

@@ -4,8 +4,8 @@ define(["jquery"
       , "stonegarden"
       , "views/context_menu"
       , "views/modal"
-      , "views/block_inserter"
-      , "views/block_delete"
+      , "views/blocks"
+      , "views/blocks_editable"
       , "models/block"], function ($, _, Backbone, sg) {
 
 
@@ -18,14 +18,10 @@ define(["jquery"
 
     events: {
       "mouseenter": "showContextMenu",
-      "mouseleave": "hideContextMenu",
-      "mousemove .js-block": "attachInserter",
-      "mousemove .js-placeholder": "attachInserter",
-      "mouseleave .js-blocks": "detachInserter"
+      "mouseleave": "hideContextMenu"
     },
 
     initialize: function() {
-      this.inserter = new views.BlockInserter;
       this.contextMenu = new views.ContextMenu({model: this.model});
       this.model
         .on("block:highlight", this.highlightBlock, this)
@@ -67,25 +63,29 @@ define(["jquery"
         }
       });
 
-      if (this.model.blocks.length) {
-        // Append blocks
-        this.model.blocks.each(this.appendBlock, this);
-      } else if (this.model.isContainer()) {
-        // Show placeholder
-        this.placeholder = new models.WysiwygBlock;
-        this.placeholder.parentBlock = this.model;
-        this.appendBlock(this.placeholder);
+      // Render blocks
+      if (this.model.isContainer()) {
+
+        console.log(this.model.get("template"))
+
+        this.blocks = new views.BlocksEditable({
+          el: this.$blocks,
+          collection: this.model.blocks
+        })
+          .on("block:contextmenu", this.propagateContextMenu, this)
+          .render()
+      } else if (this.model.blocks.length) {
+
+        this.blocks = new views.Blocks({
+          el: this.$blocks,
+          collection: this.model.blocks
+        })
+          .on("block:contextmenu", this.propagateContextMenu, this)
+          .render()
       }
 
-      return this;
-    },
 
-    appendBlock: function(block) {
-      this.$blocks.append(
-        new views.Block({model: block, el: block.get("html")})
-          .on("block:contextmenu", this.propagateContextMenu, this)
-          .render().el
-      );
+      return this;
     },
 
     showContextMenu: function(e) {
@@ -102,27 +102,9 @@ define(["jquery"
       }
     },
 
-    propagateContextMenu: function(e) {
+    propagateContextMenu: function() {
       this.hideContextMenu();
       this.trigger("block:contextmenu");
-    },
-
-    attachInserter: function(e) {
-      var $block = $(e.currentTarget)
-        , top = $block.is(".js-placeholder") || (e.pageY - $block.offset().top) < $block.height() / 2
-        , $el = $block[top ? "prev" : "next"]();
-
-      e.stopPropagation();
-
-      if (!$el.is(".js-inserter") && $block.parent().is(".js-blocks") &&
-          !$block.parent().parent().is(".row")) {
-        this.inserter.render().$el["insert" + (top ? "Before" : "After") ]($block);
-      }
-
-    },
-
-    detachInserter: function(e) {
-      this.inserter.$el.detach()
     },
 
     editBlock: function(e) {
