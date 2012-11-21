@@ -15,7 +15,8 @@ class ValidationError(web.HTTPError):
 
     def __init__(self, message, headers=None):
         status = "412 Precondition Failed"
-        web.HTTPError.__init__(self, status, headers or self.headers, unicode(message))
+        web.HTTPError.__init__(self, status, headers or self.headers,
+                               unicode(message))
 
 
 class Form(web.form.Form, object):
@@ -60,7 +61,7 @@ class Form(web.form.Form, object):
     def render(self, names=None, x=None, y=None):
         out = []
         if self.note and not x:
-            out.append('<p class="wrong">'+self.rendernote(self.note)+'</p>')
+            out.append('<p class="wrong">' + self.rendernote(self.note) + '</p>')
         for i in self.inputs[x:y]:
             if names is None or i.name in names:
                 out.append(self.render_input(i))
@@ -87,15 +88,14 @@ class Form(web.form.Form, object):
         """Renders errors block"""
         out = []
         errors = ((i.description, i.note) for i in self.inputs if i.note)
-        errors = sorted(errors, key = lambda x: x[1])
-        for err, fields in groupby(errors, key = lambda x: x[1]):
+        errors = sorted(errors, key=lambda x: x[1])
+        for err, fields in groupby(errors, key=lambda x: x[1]):
             out.append('<li>')
-            out.append( ", ".join(_(f[0]) for f in fields) )
+            out.append(", ".join(_(f[0]) for f in fields))
             out.append(": ")
             out.append(_(err))
             out.append('</li>')
         return ''.join(out)
-
 
 
 class Textbox(web.form.Textbox):
@@ -124,10 +124,12 @@ class Password(Textbox):
     def get_type(self):
         return "password"
 
+
 class Searchbox(Textbox):
 
     def get_type(self):
         return "search"
+
 
 class Hidden(web.form.Hidden):
 
@@ -152,13 +154,14 @@ class Dropdown(web.form.Dropdown):
 
         for arg in self.args:
             if isinstance(arg, (tuple, list)):
-                value, desc= arg
+                value, desc = arg
             else:
                 value, desc = arg, arg
 
             if str(self.value) == str(value) or (isinstance(self.value, list) and value in self.value):
                 select_p = ' selected="selected"'
-            else: select_p = ''
+            else:
+                select_p = ''
             x += '  <option%s value="%s">%s</option>\n' % (select_p, web.net.websafe(value), web.net.websafe(_(desc)))
 
         x += '</select>\n'
@@ -191,20 +194,25 @@ class Radio(web.form.Radio):
         x = ''
         for arg in self.args:
             if isinstance(arg, (tuple, list)):
-                value, desc= arg
+                value, desc = arg
             else:
                 value, desc = arg, arg
             attrs = self.attrs.copy()
             attrs['name'] = self.name
             attrs['type'] = 'radio'
             attrs['value'] = value
-            attrs['id'] = attrs['id']+"_"+value
+            attrs['id'] = attrs['id'] + "_" + value
             if self.value == value:
                 attrs['checked'] = 'checked'
             x += '<label class="after">'
             x += '<input %s/> %s' % (attrs, web.net.websafe(desc))
             x += '</label>'
         return x
+
+
+class TextboxList(web.form.Input):
+
+    pass
 
 
 class CheckboxList(web.form.Input):
@@ -219,7 +227,7 @@ class CheckboxList(web.form.Input):
 
     def render(self):
         attrs = self.attrs.copy()
-        x = '' #'<fieldset %s>\n' % attrs
+        x = ''  # '<fieldset %s>\n' % attrs
         for arg in self.args:
             if self.item_pre:
                 x += self.item_pre
@@ -302,4 +310,3 @@ def validDate(message=u"Некорректное значение даты"):
         except:
             return False
     return web.form.Validator(message, valid_date)
-

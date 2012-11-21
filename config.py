@@ -51,6 +51,8 @@ config = web.storage(
         admin=N_("Administrator"),
         editor=N_("Editor"),
         user=N_("User"),
+        # Page blocks
+        page=N_("Page"),
         # Content blocks
         html=N_("HTML code"),
         wysiwyg=N_("Rich text"),

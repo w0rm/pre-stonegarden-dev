@@ -7,8 +7,7 @@ $code:
     else:
         css_class = ""
 $if auth.get_user():
-	<div class="block $block.template $css_class $block.css_class js-block"
-         data-id="$block.id">
+	<div class="block $block.template $css_class $block.css_class js-block">
 		$:contents
 	</div>
 $else:

@@ -4,7 +4,7 @@
 @import "ui/sg.contextmenu";
 @import "ui/sg.pagemenu";
 @import "ui/sg.placeholder";
-
+@import "ui/sg.row_block";
 
 .block {
   // Prevent collapsing margins
@@ -14,10 +14,15 @@
   position: relative;
 }
 
-.js-blocks {
+.blocks {
   position: relative;
 }
 
+
 .sg-block-highlight {
   @include box-shadow;
+}
+
+.sg-hidden {
+  display: none;
 }

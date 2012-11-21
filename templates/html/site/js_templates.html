@@ -70,3 +70,30 @@ $if auth.get_user():
             </p>
         </form>
     </script>
+    <script type="text/template" id="block-row-form-template">
+        <form>
+            <h3>$_("Insert columns")</h3>
+            <p>
+                <select class="js-size">
+                <% _.each([2,3,4,5,6], function(size){ %>
+                    <option value="<%= size %>"
+                            <%= block.sizes.length === size ? "selected" : "" %>
+                    >
+                        $_("Columns"): <%= size %>
+                    </option>
+                <% }) %>
+                </select>
+            </p>
+            <div class="sg-block-row js-columns">
+            <% for(var i=1; i<=6; i++) { %>
+                <div class="sg-block-column-<%= block.sizes[i-1] %> <%= (i > block.sizes.length) ? 'sg-hidden' : '' %>">
+                    <input name="sizes" value="<%= block.sizes[i-1] %>" >
+                </div>
+            <% } %>
+            </div>
+            <p>
+                <button class="button" type="submit">$_("Save")</button>
+                <button class="button" type="reset">$_("Cancel")</button>
+            </p>
+        </form>
+    </script>

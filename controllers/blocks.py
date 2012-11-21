@@ -19,6 +19,8 @@ blockForm = web.form.Form(
     Textbox("position", notnull),
     Textbox("template", notnull),
     Textbox("type"),
+    # For row blocks
+    TextboxList("sizes"),
     # For content blocks
     Textbox("content"),
     # For all blocks (settings)
@@ -49,9 +51,9 @@ class Blocks(RESTfulController):
 
     @auth.restrict("admin", "editor")
     def create(self):
-        d = web.input(is_template=False, page_id=None)
+        d = web.input(is_template=False, page_id=None, sizes=[])
         block_form = blockForm()
-        if block_form.validates():
+        if block_form.validates(d):
             block = create_block(block_form.d, d.is_template, d.page_id)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         return "NOT OK"

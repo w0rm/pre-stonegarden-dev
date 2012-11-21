@@ -47,7 +47,26 @@ def create_block(block, is_template=False, page_id=None):
         is_published=True,
     )
 
+    sizes = block.pop("sizes")
+
     block.id = db.insert("blocks", **block)
+
+    # Create columns for row block
+    if block.template == "row":
+        column = web.storage(
+            created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+            is_published=True,
+            page_id=parent.page_id,
+            parent_id=block.id,
+            ids=block.ids + "," + str(block.id),
+            level=block.level + 1,
+            template="column",
+            position=1,
+        )
+        for i, size in enumerate(sizes):
+            column.position = i + 1
+            column.size = size
+            db.insert("blocks", **column)
 
     return block
 

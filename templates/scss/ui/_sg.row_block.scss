@@ -1,0 +1,21 @@
+.sg-block-row {
+  overflow: hidden;
+  margin-bottom: 17px;
+}
+
+%sg-block-column {
+  float: left;
+  @include box-sizing(border-box);
+  padding: 0 2px;
+  input {
+    display: block;
+    width: 100%;
+  }
+}
+
+@for $i from 1 through 12 {
+  .sg-block-column-#{$i} {
+    width: 100% * $i / 12;
+    @extend %sg-block-column;
+  }
+}
