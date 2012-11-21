@@ -39,9 +39,11 @@ define(["jquery"
         case "column":
           return "Column";
         case "row":
-          return "Row"
+          return "Row";
+        case "nav":
+          return "Nav";
         default:
-          return ""
+          return "";
       }
     }
 

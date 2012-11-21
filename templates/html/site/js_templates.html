@@ -22,23 +22,15 @@ $if auth.get_user():
     </script>
     <script type="text/template" id="block-inserter-template">
         <div class="sg-block-inserter-menu">
-            <a class="sg-block-inserter-item sg-ico-text js-block-insert"
-               data-template="richtext" href="#"></a>
-            <a class="sg-block-inserter-item sg-ico-cols-3 js-block-insert"
+            <a class="sg-block-inserter-item sg-ico-text js-create"
+               data-template="content" data-type="wysiwyg" href="#"></a>
+            <a class="sg-block-inserter-item sg-ico-cols-3 js-create"
                data-template="row" href="#"></a>
             <div class="sg-block-inserter-item">
                 <span class="sg-ico-menu-list"></span>
                 <ul class="sg-contextmenu">
-                    <li class="sg-contextmenu-item"><span>$_("Navigation") →</span>
-                        <ul class="sg-contextmenu">
-                        $for t in ("navigation", "subnavigation", "siblingsnavigation", "breadcrumbs"):
-                            <li class="sg-contextmenu-item">
-                                <a class="js-insert-block" data-template="$t" href="#" >$_(config.labels[t])</a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="sg-contextmenu-item">
-                        <a class="js-insert-block" data-template="htmlcode" href="#" >$_(config.labels["htmlcode"])</a>
+                        <a class="js-create" data-template="nav" href="#" >$_("Navigation")</a>
                     </li>
                 </ul>
             </div>

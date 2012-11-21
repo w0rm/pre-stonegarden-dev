@@ -110,6 +110,8 @@ define(["jquery"
 
   models.RowBlock = models.Block;
 
+  models.NavBlock = models.Block;
+
   models.ColumnBlock = models.Block.extend({
 
     hasContextMenu: function() {
