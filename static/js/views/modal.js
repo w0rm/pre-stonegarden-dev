@@ -15,7 +15,7 @@ define(["jquery"
 
     initialize: function() {
       this.contentView = this.options.contentView
-        .on("modal:close", this.close, this);
+        .on("reset modal:close", this.close, this);
       this.$el.addClass(this.options.sizeClass || "medium");
     },
 
