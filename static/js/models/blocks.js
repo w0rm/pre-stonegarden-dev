@@ -14,9 +14,18 @@ define(["jquery"
 
     url: "/a/blocks",
 
+    initialize: function() {
+      this.on("add", this.setParentBlock, this);
+    },
+
+    setParentBlock: function(model) {
+      model.parentBlock = this.parentBlock;
+    },
+
     model: function(attrs, options) {
-      var modelClass = models[utils.guessBlockType(attrs) + "Block"];
-      return new modelClass(attrs, options);
+      var modelClass = models[utils.guessBlockType(attrs) + "Block"]
+        , model = new modelClass(attrs, options);
+        return model;
     }
 
   });

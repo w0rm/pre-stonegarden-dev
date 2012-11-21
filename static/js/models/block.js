@@ -16,12 +16,34 @@ define(["jquery"
     urlRoot: "/a/blocks",
 
     initialize: function() {
-      this.blocks = new collections.Blocks;
-      this.blocks.reset(this.get("blocks"));
+      this.createBlocks(this.get("blocks"));
+    },
+
+    set: function(key, value, options) {
+      var attrs;
+
+      if (_.isObject(key) || key == null) {
+        attrs = key;
+        options = value;
+      } else {
+        attrs = {};
+        attrs[key] = value;
+      }
+
+      if ("blocks" in attrs) {
+        this.createBlocks(attrs.blocks)
+      }
+
+      return (Backbone.Model.prototype.set).apply(this, arguments);
+    },
+
+    createBlocks: function(blocks) {
+      var self = this;
+      this.blocks = new collections.Blocks(blocks);
       this.blocks.parentBlock = this;
       this.blocks.each(function(block){
-        block.parentBlock = this;
-      }, this)
+        block.parentBlock = self
+      })
     },
 
     // State information
