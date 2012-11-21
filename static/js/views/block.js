@@ -12,7 +12,7 @@ define(["jquery"
 
   var collections = sg.collections
     , models = sg.models
-    , views = sg.views || (sg.views = {});
+    , views = sg.views;
 
 
   views.Block = Backbone.View.extend({

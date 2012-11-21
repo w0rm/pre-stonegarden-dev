@@ -4,7 +4,7 @@ define(["jquery"
       , "stonegarden"
       , "views/contextmenu"], function ($, _, Backbone, sg) {
 
-  var views = sg.views || (sg.views = {});
+  var views = sg.views;
 
   // TODO: generate context menu using view
 

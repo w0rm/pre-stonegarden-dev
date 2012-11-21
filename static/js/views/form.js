@@ -1,21 +1,26 @@
 define(["jquery"
       , "underscore"
       , "backbone"
-      , "stonegarden"], function ($, _, Backbone, sg) {
+      , "stonegarden"
+      , "utils"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views || (sg.views = {});
 
 
- widgets.Form = Backbone.View.extend({
+ views.Form = Backbone.View.extend({
+
     events: {
       "submit": "submitEvent",
       "reset": "resetEvent"
     },
 
     initialize: function() {
-      this._isSync = false;
-      this._hasModel  = !!this.model;
+
+    },
+
+    hasModel: function() {
+      return !!this.model;
     },
 
     // Events
@@ -33,7 +38,7 @@ define(["jquery"
             self.errorEvent.apply(self, arguments);
           }
         };
-        if (this._hasModel) {
+        if (this.hasModel()) {
           this.model.save(this.serializeObject(), params);
         } else {
           this.collection.create(this.serializeObject(), params);
@@ -50,8 +55,8 @@ define(["jquery"
 
     successEvent: function(model) {
       this.exitSyncState().hideErrors();
-      !this._hasModel && this.reset();
-      this.trigger("success");
+      this.trigger("success", model);
+      !this.hasModel() && this.reset();
     },
 
     errorEvent: function (model, errors) {

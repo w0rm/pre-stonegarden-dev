@@ -15,11 +15,12 @@ from models.blocks import *
 from models.pages import get_page_by_id, load_page_data
 
 blockForm = web.form.Form(
-    Textbox("block_id"),
+    Textbox("parent_id", notnull),
     Textbox("position", notnull),
-    Textbox("template"),
+    Textbox("template", notnull),
+    Textbox("type"),
+    # For content blocks
     Textbox("content"),
-    Textbox("params"),
 )
 
 blockPasteForm = web.form.Form(

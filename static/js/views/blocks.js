@@ -7,9 +7,7 @@ define(["jquery"
       , "views/block_placeholder"], function ($, _, Backbone, sg) {
 
 
-  var collections = sg.collections
-    , models = sg.models
-    , views = sg.views || (sg.views = {});
+  var views = sg.views;
 
 
   views.Blocks = Backbone.View.extend({
@@ -19,12 +17,24 @@ define(["jquery"
       return this;
     },
 
+    makeBlockView: function(block) {
+      return new views.Block({model: block, el: block.get("html")})
+        .on("block:contextmenu", this.propagateContextMenu, this)
+        .render()
+    },
+
     appendBlock: function(block) {
-      this.$el.append(
-        new views.Block({model: block, el: block.get("html")})
-          .on("block:contextmenu", this.propagateContextMenu, this)
-          .render().el
-      );
+      this.$el.append(this.makeBlockView(block).el);
+      return this;
+    },
+
+    insertBlock: function(block, el) {
+      var b = this.makeBlockView(block);
+
+      console.log(b.el);
+
+      b.$el.insertAfter(el);
+      return this;
     },
 
     propagateContextMenu: function() {

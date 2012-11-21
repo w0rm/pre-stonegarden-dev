@@ -26,7 +26,7 @@ define(["jquery"
     },
 
     closeModal: function(e) {
-      this.trigger("modal:close")
+      this.trigger("modal:close");
     }
 
   });

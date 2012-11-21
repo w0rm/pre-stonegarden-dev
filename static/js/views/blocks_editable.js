@@ -5,10 +5,11 @@ define(["jquery"
       , "views/modal"
       , "views/blocks"
       , "views/block_inserter"
-      , "views/block_placeholder"], function ($, _, Backbone, sg) {
+      , "views/block_placeholder"
+      , "views/block_form"], function ($, _, Backbone, sg) {
 
 
-  var views = sg.views || (sg.views = {})
+  var views = sg.views
     , utils = sg.utils;
 
 
@@ -67,13 +68,34 @@ define(["jquery"
     },
 
     createBlock: function(attrs) {
+      var blockForm;
+
       this.detachInserter();
       this.detachPlaceholder();
+
       _.extend(attrs, {
-        parent_id: this.collection.parentBlock.get("id")
+        parent_id: this.collection.parentBlock.get("id"),
+        page_id: sgData.pageId
       });
 
-      console.log(utils.guessBlockType(attrs))
+      blockForm = new views[utils.guessBlockType(attrs) + "BlockForm"]({
+        attrs: attrs,
+        collection: this.collection
+      })
+        .render()
+        .on("success", function(block) {
+          this.insertBlock(block, blockForm.el);
+        }, this)
+        .on("reset", function(){
+          blockForm.remove();
+          this.appendPlaceholder();
+        }, this);
+
+      if (attrs.position == 1) {
+        this.$el.prepend(blockForm.el);
+      } else {
+        this.$el.children().eq(attrs.position - 2).after(blockForm.el);
+      }
 
     }
 

@@ -30,10 +30,20 @@ $if auth.get_user():
                 <span class="sg-ico-menu-list"></span>
                 <ul class="sg-contextmenu">
                     <li class="sg-contextmenu-item">
-                        <a class="js-create" data-template="nav" href="#" >$_("Navigation")</a>
+                        <a class="js-create" data-template="nav"
+                           data-type="root" href="#" >$_("Navigation")</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="sg-block-inserter-line"></div>
+    </script>
+    <script type="text/template" id="block-form-template">
+        <form>
+            <textarea name="content"><%= block.content || "" %></textarea>
+            <p>
+                <button class="button" type="submit">$_("Save")</button>
+                <button class="button" type="reset">$_("Cancel")</button>
+            </p>
+        </form>
     </script>

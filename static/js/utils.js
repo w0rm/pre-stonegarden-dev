@@ -32,6 +32,15 @@ define(["jquery"
       return (sg.i18n && sg.i18n[s]) ? sg.i18n[s] : s
     },
 
+    getValue: function(object, prop, args) {
+      if (!(object && object[prop])) return null;
+      return _.isFunction(object[prop]) ?
+        object[prop].apply(object, args) :
+        object[prop];
+    },
+
+    isFormDataSupported: function(){ return !!window.FormData },
+
     guessBlockType: function(attrs) {
       switch (attrs.template) {
         case "page":

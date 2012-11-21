@@ -3,14 +3,15 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "utils"
-      , "models/blocks"], function ($, _, Backbone, sg) {
+      , "models/blocks"
+      , "models/model"], function ($, _, Backbone, sg) {
 
 
-  var collections = sg.collections || (sg.collections = {})
-    , models = sg.models || (sg.models = {});
+  var collections = sg.collections
+    , models = sg.models;
 
 
-  models.Block = Backbone.Model.extend({
+  models.Block =  models.Model.extend({
 
     urlRoot: "/a/blocks",
 
