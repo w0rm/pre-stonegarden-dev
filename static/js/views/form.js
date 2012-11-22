@@ -56,7 +56,7 @@ define(["jquery"
     successEvent: function(model) {
       this.exitSyncState().hideErrors();
       this.trigger("success", model);
-      !this.hasModel() && this.reset();
+      //!this.hasModel() && this.reset();
     },
 
     errorEvent: function (model, errors) {
