@@ -10,10 +10,6 @@ define(["jquery"
 
     className: "sg-contextmenu-item sg-contextmenu-show",
 
-    events: {
-
-    },
-
     render: function() {
       this.$el.empty().append(
         '<span class="sg-ico-menu-list" />',
@@ -22,6 +18,7 @@ define(["jquery"
       return this;
     },
 
+    // TODO: render with _.template and use events hash to bind
     renderMenu: function(menu) {
       var $menu = $('<ul class="sg-contextmenu"/>');
       _.each(menu.items, function(item) {
@@ -34,10 +31,6 @@ define(["jquery"
             $item.append(
               "<span>" + item.text + "</span>",
               this.renderMenu(item)
-            );
-            $item.hover(
-              function(){ item.context.highlight(); },
-              function(){ item.context.lowlight(); }
             );
           } else {
             $item.hover(
