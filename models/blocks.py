@@ -6,14 +6,21 @@ from template import render_block, smarty, sanitize
 from models.pages import load_page_data, get_page_by_id
 
 
-def create_block(block, is_template=False, page_id=None):
-    """Creates block from passed dict and returns it."""
+def update_block(block_id, data):
 
-    # Set parent_id to page block id
-    # TODO: move it in javascript
-    if not block.get("parent_id") and not is_template:
-        parent = get_page_block_by_page_id(page_id)
-        block.parent_id = parent.id
+    sizes = data.pop("sizes")
+
+    db.update(
+        "blocks",
+        where="$block_id = id",
+        vars=locals(),
+        content_cached=smarty(sanitize(data.content)),
+        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        **data)
+
+
+def create_block(block, page_id=None):
+    """Creates block from passed dict and returns it."""
 
     where = "position >= $position AND NOT is_deleted"
 

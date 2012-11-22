@@ -12,8 +12,11 @@ define(["jquery"
 
   var collections = sg.collections
     , models = sg.models
+    , utils = sg.utils
     , views = sg.views;
 
+  // TODO: Baseblock view, that has makeBlockView, propagateContextMenu
+  // then views.Block and views.Blocks subclass it.
 
   views.Block = Backbone.View.extend({
 
@@ -28,7 +31,10 @@ define(["jquery"
         .on("block:highlight", this.highlightBlock, this)
         .on("block:lowlight", this.lowlightBlock, this)
         .on("block:delete", this.deleteBlock, this)
+        .on("block:edit", this.editBlock, this)
         .on("destroy", this.remove, this)
+        // TODO: make this work instead of form success callback
+        //.on("sync", this.reRender, this)
     },
 
     highlightBlock: function() {
@@ -45,6 +51,45 @@ define(["jquery"
       }).open()
     },
 
+    editBlock: function() {
+      var blockForm;
+
+      blockForm = new views[utils.guessBlockType(this.model.attributes) + "BlockForm"]({
+        model: this.model,
+        attrs: {
+          page_id: sgData.pageId
+        }
+      })
+        .on("success", function() {
+          blockForm.remove();
+          this.reRender();
+        }, this)
+        .on("reset", function() {
+          blockForm.remove();
+          this.$el.show();
+        }, this);
+
+      this.hideContextMenu();
+      this.lowlightBlock();
+
+      this.$el.after(blockForm.el).hide();
+
+      blockForm.render();
+    },
+
+    reRender: function() {
+      this.$el.after(
+        this.makeBlockView(this.model).el
+      );
+      this.remove();
+    },
+
+    makeBlockView: function(block) {
+      return new views.Block({model: block, el: block.get("html")})
+        .on("block:contextmenu", this.propagateContextMenu, this)
+        .render()
+    },
+
     render: function() {
       var self = this;
 
@@ -53,15 +98,12 @@ define(["jquery"
       // Append template blocks
       this.$(".js-template-block").each(function() {
         var $block = $(this)
-          , block_name = $block.data("name")
-          , block = sg.templateBlocks.find(function(b) {
-              return b.get("name") === block_name
-            });
+          , block = sg.templateBlocks.findByName($block.data("name"));
+
         if (block) {
-          new views.Block({model: block, el: block.get("html")})
-            .on("block:contextmenu", self.propagateContextMenu, self)
-            .render().$el.appendTo($block);
+          $block.append(self.makeBlockView(block).el);
         }
+
       });
 
       // Render blocks
@@ -101,12 +143,6 @@ define(["jquery"
     propagateContextMenu: function() {
       this.hideContextMenu();
       this.trigger("block:contextmenu");
-    },
-
-    editBlock: function(e) {
-      var $block = $(e.currentTarget);
-      e.stopPropagation();
-      // edit block
     }
 
   });

@@ -51,27 +51,21 @@ class Blocks(RESTfulController):
 
     @auth.restrict("admin", "editor")
     def create(self):
-        d = web.input(is_template=False, page_id=None, sizes=[])
+        d = web.input(page_id=None, sizes=[])
         block_form = blockForm()
         if block_form.validates(d):
-            block = create_block(block_form.d, d.is_template, d.page_id)
+            block = create_block(block_form.d, d.page_id)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         return "NOT OK"
 
     @auth.restrict("admin", "editor")
     def update(self, block_id):
-        page_id = web.input(page_id=None).page_id
+        d = web.input(page_id=None, sizes=[])
         block = get_block_by_id(block_id)
-        block_form = blockEditForm()
-        if block_form.validates():
-            db.update(
-                "blocks",
-                where="$block_id = id",
-                vars=locals(),
-                content_cached=smarty(sanitize(block_form.d.content)),
-                updated_at=datetime.datetime.now(),
-                **block_form.d)
-            raise web.seeother(link_to("blocks", block, page_id=page_id))
+        block_form = blockForm()
+        if block_form.validates(d):
+            update_block(block_id, block_form.d)
+            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         return "NOT OK"
 
     @auth.restrict("admin", "editor")

@@ -26,6 +26,12 @@ define(["jquery"
       var modelClass = models[utils.guessBlockType(attrs) + "Block"]
         , model = new modelClass(attrs, options);
         return model;
+    },
+
+    findByName: function(name) {
+      return this.find(function(block) {
+        return block.get("name") === name
+      });
     }
 
   });
