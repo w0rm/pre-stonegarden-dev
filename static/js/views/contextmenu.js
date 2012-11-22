@@ -8,7 +8,15 @@ define(["jquery"
 
   views.ContextMenu = Backbone.View.extend({
 
+    events: {
+      "mousemove": "mousemoveEvent"
+    },
+
     className: "sg-contextmenu-item sg-contextmenu-show",
+
+    mousemoveEvent: function(e) {
+      e.stopPropagation();
+    },
 
     render: function() {
       this.$el.empty().append(
