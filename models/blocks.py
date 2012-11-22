@@ -6,8 +6,11 @@ from template import render_block, smarty, sanitize
 from models.pages import load_page_data, get_page_by_id
 
 
-def update_block(block_id, data):
+def update_block_by_id(block_id, data):
 
+    block = get_block_by_id(block_id)
+
+    # Get column sizes from data
     sizes = data.pop("sizes")
 
     db.update(
@@ -18,8 +21,10 @@ def update_block(block_id, data):
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         **data)
 
+    return block
 
-def create_block(block, page_id=None):
+
+def create_block(block):
     """Creates block from passed dict and returns it."""
 
     where = "position >= $position AND NOT is_deleted"
