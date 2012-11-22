@@ -14,7 +14,7 @@ define(["jquery"
     template: _.template($("#block-form-template").html()),
 
     initialize: function() {
-      this.attrs = this.options.attrs;
+      this.attrs = this.options.attrs || {};
     },
 
     serializeObject: function() {
