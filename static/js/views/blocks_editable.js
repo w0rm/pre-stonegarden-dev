@@ -55,7 +55,7 @@ define(["jquery"
         , top = $block.is(".js-placeholder") || (e.pageY - $block.offset().top) < $block.height() / 2
         , $el = $block[top ? "prev" : "next"]();
 
-      if (this._isEditModeOn) {
+      if (this._isCreatingBlock) {
         return;
       }
 
@@ -76,10 +76,10 @@ define(["jquery"
     createBlock: function(attrs) {
       var blockForm;
 
-      if (this._isEditModeOn) {
+      if (this._isCreatingBlock) {
         return;
       } else {
-        this._isEditModeOn = true;
+        this._isCreatingBlock = true;
       }
 
       this.detachInserter();
@@ -96,10 +96,13 @@ define(["jquery"
       })
         .on("success", function(block) {
           this.insertBlock(block, blockForm.el);
+          blockForm.remove();
+          this._isCreatingBlock = false;
+          this.appendPlaceholder();
         }, this)
         .on("reset", function() {
           blockForm.remove();
-          this._isEditModeOn = false;
+          this._isCreatingBlock = false;
           this.appendPlaceholder();
         }, this);
 
