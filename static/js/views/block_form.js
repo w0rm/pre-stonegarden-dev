@@ -36,9 +36,13 @@ define(["jquery"
       }
     },
 
+    getBlockType: function() {
+      return this.hasModel() ? this.model.get("type") || this.attrs.type;
+    },
+
     render: function() {
       this.$el.html(this.template(this.getTemplateAttributes()));
-      if (this.attrs.type === "wysiwyg") {
+      if (this.getBlockType() === "wysiwyg") {
         this.$("[name=content]").tinymce(sg.config.tinymce);
       }
       return this;
