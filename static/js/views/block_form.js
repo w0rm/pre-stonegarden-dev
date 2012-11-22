@@ -37,7 +37,7 @@ define(["jquery"
     },
 
     getBlockType: function() {
-      return this.hasModel() ? this.model.get("type") || this.attrs.type;
+      return this.hasModel() ? this.model.get("type") : this.attrs.type;
     },
 
     render: function() {
