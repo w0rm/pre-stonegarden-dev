@@ -84,7 +84,6 @@ define(["jquery"
         attrs: attrs,
         collection: this.collection
       })
-        .render()
         .on("success", function(block) {
           this.insertBlock(block, blockForm.el);
         }, this)
@@ -98,6 +97,10 @@ define(["jquery"
       } else {
         this.$el.children().eq(attrs.position - 2).after(blockForm.el);
       }
+
+      // This is important, tinymce should be init only
+      // when parent div is attached to dom
+      blockForm.render();
 
     }
 
