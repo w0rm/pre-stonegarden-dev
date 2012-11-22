@@ -71,6 +71,11 @@ define(["jquery"
         , parentMenu;
 
       items.push({
+        text: t_("Edit"),
+        click: this.edit
+      });
+
+      items.push({
         text: t_("Attributes"),
         click: this.editAttributes
       });
@@ -98,6 +103,10 @@ define(["jquery"
         context: this
       };
 
+    },
+
+    edit: function() {
+      this.trigger("block:edit");
     },
 
     delete: function() {
