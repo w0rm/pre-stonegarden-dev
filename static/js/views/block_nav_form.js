@@ -15,7 +15,7 @@ define(["jquery"
     template: _.template($("#block-nav-form-template").html()),
 
     initialize: function() {
-      this.attrs = this.options.attrs;
+      this.attrs = this.options.attrs || {};
     },
 
     serializeObject: function() {
@@ -40,9 +40,7 @@ define(["jquery"
       return this;
     }
 
-
   });
-
 
 
   views.NavBlockForm = Backbone.View.extend({
