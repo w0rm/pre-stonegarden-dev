@@ -18,8 +18,8 @@ define(["jquery"
   views.BlocksEditable = views.Blocks.extend({
 
     events: {
-      "mousemove .js-block": "attachInserter",
-      "mousemove .js-placeholder": "attachInserter",
+      "mousemove .js-block": "appendInserter",
+      "mousemove .js-placeholder": "appendInserter",
       "mouseleave": "detachInserter"
     },
 
@@ -45,10 +45,19 @@ define(["jquery"
       }
     },
 
-    attachInserter: function(e) {
+    detachPlaceholder: function() {
+      this.placeholder.$el.detach();
+      return this;
+    },
+
+    appendInserter: function(e) {
       var $block = $(e.currentTarget)
         , top = $block.is(".js-placeholder") || (e.pageY - $block.offset().top) < $block.height() / 2
         , $el = $block[top ? "prev" : "next"]();
+
+      if (this._isEditModeOn) {
+        return;
+      }
 
       e.stopPropagation();
 
@@ -59,11 +68,6 @@ define(["jquery"
 
     },
 
-    detachPlaceholder: function() {
-      this.placeholder.$el.detach();
-      return this;
-    },
-
     detachInserter: function() {
       this.inserter.$el.detach();
       return this;
@@ -71,6 +75,12 @@ define(["jquery"
 
     createBlock: function(attrs) {
       var blockForm;
+
+      if (this._isEditModeOn) {
+        return;
+      } else {
+        this._isEditModeOn = true;
+      }
 
       this.detachInserter();
       this.detachPlaceholder();
@@ -87,14 +97,18 @@ define(["jquery"
         .on("success", function(block) {
           this.insertBlock(block, blockForm.el);
         }, this)
-        .on("reset", function(){
+        .on("reset", function() {
           blockForm.remove();
+          this._isEditModeOn = false;
           this.appendPlaceholder();
         }, this);
 
+
       if (attrs.position == 1) {
+        // Prepend on top of the blocks
         this.$el.prepend(blockForm.el);
       } else {
+        // Insert after block
         this.$el.children().eq(attrs.position - 2).after(blockForm.el);
       }
 
