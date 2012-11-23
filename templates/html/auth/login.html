@@ -1,13 +1,27 @@
 $def with (form)
 <div class="row">
-    <div class="eight columns">
+    <div class="eight centered columns">
         <form action="/login" method="post">
             <h1>$_("Login")</h1>
+
+            $:form.render_css()
+
             $if not flash.is_empty():
-                <p class="wrong">$:flash.render()</p>
-            $:form.render()
-            <p><a href="/password_reset">$_("Reset forgotten password")</a></p>
-            <p><button class="button" type="submit">$_("Log in")</button></p>
+                <div class="alert-box alert">
+                    $:flash.render()
+                </div>
+
+            $if not form.valid:
+                $:form.render_errors()
+
+            <div class="row">
+                <div class="six columns">
+                    <p><a href="/password_reset">$_("Reset forgotten password")</a></p>
+                </div>
+                <div class="six columns">
+                    <button class="right button" type="submit">$_("Log in")</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

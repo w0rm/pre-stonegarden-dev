@@ -1,12 +1,16 @@
-$def with (page_code_form, page=None)
+$def with (form, page=None)
 $var page = page
 <div class="row">
     <div class="eight columns">
         <h1>$_("Style and scripts")</h1>
         <h2>$_("Page") «$page.title»</h2>
         <form action="$link_to("pages", page, "edit_code")" method="post">
-            $:page_code_form.render()
-            <p><button class="button" type="submit">$_("Save")</button></p>
+            $:form.render_css()
+
+            $if not form.valid:
+                $:form.render_errors()
+
+            <p><button class="right button" type="submit">$_("Save")</button></p>
         </form>
     </div>
     <aside class="four columns"></aside>

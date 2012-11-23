@@ -19,55 +19,34 @@ class ValidationError(web.HTTPError):
                                unicode(message))
 
 
-class Form(web.form.Form, object):
+class ApiForm(web.form.Form):
+
+    def errors_to_json(self):
+
+        result = web.storage(errors={})
+        if self.note:
+            result.note = self.note
+        for i in self.inputs:
+            if i.note:
+                errors[i.name] = web.storage(
+                    description=_(i.description),
+                    note=_(i.note),
+                )
+        # {errors:{"name": {description: "", note: ""}}, note:""}
+        return json.dumps(result, indent=2)
+
+    def validation_error(self):
+        web.header("Content-Type", "application/json")
+        return ValidationError(self.errors_to_json())
+
+
+# TODO: render all forms by parts in templates
+class Form(web.form.Form):
 
     def rendernote(self, note):
-        if note:
-            return '<span class="wrong">%s</span>' % _(note)
+        return u""
 
-    def render_input(self, i):
-        out = []
-        out.append(i.pre)
-        if not isinstance(i, CheckboxList):
-            if i.note:
-                out.append('<p class="wrong">')
-            else:
-                out.append('<p>')
-            if isinstance(i, web.form.Checkbox):
-                out.append('<label class="after">')
-                out.append(i.render())
-                out.append(' %s</label>' % _(i.description))
-            else:
-                if not i.is_hidden() and i.description:
-                    out.append('<label for="%s">%s</label>' % (i.id, _(i.description)))
-                out.append(i.render())
-            if i.note:
-                out.append(self.rendernote(i.note))
-            out.append('</p>')
-        else:
-            if i.note:
-                out.append('<p class="wrong">')
-            else:
-                out.append('<p>')
-            if i.description:
-                out.append('<label for="%s">%s</label>' % (i.id, _(i.description)))
-            if i.note:
-                out.append(self.rendernote(i.note))
-            out.append('</p>')
-            out.append(i.render())
-        out.append(i.post)
-        return ''.join(out)
-
-    def render(self, names=None, x=None, y=None):
-        out = []
-        if self.note and not x:
-            out.append('<p class="wrong">' + self.rendernote(self.note) + '</p>')
-        for i in self.inputs[x:y]:
-            if names is None or i.name in names:
-                out.append(self.render_input(i))
-        return '\n'.join(out)
-
-    def l(self, control, **attrs):
+    def label_for(self, control, **attrs):
         """Renders label for input"""
         i = self[control]
 
@@ -75,36 +54,38 @@ class Form(web.form.Form, object):
             attrs['class'] = attrs['class_']
             del attrs['class_']
 
-        return u'<label for="%s" %s>%s</label>' % (i.id, web.form.AttributeList(attrs), _(i.description))
+        return (u'<label for="%s" %s>%s</label>' %
+                (i.id, web.form.AttributeList(attrs), _(i.description)))
 
-    def err(self, *controls):
+    def error_class_for(self, *controls):
         """Outputs error css class for one of controls"""
         for c in controls:
             if self[c].note:
-                return "error wrong"
+                return "error"
         return ""
 
     def render_errors(self):
         """Renders errors block"""
         out = []
+        out_errors = []
         errors = ((i.description, i.note) for i in self.inputs if i.note)
         errors = sorted(errors, key=lambda x: x[1])
+        out.append('<div class="alert-box alert">')
         for err, fields in groupby(errors, key=lambda x: x[1]):
-            out.append('<li>')
-            out.append(", ".join(_(f[0]) for f in fields))
-            out.append(": ")
-            out.append(_(err))
-            out.append('</li>')
+            out_errors.append(
+                u", ".join(_(f[0]) for f in fields) +
+                u": " +
+                _(err) +
+                ". "
+            )
+        if self.note:
+            out_errors.append(self.note)
+        out.append("".join(out_errors))
+        out.append("</div>")
         return ''.join(out)
 
 
 class Textbox(web.form.Textbox):
-
-    def __init__(self, name, *validators, **attrs):
-        super(Textbox, self).__init__(name, *validators, **attrs)
-        self.item_pre = attrs.pop("item_pre", u"")
-        self.item_post = attrs.pop("item_post", u"")
-        self.description = attrs.pop("description", u"")
 
     def render(self):
         attrs = self.attrs.copy()
@@ -114,9 +95,7 @@ class Textbox(web.form.Textbox):
         if self.value is not None:
             attrs['value'] = self.value
         attrs['name'] = self.name
-        res = [self.item_pre, ('<input %s>' % attrs)]
-        res.append(self.item_post)
-        return u"".join(res)
+        return u'<input %s>' % attrs
 
 
 class Password(Textbox):
@@ -158,11 +137,13 @@ class Dropdown(web.form.Dropdown):
             else:
                 value, desc = arg, arg
 
-            if str(self.value) == str(value) or (isinstance(self.value, list) and value in self.value):
+            if (str(self.value) == str(value) or
+                    isinstance(self.value, list) and value in self.value):
                 select_p = ' selected="selected"'
             else:
                 select_p = ''
-            x += '  <option%s value="%s">%s</option>\n' % (select_p, web.net.websafe(value), web.net.websafe(_(desc)))
+            x += ('  <option%s value="%s">%s</option>\n' %
+                  (select_p, web.net.websafe(value), web.net.websafe(_(desc))))
 
         x += '</select>\n'
         return x
@@ -210,11 +191,6 @@ class Radio(web.form.Radio):
         return x
 
 
-class TextboxList(web.form.Input):
-
-    pass
-
-
 class CheckboxList(web.form.Input):
     """CheckboxList input. """
 
@@ -235,10 +211,13 @@ class CheckboxList(web.form.Input):
                 value, desc = arg
             else:
                 value, desc = arg, arg
-            chk_attrs = web.form.AttributeList(name=self.name, type="checkbox", value=value)
-            if isinstance(self.value, (tuple, list, set)) and value in self.value:
+            chk_attrs = web.form.AttributeList(name=self.name, type="checkbox",
+                                               value=value)
+            if (isinstance(self.value, (tuple, list, set)) and
+                    value in self.value):
                 chk_attrs["checked"] = "checked"
-            x += ' <label class="after"><input %s/>  %s</label>\n' % (chk_attrs, web.net.websafe(desc))
+            x += (' <label class="after"><input %s/>  %s</label>\n' %
+                  (chk_attrs, web.net.websafe(desc)))
             if self.item_post:
                 x += self.item_post
         #x += '</fieldset>\n'

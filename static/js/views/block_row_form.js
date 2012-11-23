@@ -7,7 +7,7 @@ define(["jquery"
       , "jquery.tinymce"], function ($, _, Backbone, sg) {
 
   var views = sg.views
-    , NavBlockForm;
+    , RowBlockForm;
 
 
   RowBlockForm = views.Form.extend({
@@ -56,7 +56,7 @@ define(["jquery"
 
     correctSizes: function() {
       var sizes = this.getSizes()
-        , equalSize = parseInt( 12 / sizes.length);
+        , equalSize = parseInt(12 / sizes.length);
 
       if (!this.validSizes(sizes)) {
         // make all columns equal and set the last column to

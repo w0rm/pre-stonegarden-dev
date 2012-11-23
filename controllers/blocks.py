@@ -7,7 +7,7 @@ from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
 from modules.restful_controller import RESTfulController
-from modules.form import *
+from modules.form import ApiForm
 from template import render, render_partial, render_block, link_to
 from web import ctx
 from pytils.translit import slugify
@@ -17,7 +17,7 @@ from models.pages import get_page_by_id, load_page_data
 
 class Blocks(RESTfulController):
 
-    form = web.form.Form(
+    form = ApiForm(
         web.form.Input("parent_id", notnull),
         web.form.Input("position", notnull),
         web.form.Input("template", notnull),
@@ -43,20 +43,20 @@ class Blocks(RESTfulController):
     @auth.restrict("admin", "editor")
     def create(self):
         d = web.input(page_id=None, sizes=[])
-        block_form = self.form()
-        if block_form.validates(d):
-            block = create_block(block_form.d)
+        form = self.form()
+        if form.validates(d):
+            block = create_block(form.d)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
-        return "NOT OK"
+        raise form.validation_error()
 
     @auth.restrict("admin", "editor")
     def update(self, block_id):
         d = web.input(page_id=None, sizes=[])
-        block_form = self.form()
-        if block_form.validates(d):
-            block = update_block_by_id(block_id, block_form.d)
+        form = self.form()
+        if form.validates(d):
+            block = update_block_by_id(block_id, form.d)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
-        return "NOT OK"
+        raise form.validation_error()
 
     @auth.restrict("admin", "editor")
     def delete(self, block_id):

@@ -5,6 +5,17 @@
 5. Cut/copy/paste on blocks and documents
 6. Storage plugin for tinymce
 
+7. Render the following forms in templates by parts:
+  edit page form
+  create page form
+  style and scripts form
+  user forms
+  login form
+  password reset form
+  password change form
+
+
+
 
 TODO:
 Recursively delete blocks

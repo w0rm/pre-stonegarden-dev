@@ -1,4 +1,4 @@
-$def with (page_form, page=None)
+$def with (form, page=None)
 <div class="row">
     <div class="eight columns">
         $if page:
@@ -9,16 +9,16 @@ $def with (page_form, page=None)
             <h1>$_("New page")</h1>
             <form action="/a/pages/new" method="post">
 
-        $:page_form.render(["name"])
-        <p class="small info">$_( "Short name for navigation menu" )</p>
-        $:page_form.render(["title"])
-        <p class="small info">$_( "Browser title" )</p>
-        $#TODO: avoid x=2
-        $:page_form.render(x=2)
+        $:form.render_css()
+
+        $if not form.valid:
+            $:form.render_errors()
+
         <p><button class="button" type="submit">$_("Save")</button></p>
         </form>
     </div>
     <aside class="four columns">
+        $# TODO: Translate this
         <h3>Подсказки</h3>
         <p>Выключите опцию «Показывать на сайте» для страниц над которыми работаете и они будут недоступны посетителям сайта.</p>
         <p>Чтобы страница была доступна по ссылке, но не показывалась в навигации, отключи- те опцию «Показывать в навигации»</p>
