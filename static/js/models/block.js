@@ -52,6 +52,10 @@ define(["jquery"
       return _.contains(["page", "column"], this.get("template"));
     },
 
+    hasBlocks: function() {
+      return _.contains(["page", "column", "row"], this.get("template"));
+    },
+
     isSystem: function() {
       return !!this.get("is_system");
     },
