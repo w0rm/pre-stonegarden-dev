@@ -135,7 +135,9 @@ define(["jquery"
     },
 
     getContextMenu: function() {
-      return this.parentBlock.getContextMenu()
+      if (this.hasParent()) {
+        return this.parentBlock.getContextMenu()
+      }
     }
 
   });

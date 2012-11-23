@@ -42,59 +42,74 @@
 	"template_blocks": [
 		{
 			"name": "global_header",
-			"template": "row",
+			"template": "column",
+			"size": 12,
 	        "is_system": true,
 			"position": 1,
 			"blocks": [
 				{
+					"template": "row",
+			        "is_system": true,
 					"position": 1,
-					"template": "column",
-					"size": 6,
-					"blocks": [{
-						"position": 1,
-						"template": "content",
-						"type": "wysiwyg",
-						"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-						"content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
-					}]
-				},
-				{
-					"position": 1,
-					"template": "column",
-					"size": 6,
-					"blocks": [{
-						"position": 1,
-						"template": "nav",
-						"type": "root"
-					}]
+					"blocks": [
+						{
+							"position": 1,
+							"template": "column",
+							"size": 6,
+							"blocks": [{
+								"position": 1,
+								"template": "content",
+								"type": "wysiwyg",
+								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
+								"content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
+							}]
+						},
+						{
+							"position": 2,
+							"template": "column",
+							"size": 6,
+							"blocks": [{
+								"position": 1,
+								"template": "nav",
+								"type": "root"
+							}]
+						}
+					]
 				}
 			]
 		},
 		{
 			"name": "global_footer",
-			"template": "row",
-            "is_system": true,
+			"template": "column",
+			"size": 12,
+	        "is_system": true,
 			"position": 1,
 			"blocks": [
 				{
+					"template": "row",
+		            "is_system": true,
 					"position": 1,
-					"template": "column",
-					"size": 6
-				},
-				{
-					"position": 1,
-					"template": "column",
-					"size": 6,
-					"blocks": [{
-						"position": 1,
-						"template": "content",
-						"type": "wysiwyg",
-						"content": "<p>© Site Authors</p>",
-						"content_cached": "<p>© Site Authors</p>"
-					}]
+					"blocks": [
+						{
+							"position": 1,
+							"template": "column",
+							"size": 6
+						},
+						{
+							"position": 2,
+							"template": "column",
+							"size": 6,
+							"blocks": [{
+								"position": 1,
+								"template": "content",
+								"type": "wysiwyg",
+								"content": "<p>© Site Authors</p>",
+								"content_cached": "<p>© Site Authors</p>"
+							}]
+						}
+					]
 				}
 			]
-
 		}
 
 	],

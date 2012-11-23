@@ -1,6 +1,8 @@
 $def with(block)
 <header>
-    $:render_template_block("global_header")
+    <div class="row">
+        $:render_template_block("global_header")
+    </div>
 </header>
 <section class="row">
 	<div class="twelve columns">
@@ -8,5 +10,7 @@ $def with(block)
 	</div>
 </section>
 <footer>
-    $:render_template_block("global_footer")
+    <div class="row">
+        $:render_template_block("global_footer")
+    </div>
 </footer>
