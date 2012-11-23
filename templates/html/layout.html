@@ -19,12 +19,13 @@ $def with (page=None)
     $:render.site.js_templates()
 </head>
 <body class="$page.get("class")">
+    $if auth.get_user() and not ctx.get("page"):
+        $:render.ui.topbar()
+
     $:flash.render()
     $:page
-    $if auth.get_user():
-        $#:render.ui.notify()
-        $#:render.ui.insert()
-    $else:
+
+    $if not auth.get_user():
         <script src="$asset_url("js/public.js")"></script>
     <script>
         $:page.get("js_code", None)

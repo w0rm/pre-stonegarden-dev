@@ -44,3 +44,8 @@
   right: 100%;
   top: 0;
 };
+
+$navBarHeight: 45px !default;
+.sg-top-bar-spacer {
+  height: $navBarHeight;
+}
