@@ -12,14 +12,16 @@
   padding-bottom: 1px;
   // Allow context menu positioning
   position: relative;
+  // Set min height
+  min-height: 40px;
 }
 
 .blocks {
+  // Allow inserter positioning
   position: relative;
+  // Increase vertical space between inserters
   padding: 5px 0;
-
 }
-
 
 .sg-block-highlight {
   @include box-shadow;
