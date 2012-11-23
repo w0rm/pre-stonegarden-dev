@@ -2,14 +2,11 @@
 @import "config";
 @import "foundation_base";
 
-header {
-  margin-bottom: 20px;
+header, footer {
   padding-top: 20px;
   background: #eee;
 }
 
-footer {
-  margin-top: 20px;
-  padding-bottom: 20px;
-  background: #eee;
+header {
+  margin-bottom: 20px;
 }
