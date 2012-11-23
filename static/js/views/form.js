@@ -36,15 +36,15 @@ define(["jquery"
             }
           };
 
-        // data.position is positive number
-        // @at specifies index of new model in collection
-        if (data.position) {
-          params.at = data.position - 1;
-        };
-
         if (this.hasModel()) {
           this.model.save(this.serializeObject(), params);
         } else {
+          // data.position is positive number
+          // @at specifies index of new model in collection
+          // http://backbonejs.org/#Collection-add
+          if (data.position) {
+            params.at = data.position - 1;
+          };
           this.collection.create(this.serializeObject(), params);
         }
       });
