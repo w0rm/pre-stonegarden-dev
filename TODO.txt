@@ -6,8 +6,5 @@
 6. Storage plugin for tinymce
 
 
-Fix glitches
-1. Remove parent inserter when attaching inserter to child container
-2. Remove inserter when editing block
-
-Replace element of edited block with setElement
+TODO:
+Recursively delete blocks
