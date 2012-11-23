@@ -15,7 +15,8 @@ define(["jquery"
     template: _.template($("#block-row-form-template").html()),
 
     events: _.extend({
-      "change .js-size": "changeColumns"
+      "change .js-size": "changeColumns",
+      "change [name=sizes]": "changeSize"
     }, views.Form.prototype.events),
 
     initialize: function() {
@@ -46,27 +47,74 @@ define(["jquery"
 
       this.$columns.each(function(i, col) {
         if (i < size) {
-          sizes.push($(col).find("input").val())
+          sizes.push(parseInt($(col).find("input").val()));
         }
       });
-
       return sizes;
     },
 
-    changeColumns: function() {
 
-      var size = this.$size.val()
-        , sizes = this.getSizes();
+    correctSizes: function() {
+      var sizes = this.getSizes()
+        , equalSize = parseInt( 12 / sizes.length);
 
+      if (!this.validSizes(sizes)) {
+        // make all columns equal and set the last column to
+        // remainder
+        sizes = _.map(sizes, function() {
+          return equalSize
+        });
+        sizes[sizes.length-1] = 12 - equalSize * (sizes.length - 1);
+      }
+      return sizes;
+    },
+
+
+    validSizes: function(sizes) {
+      var correctValues
+        , sum;
+
+      correctValues = _.reduce(
+        sizes, function(memo, size) {
+          return memo && (size > 0)
+        },
+        true
+      );
+
+      sum = _.reduce(
+        sizes, function(memo, size) {
+          return memo + size
+        },
+        0
+      );
+
+      console.log(correctValues, sum)
+
+      return correctValues && sum === 12;
+
+    },
+
+
+    updateColumns: function(sizes) {
       this.$columns.each(function(i, col) {
         var $col = $(col)
           , $size = $col.find("input");
-
         $col.attr("class", "sg-block-column-" + sizes[i]);
-        $col.toggleClass("sg-hidden", i >= size);
-
+        $col.toggleClass("sg-hidden", i >= sizes.length);
+        $size.val(sizes[i]);
       });
+    },
 
+    changeColumns: function() {
+      var sizes = this.correctSizes();
+      this.updateColumns(sizes);
+    },
+
+    changeSize: function() {
+      var sizes = this.getSizes();
+      if (this.validSizes(sizes)) {
+        this.updateColumns(sizes)
+      }
     },
 
     render: function() {
@@ -76,9 +124,7 @@ define(["jquery"
       return this;
     }
 
-
   });
-
 
 
   views.RowBlockForm = Backbone.View.extend({
@@ -103,7 +149,6 @@ define(["jquery"
     }
 
   });
-
 
 
 });
