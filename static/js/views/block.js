@@ -35,6 +35,7 @@ define(["jquery"
         .on("destroy", this.remove, this)
         // TODO: make this work instead of form success callback
         //.on("sync", this.reRender, this)
+        //.on("change:html", this.reRender, this)
     },
 
     highlightBlock: function() {
@@ -48,7 +49,7 @@ define(["jquery"
     deleteBlock: function() {
       new views.Modal({
         contentView: new views.BlockDelete({model: this.model})
-      }).open()
+      }).open();
     },
 
     editBlock: function() {
@@ -78,10 +79,10 @@ define(["jquery"
     },
 
     reRender: function() {
-      this.$el.after(
-        this.makeBlockView(this.model).el
-      );
-      this.remove();
+      this.hideContextMenu(); // detach context menu
+      this.$el.replaceWith(this.model.get("html")); // replace element
+      this.setElement(this.$el); // rebind events
+      this.render(); // render nested blocks
     },
 
     makeBlockView: function(block) {
@@ -92,31 +93,29 @@ define(["jquery"
 
     render: function() {
       var self = this;
-
-      this.$blocks = this.$(".js-blocks");
+        , $blocks = this.$(".js-blocks"); // cache this element
+                                          // before nested .js-blocks
+                                          // are rendered
 
       // Append template blocks
       this.$(".js-template-block").each(function() {
         var $block = $(this)
           , block = sg.templateBlocks.findByName($block.data("name"));
-
-        if (block) {
-          $block.append(self.makeBlockView(block).el);
-        }
-
+        block && $block.append(self.makeBlockView(block).el);
       });
 
       // Render blocks
+      // TODO: simplify code
       if (this.model.isContainer()) {
         this.blocks = new views.BlocksEditable({
-          el: this.$blocks,
+          el: $blocks,
           collection: this.model.blocks
         })
           .on("block:contextmenu", this.propagateContextMenu, this)
           .render()
       } else if (this.model.blocks.length) {
         this.blocks = new views.Blocks({
-          el: this.$blocks,
+          el: $blocks,
           collection: this.model.blocks
         })
           .on("block:contextmenu", this.propagateContextMenu, this)
