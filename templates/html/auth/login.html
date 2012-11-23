@@ -4,7 +4,7 @@ $def with (form)
         <form action="/login" method="post">
             <h1>$_("Login")</h1>
             $if not flash.is_empty():
-                <div class="wrong">$:flash.render()</div>
+                <p class="wrong">$:flash.render()</p>
             $:form.render()
             <p><a href="/password_reset">$_("Reset forgotten password")</a></p>
             <p><button class="button" type="submit">$_("Log in")</button></p>
