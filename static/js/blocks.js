@@ -8,7 +8,8 @@ define(['jquery', 'underscore', 'stonegarden', 'views/block'], function ($, _, s
     if (window.sgData && window.sgData.pageBlock) {
 
       // init page block model
-      sg.pageBlock = new models.PageBlock(window.sgData.pageBlock)
+      sg.pageBlock = new models.PageBlock;
+      sg.pageBlock.set(window.sgData.pageBlock);
 
       // init template blocks collection
       sg.templateBlocks = new collections.Blocks();

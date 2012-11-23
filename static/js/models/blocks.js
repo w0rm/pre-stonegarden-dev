@@ -15,7 +15,13 @@ define(["jquery"
     url: "/a/blocks",
 
     initialize: function() {
-      this.on("add", this.setParentBlock, this);
+      this
+        .on("add", this.setParentBlock, this)
+        .on("reset", this.setParentBlocks, this)
+    },
+
+    setParentBlocks: function() {
+      this.each(this.setParentBlock, this);
     },
 
     setParentBlock: function(model) {
