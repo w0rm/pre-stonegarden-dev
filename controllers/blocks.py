@@ -7,7 +7,7 @@ from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
 from modules.restful_controller import RESTfulController
-from modules.form import ApiForm
+from modules.form import ApiForm, notnull
 from template import render, render_partial, render_block, link_to
 from web import ctx
 from pytils.translit import slugify

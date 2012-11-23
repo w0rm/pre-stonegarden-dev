@@ -112,7 +112,7 @@ def update_columns(block, sizes):
         col, size = columns[i], sizes[i]
         db.update(
             "blocks",
-            where="id=$id",
+            where="id = $id",
             vars=col,
             updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
             size=size,
@@ -186,7 +186,6 @@ def delete_block_by_id(block_id):
     """Deletes block and returns deleted block."""
 
     block = get_block_by_id(block_id)
-    where = "position > $position AND NOT is_deleted"
 
     db.update(
         "blocks",
@@ -195,17 +194,14 @@ def delete_block_by_id(block_id):
         is_deleted=1)
 
     if block.parent_id:
-        where += " AND parent_id = $parent_id"
-    else:
-        where += " AND parent_id IS NULL"
-
-    # Shift positions of the blocks after deleted block
-    db.update(
-        "blocks",
-        where=where,
-        vars=block,
-        position=web.SQLLiteral("position-1"),
-    )
+        # Collapse positions of the blocks after deleted block
+        db.update(
+            "blocks",
+            where="parent_id = $parent_id AND NOT is_deleted AND "
+                  "position > $position",
+            vars=block,
+            position=web.SQLLiteral("position - 1"),
+        )
 
     return block
 
@@ -237,23 +233,20 @@ def get_page_block_by_page_id(page_id):
     )[0]
 
 
-def get_page_blocks_by_page_id(page_id):
-    """Returns all page blocks"""
+def get_page_blocks_by_page_id(page_id=None):
+    """Returns all page blocks or template blocks"""
+    where = "page_id IS NULL" if page_id is None else "page_id = $page_id"
     return db.select(
         "blocks",
         locals(),
-        where="(page_id = $page_id OR page_id IS NULL) AND NOT is_deleted",
+        where=where + " AND NOT is_deleted",
         order="position",
     ).list()
 
 
 def get_template_blocks():
     """Returns all template blocks"""
-    return db.select(
-        "blocks",
-        where="page_id IS NULL AND NOT is_deleted",
-        order="position",
-    ).list()
+    return get_page_blocks_by_page_id(None)
 
 
 def build_block_tree(block, blocks, with_render=False):
