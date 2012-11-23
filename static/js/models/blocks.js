@@ -17,7 +17,7 @@ define(["jquery"
     initialize: function() {
       this
         .on("add", this.setParentBlock, this)
-        .on("reset", this.setParentBlocks, this)
+        .on("reset", this.setParentBlocks, this);
     },
 
     setParentBlocks: function() {
@@ -36,7 +36,7 @@ define(["jquery"
 
     findByName: function(name) {
       return this.find(function(block) {
-        return block.get("name") === name
+        return block.get("name") === name;
       });
     }
 

@@ -124,10 +124,7 @@ define(["jquery"
     }
   });
 
-  models.RowBlock = models.Block.extend({
-
-
-  });
+  models.RowBlock = models.Block;
 
   models.NavBlock = models.Block;
 

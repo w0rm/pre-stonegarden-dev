@@ -33,12 +33,10 @@ define(["jquery"
     getTemplateAttributes: function() {
       return this.hasModel() ?
       {
-        block: this.model.toJSON(),
+        sizes: this.model.blocks.pluck("size")
       } :
       {
-        block: {
-          sizes: [3, 3, 3, 3]
-        },
+        sizes: [3, 3, 3, 3]
       }
     },
 

@@ -77,7 +77,7 @@ $if auth.get_user():
                 <select class="js-size">
                 <% _.each([2,3,4,5,6], function(size){ %>
                     <option value="<%= size %>"
-                            <%= block.sizes.length === size ? "selected" : "" %>
+                            <%= sizes.length === size ? "selected" : "" %>
                     >
                         $_("Columns"): <%= size %>
                     </option>
@@ -86,8 +86,8 @@ $if auth.get_user():
             </p>
             <div class="sg-block-row js-columns">
             <% for(var i=1; i<=6; i++) { %>
-                <div class="sg-block-column-<%= block.sizes[i-1] %> <%= (i > block.sizes.length) ? 'sg-hidden' : '' %>">
-                    <input name="sizes" value="<%= block.sizes[i-1] %>" >
+                <div class="sg-block-column-<%= sizes[i-1] %> <%= (i > sizes.length) ? 'sg-hidden' : '' %>">
+                    <input name="sizes" value="<%= sizes[i-1] %>" >
                 </div>
             <% } %>
             </div>
