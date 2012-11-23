@@ -33,9 +33,7 @@ define(["jquery"
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("destroy", this.remove, this)
-        // TODO: make this work instead of form success callback
-        //.on("sync", this.reRender, this)
-        //.on("change:html", this.reRender, this)
+        .on("sync", this.reRender, this);
     },
 
     highlightBlock: function() {
@@ -53,28 +51,25 @@ define(["jquery"
     },
 
     editBlock: function() {
-      var blockForm;
-
-      blockForm = new views[utils.guessBlockType(this.model.attributes) + "BlockForm"]({
+      var blockForm = new views[utils.guessBlockType(this.model.attributes) +
+                                "BlockForm"]({
         model: this.model,
         attrs: {
           page_id: sgData.pageId
         }
       })
-        .on("success", function() {
+        .on("success reset", function() {
           blockForm.remove();
-          this.reRender();
-        }, this)
-        .on("reset", function() {
-          blockForm.remove();
+          this.lowlightBlock();
           this.$el.show();
         }, this);
-
       this.hideContextMenu();
-      this.lowlightBlock();
-
-      this.$el.after(blockForm.el).hide();
-
+      this.propagateInserter();
+      this.$el.after(blockForm.el)
+      if (this.model.get("template") === "content") {
+        // Hide block only if editing inline
+        this.$el.hide();
+      }
       blockForm.render();
     },
 
@@ -88,11 +83,13 @@ define(["jquery"
     makeBlockView: function(block) {
       return new views.Block({model: block, el: block.get("html")})
         .on("block:contextmenu", this.propagateContextMenu, this)
+        .on("block:inserter", this.propagateInserter, this)
         .render()
     },
 
     render: function() {
-      var self = this;
+      var self = this
+        , blocksViewClassName
         , $blocks = this.$(".js-blocks"); // cache this element
                                           // before nested .js-blocks
                                           // are rendered
@@ -105,21 +102,16 @@ define(["jquery"
       });
 
       // Render blocks
-      // TODO: simplify code
-      if (this.model.isContainer()) {
-        this.blocks = new views.BlocksEditable({
+      if (this.model.hasBlocks()) {
+        blocksViewClassName = "Blocks" + (
+          this.model.isContainer() ? "Editable" : "");
+        this.blocks = new views[blocksViewClassName]({
           el: $blocks,
           collection: this.model.blocks
         })
           .on("block:contextmenu", this.propagateContextMenu, this)
-          .render()
-      } else if (this.model.blocks.length) {
-        this.blocks = new views.Blocks({
-          el: $blocks,
-          collection: this.model.blocks
-        })
-          .on("block:contextmenu", this.propagateContextMenu, this)
-          .render()
+          .on("block:inserter", this.propagateInserter, this)
+          .render();
       }
 
       return this;
@@ -142,6 +134,10 @@ define(["jquery"
     propagateContextMenu: function() {
       this.hideContextMenu();
       this.trigger("block:contextmenu");
+    },
+
+    propagateInserter: function() {
+      this.trigger("block:inserter");
     }
 
   });

@@ -18,9 +18,9 @@ define(["jquery"
   views.BlocksEditable = views.Blocks.extend({
 
     events: {
-      "mousemove .js-block": "appendInserter",
-      "mousemove .js-placeholder": "appendInserter",
-      "mouseleave": "detachInserter"
+      "mousemove .js-block": "showInserter",
+      "mousemove .js-placeholder": "showInserter",
+      "mouseleave": "hideInserter"
     },
 
     initialize: function() {
@@ -29,28 +29,28 @@ define(["jquery"
       this.placeholder = (new views.BlockPlaceholder)
         .on("block:create", this.createBlock, this);
       this.collection
-        .on("remove", this.appendPlaceholder, this)
-        .on("add", this.detachPlaceholder, this);
+        .on("remove", this.showPlaceholder, this)
+        .on("add", this.hidePlaceholder, this);
     },
 
     render: function(){
-      this.appendPlaceholder();
+      this.showPlaceholder();
       return views.Blocks.prototype.render.call(this);
     },
 
-    appendPlaceholder: function() {
+    showPlaceholder: function() {
       if (this.collection.length === 0 &&
           !this.placeholder.$el.parent().is(this.el)) {
         this.$el.append(this.placeholder.render().el);
       }
     },
 
-    detachPlaceholder: function() {
+    hidePlaceholder: function() {
       this.placeholder.$el.detach();
       return this;
     },
 
-    appendInserter: function(e) {
+    showInserter: function(e) {
       var $block = $(e.currentTarget)
         , top = $block.is(".js-placeholder") || (e.pageY - $block.offset().top) < $block.height() / 2
         , $el = $block[top ? "prev" : "next"]();
@@ -66,11 +66,18 @@ define(["jquery"
         this.inserter.render().$el["insert" + (top ? "Before" : "After") ]($block);
       }
 
+      this.trigger("block:inserter");
+
     },
 
-    detachInserter: function() {
+    hideInserter: function() {
       this.inserter.$el.detach();
       return this;
+    },
+
+    propagateInserter: function() {
+      this.hideInserter();
+      this.trigger("block:inserter");
     },
 
     createBlock: function(attrs) {
@@ -82,8 +89,8 @@ define(["jquery"
         this._isCreatingBlock = true;
       }
 
-      this.detachInserter();
-      this.detachPlaceholder();
+      this.hideInserter();
+      this.hidePlaceholder();
 
       _.extend(attrs, {
         parent_id: this.collection.parentBlock.get("id"),
@@ -98,12 +105,12 @@ define(["jquery"
           this.insertBlock(block, blockForm.el);
           blockForm.remove();
           this._isCreatingBlock = false;
-          this.appendPlaceholder();
+          this.showPlaceholder();
         }, this)
         .on("reset", function() {
           blockForm.remove();
           this._isCreatingBlock = false;
-          this.appendPlaceholder();
+          this.showPlaceholder();
         }, this);
 
 
