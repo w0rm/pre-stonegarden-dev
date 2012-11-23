@@ -66,6 +66,8 @@ define(["jquery"
         this.inserter.render().$el["insert" + (top ? "Before" : "After") ]($block);
       }
 
+      // Trigger inserter event so parent blocks views
+      // will remove their inserters
       this.trigger("block:inserter");
 
     },
