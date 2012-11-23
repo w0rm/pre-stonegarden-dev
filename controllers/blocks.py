@@ -15,16 +15,6 @@ from models.blocks import *
 from models.pages import get_page_by_id, load_page_data
 
 
-blockPasteForm = web.form.Form(
-    Textbox("block_id"),
-    Textbox("position", notnull),
-    # Validate presence of block in session
-    validators=[web.form.Validator(
-        N_("Buffer is empty."),
-        lambda form: get_block_from_session())]
-)
-
-
 class Blocks(RESTfulController):
 
     form = web.form.Form(
@@ -73,46 +63,3 @@ class Blocks(RESTfulController):
         delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")
         return '{"status":1}'
-
-
-class CopyBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
-        block = get_block_by_id(block_id)
-        save_block_in_session(block)
-        web.header("Content-Type", "application/json")
-        return '{"status":1}'
-
-
-class CutBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self, block_id):
-        print "DELETE"
-        block = delete_block_by_id(block_id)
-        save_block_in_session(block)
-        web.header("Content-Type", "application/json")
-        return '{"status":1}'
-
-
-class PasteBlock:
-
-    @auth.restrict("admin", "editor")
-    def POST(self):
-
-        d = web.input(page_id=None, is_template=False)
-        block_form = blockPasteForm()
-
-        if block_form.validates():
-
-            # Retreive block from session
-            saved_block = get_block_from_session()
-
-            # Update block with form data
-            saved_block.update(block_form.d)
-
-            block = create_block(saved_block, d.is_template, d.page_id)
-            raise web.seeother(link_to("blocks", block, page_id=d.page_id))
-
-        return "NOT OK"
