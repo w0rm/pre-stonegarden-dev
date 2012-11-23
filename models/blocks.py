@@ -9,16 +9,29 @@ def update_block_by_id(block_id, data):
 
     block = get_block_by_id(block_id)
 
+    data.update(
+        content_cached=smarty(sanitize(data.content)),
+        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
     # Get column sizes from data
     sizes = data.pop("sizes")
+
+    # Don't change block position, it may be wrong
+    position = data.pop("position")
 
     db.update(
         "blocks",
         where="$block_id = id",
         vars=locals(),
-        content_cached=smarty(sanitize(data.content)),
-        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         **data)
+
+    # Update block with data
+    block.update(data)
+
+    # Create columns for row block
+    if block.template == "row":
+        block.orphans = update_columns(block, sizes)
 
     return block
 
@@ -27,6 +40,13 @@ def create_block(block):
     """Creates block from passed dict and returns it."""
 
     where = "position >= $position AND NOT is_deleted"
+
+    block.update(
+        position=int(block.position),
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        content_cached=smarty(sanitize(block.content)),
+        is_published=True,
+    )
 
     if block.get("parent_id"):
         parent = get_block_by_id(block.parent_id)
@@ -52,34 +72,113 @@ def create_block(block):
         position=web.SQLLiteral("position+1"),
     )
 
-    block.update(
-        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
-        content_cached=smarty(sanitize(block.content)),
-        is_published=True,
-    )
-
     sizes = block.pop("sizes")
-
     block.id = db.insert("blocks", **block)
 
     # Create columns for row block
     if block.template == "row":
-        column = web.storage(
-            created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
-            is_published=True,
-            page_id=parent.page_id,
-            parent_id=block.id,
-            ids=block.ids + "," + str(block.id),
-            level=block.level + 1,
-            template="column",
-            position=1,
-        )
-        for i, size in enumerate(sizes):
-            column.position = i + 1
-            column.size = size
-            db.insert("blocks", **column)
+        create_columns(block, sizes)
 
     return block
+
+
+def create_columns(block, sizes, start_index=0):
+
+    # Basic column data
+    column = web.storage(
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        is_published=True,
+        page_id=block.page_id,
+        parent_id=block.id,
+        ids=block.ids + "," + str(block.id),
+        level=block.level + 1,
+        template="column",
+        position=start_index + 1,
+    )
+    for size in sizes:
+        column.size = size
+        db.insert("blocks", **column)
+        column.position += 1
+
+
+def update_columns(block, sizes):
+
+    columns = get_blocks_by_parent_id(block.id)
+    edit_len = min(len(columns), len(sizes))
+    create_len = len(sizes) - len(columns)
+    orphan_blocks = []
+
+    for i in range(edit_len):
+        col, size = columns[i], sizes[i]
+        db.update(
+            "blocks",
+            where="id=$id",
+            vars=col,
+            updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+            size=size,
+            position=i + 1,
+        )
+
+    if create_len >= 0:
+        # Create columns
+        create_columns(block, sizes[edit_len:], edit_len)
+    else:
+        # Remove columns
+        position = block.position
+        orphan_blocks = remove_columns(block, columns[create_len:])
+
+    return orphan_blocks
+
+
+def remove_columns(block, columns):
+
+    # TODO: fix CURRENT_TIMESTAMP
+
+    column_ids = (c.id for c in columns)
+    print type(block.position)
+
+    # Orphan update data
+    orphan_data = web.storage(
+        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        page_id=block.page_id,
+        parent_id=block.parent_id,
+        ids=block.ids,
+        level=block.level,
+        position=block.position + 1,
+    )
+
+    orphans = []
+
+    for column in columns:
+        orphans += get_blocks_by_parent_id(column.id)
+        delete_block_by_id(column.id)
+
+    # Shift positions of the blocks after orphans
+    # Positions before:
+    # 1 2 (3) 4 5
+    # Positions after (3 orphans):
+    # 1 2 (3) [4 5 6] 7 8
+    # Blocks 4 5 shifted to 7 8
+    #
+    db.update(
+        "blocks",
+        where="parent_id = $parent_id AND NOT is_deleted AND "
+              "position > $position",
+        vars=block,
+        position=web.SQLLiteral("position + %d" % len(orphans)),
+    )
+
+    # Insert orphans
+    for orphan in orphans:
+        orphan.update(orphan_data)
+        db.update(
+            "blocks",
+            where="id = $id",
+            vars=orphan,
+            **orphan_data)
+        orphan_data.position += 1
+
+    return orphans
 
 
 def delete_block_by_id(block_id):

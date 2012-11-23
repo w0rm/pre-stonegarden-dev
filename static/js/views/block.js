@@ -33,7 +33,7 @@ define(["jquery"
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("destroy", this.remove, this)
-        .on("change:html", this.updateBlock, this);
+        .on("change:html change:blocks", this.updateBlock, this);
     },
 
     highlightBlock: function() {
