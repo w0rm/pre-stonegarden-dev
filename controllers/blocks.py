@@ -14,19 +14,6 @@ from pytils.translit import slugify
 from models.blocks import *
 from models.pages import get_page_by_id, load_page_data
 
-blockForm = web.form.Form(
-    Textbox("parent_id", notnull),
-    Textbox("position", notnull),
-    Textbox("template", notnull),
-    Textbox("type"),
-    # For row blocks
-    TextboxList("sizes"),
-    # For content blocks
-    Textbox("content"),
-    # For all blocks (settings)
-    Textbox("css_class"),
-    Checkbox("is_published"),
-)
 
 blockPasteForm = web.form.Form(
     Textbox("block_id"),
@@ -40,6 +27,20 @@ blockPasteForm = web.form.Form(
 
 class Blocks(RESTfulController):
 
+    form = web.form.Form(
+        web.form.Input("parent_id", notnull),
+        web.form.Input("position", notnull),
+        web.form.Input("template", notnull),
+        web.form.Input("type"),
+        # For row blocks
+        web.form.Input("sizes"),
+        # For content blocks
+        web.form.Input("content"),
+        # For all blocks (settings)
+        web.form.Input("css_class"),
+        web.form.Input("is_published"),
+    )
+
     @auth.restrict("admin", "editor")
     def get(self, block_id):
         d = web.input(page_id=None)
@@ -52,7 +53,7 @@ class Blocks(RESTfulController):
     @auth.restrict("admin", "editor")
     def create(self):
         d = web.input(page_id=None, sizes=[])
-        block_form = blockForm()
+        block_form = self.form()
         if block_form.validates(d):
             block = create_block(block_form.d)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
@@ -61,7 +62,7 @@ class Blocks(RESTfulController):
     @auth.restrict("admin", "editor")
     def update(self, block_id):
         d = web.input(page_id=None, sizes=[])
-        block_form = blockForm()
+        block_form = self.form()
         if block_form.validates(d):
             block = update_block_by_id(block_id, block_form.d)
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
