@@ -41,7 +41,9 @@ define(["jquery"
     },
 
     closed: function() {
-      this.contentView.$el.detach();
+      this.contentView
+        .trigger("reset")
+        .$el.detach();
       this.$el.detach();
     }
 
