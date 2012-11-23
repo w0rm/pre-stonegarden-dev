@@ -30,7 +30,16 @@ define(["jquery"
         .on("block:create", this.createBlock, this);
       this.collection
         .on("remove", this.showPlaceholder, this)
-        .on("add", this.hidePlaceholder, this);
+        .on("add", this.addBlock, this);
+    },
+
+    addBlock: function(model, collection, options) {
+      // Detach inserter and placeholder
+      // to ensure new block is inserted
+      // in correct position
+      this.hideInserter();
+      this.hidePlaceholder();
+      return views.Blocks.prototype.addBlock.apply(this, arguments);
     },
 
     render: function(){
@@ -91,9 +100,6 @@ define(["jquery"
         this._isCreatingBlock = true;
       }
 
-      this.hideInserter();
-      this.hidePlaceholder();
-
       _.extend(attrs, {
         parent_id: this.collection.parentBlock.get("id"),
         page_id: sgData.pageId
@@ -103,26 +109,23 @@ define(["jquery"
         attrs: attrs,
         collection: this.collection
       })
-        .on("success", function(block) {
-          this.insertBlock(block, blockForm.el);
-          blockForm.remove();
-          this._isCreatingBlock = false;
-          this.showPlaceholder();
-        }, this)
-        .on("reset", function() {
+        .on("reset success", function(block) {
           blockForm.remove();
           this._isCreatingBlock = false;
           this.showPlaceholder();
         }, this);
 
+      // These should be hidden to enforce correct position
+      this.hideInserter();
+      this.hidePlaceholder();
 
-      if (attrs.position == 1) {
+      if (attrs.position === 1) {
         // Prepend on top of the blocks
         this.$el.prepend(blockForm.el);
       } else {
         // Insert after block
         this.$el.children().eq(attrs.position - 2).after(blockForm.el);
-      }
+      };
 
       // This is important, tinymce should be init only
       // when parent div is attached to dom

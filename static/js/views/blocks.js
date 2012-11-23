@@ -13,7 +13,7 @@ define(["jquery"
   views.Blocks = Backbone.View.extend({
 
     render: function() {
-      this.collection.each(this.appendBlock, this);
+      this.collection.each(this.addBlock, this);
       return this;
     },
 
@@ -24,17 +24,22 @@ define(["jquery"
         .render()
     },
 
-    appendBlock: function(block) {
-      this.$el.append(this.makeBlockView(block).el);
-      return this;
+    addBlock: function (model, collection, options) {
+      this.appendBlock(model, options.index);
     },
 
-    insertBlock: function(block, el) {
+    appendBlock: function(block, index) {
       var b = this.makeBlockView(block);
-
-      console.log(b.el);
-
-      b.$el.insertAfter(el);
+      if (_.isNumber(index)) {
+        if (index === 0) {
+          this.$el.prepend(b.el);
+        } else {
+          this.$el.children().eq(index - 1).after(b.el);
+        }
+      } else {
+        // append if no index specified
+        this.$el.append(b.el);
+      }
       return this;
     },
 

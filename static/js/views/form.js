@@ -15,10 +15,6 @@ define(["jquery"
       "reset": "resetEvent"
     },
 
-    initialize: function() {
-
-    },
-
     hasModel: function() {
       return !!this.model;
     },
@@ -29,15 +25,23 @@ define(["jquery"
       e.preventDefault();
       e.stopPropagation();
       this.enterSyncState(function(){
-        var params = {
-          wait: true,
-          success: function() {
-            self.successEvent.apply(self, arguments);
-          },
-          error: function() {
-            self.errorEvent.apply(self, arguments);
-          }
+        var data = this.serializeObject()
+          , params = {
+            wait: true,
+            success: function() {
+              self.successEvent.apply(self, arguments);
+            },
+            error: function() {
+              self.errorEvent.apply(self, arguments);
+            }
+          };
+
+        // data.position is positive number
+        // @at specifies index of new model in collection
+        if (data.position) {
+          params.at = data.position - 1;
         };
+
         if (this.hasModel()) {
           this.model.save(this.serializeObject(), params);
         } else {
