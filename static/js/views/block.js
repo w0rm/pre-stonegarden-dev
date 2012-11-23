@@ -33,7 +33,7 @@ define(["jquery"
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("destroy", this.remove, this)
-        .on("sync", this.reRender, this);
+        .on("change:html", this.updateBlock, this);
     },
 
     highlightBlock: function() {
@@ -73,11 +73,11 @@ define(["jquery"
       blockForm.render();
     },
 
-    reRender: function() {
+    updateBlock: function() {
+      var $newEl = $(this.model.get("html"));
       this.hideContextMenu(); // detach context menu
-      this.$el.replaceWith(this.model.get("html")); // replace element
-      this.setElement(this.$el); // rebind events
-      this.render(); // render nested blocks
+      this.setElement($newEl.replaceAll(this.el)); // replace element
+      return this.render(); // render nested blocks
     },
 
     makeBlockView: function(block) {
@@ -93,8 +93,7 @@ define(["jquery"
         , $blocks = this.$(".js-blocks"); // cache this element
                                           // before nested .js-blocks
                                           // are rendered
-
-      // Append template blocks
+      // Render template blocks
       this.$(".js-template-block").each(function() {
         var $block = $(this)
           , block = sg.templateBlocks.findByName($block.data("name"));
@@ -112,7 +111,7 @@ define(["jquery"
           .on("block:contextmenu", this.propagateContextMenu, this)
           .on("block:inserter", this.propagateInserter, this)
           .render();
-      }
+      };
 
       return this;
     },
@@ -125,7 +124,7 @@ define(["jquery"
       }
     },
 
-    hideContextMenu: function(e) {
+    hideContextMenu: function() {
       if (this.model.hasContextMenu()) {
         this.contextMenu.$el.detach();
       }
