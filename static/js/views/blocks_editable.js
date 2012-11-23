@@ -117,7 +117,11 @@ define(["jquery"
 
       // These should be hidden to enforce correct position
       this.hideInserter();
-      this.hidePlaceholder();
+
+      if (attrs.template === "content") {
+        // Hide placeholder only for inline editing
+        this.hidePlaceholder();
+      }
 
       if (attrs.position === 1) {
         // Prepend on top of the blocks
