@@ -32,12 +32,18 @@
         .container { width: 1100px; margin: 0px auto; }
         .col { float: left; width: 330px; margin-right: 20px }
         .clear { clear: both }
+        ul li {color:#ccc}
+        ul li span {color:#666}
         ul.small { font-size: 12px; line-height: 24px}
         ul.medium { font-size: 14px; line-height: 24px}
         ul.normal { font-size: 16px; line-height: 24px}
         ul.bigger { font-size: 18px; line-height: 24px}
+        li:hover { color:#888 }
         li:hover span { color:#333 }
         li:hover span[class*="sg-ico-"]:before { color: #000 }
+        body [class*="sg-ico-"]:before { padding-right:10px  }
+        body [class*="sg-ico-"]:before { font-size:16px  }
+
     </style>
 </head>
 
@@ -48,6 +54,8 @@
     <p>Icons are designed to be crispy at 16px. Use them with another size at your own risk.</p>
 	<hr>
     <p>
+        <span class="sg-ico-edzo"></span>
+        <span class="sg-ico-stone"></span> | 
         <span class="sg-ico-copy"></span>
         <span class="sg-ico-cut"></span>
         <span class="sg-ico-paste"></span>
@@ -55,133 +63,147 @@
 	<hr>
     <ul class="col small">
     	<li><b>Small</b> 12px</li>
-    	<li><span class="sg-ico-empty">Empty UTF+E000</span>.sg-ico-empty</li>
-    	<li><span class="sg-ico-stone">Stonegarden UTF+E001</span>.sg-ico-stone</li>
-    	<li><span class="sg-ico-cursor">Cursor UTF+E002</span>.sg-ico-cursor</li>
-    	<li><span class="sg-ico-page">Page UTF+E003</span>.sg-ico-page</li>
-    	<li><span class="sg-ico-documents">Documents UTF+E004</span>.sg-ico-documents</li>
-    	<li><span class="sg-ico-trash">Trash UTF+E005</span>.sg-ico-trash</li>
-    	<li><span class="sg-ico-settings">Settings UTF+E006</span>.sg-ico-settings</li>
-    	<li><span class="sg-ico-help">Help UTF+E007</span>.sg-ico-help</li>
-    	<li><span class="sg-ico-published">Published UTF+E008</span>  </li>
-    	<li><span class="sg-ico-hidden">Hidden UTF+E009</span> </li>
-    	<li><span class="sg-ico-calendar">Calendar UTF+E008</span>  </li>
-    	<li><span class="sg-ico-login">Login UTF+00b</span>.sg-ico-login</li>
-    	<li><span class="sg-ico-search">Search UTF+00c</span>.sg-ico-search</li>
-    	<li><span class="sg-ico-comments">Comments UTF+00d</span>.sg-ico-comments</li>
-    	<li><span class="sg-ico-placemark">Placemark UTF+00e</span>.sg-ico-placemark</li>
-    	<li><span class="sg-ico-checked">Checked UTF+00f</span>.sg-ico-checked</li>
-    	<li><span class="sg-ico-menu">Menu UTF+010</span>.sg-ico-menu</li>
-    	<li><span class="sg-ico-menu-list">Menu List UTF+011</span>.sg-ico-menu-list</li>
-    	<li><span class="sg-ico-cols-2">2 Columns UTF+012</span>.sg-ico-cols-2</li>
-    	<li><span class="sg-ico-cols-3">3 Columns UTF+013</span>.sg-ico-cols-3</li>
-    	<li><span class="sg-ico-image">Image UTF+001</span>.sg-ico-image</li>
-    	<li><span class="sg-ico-gallery">Gallery UTF+001</span>.sg-ico-gallery</li>
-    	<li><span class="sg-ico-text">Text UTF+001</span>.sg-ico-text</li>
-    	<li><span class="sg-ico-plus-light">Light Plus UTF+001</span>.sg-ico-plus-light</li>
-    	<li><span class="sg-ico-plus-bold">Bold Plus UTF+001</span>.sg-ico-plus-bold</li>
-    	<li><span class="sg-ico-warning">Warning UTF+001</span>.sg-ico-warning</li>
-    	<li><span class="sg-ico-download">Download UTF+001</span>.sg-ico-download</li>
-    	<li><span class="sg-ico-arrow-r">Right Arrow UTF+001</span>.sg-ico-arrow-r</li>
-    	<li><span class="sg-ico-exit">Exit UTF+001</span>.sg-ico-exit</li>
+        <li><span class="sg-ico-empty">Empty</span>.sg-ico-empty</li>
+        <li><span class="sg-ico-edzo">Edzo</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-stone">Stonegarden</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-cursor">Cursor</span>.sg-ico-cursor</li>
+        <li><span class="sg-ico-edit">Edit</span>.sg-ico-edit</li>
+        <li><span class="sg-ico-page">Page</span>.sg-ico-page</li>
+        <li><span class="sg-ico-documents">Documents</span>.sg-ico-documents</li>
+        <li><span class="sg-ico-trash">Trash</span>.sg-ico-trash</li>
+        <li><span class="sg-ico-settings">Settings</span>.sg-ico-settings</li>
+        <li><span class="sg-ico-help">Help</span>.sg-ico-help</li>
+        <li><span class="sg-ico-published">Published</span>.sg-ico-published  </li>
+        <li><span class="sg-ico-hidden">Hidden</span>.sg-ico-hidden </li>
+        <li><span class="sg-ico-calendar">Calendar</span>.sg-ico-calendar</li>
+        <li><span class="sg-ico-login">Login</span>.sg-ico-login</li>
+        <li><span class="sg-ico-search">Search</span>.sg-ico-search</li>
+        <li><span class="sg-ico-comments">Comments</span>.sg-ico-comments</li>
+        <li><span class="sg-ico-placemark">Placemark</span>.sg-ico-placemark</li>
+        <li><span class="sg-ico-checked">Checked</span>.sg-ico-checked</li>
+        <li><span class="sg-ico-menu">Menu</span>.sg-ico-menu</li>
+        <li><span class="sg-ico-menu-list">Menu</span>.sg-ico-menu-list</li>
+        <li><span class="sg-ico-cols-2">Columns</span>.sg-ico-cols-2</li>
+        <li><span class="sg-ico-cols-3">Columns</span>.sg-ico-cols-3</li>
+        <li><span class="sg-ico-image">Image</span>.sg-ico-image</li>
+        <li><span class="sg-ico-gallery">Gallery</span>.sg-ico-gallery</li>
+        <li><span class="sg-ico-text">Text </span>.sg-ico-text</li>
+        <li><span class="sg-ico-plus-light">Light add</span>.sg-ico-plus-light</li>
+        <li><span class="sg-ico-plus-arrow">Expermental add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-plus-bold">Fat add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-warning">Warning </span>.sg-ico-warning</li>
+        <li><span class="sg-ico-download">Download </span>.sg-ico-download</li>
+        <li><span class="sg-ico-arrow-l">Arrow left</span>.sg-ico-arrow-l</li>
+        <li><span class="sg-ico-arrow-r">Arrow right</span>.sg-ico-arrow-r</li>
+        <li><span class="sg-ico-bracket-r">Bracket arrow right</span>.sg-ico-bracket-r</li>
+        <li><span class="sg-ico-bracket-l">Bracket arrow left</span>.sg-ico-bracket-l</li>
+        <li><span class="sg-ico-exit">Exit </span>.sg-ico-exit</li>
+        <li><span class="sg-ico-heart">Heart / Mark  </span>.sg-ico-heart</li>
+        <li><span class="sg-ico-unheart">Unheart / Unmark </span>.sg-ico-unheart</li>
+        <li><span class="sg-ico-reload45">Reload</span>.sg-ico-reload45</li>
+        <li><span class="sg-ico-reload">Reload</span>.sg-ico-reload</li>
+        <li><span class="sg-ico-tile">Display tiles </span>.sg-ico-tile</li>
+        <li><span class="sg-ico-list">Display list</span>.sg-ico-list</li>
+        <li><span class="sg-ico-folder">Folder</span>.sg-ico-folder</li>
+        <li><span class="sg-ico-folder-add">Add folder </span>.sg-ico-folder</li>
+        <li><span class="sg-ico-user">User profile</span>.sg-ico-user</li>
+
     </ul>
     <ul class="col medium">
     	<li><b>Medium</b> 14px</li>
-        <li><span class="sg-ico-empty">Empty UTF+E000</span>.sg-ico-empty</li>
-        <li><span class="sg-ico-stone">Stonegarden UTF+E001</span>.sg-ico-stone</li>
-        <li><span class="sg-ico-cursor">Cursor UTF+E002</span>.sg-ico-cursor</li>
-        <li><span class="sg-ico-page">Page UTF+E003</span>.sg-ico-page</li>
-        <li><span class="sg-ico-documents">Documents UTF+E004</span>.sg-ico-documents</li>
-        <li><span class="sg-ico-trash">Trash UTF+E005</span>.sg-ico-trash</li>
-        <li><span class="sg-ico-settings">Settings UTF+E006</span>.sg-ico-settings</li>
-        <li><span class="sg-ico-help">Help UTF+E007</span>.sg-ico-help</li>
-        <li><span class="sg-ico-published">Published UTF+E008</span>  </li>
-        <li><span class="sg-ico-hidden">Hidden UTF+E009</span> </li>
-        <li><span class="sg-ico-calendar">Calendar UTF+E008</span>  </li>
-        <li><span class="sg-ico-login">Login UTF+00b</span>.sg-ico-login</li>
-        <li><span class="sg-ico-search">Search UTF+00c</span>.sg-ico-search</li>
-        <li><span class="sg-ico-comments">Comments UTF+00d</span>.sg-ico-comments</li>
-        <li><span class="sg-ico-placemark">Placemark UTF+00e</span>.sg-ico-placemark</li>
-        <li><span class="sg-ico-checked">Checked UTF+00f</span>.sg-ico-checked</li>
-        <li><span class="sg-ico-menu">Menu UTF+010</span>.sg-ico-menu</li>
-        <li><span class="sg-ico-menu-list">Menu List UTF+011</span>.sg-ico-menu-list</li>
-        <li><span class="sg-ico-cols-2">2 Columns UTF+012</span>.sg-ico-cols-2</li>
-        <li><span class="sg-ico-cols-3">3 Columns UTF+013</span>.sg-ico-cols-3</li>
-        <li><span class="sg-ico-image">Image UTF+001</span>.sg-ico-image</li>
-        <li><span class="sg-ico-gallery">Gallery UTF+001</span>.sg-ico-gallery</li>
-        <li><span class="sg-ico-text">Text UTF+001</span>.sg-ico-text</li>
-        <li><span class="sg-ico-plus-light">Light Plus UTF+001</span>.sg-ico-plus-light</li>
-        <li><span class="sg-ico-plus-bold">Bold Plus UTF+001</span>.sg-ico-plus-bold</li>
-        <li><span class="sg-ico-warning">Warning UTF+001</span>.sg-ico-warning</li>
-        <li><span class="sg-ico-download">Download UTF+001</span>.sg-ico-download</li>
-        <li><span class="sg-ico-arrow-r">Right Arrow UTF+001</span>.sg-ico-arrow-r</li>
-        <li><span class="sg-ico-exit">Exit UTF+001</span>.sg-ico-exit</li>
+        <li><span class="sg-ico-empty">Empty</span>.sg-ico-empty</li>
+        <li><span class="sg-ico-edzo">Edzo</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-stone">Stonegarden</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-cursor">Cursor</span>.sg-ico-cursor</li>
+        <li><span class="sg-ico-edit">Edit</span>.sg-ico-edit</li>
+        <li><span class="sg-ico-page">Page</span>.sg-ico-page</li>
+        <li><span class="sg-ico-documents">Documents</span>.sg-ico-documents</li>
+        <li><span class="sg-ico-trash">Trash</span>.sg-ico-trash</li>
+        <li><span class="sg-ico-settings">Settings</span>.sg-ico-settings</li>
+        <li><span class="sg-ico-help">Help</span>.sg-ico-help</li>
+        <li><span class="sg-ico-published">Published</span>.sg-ico-published  </li>
+        <li><span class="sg-ico-hidden">Hidden</span>.sg-ico-hidden </li>
+        <li><span class="sg-ico-calendar">Calendar</span>.sg-ico-calendar</li>
+        <li><span class="sg-ico-login">Login</span>.sg-ico-login</li>
+        <li><span class="sg-ico-search">Search</span>.sg-ico-search</li>
+        <li><span class="sg-ico-comments">Comments</span>.sg-ico-comments</li>
+        <li><span class="sg-ico-placemark">Placemark</span>.sg-ico-placemark</li>
+        <li><span class="sg-ico-checked">Checked</span>.sg-ico-checked</li>
+        <li><span class="sg-ico-menu">Menu</span>.sg-ico-menu</li>
+        <li><span class="sg-ico-menu-list">Menu</span>.sg-ico-menu-list</li>
+        <li><span class="sg-ico-cols-2">Columns</span>.sg-ico-cols-2</li>
+        <li><span class="sg-ico-cols-3">Columns</span>.sg-ico-cols-3</li>
+        <li><span class="sg-ico-image">Image</span>.sg-ico-image</li>
+        <li><span class="sg-ico-gallery">Gallery</span>.sg-ico-gallery</li>
+        <li><span class="sg-ico-text">Text </span>.sg-ico-text</li>
+        <li><span class="sg-ico-plus-light">Light add</span>.sg-ico-plus-light</li>
+        <li><span class="sg-ico-plus-arrow">Expermental add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-plus-bold">Fat add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-warning">Warning </span>.sg-ico-warning</li>
+        <li><span class="sg-ico-download">Download </span>.sg-ico-download</li>
+        <li><span class="sg-ico-arrow-l">Arrow left</span>.sg-ico-arrow-l</li>
+        <li><span class="sg-ico-arrow-r">Arrow right</span>.sg-ico-arrow-r</li>
+        <li><span class="sg-ico-bracket-r">Bracket arrow right</span>.sg-ico-bracket-r</li>
+        <li><span class="sg-ico-bracket-l">Bracket arrow left</span>.sg-ico-bracket-l</li>
+        <li><span class="sg-ico-exit">Exit </span>.sg-ico-exit</li>
+        <li><span class="sg-ico-heart">Heart / Mark  </span>.sg-ico-heart</li>
+        <li><span class="sg-ico-unheart">Unheart / Unmark </span>.sg-ico-unheart</li>
+        <li><span class="sg-ico-reload45">Reload</span>.sg-ico-reload45</li>
+        <li><span class="sg-ico-reload">Reload</span>.sg-ico-reload</li>
+        <li><span class="sg-ico-tile">Display tiles </span>.sg-ico-tile</li>
+        <li><span class="sg-ico-list">Display list</span>.sg-ico-list</li>
+        <li><span class="sg-ico-folder">Folder</span>.sg-ico-folder</li>
+        <li><span class="sg-ico-folder-add">Add folder </span>.sg-ico-folder</li>
+        <li><span class="sg-ico-user">User profile</span>.sg-ico-user</li>
     </ul>
     <ul class="col normal">
     	<li><b>Normal</b> 16px</li>
-        <li><span class="sg-ico-empty">Empty UTF+E000</span>.sg-ico-empty</li>
-        <li><span class="sg-ico-stone">Stonegarden UTF+E001</span>.sg-ico-stone</li>
-        <li><span class="sg-ico-cursor">Cursor UTF+E002</span>.sg-ico-cursor</li>
-        <li><span class="sg-ico-page">Page UTF+E003</span>.sg-ico-page</li>
-        <li><span class="sg-ico-documents">Documents UTF+E004</span>.sg-ico-documents</li>
-        <li><span class="sg-ico-trash">Trash UTF+E005</span>.sg-ico-trash</li>
-        <li><span class="sg-ico-settings">Settings UTF+E006</span>.sg-ico-settings</li>
-        <li><span class="sg-ico-help">Help UTF+E007</span>.sg-ico-help</li>
-        <li><span class="sg-ico-published">Published UTF+E008</span>  </li>
-        <li><span class="sg-ico-hidden">Hidden UTF+E009</span> </li>
-        <li><span class="sg-ico-calendar">Calendar UTF+E008</span>  </li>
-        <li><span class="sg-ico-login">Login UTF+00b</span>.sg-ico-login</li>
-        <li><span class="sg-ico-search">Search UTF+00c</span>.sg-ico-search</li>
-        <li><span class="sg-ico-comments">Comments UTF+00d</span>.sg-ico-comments</li>
-        <li><span class="sg-ico-placemark">Placemark UTF+00e</span>.sg-ico-placemark</li>
-        <li><span class="sg-ico-checked">Checked UTF+00f</span>.sg-ico-checked</li>
-        <li><span class="sg-ico-menu">Menu UTF+010</span>.sg-ico-menu</li>
-        <li><span class="sg-ico-menu-list">Menu List UTF+011</span>.sg-ico-menu-list</li>
-        <li><span class="sg-ico-cols-2">2 Columns UTF+012</span>.sg-ico-cols-2</li>
-        <li><span class="sg-ico-cols-3">3 Columns UTF+013</span>.sg-ico-cols-3</li>
-        <li><span class="sg-ico-image">Image UTF+001</span>.sg-ico-image</li>
-        <li><span class="sg-ico-gallery">Gallery UTF+001</span>.sg-ico-gallery</li>
-        <li><span class="sg-ico-text">Text UTF+001</span>.sg-ico-text</li>
-        <li><span class="sg-ico-plus-light">Light Plus UTF+001</span>.sg-ico-plus-light</li>
-        <li><span class="sg-ico-plus-bold">Bold Plus UTF+001</span>.sg-ico-plus-bold</li>
-        <li><span class="sg-ico-warning">Warning UTF+001</span>.sg-ico-warning</li>
-        <li><span class="sg-ico-download">Download UTF+001</span>.sg-ico-download</li>
-        <li><span class="sg-ico-arrow-r">Right Arrow UTF+001</span>.sg-ico-arrow-r</li>
-        <li><span class="sg-ico-exit">Exit UTF+001</span>.sg-ico-exit</li>
+        <li><span class="sg-ico-empty">Empty</span>.sg-ico-empty</li>
+        <li><span class="sg-ico-edzo">Edzo</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-stone">Stonegarden</span>.sg-ico-stone</li>
+        <li><span class="sg-ico-cursor">Cursor</span>.sg-ico-cursor</li>
+        <li><span class="sg-ico-edit">Edit</span>.sg-ico-edit</li>
+        <li><span class="sg-ico-page">Page</span>.sg-ico-page</li>
+        <li><span class="sg-ico-documents">Documents</span>.sg-ico-documents</li>
+        <li><span class="sg-ico-trash">Trash</span>.sg-ico-trash</li>
+        <li><span class="sg-ico-settings">Settings</span>.sg-ico-settings</li>
+        <li><span class="sg-ico-help">Help</span>.sg-ico-help</li>
+        <li><span class="sg-ico-published">Published</span>.sg-ico-published  </li>
+        <li><span class="sg-ico-hidden">Hidden</span>.sg-ico-hidden </li>
+        <li><span class="sg-ico-calendar">Calendar</span>.sg-ico-calendar</li>
+        <li><span class="sg-ico-login">Login</span>.sg-ico-login</li>
+        <li><span class="sg-ico-search">Search</span>.sg-ico-search</li>
+        <li><span class="sg-ico-comments">Comments</span>.sg-ico-comments</li>
+        <li><span class="sg-ico-placemark">Placemark</span>.sg-ico-placemark</li>
+        <li><span class="sg-ico-checked">Checked</span>.sg-ico-checked</li>
+        <li><span class="sg-ico-menu">Menu</span>.sg-ico-menu</li>
+        <li><span class="sg-ico-menu-list">Menu</span>.sg-ico-menu-list</li>
+        <li><span class="sg-ico-cols-2">Columns</span>.sg-ico-cols-2</li>
+        <li><span class="sg-ico-cols-3">Columns</span>.sg-ico-cols-3</li>
+        <li><span class="sg-ico-image">Image</span>.sg-ico-image</li>
+        <li><span class="sg-ico-gallery">Gallery</span>.sg-ico-gallery</li>
+        <li><span class="sg-ico-text">Text </span>.sg-ico-text</li>
+        <li><span class="sg-ico-plus-light">Light add</span>.sg-ico-plus-light</li>
+        <li><span class="sg-ico-plus-arrow">Expermental add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-plus-bold">Fat add</span>.sg-ico-plus-bold</li>
+        <li><span class="sg-ico-warning">Warning </span>.sg-ico-warning</li>
+        <li><span class="sg-ico-download">Download </span>.sg-ico-download</li>
+        <li><span class="sg-ico-arrow-l">Arrow left</span>.sg-ico-arrow-l</li>
+        <li><span class="sg-ico-arrow-r">Arrow right</span>.sg-ico-arrow-r</li>
+        <li><span class="sg-ico-bracket-r">Bracket arrow right</span>.sg-ico-bracket-r</li>
+        <li><span class="sg-ico-bracket-l">Bracket arrow left</span>.sg-ico-bracket-l</li>
+        <li><span class="sg-ico-exit">Exit </span>.sg-ico-exit</li>
+        <li><span class="sg-ico-heart">Heart / Mark  </span>.sg-ico-heart</li>
+        <li><span class="sg-ico-unheart">Unheart / Unmark </span>.sg-ico-unheart</li>
+        <li><span class="sg-ico-reload45">Reload</span>.sg-ico-reload45</li>
+        <li><span class="sg-ico-reload">Reload</span>.sg-ico-reload</li>
+        <li><span class="sg-ico-tile">Display tiles </span>.sg-ico-tile</li>
+        <li><span class="sg-ico-list">Display list</span>.sg-ico-list</li>
+        <li><span class="sg-ico-folder">Folder</span>.sg-ico-folder</li>
+        <li><span class="sg-ico-folder-add">Add folder </span>.sg-ico-folder</li>
+        <li><span class="sg-ico-user">User profile</span>.sg-ico-user</li>        
     </ul>
    <hr class="clear">
-    <ul class="bigger">
-        <li><b>Bigger</b> 18px</li>
-        <li><span class="sg-ico-empty">Empty UTF+E000</span>.sg-ico-empty</li>
-        <li><span class="sg-ico-stone">Stonegarden UTF+E001</span>.sg-ico-stone</li>
-        <li><span class="sg-ico-cursor">Cursor UTF+E002</span>.sg-ico-cursor</li>
-        <li><span class="sg-ico-page">Page UTF+E003</span>.sg-ico-page</li>
-        <li><span class="sg-ico-documents">Documents UTF+E004</span>.sg-ico-documents</li>
-        <li><span class="sg-ico-trash">Trash UTF+E005</span>.sg-ico-trash</li>
-        <li><span class="sg-ico-settings">Settings UTF+E006</span>.sg-ico-settings</li>
-        <li><span class="sg-ico-help">Help UTF+E007</span>.sg-ico-help</li>
-        <li><span class="sg-ico-published">Published UTF+E008</span>  </li>
-        <li><span class="sg-ico-hidden">Hidden UTF+E009</span> </li>
-        <li><span class="sg-ico-calendar">Calendar UTF+E008</span>  </li>
-        <li><span class="sg-ico-login">Login UTF+00b</span>.sg-ico-login</li>
-        <li><span class="sg-ico-search">Search UTF+00c</span>.sg-ico-search</li>
-        <li><span class="sg-ico-comments">Comments UTF+00d</span>.sg-ico-comments</li>
-        <li><span class="sg-ico-placemark">Placemark UTF+00e</span>.sg-ico-placemark</li>
-        <li><span class="sg-ico-checked">Checked UTF+00f</span>.sg-ico-checked</li>
-        <li><span class="sg-ico-menu">Menu UTF+010</span>.sg-ico-menu</li>
-        <li><span class="sg-ico-menu-list">Menu List UTF+011</span>.sg-ico-menu-list</li>
-        <li><span class="sg-ico-cols-2">2 Columns UTF+012</span>.sg-ico-cols-2</li>
-        <li><span class="sg-ico-cols-3">3 Columns UTF+013</span>.sg-ico-cols-3</li>
-        <li><span class="sg-ico-image">Image UTF+001</span>.sg-ico-image</li>
-        <li><span class="sg-ico-gallery">Gallery UTF+001</span>.sg-ico-gallery</li>
-        <li><span class="sg-ico-text">Text UTF+001</span>.sg-ico-text</li>
-        <li><span class="sg-ico-plus-light">Light Plus UTF+001</span>.sg-ico-plus-light</li>
-        <li><span class="sg-ico-plus-bold">Bold Plus UTF+001</span>.sg-ico-plus-bold</li>
-        <li><span class="sg-ico-warning">Warning UTF+001</span>.sg-ico-warning</li>
-        <li><span class="sg-ico-download">Download UTF+001</span>.sg-ico-download</li>
-        <li><span class="sg-ico-arrow-r">Right Arrow UTF+001</span>.sg-ico-arrow-r</li>
-        <li><span class="sg-ico-exit">Exit UTF+001</span>.sg-ico-exit</li>
-    </ul>
 </div>
 </body>
 </html>

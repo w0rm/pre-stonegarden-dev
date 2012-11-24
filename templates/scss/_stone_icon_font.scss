@@ -20,6 +20,7 @@
   text-decoration: none;
 }
 
+.sg-ico-edzo:before{content: "\0070"}
 .sg-ico-empty:before{content: "\0061"; color: red!important;}
 .sg-ico-stone:before{content: "\e001"}
 .sg-ico-cursor:before{content: "\e002"}
@@ -51,4 +52,23 @@
 .sg-ico-warning:before{content: "\e01c"}
 .sg-ico-download:before{content: "\e01d"}
 .sg-ico-arrow-r:before{content: "\e01e"}
+.sg-ico-arrow-l:before{content: "\e027"}
+.sg-ico-arrow-right:before{content: "\e03b"}
+.sg-ico-arrow-left:before{content: "\e03a"}
 .sg-ico-exit:before{content: "\e01f"}
+
+.sg-ico-heart:before{content: "\e105"}
+.sg-ico-unheart:before{content: "\e106"}
+.sg-ico-reload45:before{content: "\e021"}
+.sg-ico-reload:before{content: "\e022"}
+.sg-ico-tile:before{content: "\e025"}
+.sg-ico-list:before{content: "\e026"}
+.sg-ico-bracket-l:before{content: "\e028"}
+.sg-ico-bracket-r:before{content: "\e029"}
+
+.sg-ico-folder:before{content: "\e023"}
+.sg-ico-folder-add:before{content: "\e024"}
+
+.sg-ico-edit:before{content: "\e03d"}
+.sg-ico-user:before{content: "\e03e"}
+.sg-ico-plus-arrow:before{content: "\e111"}
