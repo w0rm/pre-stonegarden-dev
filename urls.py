@@ -16,25 +16,19 @@ urls=(
     "/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$", "controllers.auth.ResetChange",
 
     # Documents
+    "/a/storage", "controllers.documents.GetDocuments",
+    "/uploads/(.*)", "controllers.documents.DownloadDocument",
+
     "/a/documents/upload", "controllers.documents.DropUploadDocument",
     "/a/documents/newfolder", "controllers.documents.NewFolderDocument",
-    "/uploads/(.*)", "controllers.documents.DownloadDocument",
     "/a/documents/(\d+)(/|\.json)?", "controllers.documents.GetDocument",
     "/a/documents/(\d+)/image_size", "controllers.documents.GetImageSize",
-    "/a/documents", "controllers.documents.GetDocuments",
     "/a/documents/(\d+)/order", "controllers.documents.OrderDocument",
     "/a/documents/(\d+)/edit_settings", "controllers.documents.EditDocumentSettings",
     "/a/documents/(\d+)/delete", "controllers.documents.DeleteDocument",
 
     # Blocks
     r'/a/blocks(?:/(?P<resource_id>[0-9]+))?', "controllers.blocks.Blocks",
-    "/a/blocks/(\d+)/edit_template", "controllers.blocks.EditBlockTemplate",
-    "/a/blocks/(\d+)/edit_settings", "controllers.blocks.EditBlockSettings",
-    "/a/blocks/(\d+)/wrap", "controllers.blocks.WrapBlock",
-    "/a/blocks/(\d+)/unwrap", "controllers.blocks.UnwrapBlock",
-    "/a/blocks/(\d+)/copy", "controllers.blocks.CopyBlock",
-    "/a/blocks/(\d+)/cut", "controllers.blocks.CutBlock",
-    "/a/blocks/paste", "controllers.blocks.PasteBlock",
 
     # Pages
     "/a/sitemap", "controllers.pages.Sitemap",
