@@ -135,18 +135,24 @@ define(["jquery"
 
       parentBlocks = this.parentBlock && this.parentBlock.blocks;
 
+      // Expand orphaned blocks from deleted columns
       if (parentBlocks) {
+        // Get new row size
         newSize = this.get("blocks").length;
+        // Get index of row block
         index = parentBlocks.indexOf(this);
         orphans = [];
+        // collect orphaned blocks
         this.blocks.each(function(column, idx) {
           if (idx >= newSize) {
             orphans = orphans.concat(column.blocks.models);
           }
         }, this);
+        // add orphans after row block
         parentBlocks.add(orphans, {at: index + 1});
       }
 
+      // Replace row's columns
       models.Block.prototype.updateBlocks.apply(this, arguments);
 
     }
