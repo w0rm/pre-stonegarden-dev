@@ -3,21 +3,21 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "models/block"
-      , "views/form"
+      , "views/alert_form"
       , "jquery.tinymce"], function ($, _, Backbone, sg) {
 
   var views = sg.views
     , RowBlockForm;
 
 
-  RowBlockForm = views.Form.extend({
+  RowBlockForm = views.AlertForm.extend({
 
     template: _.template($("#block-row-form-template").html()),
 
     events: _.extend({
       "change .js-size": "changeColumns",
       "change [name=sizes]": "changeSize"
-    }, views.Form.prototype.events),
+    }, views.AlertForm.prototype.events),
 
     initialize: function() {
       this.attrs = this.options.attrs;
