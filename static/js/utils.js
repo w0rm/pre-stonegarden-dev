@@ -54,6 +54,25 @@ define(["jquery"
         default:
           return "";
       }
+    },
+
+    timify: function(time) {
+      if (time < 10) {
+        return "0" + time;
+      } else {
+        return time;
+      }
+    },
+
+    dateFromString: function(dateAsString) {
+      var parts, pattern;
+      pattern = new RegExp("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})");
+      parts = dateAsString.match(pattern);
+      if (parts) {
+        return new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10), 0);
+      } else {
+        return null;
+      }
     }
 
   });
