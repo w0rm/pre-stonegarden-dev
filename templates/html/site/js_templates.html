@@ -3,6 +3,15 @@ $if auth.get_user():
         <a class="close-reveal-modal">&#215;</a>
         <div class="js-content"></div>
     </script>
+    <script type="text/template" id="alert-template">
+        <div class="alert-box alert">
+            <% _.each(errors, function(error){ %>
+                <%= error.note %>.
+            <% }); %>
+        </div>
+    </script>
+
+
     <script type="text/template" id="block-delete-template">
         <h3>$_("Delete this block?")</h3>
         <p>$_("It will also delete all the nested blocks.")</p>
@@ -91,6 +100,7 @@ $if auth.get_user():
                 </div>
             <% } %>
             </div>
+            <div class="js-alert"></div>
             <p>
                 <button class="button" type="submit">$_("Save")</button>
                 <button class="button" type="reset">$_("Cancel")</button>
