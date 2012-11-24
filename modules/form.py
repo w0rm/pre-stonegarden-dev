@@ -39,8 +39,10 @@ class ApiForm(web.form.Form):
         return json.dumps(result, indent=2)
 
     def validation_error(self):
-        web.header("Content-Type", "application/json")
-        return ValidationError(self.errors_to_json())
+        return ValidationError(
+            self.errors_to_json(),
+            {"Content-Type": "application/json"}
+        )
 
 
 # TODO: render all forms by parts in templates
