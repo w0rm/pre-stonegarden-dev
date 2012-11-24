@@ -7,8 +7,8 @@ from template import render_block, smarty, sanitize
 
 def validate_row_block_form(form):
     if form.template == "row":
-        sizes = (int(s) for s in form.sizes)
-        return sum(sizes) == 12 and all(size > 0 for s in sizes)
+        sizes = [int(s) for s in form.sizes]
+        return sum(sizes) == 12 and all(s > 0 for s in sizes)
     return True
 
 
