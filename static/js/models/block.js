@@ -22,7 +22,7 @@ define(["jquery"
       this.updateBlocks();
     },
 
-    updateBlocks: function(model, blocks) {
+    updateBlocks: function() {
       this.blocks.reset(this.get("blocks"));
     },
 
@@ -124,7 +124,34 @@ define(["jquery"
     }
   });
 
-  models.RowBlock = models.Block;
+  models.RowBlock = models.Block.extend({
+
+    updateBlocks: function() {
+
+      var parentBlocks
+        , newSize
+        , index
+        , orphans;
+
+      parentBlocks = this.parentBlock && this.parentBlock.blocks;
+
+      if (parentBlocks) {
+        newSize = this.get("blocks").length;
+        index = parentBlocks.indexOf(this);
+        orphans = [];
+        this.blocks.each(function(column, idx) {
+          if (idx >= newSize) {
+            orphans = orphans.concat(column.blocks.models);
+          }
+        }, this);
+        parentBlocks.add(orphans, {at: index + 1});
+      }
+
+      models.Block.prototype.updateBlocks.apply(this, arguments);
+
+    }
+
+  });
 
   models.NavBlock = models.Block;
 
