@@ -133,7 +133,7 @@ define(["jquery"
         , index
         , orphans;
 
-      parentBlocks = this.parentBlock && this.parentBlock.blocks;
+      parentBlocks = this.hasParent() && this.parentBlock.blocks;
 
       // Expand orphaned blocks from deleted columns
       if (parentBlocks) {
