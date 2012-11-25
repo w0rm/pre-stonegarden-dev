@@ -2,15 +2,15 @@
 
 import web
 import os
-import datetime
 import json
 import urllib
+from modules.form import ApiForm, notnull
 from config import config
 from base import db, auth, flash
-from modules.utils import dthandler
 from modules.translation import _, N_
+from modules.restful_controller import RESTfulController
 from template import render, render_partial, link_to, image_url
-from modules.form import *
+from modules.form import ApiForm, notnull
 from web import ctx
 from pytils.translit import slugify
 import random
@@ -18,12 +18,6 @@ import string
 import mimetypes
 
 document_download_forbidden = N_("Cannot download this document")
-
-documentSettingsForm = web.form.Form(
-    Textbox("title"),
-    Textarea("content"),
-    Checkbox("is_published", description=N_("Show on site"), value="ok"),
-)
 
 
 def document_download_access(func):  # defines who can download file
@@ -36,69 +30,81 @@ def document_download_access(func):  # defines who can download file
     return proxyfunc
 
 
-def download_document(document):
-    web.header("Content-Disposition", "attachment; filename=%s" %
-               slugify(document.title) + document.extension)
-    web.header("Content-Type", document.mimetype)
-    #web.header('Transfer-Encoding', 'chunked')
-    f = open(os.path.join(config.upload_dir, document.filename), 'rb')
-    while 1:
-        buf = f.read(1024 * 8)
-        if not buf:
-            break
-        yield buf
+class Storage:
+
+    def GET(self):
+        pass
 
 
-def rem_file(filename):
-    if os.path.exists(filename):
-        os.unlink(filename)
+class Download:
+
+    def GET(self, filename):
+        document = db.select(
+            "documents",
+            locals(),
+            where="filename = $filename AND NOT is_deleted",
+            limit=1)[0]
+        return self.download(document)
+
+    @document_download_access
+    def download(self, document):
+        return download_document(document)
 
 
-def delete_file(filename):
-    rem_file(os.path.join(config.upload_dir, filename + ".jpg"))
-    rem_file(os.path.join(config.upload_dir, filename + "_tmp.jpg"))
-    for size in config.image.keys():
-        rem_file(os.path.join(config.static_dir, filename +
-                              "_" + size + ".jpg"))
+class Documents(RESTfulController):
+
+    form = ApiForm(
+        web.form.Input("parent_id", notnull),
+        web.form.Input("title"),
+        web.form.Input("type"),
+        web.form.Input("description"),
+        web.form.Input("is_published"),
+        web.form.Input("upload"),
+    )
+
+    filter_form = ApiForm(
+        web.form.Input("parent_id", notnull),
+        web.form.Input("type"),
+    )
+
+    @auth.restrict("admin", "editor")
+    def list(self):
+        """Lists documents by specified parent_id (or type filter)"""
+        form = self.filter_form()
+        if form.validates():
+            web.header("Content-Type", "application/json")
+            query = form.d
+            documents = get_documents_by_parent_id(query.parent_id,
+                                                   query.type)
+            return documents_to_json(documents)
+        raise form.validation_error()
+
+    @auth.restrict("admin", "editor")
+    def create(self):
+        d = web.input(upload={})
+        form = self.form()
+        if form.validates(d):
+            document = create_document(form.d)
+            raise web.seeother(link_to("documents", document))
+        raise form.validation_error()
+
+    @auth.restrict("admin", "editor")
+    def update(self, document_id):
+        d = web.input(page_id=None, sizes=[])
+        form = self.form()
+        if form.validates(d):
+            document = update_document_by_id(document_id, form.d)
+            raise web.seeother(link_to("document_ids", document))
+        raise form.validation_error()
+
+    @auth.restrict("admin", "editor")
+    def delete(self, document_id):
+        delete_document_by_id(block_id)
+        web.header("Content-Type", "application/json")
+        return '{"status": 1}'
 
 
-def delete_document(document):
-    db.update("documents", where="id = $id AND NOT is_deleted",
-              vars=document, is_deleted=1)
-    if document.type == "folder":
-        for doc in db.select("documents", document,
-                             where="parent_id=$id AND NOT is_deleted"):
-            delete_document(doc)
-
-
-def save_document(f):
-    """Saves file and returns filename with path from upload folder"""
-    prefix = datetime.datetime.now().strftime("%Y/%m")
-    prefixname = None
-    while prefixname is None or os.path.exists(
-            os.path.join(config.upload_dir, prefix, prefixname)):
-        prefixname = (
-            os.path.join(
-                prefix,
-                ''.join(random.choice(string.ascii_letters + string.digits)
-                        for x in range(5))
-            )
-        )
-
-    folder = os.path.join(config.upload_dir, prefix)
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-    document_file = file(os.path.join(config.upload_dir, prefixname), 'w')
-
-    while 1:
-        buf = f.read(1024 * 8)
-        if not buf:
-            break
-        document_file.write(buf)
-    size = document_file.tell()
-    document_file.close()
-    return prefixname, size
-
+#TODO: extract parts from the code below to models/documents.py
 
 class DropUploadDocument:
 
@@ -196,22 +202,7 @@ class NewFolderDocument:
         raise web.seeother(link_to("documents", document) + ".json")
 
 
-class DownloadDocument:
-
-    def GET(self, filename):
-        document = db.select(
-            "documents",
-            locals(),
-            where="filename = $filename AND NOT is_deleted",
-            limit=1)[0]
-        return self.download(document)
-
-    @document_download_access
-    def download(self, document):
-        return download_document(document)
-
-
-class GetDocument(object):
+class GetDocument:
 
     @auth.restrict("admin", "editor", "user")
     def GET(self, document_id, format=None):
@@ -281,14 +272,6 @@ class GetImageSize:
                                    title=document.title))
         else:
             raise web.seeother(src)
-
-
-class GetDocuments(GetDocument):
-
-    path = "/a/documents/?"
-
-    def GET(self):
-        return super(self.__class__, self).GET(1)
 
 
 class OrderDocument:

@@ -13,19 +13,20 @@ urls=(
     "/login", "controllers.auth.Login",
     "/logout", "controllers.auth.Logout",
     "/password_reset", "controllers.auth.ResetToken",
-    "/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$", "controllers.auth.ResetChange",
+    r'/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$', "controllers.auth.ResetChange",
 
     # Documents
-    "/a/storage", "controllers.documents.GetDocuments",
-    "/uploads/(.*)", "controllers.documents.DownloadDocument",
+    "/a/storage", "controllers.documents.Storage",
+    "/uploads/(.*)", "controllers.documents.Download",
+    r'/a/documents(?:/(?P<resource_id>[0-9]+))?', "controllers.documents.Documents",
 
-    "/a/documents/upload", "controllers.documents.DropUploadDocument",
-    "/a/documents/newfolder", "controllers.documents.NewFolderDocument",
-    "/a/documents/(\d+)(/|\.json)?", "controllers.documents.GetDocument",
+    #"/a/documents/upload", "controllers.documents.DropUploadDocument",
+    #"/a/documents/newfolder", "controllers.documents.NewFolderDocument",
+    #"/a/documents/(\d+)(/|\.json)?", "controllers.documents.GetDocument",
     "/a/documents/(\d+)/image_size", "controllers.documents.GetImageSize",
-    "/a/documents/(\d+)/order", "controllers.documents.OrderDocument",
-    "/a/documents/(\d+)/edit_settings", "controllers.documents.EditDocumentSettings",
-    "/a/documents/(\d+)/delete", "controllers.documents.DeleteDocument",
+    #"/a/documents/(\d+)/order", "controllers.documents.OrderDocument",
+    #"/a/documents/(\d+)/edit_settings", "controllers.documents.EditDocumentSettings",
+    #"/a/documents/(\d+)/delete", "controllers.documents.DeleteDocument",
 
     # Blocks
     r'/a/blocks(?:/(?P<resource_id>[0-9]+))?', "controllers.blocks.Blocks",
