@@ -1,16 +1,11 @@
 # coding: utf-8
 
 import web
-import os
-import datetime
-from config import config
-from base import db, auth, flash
-from modules.translation import _, N_
-from modules.restful_controller import RESTfulController
+from base import auth
+from template import link_to
 from modules.form import ApiForm, notnull
-from template import render, render_partial, render_block, link_to
-from web import ctx
-from pytils.translit import slugify
+from modules.restful_controller import RESTfulController
+from modules.translation import N_
 from models.blocks import *
 from models.pages import get_page_by_id, load_page_data
 
@@ -67,4 +62,4 @@ class Blocks(RESTfulController):
     def delete(self, block_id):
         delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")
-        return '{"status":1}'
+        return '{"status": 1}'
