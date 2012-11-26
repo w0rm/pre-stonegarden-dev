@@ -13,6 +13,8 @@ define(["jquery"
 
     template: _.template($("#document-storage-template").html()),
 
+    className: "sg-storage",
+
     events: {
       "click .js-create-folder": "createFolder"
     },
