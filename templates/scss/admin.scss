@@ -31,7 +31,7 @@
   display: none;
 }
 
-.block[data-position]:before {
+/*.block[data-position]:before {
   content: attr(data-position);
   font: 12px/1 sans-serif;
   color: #fff;
@@ -43,7 +43,7 @@
   position: absolute;
   right: 100%;
   top: 0;
-};
+};*/
 
 $navBarHeight: 45px !default;
 .sg-top-bar-spacer {
