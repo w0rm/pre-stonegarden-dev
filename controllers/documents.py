@@ -1,7 +1,7 @@
 # coding: utf-8
 import web
 from base import auth
-from template import link_to, image_url
+from template import link_to, image_url, render
 from modules.form import ApiForm, notnull
 from modules.restful_controller import RESTfulController
 from modules.translation import N_
@@ -11,7 +11,7 @@ from models.documents import *
 class Storage:
 
     def GET(self):
-        pass
+        return render.documents.storage()
 
 
 class Download:
