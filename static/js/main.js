@@ -21,4 +21,4 @@ require.config({
   }
 });
 
-require(["blocks"]);
+require(["blocks", "documents"]);

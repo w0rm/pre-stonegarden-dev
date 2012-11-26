@@ -21,10 +21,10 @@ $def with(page, edit_mode_on)
         <span class="sg-ico-menu-list"></span>
         <ul class="sg-contextmenu">
             <li class="sg-contextmenu-item"><a href="/a/storage">$_("Storage")</a></li>
-            <li data-role="admin" class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$auth.get_user().title</a></li>
-            <li data-role="admin" class="sg-contextmenu-item"><a href="/a/users">$_("User accounts")</a></li>
+            <li data-role="admin" class="sg-contextmenu-item"><a href="/a/users">$_("Users")</a></li>
+            <li data-role="admin" class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$_("My account")</a></li>
             <li data-role="admin" class="sg-contextmenu-separator"></li>
-            <li class="sg-contextmenu-item"><a href="/logout">$_("Logout")</a></li>
+            <li class="sg-contextmenu-item"><a href="/logout">$_("Exit")</a></li>
         </ul>
     </div>
 </nav>

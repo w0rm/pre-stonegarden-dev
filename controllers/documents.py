@@ -10,6 +10,7 @@ from models.documents import *
 
 class Storage:
 
+    @auth.restrict("admin", "editor", "user")
     def GET(self):
         return render.documents.storage()
 

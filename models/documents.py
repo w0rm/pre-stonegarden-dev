@@ -4,7 +4,7 @@ import json
 import mimetypes
 import random
 import string
-from base import db
+from base import db, auth
 from modules.utils import dthandler
 from modules.translation import _
 from config import config
@@ -13,16 +13,16 @@ from config import config
 def create_document(document):
     """Creates new document and saves upload"""
 
-    parent = get_document_by_id(data.parent_id)
+    parent = get_document_by_id(document.parent_id)
 
     document.update(
-        ids=parent.ids + "," + str(parent.id),
+        ids=(parent.ids or "") + "," + str(parent.id),
         level=parent.level + 1,
         position=int(document.position),
-        parent_id=int(parent_id),
+        parent_id=int(document.parent_id),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
-        is_published=True, #True for the new documents
+        is_published=True,  # True for the new documents
     )
 
     if document.type == "folder":
@@ -80,7 +80,8 @@ def update_document_by_id(document_id, data):
 
     # TODO: wrap the code below in transaction
     # TODO: custom input field that returns integer value
-    if data.position != document.position or data.parent_id != document.parent_id:
+    if (data.position != document.position or
+            data.parent_id != document.parent_id):
         # Collapse positions
         db.update(
             "documents",
@@ -145,9 +146,10 @@ def delete_document_tree(document):
     db.update("documents", where="id = $document_id AND NOT is_deleted",
               vars=document, is_deleted=1)
     if document.type == "folder":
-        for doc in db.select("documents", what="id, type",
-                             where="parent_id = $document_id AND NOT is_deleted",
-                             vars=locals()):
+        for doc in db.select(
+                "documents", what="id, type",
+                where="parent_id = $document_id AND NOT is_deleted",
+                vars=locals()):
             delete_document_tree(doc)
     return document
 
@@ -238,7 +240,8 @@ def save_document(f):
 
 def download_document(document):
 
-    if not auth.has_role("admin", "editor", "user") and not document.is_published:
+    if (not auth.has_role("admin", "editor", "user") and
+            not document.is_published):
         raise flash.redirect(_("Cannot download this document"))
 
     web.header("Content-Disposition", "attachment; filename=%s" %

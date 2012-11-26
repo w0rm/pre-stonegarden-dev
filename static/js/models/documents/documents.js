@@ -9,6 +9,12 @@ define(["jquery"
     , models = sg.models
     , utils = sg.utils;
 
-  collections.Documents = Backbone.Collection.extend({});
+  collections.Documents = Backbone.Collection.extend({
+
+    model: models.Document,
+
+    url: "/a/documents"
+
+  });
 
 });

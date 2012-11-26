@@ -1,30 +1,26 @@
 $def with (page=None)
 <!doctype html>
-<html lang="$config.default_locale">
+<html lang="$ctx.lang">
 <head>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>$page.get("title")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$page.get("title", None)</title>
     <meta name="description" content="$page.get("meta_description")">
     <meta name="keywords" content="$page.get("meta_keywords")">
     <link rel="shortcut icon" href="$asset_url("img/favicon.ico")" type="image/x-icon">
     <link rel="stylesheet" href="$asset_url("css/style.css")">
     $if auth.get_user():
         <link rel="stylesheet" href="$asset_url("css/admin.css")">
-        <script data-main="$asset_url("js/main.js", False)" src="$asset_url("vendor/js/require-2.1.1.js")"></script>
-    <style>
-        $:page.get("css_code")
-    </style>
+        <script data-main="$asset_url("js/main.js", False)"
+                src="$asset_url("vendor/js/require-2.1.1.js")"></script>
+    <style>$:page.get("css_code")</style>
     $:render.site.js_templates()
 </head>
 <body class="$page.get("class")">
     $if auth.get_user() and not ctx.get("page"):
-        $:render.site.topbar()
-
+        $:render.site.topbar(page)
     $:flash.render()
     $:page
-
     $if not auth.get_user():
         <script src="$asset_url("js/public.js")"></script>
     <script>

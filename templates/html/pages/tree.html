@@ -1,5 +1,3 @@
-$var page = ctx.page
-
 $def render_block(block):
     $_("Block"): $block.template
     $if block.blocks:
@@ -7,11 +5,9 @@ $def render_block(block):
         $for b in block.blocks:
             <li>$:render_block(b)</li>
         </ul>
-
 <div class="row">
     <div class="eight columns">
-        <h1>$_("Page tree")</h1>
-        <h2>$_("Page") «$ctx.page.title»</h2>
+        <h1>$_("Page tree"): $ctx.page.title</h2>
         <div class="sitemap">
             $:render_block(ctx.page_block)
         </div>
