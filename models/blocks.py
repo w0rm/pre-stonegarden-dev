@@ -1,6 +1,6 @@
 import web
 import json
-from base import db
+from base import db, auth
 from modules.utils import dthandler
 from template import render_block, smarty, sanitize
 
@@ -16,6 +16,11 @@ def update_block_by_id(block_id, data):
 
     block = get_block_by_id(block_id)
 
+    # Cannot edit or delete system blocks
+    if block.is_system:
+        raise flash.error(
+            _("Cannot edit or delete system blocks."))
+
     data.update(
         content_cached=smarty(sanitize(data.content)),
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
@@ -25,8 +30,10 @@ def update_block_by_id(block_id, data):
     sizes = data.pop("sizes")
 
     # Don't change block position, it may be wrong
+    # TODO: ensure correct position from the server
     position = data.pop("position")
 
+    # TODO: wrap the code below in transaction
     db.update(
         "blocks",
         where="$block_id = id",
@@ -34,6 +41,7 @@ def update_block_by_id(block_id, data):
         **data)
 
     # Update block with data
+    # TODO: fix updated_at
     block.update(data)
 
     # Create columns for row block
@@ -46,15 +54,15 @@ def update_block_by_id(block_id, data):
 def create_block(block):
     """Creates block from passed dict and returns it."""
 
-    where = "position >= $position AND NOT is_deleted"
-
     block.update(
         position=int(block.position),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        user_id=auth.get_user().id,
         content_cached=smarty(sanitize(block.content)),
         is_published=True,
     )
 
+    # TODO: wrap the code below in transaction
     if block.get("parent_id"):
         parent = get_block_by_id(block.parent_id)
         if parent.ids:
@@ -66,18 +74,17 @@ def create_block(block):
             ids=parent_blocks,
             level=parent.level + 1,
         )
-        where += " AND parent_id = $parent_id"
+        # Shift blocks positions to free the place for new block
+        db.update(
+            "blocks",
+            where="position >= $position AND NOT is_deleted AND "
+                  "parent_id = $parent_id",
+            vars=block,
+            position=web.SQLLiteral("position + 1"),
+        )
+
     else:
         block.level = 0
-        where += " AND parent_id IS NULL"
-
-    # Shift blocks positions to free the place for new block
-    db.update(
-        "blocks",
-        where=where,
-        vars=block,
-        position=web.SQLLiteral("position+1"),
-    )
 
     sizes = block.pop("sizes")
     block.id = db.insert("blocks", **block)
@@ -86,6 +93,7 @@ def create_block(block):
     if block.template == "row":
         create_columns(block, sizes)
 
+    # TODO: fix created_at
     return block
 
 
@@ -94,6 +102,7 @@ def create_columns(block, sizes, start_index=0):
     # Basic column data
     column = web.storage(
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        user_id=auth.get_user().id,
         is_published=True,
         page_id=block.page_id,
         parent_id=block.id,
@@ -189,11 +198,16 @@ def remove_columns(block, columns):
 
 
 def delete_block_by_id(block_id):
-
     """Deletes block and returns deleted block."""
 
     block = get_block_by_id(block_id)
 
+    # Cannot delete system blocks
+    if block.is_system:
+        raise flash.error(
+            _("Cannot edit or delete system blocks."))
+
+    # TODO: wrap the code below in transaction
     db.update(
         "blocks",
         where="id = $id AND NOT is_deleted",
@@ -222,10 +236,10 @@ def get_block_by_id(block_id):
     )[0]
 
 
-def get_blocks_by_parent_id(block_id=None):
+def get_blocks_by_parent_id(parent_id=None):
     """Returns all blocks for specific parent block"""
     return db.select("blocks", locals(),
-                     where="parent_id = $block_id AND NOT is_deleted",
+                     where="parent_id = $parent_id AND NOT is_deleted",
                      order="position ASC").list()
 
 
