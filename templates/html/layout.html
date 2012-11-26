@@ -20,7 +20,7 @@ $def with (page=None)
 </head>
 <body class="$page.get("class")">
     $if auth.get_user() and not ctx.get("page"):
-        $:render.ui.topbar()
+        $:render.site.topbar()
 
     $:flash.render()
     $:page
