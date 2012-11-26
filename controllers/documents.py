@@ -4,6 +4,7 @@ from base import auth
 from template import link_to, image_url
 from modules.form import ApiForm, notnull
 from modules.restful_controller import RESTfulController
+from modules.translation import N_
 from models.documents import *
 
 
