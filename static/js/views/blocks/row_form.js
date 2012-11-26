@@ -2,14 +2,15 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "views/modal"
       , "views/alert_form"
       , "jquery.tinymce"], function ($, _, Backbone, sg) {
 
   var views = sg.views
-    , RowBlockForm;
+    , _RowBlockForm;
 
 
-  RowBlockForm = views.AlertForm.extend({
+  _RowBlockForm = views.AlertForm.extend({
 
     template: _.template($("#block-row-form-template").html()),
 
@@ -129,7 +130,7 @@ define(["jquery"
   views.RowBlockForm = Backbone.View.extend({
 
     initialize: function() {
-      this.formView = new RowBlockForm({
+      this.formView = new _RowBlockForm({
         model: this.model,
         collection: this.collection,
         attrs: this.options.attrs

@@ -3,13 +3,14 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "views/form"
+      , "views/modal"
       , "jquery.tinymce"], function ($, _, Backbone, sg) {
 
   var views = sg.views
-    , NavBlockForm;
+    , _NavBlockForm;
 
 
-  NavBlockForm = views.Form.extend({
+  _NavBlockForm = views.Form.extend({
 
     template: _.template($("#block-nav-form-template").html()),
 
@@ -45,7 +46,7 @@ define(["jquery"
   views.NavBlockForm = Backbone.View.extend({
 
     initialize: function() {
-      this.formView = new NavBlockForm({
+      this.formView = new _NavBlockForm({
         model: this.model,
         collection: this.collection,
         attrs: this.options.attrs
