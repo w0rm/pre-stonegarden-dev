@@ -22,11 +22,13 @@ def create_document(document):
         parent_id=int(parent_id),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
-        is_published=True,
+        is_published=True, #True for the new documents
     )
 
     if document.type == "folder":
         del document["upload"]
+        if not document.title:
+            document.title = _("Untitled Folder")
     else:
         upload = document.pop("upload")
         try:
@@ -61,7 +63,6 @@ def create_document(document):
 def update_document_by_id(document_id, data):
 
     document = get_document_by_id(document_id)
-
     parent = get_document_by_id(data.parent_id)
 
     data.update(
