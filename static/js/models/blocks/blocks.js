@@ -4,7 +4,6 @@ define(["jquery"
       , "stonegarden"
       , "utils"], function ($, _, Backbone, sg) {
 
-
   var collections = sg.collections || (sg.collections = {})
     , models = sg.models || (sg.models = {})
     , utils = sg.utils;

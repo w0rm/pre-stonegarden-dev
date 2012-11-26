@@ -2,7 +2,6 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "models/block"
       , "views/form"
       , "jquery.tinymce"], function ($, _, Backbone, sg) {
 

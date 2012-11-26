@@ -3,9 +3,8 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "utils"
-      , "models/blocks"
+      , "models/blocks/blocks"
       , "models/model"], function ($, _, Backbone, sg) {
-
 
   var collections = sg.collections
     , models = sg.models;

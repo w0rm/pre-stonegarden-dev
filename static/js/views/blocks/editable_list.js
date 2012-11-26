@@ -2,20 +2,18 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/modal"
-      , "views/blocks"
-      , "views/block_inserter"
-      , "views/block_placeholder"
-      , "views/block_form"
-      , "views/block_nav_form"
-      , "views/block_row_form"], function ($, _, Backbone, sg) {
-
+      , "views/blocks/list"
+      , "views/blocks/inserter"
+      , "views/blocks/placeholder"
+      , "views/blocks/form"
+      , "views/blocks/nav_form"
+      , "views/blocks/row_form"], function ($, _, Backbone, sg) {
 
   var views = sg.views
     , utils = sg.utils;
 
 
-  views.BlocksEditable = views.Blocks.extend({
+  views.EditableBlockList = views.BlockList.extend({
 
     events: {
       "mousemove .js-block": "showInserter",
@@ -39,12 +37,12 @@ define(["jquery"
       // in correct position
       this.hideInserter();
       this.hidePlaceholder();
-      return views.Blocks.prototype.addBlock.apply(this, arguments);
+      return views.BlockList.prototype.addBlock.apply(this, arguments);
     },
 
     render: function(){
       this.showPlaceholder();
-      return views.Blocks.prototype.render.call(this);
+      return views.BlockList.prototype.render.call(this);
     },
 
     showPlaceholder: function() {

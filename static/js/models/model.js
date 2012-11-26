@@ -4,8 +4,8 @@ define(["jquery"
       , "stonegarden"
       , "utils"], function ($, _, Backbone, sg) {
 
-
   var models = sg.models || (sg.models = {});
+
 
   models.Model = Backbone.Model.extend({
     sync: function (method, model, options) {

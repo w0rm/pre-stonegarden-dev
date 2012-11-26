@@ -6,8 +6,8 @@ define(["jquery"
 
   var views = sg.views;
 
-  // TODO: generate context menu using view
 
+  // TODO: generate context menu using view
   views.BlockInserter = Backbone.View.extend({
 
     className: "sg-block-inserter js-inserter",

@@ -4,16 +4,13 @@ define(["jquery"
       , "stonegarden"
       , "views/contextmenu"
       , "views/modal"
-      , "views/blocks"
-      , "views/blocks_editable"
-      , "views/block_delete"
-      , "models/block"], function ($, _, Backbone, sg) {
+      , "views/blocks/list"
+      , "views/blocks/editable_list"
+      , "views/blocks/delete"], function ($, _, Backbone, sg) {
 
-
-  var collections = sg.collections
-    , models = sg.models
-    , utils = sg.utils
+  var utils = sg.utils
     , views = sg.views;
+
 
   // TODO: Baseblock view, that has makeBlockView, propagateContextMenu
   // then views.Block and views.Blocks subclass it.
@@ -102,8 +99,7 @@ define(["jquery"
 
       // Render blocks
       if (this.model.hasBlocks()) {
-        blocksViewClassName = "Blocks" + (
-          this.model.isContainer() ? "Editable" : "");
+        blocksViewClassName = (this.model.isContainer() ? "Editable" : "") + "BlockList";
         this.blocks = new views[blocksViewClassName]({
           el: $blocks,
           collection: this.model.blocks

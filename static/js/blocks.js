@@ -1,4 +1,11 @@
-define(['jquery', 'underscore', 'stonegarden', 'views/block'], function ($, _, sg) {
+define(['jquery'
+      , 'underscore'
+      , 'stonegarden'
+      , 'views/blocks/block'
+      , 'models/blocks/block'
+      , 'models/blocks/blocks'], function ($, _, sg) {
+
+
   $(function() {
 
     var views = sg.views
@@ -12,7 +19,7 @@ define(['jquery', 'underscore', 'stonegarden', 'views/block'], function ($, _, s
       sg.pageBlock.set(window.sgData.pageBlock);
 
       // init template blocks collection
-      sg.templateBlocks = new collections.Blocks();
+      sg.templateBlocks = new collections.Blocks;
       sg.templateBlocks.reset(window.sgData.templateBlocks);
 
       // init main view

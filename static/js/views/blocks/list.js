@@ -2,15 +2,12 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/modal"
-      , "views/block_inserter"
-      , "views/block_placeholder"], function ($, _, Backbone, sg) {
-
+      , "views/modal"], function ($, _, Backbone, sg) {
 
   var views = sg.views;
 
 
-  views.Blocks = Backbone.View.extend({
+  views.BlockList = Backbone.View.extend({
 
     render: function() {
       this.collection.each(this.addBlock, this);
