@@ -16,8 +16,8 @@ define(["jquery"
 
     makeBlockView: function(block) {
       return new views.Block({model: block, el: block.get("html")})
-        .on("block:contextmenu", this.propagateContextMenu, this)
-        .on("block:inserter", this.propagateInserter, this)
+        .on("contextmenu:show", this.propagateContextMenu, this)
+        .on("inserter:show", this.propagateInserter, this)
         .render()
     },
 
@@ -41,11 +41,11 @@ define(["jquery"
     },
 
     propagateContextMenu: function() {
-      this.trigger("block:contextmenu");
+      this.trigger("contextmenu:show");
     },
 
     propagateInserter: function() {
-      this.trigger("block:inserter");
+      this.trigger("inserter:show");
     }
 
   });

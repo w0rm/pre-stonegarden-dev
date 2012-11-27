@@ -2,28 +2,22 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/contextmenu"
+      , "views/mixins/has_contextmenu"
       , "views/modal"
       , "views/blocks/list"
       , "views/blocks/editable_list"
       , "views/blocks/delete"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
-    , views = sg.views;
+    , views = sg.views
+    , mixins = sg.mixins;
 
 
   // TODO: Baseblock view, that has makeBlockView, propagateContextMenu
   // then views.Block and views.Blocks subclass it.
 
-  views.Block = Backbone.View.extend({
-
-    events: {
-      "mouseenter": "showContextMenu",
-      "mouseleave": "hideContextMenu"
-    },
-
+  views.Block = Backbone.View.extend(_.extend(mixins.hasContextMenu, {
     initialize: function() {
-      this.contextMenu = new views.ContextMenu({model: this.model});
       this.model
         .on("block:highlight", this.highlightBlock, this)
         .on("block:lowlight", this.lowlightBlock, this)
@@ -79,8 +73,8 @@ define(["jquery"
 
     makeBlockView: function(block) {
       return new views.Block({model: block, el: block.get("html")})
-        .on("block:contextmenu", this.propagateContextMenu, this)
-        .on("block:inserter", this.propagateInserter, this)
+        .on("contextmenu:show", this.propagateContextMenu, this)
+        .on("inserter:show", this.propagateInserter, this)
         .render()
     },
 
@@ -104,37 +98,23 @@ define(["jquery"
           el: $blocks,
           collection: this.model.blocks
         })
-          .on("block:contextmenu", this.propagateContextMenu, this)
-          .on("block:inserter", this.propagateInserter, this)
+          .on("contextmenu:show", this.propagateContextMenu, this)
+          .on("inserter:show", this.propagateInserter, this)
           .render();
       };
 
       return this;
     },
 
-    showContextMenu: function(e) {
-      if (this.model.hasContextMenu()) {
-        e.stopPropagation()
-        this.$el.prepend(this.contextMenu.render().el);
-        this.trigger("block:contextmenu");
-      }
-    },
-
-    hideContextMenu: function() {
-      if (this.model.hasContextMenu()) {
-        this.contextMenu.$el.detach();
-      }
-    },
-
     propagateContextMenu: function() {
       this.hideContextMenu();
-      this.trigger("block:contextmenu");
+      this.trigger("contextmenu:show");
     },
 
     propagateInserter: function() {
-      this.trigger("block:inserter");
+      this.trigger("inserter:show");
     }
 
-  });
+  }));
 
 });

@@ -75,7 +75,7 @@ define(["jquery"
 
       // Trigger inserter event so parent blocks views
       // will remove their inserters
-      this.trigger("block:inserter");
+      this.trigger("inserter:show");
 
     },
 
@@ -86,7 +86,7 @@ define(["jquery"
 
     propagateInserter: function() {
       this.hideInserter();
-      this.trigger("block:inserter");
+      this.trigger("inserter:show");
     },
 
     createBlock: function(attrs) {
