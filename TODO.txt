@@ -1,11 +1,8 @@
-1. Row block edit
-2. Block attributes edit
-3. Partial template for admin toolbar
-4. Basic functionality of the storage
-5. Cut/copy/paste on blocks and documents
-6. Storage plugin for tinymce
-
-7. Render the following forms in templates by parts:
+1. Image resize api
+3. Document and block  attributes edit
+4. Cut/copy/paste on blocks and documents
+5. Storage plugin for tinymce
+6. Render the following forms in templates by parts:
   edit page form
   create page form
   style and scripts form
