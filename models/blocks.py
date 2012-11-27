@@ -66,7 +66,7 @@ def create_block(block):
     if block.get("parent_id"):
         parent = get_block_by_id(block.parent_id)
         if parent.ids:
-            parent_blocks = parent.ids + "," + str(parent.id)
+            parent_blocks = (parent.ids or "") + "," + str(parent.id)
         else:
             parent_blocks = str(parent.id)
         block.update(
