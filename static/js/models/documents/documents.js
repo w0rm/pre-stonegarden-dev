@@ -13,7 +13,17 @@ define(["jquery"
 
     model: models.Document,
 
-    url: "/a/documents"
+    url: "/a/documents",
+
+    getUploadPosition: function() {
+      var firstNonFolder = this.find(function(d) {
+            return d.get("type") != "folder";
+          })
+        , position = firstNonFolder ?
+            firstNonFolder.get("position") :
+            1;
+      return position;
+    }
 
   });
 

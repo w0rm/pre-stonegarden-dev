@@ -52,7 +52,7 @@ $if auth.get_user():
     <script type="text/template" id="document-form-template">
         <form>
             <label>$_("Title")</label>
-            <input name="title" type="text" val="<%= document.title || "" %>">
+            <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
             <label>$_("Description")</label>
             <textarea name="description"><%= document.description || "" %></textarea>
             <div class="js-alert"></div>

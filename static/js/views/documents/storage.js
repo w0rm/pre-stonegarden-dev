@@ -16,7 +16,8 @@ define(["jquery"
     className: "sg-storage",
 
     events: {
-      "click .js-create-folder": "createFolder"
+      "click .js-create-folder": "createFolder",
+      "change input[name=upload]": "changeEvent"
     },
 
     navigateTo: function(parent_id) {
@@ -34,7 +35,6 @@ define(["jquery"
 
       return this;
     },
-
 
     createFolder: function() {
       var documentForm
@@ -54,8 +54,24 @@ define(["jquery"
         contentView: documentForm
       }).open();
 
-    }
+    },
 
+    changeEvent: function(e) {
+      this.upload(e.target.files);
+      // Empty file input value:
+      e.target.outerHTML = e.target.outerHTML;
+    },
+
+    upload: function(files) {
+      _.each(files, function(file) {
+        this.collection.create({
+          upload: file,
+          parent_id: this.parent_id,
+          position: this.collection.getUploadPosition()
+        }, {wait: true});
+      }, this);
+      return this;
+    }
 
   });
 
