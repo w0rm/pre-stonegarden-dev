@@ -14,11 +14,11 @@ $if auth.get_user():
         <div class="row">
             <div class="twelve columns">
                 <p></p>
-                <ul class="right button-group radius">
+                <ul class="right button-group">
                     <li>
                         <button class="button sg-ico-upload sg-file-input">
                             $_("Upload files")
-                            <input type="file" name="upload">
+                            <input type="file" multiple name="upload">
                         </button>
                     </li>
                     <li>
@@ -28,7 +28,7 @@ $if auth.get_user():
                     </li>
                 </p>
             </div>
-            <ul class="twelve columns sg-documents js-documents"></ul>
+            <ul class="twelve columns sg-document-tiles js-documents"></ul>
         </div>
     </script>
     <script type="text/template" id="document-template">
@@ -36,7 +36,7 @@ $if auth.get_user():
         <% if (document.type === "folder") { %>
             <span class="sg-ico-folder"></span>
         <% } else if (document.type === "document") { %>
-            <span class="sg-ico-page sg-document-extension"><%= document.extension %></span>
+            <span class="sg-ico-page sg-document-extension"><em><%= document.extension %></em></span>
         <% } else if (document.type === "image") { %>
             <img src="<%= document.src %>" alt="<%= document.title %>">
         <% } %>

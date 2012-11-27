@@ -1,8 +1,9 @@
 @import "config";
 @import "stone_icon_font";
 @import "admin/ui";
-@import "admin/blocks"; // extends contextmenu from ui
 @import "admin/form";
+@import "admin/documents";
+@import "admin/blocks"; // extends contextmenu from ui
 
 .debug {
   @import "admin/debug";

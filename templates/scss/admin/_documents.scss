@@ -1,0 +1,73 @@
+
+
+.sg-document-storage {
+  background-color: #f2f2f2;
+  min-height: 180px * 3;
+}
+
+.sg-document-tiles {
+
+  list-style: none;
+
+  .sg-document {
+    display: inline-block;
+    vertical-align: top;
+    width: 190px;
+    padding: 170px 15px 10px;
+    position: relative;
+    @include border-radius;
+    &:hover {
+      @include box-shadow;
+      background: #fff;
+      .sg-ico-folder {
+        color: #f2f2f2;
+      }
+    };
+    .sg-contextmenu-show {
+      top: 120px;
+      left: 25px;
+    }
+  }
+
+  .sg-document-extension {
+    position: absolute;
+    top: 80px;
+    left: 90px;
+    margin-top: -24px;
+    margin-left: -24px;
+
+    &:before {
+      font-size: 48px;
+      color: #808285;
+    };
+
+    em {
+      display: inline-block;
+      position: relative;
+      text-transform: uppercase;
+      line-height: 14px;
+      height: 14px;
+      top: -10px;
+      left: -25px;
+      color: #fff;
+      background-color: #80c73a;
+      font-size: 12px;
+      font-weight: bold;
+      font-style: normal;
+      padding: 0 2px;
+    }
+  }
+
+  .sg-ico-folder {
+    position: absolute;
+    top: 20px;
+    color: #fff;
+    left: 15px;
+    font-size: 160px;
+    line-height: 180px;
+    height: 170px;
+    overflow: hidden
+  }
+
+
+}
