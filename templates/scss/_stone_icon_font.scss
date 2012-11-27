@@ -68,6 +68,7 @@
 
 .sg-ico-folder:before{content: "\e023"}
 .sg-ico-folder-add:before{content: "\e024"}
+.sg-ico-upload{@extend .sg-ico-empty;}
 
 .sg-ico-edit:before{content: "\e03d"}
 .sg-ico-user:before{content: "\e03e"}

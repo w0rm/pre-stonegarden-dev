@@ -1,49 +1,16 @@
 @import "config";
 @import "stone_icon_font";
-@import "ui/sg.inserter";
-@import "ui/sg.contextmenu";
-@import "ui/sg.pagemenu";
-@import "ui/sg.placeholder";
-@import "ui/sg.row_block";
+@import "admin/ui";
+@import "admin/blocks"; // extends contextmenu from ui
+@import "admin/form";
 
-.block {
-  // Prevent collapsing margins
-  padding-top: 1px;
-  padding-bottom: 1px;
-  // Allow context menu positioning
-  position: relative;
-  // Set min height
-  min-height: 40px;
-}
-
-.blocks {
-  // Allow inserter positioning
-  position: relative;
-  // Increase vertical space between inserters
-  padding: 5px 0;
-}
-
-.sg-block-highlight {
-  @include box-shadow;
+.debug {
+  @import "admin/debug";
 }
 
 .sg-hidden {
   display: none;
 }
-
-/*.block[data-position]:before {
-  content: attr(data-position);
-  font: 12px/1 sans-serif;
-  color: #fff;
-  background: #000;
-  width: 12px;
-  text-align: center;
-  height: 12px;
-  @include border-radius(6px);
-  position: absolute;
-  right: 100%;
-  top: 0;
-};*/
 
 $navBarHeight: 45px !default;
 .sg-top-bar-spacer {

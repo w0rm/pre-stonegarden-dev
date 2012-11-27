@@ -14,11 +14,18 @@ $if auth.get_user():
         <div class="row">
             <div class="twelve columns">
                 <p></p>
-                <p>
-                    <button class="button right js-create-folder">
-                        <i class="sg-ico-folder-add"></i>
-                        $_("Create folder")
-                    </button>
+                <ul class="right button-group radius">
+                    <li>
+                        <button class="button sg-ico-upload sg-file-input">
+                            $_("Upload files")
+                            <input type="file" name="upload">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button sg-ico-folder-add js-create-folder">
+                            $_("Create folder")
+                        </button>
+                    </li>
                 </p>
             </div>
             <ul class="twelve columns sg-documents js-documents"></ul>
