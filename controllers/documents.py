@@ -76,7 +76,7 @@ class Documents(RESTfulController):
 
     @auth.restrict("admin", "editor")
     def delete(self, document_id):
-        delete_document_by_id(block_id)
+        delete_document_by_id(document_id)
         web.header("Content-Type", "application/json")
         return '{"status": 1}'
 

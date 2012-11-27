@@ -13,7 +13,7 @@ define(["jquery"
 
     template: _.template($("#document-storage-template").html()),
 
-    className: "sg-storage",
+    className: "sg-document-storage",
 
     events: {
       "click .js-create-folder": "createFolder",
@@ -63,12 +63,13 @@ define(["jquery"
     },
 
     upload: function(files) {
+      var position = this.collection.getUploadPosition();
       _.each(files, function(file) {
         this.collection.create({
           upload: file,
           parent_id: this.parent_id,
-          position: this.collection.getUploadPosition()
-        }, {wait: true});
+          position: position
+        }, {wait: true, at: position - 1});
       }, this);
       return this;
     }

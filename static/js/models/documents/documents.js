@@ -15,6 +15,16 @@ define(["jquery"
 
     url: "/a/documents",
 
+    initialize: function() {
+      this.on("add remove", this.updatePositions, this);
+    },
+
+    updatePositions: function(model, collection, options) {
+      this.each(function(m, index) {
+        m.set({position: index + 1});
+      })
+    },
+
     getUploadPosition: function() {
       var firstNonFolder = this.find(function(d) {
             return d.get("type") != "folder";

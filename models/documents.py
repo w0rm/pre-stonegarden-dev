@@ -145,12 +145,12 @@ def delete_document_tree(document):
         Recursively deletes document tree branch.
         Ignores is_system flag, deletes everything.
     """
-    db.update("documents", where="id = $document_id AND NOT is_deleted",
+    db.update("documents", where="id = $id AND NOT is_deleted",
               vars=document, is_deleted=1)
     if document.type == "folder":
         for doc in db.select(
                 "documents", what="id, type",
-                where="parent_id = $document_id AND NOT is_deleted",
+                where="parent_id = $parent_id AND NOT is_deleted",
                 vars=locals()):
             delete_document_tree(doc)
     return document
