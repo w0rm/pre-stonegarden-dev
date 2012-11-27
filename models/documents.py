@@ -3,8 +3,9 @@ import web
 import json
 import mimetypes
 import random
+import datetime
 import string
-from base import db, auth
+from base import db, auth, flash
 from modules.utils import dthandler
 from modules.translation import _
 from config import config
@@ -34,10 +35,11 @@ def create_document(document):
         try:
             mimetype, encoding = mimetypes.guess_type(upload.filename)
             filename, filesize = save_document(upload.file)
+            title, extension = os.path.splitext(upload.filename)
             document.update(
-                title=document.title or os.path.splitext(upload.filename)[0],
+                title=document.title or title,
                 filename=filename,
-                extension=os.path.splitext(f.filename)[1].lower(),
+                extension=extension.lower(),
                 mimetype=mimetype,
                 type="image" if "image" in mimetype else "document",
                 filesize=filesize,

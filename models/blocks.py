@@ -1,6 +1,6 @@
 import web
 import json
-from base import db, auth
+from base import db, auth, flash
 from modules.utils import dthandler
 from template import render_block, smarty, sanitize
 
