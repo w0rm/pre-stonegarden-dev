@@ -17,6 +17,7 @@ define(["jquery"
       this
         .on("add", this.setParentBlock, this)
         .on("reset", this.setParentBlocks, this);
+
     },
 
     setParentBlocks: function() {
@@ -30,7 +31,7 @@ define(["jquery"
     model: function(attrs, options) {
       var modelClass = models[utils.guessBlockType(attrs) + "Block"]
         , model = new modelClass(attrs, options);
-        return model;
+      return model;
     },
 
     findByName: function(name) {
