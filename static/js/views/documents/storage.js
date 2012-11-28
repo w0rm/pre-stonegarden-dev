@@ -20,15 +20,26 @@ define(["jquery"
       "change input[name=upload]": "changeEvent"
     },
 
+    initialize: function() {
+      this.collection
+        .on("document:open", this.openDocument, this)
+    },
+
+    openDocument: function(model) {
+      if(model.get("type") === "folder") {
+        this.navigateTo(model.get("id"));
+      }
+    },
+
     navigateTo: function(parent_id) {
-      this.parent_id = parent_id;
+      this.collection.parent_id = parent_id;
       this.collection.fetch({data: {parent_id: parent_id}});
     },
 
     render: function() {
       this.$el.html(this.template());
 
-      new views.DocumentList({
+      this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
         collection: this.collection
       }).render()
@@ -37,39 +48,32 @@ define(["jquery"
     },
 
     createFolder: function() {
-      var documentForm
-        , documentFormModal
+      var documentFormModal
         , attrs = {
             type: "folder",
-            parent_id: this.parent_id,
+            parent_id: this.collection.parent_id,
             position: 1
           };
 
-      documentForm = new views.DocumentForm({
-        attrs: attrs,
-        collection: this.collection
-      });
-
       documentFormModal = new views.Modal({
-        contentView: documentForm
+        contentView: new views.DocumentForm({
+          attrs: attrs,
+          collection: this.collection
+        })
       }).open();
 
     },
 
     changeEvent: function(e) {
-      this.upload(e.target.files);
+      this.uploadFiles(e.target.files);
       // Empty file input value:
       e.target.outerHTML = e.target.outerHTML;
     },
 
-    upload: function(files) {
+    uploadFiles: function(files) {
       var position = this.collection.getUploadPosition();
       _.each(files, function(file) {
-        this.collection.create({
-          upload: file,
-          parent_id: this.parent_id,
-          position: position
-        }, {wait: true, at: position - 1});
+        this.documentListView.uploadFile(file, position);
       }, this);
       return this;
     }

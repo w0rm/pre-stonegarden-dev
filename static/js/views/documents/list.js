@@ -12,39 +12,59 @@ define(["jquery"
 
     initialize: function() {
       this.collection
-        .on("add", this.addDocument, this)
+        .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
     },
 
     render: function() {
-      this.collection.each(this.addDocument, this);
+      this.$el.empty();
+      this.collection.each(this.appendDocument, this);
       return this;
     },
 
     makeItemView: function(model) {
-      return new views.Document({model: model})
-        .on("document:navigate", this.navigate, this)
-        .render()
+      return new views.Document({model: model}).render()
     },
 
-    addDocument: function (model, collection, options) {
-      this.appendDocument(model, options.index);
+    appendDocument: function(model, collection, options) {
+      var view = this.makeItemView(model)
+        , index = options.index;
+      this.insertAt(view.el, index);
+      return this;
     },
 
-    appendDocument: function(model, index) {
-      var view = this.makeItemView(model);
+    insertAt: function(el, index) {
       if (_.isNumber(index)) {
         if (index === 0) {
-          this.$el.prepend(view.el);
+          this.$el.prepend(el);
         } else {
-          this.$el.children().eq(index - 1).after(view.el);
+          this.$el.children().eq(index - 1).after(el);
         }
       } else {
         // append if no index specified
-        this.$el.append(view.el);
+        this.$el.append(el);
       }
+    },
+
+    uploadFile: function(file, position) {
+      var $load = $("<li class='sg-document-loader'>" +
+                      "<span class='sg-document-title'>" +
+                        file.name.substr(0, file.name.lastIndexOf(".")) +
+                      "</span>" +
+                    "</li>");
+      this.insertAt($load, position - 1);
+      this.collection.create({
+        upload: file,
+        parent_id: this.collection.parent_id,
+        position: position
+      }, {
+        wait: true,
+        at: position - 1,
+        complete: function() { $load.remove(); }
+      })
       return this;
     }
+
 
   });
 
