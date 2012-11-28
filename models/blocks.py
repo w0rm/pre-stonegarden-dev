@@ -6,7 +6,7 @@ from template import render_block, smarty, sanitize
 
 
 def validate_row_block_form(form):
-    if form.template == "row":
+    if form.template == "row" and form.sizes:
         sizes = [int(s) for s in form.sizes]
         return sum(sizes) == 12 and all(s > 0 for s in sizes)
     return True
@@ -45,7 +45,7 @@ def update_block_by_id(block_id, data):
     block.update(data)
 
     # Create columns for row block
-    if block.template == "row":
+    if block.template == "row" and sizes:
         block.orphans = update_columns(block, sizes)
 
     return block
