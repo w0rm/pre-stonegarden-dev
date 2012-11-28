@@ -22,7 +22,7 @@ class Storage:
 class Download:
 
     def GET(self, filename):
-        document = get_document_by_filename()
+        document = get_document_by_filename(filename)
         return download_document(document)
 
 

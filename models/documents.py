@@ -10,6 +10,7 @@ from modules.utils import dthandler
 from modules.translation import _
 from config import config
 from template import asset_url
+from pytils.translit import slugify
 
 # Image resize
 import Image

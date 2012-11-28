@@ -40,6 +40,13 @@ define(["jquery"
         });
       };
 
+      if(this.get("type") === "document") {
+        items.push({
+          text: t_("Download"),
+          href: this.get("src")
+        });
+      }
+
       return {
         items: items,
         context: this
