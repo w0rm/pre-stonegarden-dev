@@ -11,7 +11,7 @@ define(["jquery"
     template: _.template($("#document-delete-template").html()),
 
     events: {
-      "click .js-ok": "deleteBlock",
+      "click .js-ok": "deleteDocument",
       "click .js-cancel": "closeModal"
     },
 
@@ -20,7 +20,7 @@ define(["jquery"
       return this;
     },
 
-    deleteBlock: function(e) {
+    deleteDocument: function(e) {
       this.model.destroy();
       this.trigger("modal:close");
     },
