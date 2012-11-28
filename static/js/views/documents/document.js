@@ -4,6 +4,7 @@ define(["jquery"
       , "stonegarden"
       , "views/mixins/has_contextmenu"
       , "views/modal"
+      , "views/documents/attributes"
       , "views/documents/delete"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -14,7 +15,7 @@ define(["jquery"
 
     tagName: "li",
 
-    className: "sg-document js-document",
+    className: "sg-document",
 
     template: _.template($("#document-template").html()),
 
@@ -28,24 +29,36 @@ define(["jquery"
     initialize: function() {
       this.model
         .on("document:delete", this.deleteDocument, this)
-        .on("destroy", this.remove, this);
-        /*
+        .on("document:attributes", this.editAttributes, this)
+        .on("destroy", this.remove, this)
+        .on("change:title", this.render, this)
+        .on("change:is_published", this.changePublished, this)
         .on("change:position", function(m, pos) {
-          this.$(".sg-document-title").text(pos)
-        }, this)
-        */
+          this.$el.attr("data-position", pos);
+        }, this);
     },
 
     render: function() {
       this.$el
-        .addClass("sg-document-" + this.model.get("type"))
+        .attr("class", "sg-document sg-document-" + this.model.get("type"))
         .html(this.template({"document": this.model.toJSON()}));
+      this.changePublished();
       return this;
+    },
+
+    changePublished: function() {
+      this.$el.toggleClass("sg-not-published", !this.model.get("is_published"));
     },
 
     deleteDocument: function() {
       new views.Modal({
         contentView: new views.DocumentDelete({model: this.model})
+      }).open();
+    },
+
+    editAttributes: function() {
+      new views.Modal({
+        contentView: new views.DocumentAttributes({model: this.model})
       }).open();
     },
 

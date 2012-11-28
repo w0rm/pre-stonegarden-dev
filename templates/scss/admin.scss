@@ -13,6 +13,10 @@
   display: none;
 }
 
+.sg-not-published {
+  @include opacity(.5);
+}
+
 $navBarHeight: 45px !default;
 .sg-top-bar-spacer {
   height: $navBarHeight;

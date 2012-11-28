@@ -7,10 +7,11 @@ $code:
     else:
         css_class = ""
 $if auth.get_user():
-	<div data-position="$block.position" class="block $block.template $css_class $block.css_class js-block">
+	<div data-position="$block.position"
+         class="block $block.template $css_class $block.css_class ${not block.is_published and "sg-not-published" or ""} js-block">
 		$:contents
 	</div>
-$else:
+$elif block.is_published:
 	<div class="block $block.template $css_class $block.css_class">
 		$:contents
 	</div>
