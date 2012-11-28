@@ -6,6 +6,7 @@ define(["jquery"
       , "views/modal"
       , "views/blocks/list"
       , "views/blocks/editable_list"
+      , "views/blocks/attributes"
       , "views/blocks/delete"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -23,8 +24,9 @@ define(["jquery"
         .on("block:lowlight", this.lowlightBlock, this)
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
+        .on("block:attributes", this.editAttributes, this)
         .on("destroy", this.remove, this)
-        .on("change:html change:blocks", this.updateBlock, this);
+        .on("change", this.updateBlock, this);
     },
 
     highlightBlock: function() {
@@ -38,6 +40,17 @@ define(["jquery"
     deleteBlock: function() {
       new views.Modal({
         contentView: new views.BlockDelete({model: this.model})
+      }).open();
+    },
+
+    editAttributes: function() {
+      new views.Modal({
+        contentView: new views.BlockAttributes({
+          model: this.model,
+          attrs: {
+            page_id: sgData.pageId
+          }
+        })
       }).open();
     },
 
