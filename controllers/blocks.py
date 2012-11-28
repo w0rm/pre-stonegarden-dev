@@ -23,7 +23,7 @@ class Blocks(RESTfulController):
         web.form.Input("content"),
         # For all blocks (settings)
         web.form.Input("css_class"),
-        web.form.Input("is_published"),
+        web.form.Checkbox("is_published"),
         validators=[
             web.form.Validator(N_("Sizes should be positive integers and "
                                   " sum should equal 12"),

@@ -31,6 +31,19 @@ $if auth.get_user():
             <ul class="twelve columns sg-document-tiles js-documents"></ul>
         </div>
     </script>
+    <script type="text/template" id="document-loader-template">
+        <li class='sg-document-loader'>
+            <span class='sg-document-title'>
+                <%= filename %>
+            </span>
+        </li>
+    </script>
+    <script type="text/template" id="document-back-template">
+        <li class='sg-document-back js-back'>
+            <span class="sg-ico-folder"></span>
+            <span class="sg-ico-arrow-l"></span>
+        </li>
+    </script>
     <script type="text/template" id="document-template">
         <span class="sg-document-title"><%= document.title %></span>
         <% if (document.type === "folder") { %>

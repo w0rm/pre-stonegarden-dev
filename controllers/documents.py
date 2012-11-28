@@ -34,7 +34,7 @@ class Documents(RESTfulController):
         web.form.Input("title"),
         web.form.Input("type"),
         web.form.Input("description"),
-        web.form.Input("is_published"),
+        web.form.Checkbox("is_published"),
         web.form.Input("upload"),
     )
 

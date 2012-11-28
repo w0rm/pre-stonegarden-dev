@@ -2,13 +2,22 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "models/documents/document"
       , "views/documents/document"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
-    , views = sg.views;
+    , views = sg.views
+    , models = sg.models;
 
 
   views.DocumentList = Backbone.View.extend({
+
+    loaderTemplate: _.template($("#document-loader-template").html()),
+    backTemplate: _.template($("#document-back-template").html()),
+
+    events: {
+      "dblclick .js-back": "openParent"
+    },
 
     initialize: function() {
       this.collection
@@ -19,6 +28,9 @@ define(["jquery"
 
     render: function() {
       this.$el.empty();
+      if (this.model.get("parent_id")) {
+        this.$el.append(this.backTemplate())
+      };
       this.collection.each(this.appendDocument, this);
       return this;
     },
@@ -28,31 +40,29 @@ define(["jquery"
     },
 
     appendDocument: function(model, collection, options) {
-      var view = this.makeItemView(model)
-        , index = options.index;
-      this.insertAt(view.el, index);
+      var view
+        , index;
+      if (model.get("parent_id") === this.model.get("id")) {
+        view = this.makeItemView(model);
+        index = options.index;
+        this.insertAt(view.el, index);
+      } else {
+        this.collection.remove(model);
+      }
       return this;
     },
 
     insertAt: function(el, index) {
-      if (_.isNumber(index)) {
-        if (index === 0) {
-          this.$el.prepend(el);
-        } else {
-          this.$el.children().eq(index - 1).after(el);
-        }
+      if (_.isNumber(index) && index < this.collection.length) {
+          this.$el.children(":not(.js-back)").eq(index).before(el);
       } else {
-        // append if no index specified
         this.$el.append(el);
       }
     },
 
     uploadFile: function(file, position) {
-      var $load = $("<li class='sg-document-loader'>" +
-                      "<span class='sg-document-title'>" +
-                        file.name.substr(0, file.name.lastIndexOf(".")) +
-                      "</span>" +
-                    "</li>");
+      var filename = file.name.substr(0, file.name.lastIndexOf("."))
+        , $load = $(this.loaderTemplate({filename: filename}));
       this.insertAt($load, position - 1);
       this.collection.create({
         upload: file,
@@ -75,6 +85,14 @@ define(["jquery"
       return this;
     },
 
+    openParent: function() {
+      var folder_id = this.model.get("parent_id")
+        , folder = new models.Document({id: folder_id})
+            .on("change", function(model) {
+              this.collection.trigger("document:open", model);
+            }, this)
+            .fetch();
+    }
 
   });
 

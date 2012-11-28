@@ -25,12 +25,14 @@ define(["jquery"
 
       this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
-        collection: this.collection,
-        model: this.model
+        collection: this.collection
       })
-        .openDocument(this.model)
 
       return this;
+    },
+
+    open: function(model) {
+      this.documentListView.openDocument(model)
     },
 
     createFolder: function() {

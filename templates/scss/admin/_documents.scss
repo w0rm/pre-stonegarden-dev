@@ -9,7 +9,7 @@
 
   list-style: none;
 
-  .sg-document, .sg-document-loader {
+  .sg-document, .sg-document-loader, .sg-document-back {
     display: inline-block;
     vertical-align: top;
     width: 190px;
@@ -18,12 +18,15 @@
     @include border-radius;
   }
 
-  .sg-document {
+  .sg-document, .sg-document-back {
     &:hover {
       @include box-shadow;
       background: #fff;
       .sg-ico-folder {
         color: #f2f2f2;
+      }
+      .sg-ico-arrow-l {
+        color: #fff;
       }
     };
     .sg-contextmenu-show {
@@ -75,6 +78,16 @@
       font-style: normal;
       padding: 0 2px;
     }
+  }
+
+  .sg-ico-arrow-l {
+    position: absolute;
+    top: 50px;
+    width: 160px;
+    text-align: center;
+    left: 15px;
+    font-size: 80px;
+    color: #e5e5e5;
   }
 
   .sg-ico-folder {

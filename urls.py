@@ -16,7 +16,7 @@ urls=(
     r'/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$', "controllers.auth.ResetChange",
 
     # Documents
-    "/a/storage", "controllers.documents.Storage",
+    "/a/storage(?:/[0-9]+)?", "controllers.documents.Storage",
     "/uploads/(.*)", "controllers.documents.Download",
     r'/a/documents(?:/(?P<resource_id>[0-9]+))?', "controllers.documents.Documents",
 
