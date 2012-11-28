@@ -9,13 +9,16 @@
 
   list-style: none;
 
-  .sg-document {
+  .sg-document, .sg-document-loader {
     display: inline-block;
     vertical-align: top;
     width: 190px;
     padding: 170px 15px 10px;
     position: relative;
     @include border-radius;
+  }
+
+  .sg-document {
     &:hover {
       @include box-shadow;
       background: #fff;
@@ -24,8 +27,24 @@
       }
     };
     .sg-contextmenu-show {
-      top: 120px;
+      top: 125px;
       left: 25px;
+    }
+  }
+
+  .sg-document-loader  {
+    background: image-url("loader.gif") center center no-repeat;
+  }
+
+  .sg-document-image-container {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    width: 160px;
+    height: 160px;
+    line-height: 160px;
+    img {
+      vertical-align: bottom;
     }
   }
 
@@ -60,14 +79,21 @@
 
   .sg-ico-folder {
     position: absolute;
-    top: 20px;
+    top: 10px;
     color: #fff;
     left: 15px;
     font-size: 160px;
-    line-height: 180px;
-    height: 170px;
-    overflow: hidden
+    line-height: 160px;
+    height: 160px;
+    overflow: hidden;
+    &:before {
+      vertical-align: -32px;
+    };
   }
 
+  .sg-document-title {
+    font-size: 12px;
+    word-break: break-all
+  }
 
 }
