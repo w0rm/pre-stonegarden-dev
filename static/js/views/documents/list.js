@@ -62,7 +62,7 @@ define(["jquery"
         wait: true,
         at: position - 1,
         complete: function() { $load.remove(); }
-      })
+      });
       return this;
     },
 
@@ -71,7 +71,7 @@ define(["jquery"
         this.collection.remove(model);
         this.model = model;
         this.collection.fetch({data: {parent_id: model.get("id")}});
-      }
+      };
       return this;
     },
 
