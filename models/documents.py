@@ -9,6 +9,15 @@ from base import db, auth, flash
 from modules.utils import dthandler
 from modules.translation import _
 from config import config
+from template import asset_url
+
+# Image resize
+import Image
+import ImageFilter
+import shutil
+from StringIO import StringIO
+import ImageFile
+ImageFile.MAXBLOCK = 1500 * 1500  # default is 64k
 
 
 def create_document(document):
@@ -190,26 +199,75 @@ def get_documents_by_parent_id(parent_id, type=None):
                      order="position ASC").list()
 
 
+def document_src(document):
+    if document.type == "image":
+        document.src = image_url(document, "t")
+    elif document.type == "document":
+        document.src = "/uploads/" + document.filename
+    return document
+
+
 def document_to_json(document):
-    return json.dumps(document, default=dthandler, sort_keys=True, indent=2)
+    return json.dumps(document_src(document), default=dthandler,
+                      sort_keys=True, indent=2)
 
 
 def documents_to_json(documents):
+    for document in documents:
+        document_src(document)
     return json.dumps(documents, default=dthandler, sort_keys=True, indent=2)
 
 
-def rem_file(filename):
-    if os.path.exists(filename):
-        os.unlink(filename)
+def download_document(document):
+    if (not auth.has_role("admin", "editor", "user") and
+            not document.is_published):
+        raise flash.redirect(_("Cannot download this document"))
+
+    web.header("Content-Disposition", "attachment; filename=%s" %
+               slugify(document.title) + document.extension)
+    web.header("Content-Type", document.mimetype)
+    f = open(os.path.join(config.upload_dir, document.filename), 'rb')
+    while 1:
+        buf = f.read(1024 * 8)
+        if not buf:
+            break
+        yield buf
 
 
-def delete_file(filename):
-    rem_file(os.path.join(config.upload_dir, filename + ".jpg"))
-    rem_file(os.path.join(config.upload_dir, filename + "_tmp.jpg"))
-    for size in config.image.keys():
-        rem_file(os.path.join(config.static_dir, filename +
-                              "_" + size + ".jpg"))
+def resize_image(image, size):
+    original_name = os.path.join(config.upload_dir, image.filename)
+    destination_name = os.path.join(
+        config.static_dir,
+        "i/" + image.filename + "_" + size + image.extension
+    )
+    resize_image_file(original_name, destination_name, size)
 
+    if image.sizes:
+        sizes = set(image.sizes.split(","))
+    else:
+        sizes = set()
+    sizes.add(size)
+    image.sizes = ",".join(sizes)
+
+    db.update("documents", where="id = $id", vars=image, sizes=image.sizes)
+
+    return image
+
+
+def image_url(image, size):
+    if not size in config.image:
+        size = "_"
+    try:
+        if not image.sizes or not size in image.sizes.split(","):
+            resize_image(image, size)
+        return asset_url("i/" + image.filename + "_" + size + image.extension,
+                         version=False)
+    except:
+        raise
+    return asset_url("img/broken_" + size + ".png")
+
+
+# File operations
 
 def save_document(f):
     """Saves file and returns filename with path from upload folder"""
@@ -240,18 +298,79 @@ def save_document(f):
     return prefixname, size
 
 
-def download_document(document):
+def rem_file(filename):
+    if os.path.exists(filename):
+        os.unlink(filename)
 
-    if (not auth.has_role("admin", "editor", "user") and
-            not document.is_published):
-        raise flash.redirect(_("Cannot download this document"))
 
-    web.header("Content-Disposition", "attachment; filename=%s" %
-               slugify(document.title) + document.extension)
-    web.header("Content-Type", document.mimetype)
-    f = open(os.path.join(config.upload_dir, document.filename), 'rb')
-    while 1:
-        buf = f.read(1024 * 8)
-        if not buf:
-            break
-        yield buf
+def delete_file(filename):
+    rem_file(os.path.join(config.upload_dir, filename))
+    for size in config.image.keys():
+        rem_file(os.path.join(config.static_dir,
+                              filename + "_" + size + extension))
+
+
+def resize_image_file(original_name, destination, prefix):
+    (dst_width, dst_height, crop, sharp,
+     watermark, quality, progressive) = config.image[prefix]
+    if dst_width and dst_height:
+        img = Image.open(original_name)
+        src_width, src_height = img.size
+        src_ratio = float(src_width) / float(src_height)
+        dst_ratio = float(dst_width) / float(dst_height)
+        if crop:
+            if dst_ratio < src_ratio:
+                crop_height = src_height
+                crop_width = crop_height * dst_ratio
+                x_offset = float(src_width - crop_width) / 2
+                y_offset = 0
+            else:
+                crop_width = src_width
+                crop_height = crop_width / dst_ratio
+                x_offset = 0
+                y_offset = float(src_height - crop_height) / 3
+            img = img.crop(
+                (
+                    x_offset,
+                    y_offset,
+                    x_offset + int(crop_width),
+                    y_offset + int(crop_height)
+                ),
+            )
+            img = img.resize((dst_width, dst_height), Image.ANTIALIAS)
+        elif src_width > dst_width and src_height > dst_height:
+            if dst_ratio > src_ratio:
+                img = img.resize(
+                    (
+                        int((float(dst_height) * src_ratio) + 0.5),
+                        dst_height
+                    ),
+                    Image.ANTIALIAS
+                )
+            else:
+                img = img.resize(
+                    (
+                        dst_width,
+                        int((float(dst_width) / src_ratio) + 0.5)
+                    ),
+                    Image.ANTIALIAS
+                )
+        folder = os.path.dirname(destination)
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+        rem_file(destination)
+        if destination.endswith("jpg"):
+            if sharp:
+                img = img.filter(ImageFilter.DETAIL)
+            if watermark:
+                mark = Image.open(os.path.join(config.static_dir,
+                                               "/img/watermark.png"))
+                w1, h1 = img.size
+                w2, h2 = mark.size
+                img.paste(mark, (w1 - w2, h1 - h2), mark)
+            img.save(destination, "JPEG", quality=quality,
+                     optimize=True, progressive=progressive)
+        else:
+            img.save(destination)
+    else:
+        shutil.copy(original_name, destination)

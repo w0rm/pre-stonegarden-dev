@@ -1,7 +1,7 @@
 # coding: utf-8
 import web
 from base import auth
-from template import link_to, image_url, render
+from template import link_to, render
 from modules.form import ApiForm, notnull
 from modules.restful_controller import RESTfulController
 from modules.translation import N_
@@ -85,20 +85,12 @@ class Documents(RESTfulController):
 class GetImageSize:
 
     @auth.restrict("admin", "editor", "user")
-    def GET(self, document_id):
-        document = db.select(
-            "documents",
-            locals(),
-            where="id = $document_id AND NOT is_deleted",
-            limit=1)[0]
+    def GET(self, image_id):
+        image = get_document_by_id(image_id)
         size = web.input(size="_").size
-        if not size in config.image:
-            size = "_"
-        src = image_url(document.id, document.filename,
-                        document.extension, document.sizes, size)
+        src = image_url(image, size)
         if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             web.header("Content-Type", "application/json")
-            return json.dumps(dict(src=src, id=document.id,
-                                   title=document.title))
+            return json.dumps(dict(src=src))
         else:
             raise web.seeother(src)
