@@ -38,7 +38,7 @@ $if auth.get_user():
         <% } else if (document.type === "document") { %>
             <span class="sg-ico-page sg-document-extension"><em><%= document.extension %></em></span>
         <% } else if (document.type === "image") { %>
-            <img src="<%= document.src %>" alt="<%= document.title %>">
+            <span class="sg-document-image-container"><img src="<%= document.src %>" alt="<%= document.title %>"></span>
         <% } %>
     </script>
     <script type="text/template" id="document-delete-template">
