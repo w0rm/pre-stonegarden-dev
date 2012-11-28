@@ -78,10 +78,10 @@ def update_document_by_id(document_id, data):
     parent = get_document_by_id(data.parent_id)
 
     data.update(
-        ids=parent.ids + "," + str(parent.id),
+        ids=(parent.ids or "") + "," + str(parent.id),
         level=parent.level + 1,
         position=int(data.position),
-        parent_id=int(parent_id),
+        parent_id=parent.id,
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
     )
 
