@@ -10,7 +10,7 @@ define(["jquery"
     , views = sg.views
     , mixins = sg.mixins;
 
-  views.Document = Backbone.View.extend(_.extend(mixins.hasContextMenu, {
+  views.Document = Backbone.View.extend(_.extend({}, mixins.hasContextMenu, {
 
     tagName: "li",
 
@@ -18,11 +18,17 @@ define(["jquery"
 
     template: _.template($("#document-template").html()),
 
+    events: _.extend({
+
+      "dblclick": "openDocument"
+
+    }, mixins.hasContextMenu.events),
+
+
     initialize: function() {
       this.model
         .on("document:delete", this.deleteDocument, this)
         .on("destroy", this.remove, this);
-
         /*
         .on("change:position", function(m, pos) {
           this.$(".sg-document-title").text(pos)
@@ -41,7 +47,12 @@ define(["jquery"
       new views.Modal({
         contentView: new views.DocumentDelete({model: this.model})
       }).open();
+    },
+
+    openDocument: function() {
+      this.model.trigger("document:open", this.model);
     }
+
 
   }));
 

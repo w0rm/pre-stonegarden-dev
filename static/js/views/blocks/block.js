@@ -16,7 +16,7 @@ define(["jquery"
   // TODO: Baseblock view, that has makeBlockView, propagateContextMenu
   // then views.Block and views.Blocks subclass it.
 
-  views.Block = Backbone.View.extend(_.extend(mixins.hasContextMenu, {
+  views.Block = Backbone.View.extend(_.extend({}, mixins.hasContextMenu, {
     initialize: function() {
       this.model
         .on("block:highlight", this.highlightBlock, this)
