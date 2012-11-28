@@ -6,10 +6,11 @@ define(["jquery"
       , "views/form"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
-    , views = sg.views || (sg.views = {});
+    , views = sg.views || (sg.views = {})
+    , _Alert;
 
 
-  Alert = Backbone.View.extend({
+  _Alert = Backbone.View.extend({
 
     template: _.template($("#alert-template").html()),
 
@@ -30,7 +31,7 @@ define(["jquery"
         );
       }, this);
 
-      this.alert = new Alert({el: this.$(".js-alert")})
+      this.alert = new _Alert({el: this.$(".js-alert")})
         .render(errors);
 
       return this;
