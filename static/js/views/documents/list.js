@@ -14,6 +14,7 @@ define(["jquery"
       this.collection
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
+        .on("document:open", this.openDocument, this)
     },
 
     render: function() {
@@ -55,7 +56,7 @@ define(["jquery"
       this.insertAt($load, position - 1);
       this.collection.create({
         upload: file,
-        parent_id: this.collection.parent_id,
+        parent_id: this.model.get("id"),
         position: position
       }, {
         wait: true,
@@ -63,7 +64,16 @@ define(["jquery"
         complete: function() { $load.remove(); }
       })
       return this;
-    }
+    },
+
+    openDocument: function(model) {
+      if (model.get("type") === "folder") {
+        this.collection.remove(model);
+        this.model = model;
+        this.collection.fetch({data: {parent_id: model.get("id")}});
+      }
+      return this;
+    },
 
 
   });

@@ -12,7 +12,11 @@ class Storage:
 
     @auth.restrict("admin", "editor", "user")
     def GET(self):
-        return render.documents.storage()
+        document = get_document_by_id(web.input(document_id=1).document_id)
+        json_data = web.storage(
+            root_folder=document_to_json(document)
+        )
+        return render.documents.storage(json_data)
 
 
 class Download:

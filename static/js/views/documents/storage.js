@@ -20,29 +20,15 @@ define(["jquery"
       "change input[name=upload]": "changeEvent"
     },
 
-    initialize: function() {
-      this.collection
-        .on("document:open", this.openDocument, this)
-    },
-
-    openDocument: function(model) {
-      if(model.get("type") === "folder") {
-        this.navigateTo(model.get("id"));
-      }
-    },
-
-    navigateTo: function(parent_id) {
-      this.collection.parent_id = parent_id;
-      this.collection.fetch({data: {parent_id: parent_id}});
-    },
-
     render: function() {
       this.$el.html(this.template());
 
       this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
-        collection: this.collection
-      }).render()
+        collection: this.collection,
+        model: this.model
+      })
+        .openDocument(this.model)
 
       return this;
     },
@@ -51,7 +37,7 @@ define(["jquery"
       var documentFormModal
         , attrs = {
             type: "folder",
-            parent_id: this.collection.parent_id,
+            parent_id: this.documentListView.model.get("id"),
             position: 1
           };
 

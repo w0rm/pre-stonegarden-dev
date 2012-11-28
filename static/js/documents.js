@@ -13,22 +13,17 @@ define(['jquery'
       , collections = sg.collections
       , storageView;
 
-    if (window.sgData && window.sgData.documentId) {
+    if (window.sgData && window.sgData.rootFolder) {
 
-      // init template blocks collection
-      sg.documents = new collections.Documents;
-
-      // init main view
+      // Init main view
       storageView = new views.DocumentStorage({
-        collection: sg.documents
+        collection: new collections.Documents,
+        model: new models.Document(window.sgData.rootFolder)
       });
 
       storageView
         .render()
         .$el.appendTo("body");
-
-      storageView
-        .navigateTo(window.sgData.documentId);
 
     }
 
