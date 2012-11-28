@@ -13,7 +13,6 @@ from config import config
 from base import flash, auth, db
 from modules.translation import _, n_
 from modules import smartypants
-from modules.images import resize_image
 from modules.sanitizer import sanitize
 from dateutil import parser, tz
 
@@ -63,10 +62,7 @@ def datify(dtime=None, format=u"%x %H:%M", convert_to_utc=False, lang=None):
 
 
 def smarty(text, lang=None):
-    if lang is None:
-        return smartypants.smartyPants(text, web.ctx.lang)
-    else:
-        return smartypants.smartyPants(text, lang)
+    return smartypants.smartyPants(text, lang or web.ctx.lang)
 
 
 def asset_url(filename="", version=True):
@@ -83,18 +79,6 @@ def asset_url(filename="", version=True):
             if version:
                 return_url += "?" + config.asset_version
         return return_url
-
-
-def image_url(image_id, filename, extension, sizes, size):
-    if image_id and filename:
-        try:
-            if not sizes or not size in sizes.split(","):
-                resize_image(image_id, filename, extension, size)
-            return asset_url("i/" + filename + "_" + size + extension,
-                             version=False)
-        except:
-            pass
-    return asset_url("img/broken_" + size + ".png")
 
 
 def link_to(obj_type, obj=None, method=None, **kw):
@@ -146,7 +130,6 @@ template_globals = {
     'link_to': link_to,
     'flash': flash,
     'asset_url': asset_url,
-    'image_url': image_url,
     'auth': auth,
     'config': config,
     'datify': datify,
