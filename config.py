@@ -36,7 +36,9 @@ config = web.storage(
         "uploads",
     ],
     user_roles=["admin", "editor", "user"],
-    page_blocks=["page"],
+    page_types=dict(
+        page=dict(block=dict(template="page")),
+    ),
     image={
         # dst_width, dst_height, crop, sharp, watermark, quality, progressive
         "o": [None, None, False, False, False, 90, 0],

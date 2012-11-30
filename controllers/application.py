@@ -16,7 +16,7 @@ class Config:
     def GET(self):
         web.header("Content-Type", "text/javascript; charset=utf-8")
         conf = dict(
-            (i, config[i]) for i in ("page_blocks", "image", "labels")
+            (i, config[i]) for i in ("image", "labels")
         )
         conf["tinymce_valid_elements"] = (
             config.sanitizer["tinymce_valid_elements"])
