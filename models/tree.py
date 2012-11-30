@@ -4,7 +4,8 @@ from base import db
 
 
 def create_tree_branch(table_name, current_obj,
-                       parent=None, func=None,
+                       parent=None, position=1,
+                       func=None,
                        **data):
     """Recursively creates tree branch"""
     obj = web.storage(current_obj.copy())
@@ -28,11 +29,12 @@ def create_tree_branch(table_name, current_obj,
     if func is not None:
         obj = func(obj, parent)
 
-    obj.id = db.insert(table_name, **obj)
+    obj.id = db.insert(table_name, position=position, **obj)
 
-    for child in children:
-        create_tree_branch(table_name, child, obj, func, **data)
-
+    for index, child in enumerate(children):
+        create_tree_branch(table_name, child, obj,
+                           index + 1, func,
+                           **data)
     return obj
 
 

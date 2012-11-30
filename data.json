@@ -15,7 +15,7 @@
 	        "name": "Index page",
 	        "block": {
 	        	"template": "page",
-				"position": 1
+	        	"is_system": true
 	        }
 		},
 		{
@@ -28,9 +28,7 @@
 	        "name": "Documentation",
 	        "block": {
 	        	"template": "page",
-				"position": 1,
 				"blocks": [{
-					"position": 1,
 					"template": "nav",
 					"type": "breadcrumbs"
 				}]
@@ -45,18 +43,14 @@
 			"template": "column",
 			"size": 12,
 	        "is_system": true,
-			"position": 1,
 			"blocks": [
 				{
 					"template": "row",
-					"position": 1,
 					"blocks": [
 						{
-							"position": 1,
 							"template": "column",
 							"size": 4,
 							"blocks": [{
-								"position": 1,
 								"template": "content",
 								"type": "wysiwyg",
 								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
@@ -64,11 +58,9 @@
 							}]
 						},
 						{
-							"position": 2,
 							"template": "column",
 							"size": 8,
 							"blocks": [{
-								"position": 1,
 								"template": "nav",
 								"type": "root"
 							}]
@@ -82,23 +74,18 @@
 			"template": "column",
 			"size": 12,
 	        "is_system": true,
-			"position": 1,
 			"blocks": [
 				{
 					"template": "row",
-					"position": 1,
 					"blocks": [
 						{
-							"position": 1,
 							"template": "column",
 							"size": 8
 						},
 						{
-							"position": 2,
 							"template": "column",
 							"size": 4,
 							"blocks": [{
-								"position": 1,
 								"template": "content",
 								"type": "wysiwyg",
 								"content": "<p>© Site Authors</p>",
