@@ -10,6 +10,8 @@ from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, link_to
 from modules.form import *
+from modules.restful_controller import RESTfulController
+
 from models.pages import *
 from models.blocks import (load_page_blocks, get_page_block_by_page_id,
                            block_to_json, template_blocks_to_json)
@@ -46,10 +48,41 @@ class Sitemap:
     @auth.restrict("admin", "editor", "user")
     def GET(self):
         pages = db.select("pages", where="NOT is_deleted")
-        if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-            return render_partial.pages.sitemap(pages)
-        else:
-            return render.pages.sitemap(pages)
+        return render.pages.sitemap(pages)
+
+
+class Pages(RESTfulController):
+
+    form = ApiForm(
+
+    )
+
+    filter_form = ApiForm(
+        web.form.Input("parent_id"),
+    )
+
+    @auth.restrict("admin", "editor", "user")
+    def list(self):
+        """List pages (filtered by @parent_id)"""
+
+    @auth.restrict("admin", "editor")
+    def create(self):
+        """Create new page"""
+
+    @auth.restrict("admin", "editor", "user")
+    def get(self, page_id):
+        """Get page by id"""
+
+    @auth.restrict("admin", "editor")
+    def update(self, page_id):
+        """Update page by id"""
+
+    @auth.restrict("admin", "editor")
+    def delete(self, page_id):
+        """Delete page by id"""
+        delete_page_by_id(page_id)
+        web.header("Content-Type", "application/json")
+        return '{"status": 1}'
 
 
 class NewPage:
