@@ -45,7 +45,7 @@ class Documents(RESTfulController):
 
     @auth.restrict("admin", "editor", "user")
     def list(self):
-        """Lists documents by specified parent_id (or type filter)"""
+        """Lists documents by specified @parent_id"""
         form = self.filter_form()
         if form.validates():
             web.header("Content-Type", "application/json")
