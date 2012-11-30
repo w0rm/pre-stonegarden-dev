@@ -59,13 +59,7 @@ def create_document(document):
             raise flash.error(_("File upload error."))
 
     # Shift positions to free the space to insert document
-    db.update(
-        "documents",
-        where="parent_id = $parent_id AND position >= $position AND "
-              "NOT is_deleted",
-        vars=document,
-        position=web.SQLLiteral("position + 1"),
-    )
+    expand_tree_siblings("documents", document)
 
     document.id = db.insert("documents", **document)
 
@@ -78,6 +72,7 @@ def update_document_by_id(document_id, data):
     document = get_document_by_id(document_id)
     parent = get_document_by_id(data.parent_id)
 
+    # TODO: custom input field that returns integer value
     data.update(
         ids=(parent.ids or "") + "," + str(parent.id),
         level=parent.level + 1,
@@ -91,26 +86,27 @@ def update_document_by_id(document_id, data):
         raise flash.error(
             _("Cannot edit or delete system files and folders."))
 
-    # TODO: wrap the code below in transaction
-    # TODO: custom input field that returns integer value
-    if (data.position != document.position or
-            data.parent_id != document.parent_id):
+    with db.transaction():
 
-        # Collapse positions for the removed document
-        collapse_tree_siblings("documents", document)
+        # Transact changes to positions
+        if (data.position != document.position or
+                data.parent_id != document.parent_id):
 
-        # Shift positions to free the space to insert document
-        expand_tree_siblings("documents", data)
+            # Collapse positions for the removed document
+            collapse_tree_siblings("documents", document)
 
-    # Cannot change documents type and upload
-    del data["type"]
-    del data["upload"]
+            # Shift positions to free the space to insert document
+            expand_tree_siblings("documents", data)
 
-    db.update(
-        "documents",
-        where="id = $document_id",
-        vars=locals(),
-        **data)
+        # Cannot change documents type and upload
+        del data["type"]
+        del data["upload"]
+
+        db.update(
+            "documents",
+            where="id = $document_id",
+            vars=locals(),
+            **data)
 
     # Update document with data
     # TODO: fix updated_at
@@ -171,6 +167,7 @@ def get_documents_by_parent_id(parent_id, type=None):
 def document_src(document):
     if document.type == "image":
         document.src = image_url(document, "t")
+        document.src_large = image_url(document, "l")
     elif document.type == "document":
         document.src = "/uploads/" + document.filename
     return document
