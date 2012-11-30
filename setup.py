@@ -2,14 +2,17 @@
 import web
 from config import config
 from base import db, auth
-from model.tree import create_tree_branch
+from models.tree import create_tree_branch
 import json
 import shutil
+import os
 
 if __name__ == "__main__":
 
-    shutil.rmtree(config.upload_dir + "/*")
-    shutil.rmtree(config.static_dir + "/i/*")
+    shutil.rmtree(config.upload_dir, True)
+    os.mkdir(config.upload_dir)
+    shutil.rmtree(config.static_dir + "/i", True)
+    os.mkdir(config.static_dir + "/i")
 
     schema_commands = open("schema.sql", "r").read().split(";")
 
