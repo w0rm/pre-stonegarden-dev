@@ -38,10 +38,6 @@ pageCodeForm = Form(
     Textarea("js_code", description=N_("Javascript"), cols=80, rows=20),
 )
 
-page_access_forbidden_text = N_("Page access forbidden.")
-page_deleted_text = N_("Page was deleted.")
-cannot_delete_root_text = N_("Cannot delete root page.")
-
 
 class Sitemap:
 
