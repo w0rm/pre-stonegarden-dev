@@ -3,6 +3,7 @@ import web
 from base import db
 from pytils.translit import slugify
 from config import config
+from models.tree import delete_tree_branch
 
 
 def get_page_by_id(page_id):
@@ -13,34 +14,12 @@ def get_page_by_id(page_id):
         limit=1)[0]
 
 
-def get_pages(parent_id):
+def get_pages_by_parent_id(parent_id):
     return db.select(
         "pages",
         locals(),
         where="parent_id=$parent_id AND NOT is_deleted"
     ).list()
-
-
-def load_page_data(page):
-    web.ctx.page = page
-    web.ctx.nav = web.storage(
-        root=db.select(
-            "pages",
-            where="level=1 AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        children=db.select(
-            "pages", page,
-            where="parent_id=$id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        siblings=db.select(
-            "pages", page,
-            where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        breadcrumbs=(db.select("pages",
-                               where="id in (%s) AND NOT is_deleted" %
-                               page.ids).list() + [page]
-                     if page.ids else [])
-    )
 
 
 def join_path(path, slug=""):
@@ -78,24 +57,57 @@ def unique_path(page, page_id=None):
 
 
 def update_branch(parent_id):
-    for page in get_pages(parent_id):
+    for page in get_pages_by_parent_id(parent_id):
         db.update(
             "pages", where="id=$id", vars=page,
             **unique_path(page, page.id))
         update_branch(page.id)
 
 
-def delete_branch(page_id, deleted_at):
-    if str(page_id) == "1":
-        return
-    for page in get_pages(page_id):
-        delete_branch(page.id, deleted_at)
-    db.update("pages", where="id=$parent_id AND NOT is_deleted", vars=locals(),
-              is_deleted=True, deleted_at=deleted_at)
+def delete_page_by_id(page_id):
+
+    page = get_page_by_id(page_id)
+
+    if page.id == 1 or page.is_system:
+        raise flash.error(_("Cannot delete root and system pages."))
+
+    # Collapse positions
+    db.update(
+        "pages",
+        where="parent_id = $parent_id AND position > $position AND "
+              "NOT is_deleted",
+        vars=page,
+        position=web.SQLLiteral("position - 1"),
+    )
+
+    # Delete recursively
+    return delete_tree_branch("pages", page)
 
 
 def dropdown_pages(page, pages):
     return [(page.id, u"  " * page.level + u"• " + page.name)] + sum(
         [dropdown_pages(p, pages) for p in pages if p.parent_id == page.id],
         [],
+    )
+
+
+def load_page_data(page):
+    web.ctx.page = page
+    web.ctx.nav = web.storage(
+        root=db.select(
+            "pages",
+            where="level=1 AND NOT is_deleted AND is_navigatable",
+            order="position ASC").list(),
+        children=db.select(
+            "pages", page,
+            where="parent_id=$id AND NOT is_deleted AND is_navigatable",
+            order="position ASC").list(),
+        siblings=db.select(
+            "pages", page,
+            where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
+            order="position ASC").list(),
+        breadcrumbs=(db.select("pages",
+                               where="id in (%s) AND NOT is_deleted" %
+                               page.ids).list() + [page]
+                     if page.ids else [])
     )

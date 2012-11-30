@@ -94,25 +94,14 @@ def update_document_by_id(document_id, data):
     # TODO: custom input field that returns integer value
     if (data.position != document.position or
             data.parent_id != document.parent_id):
-        # Collapse positions
-        db.update(
-            "documents",
-            where="parent_id = $parent_id AND position > $position AND "
-                  "NOT is_deleted",
-            vars=document,
-            position=web.SQLLiteral("position - 1"),
-        )
-        # Shift positions to free the space to insert document
-        db.update(
-            "documents",
-            where="parent_id = $parent_id AND position >= $position AND "
-                  "NOT is_deleted",
-            vars=data,
-            position=web.SQLLiteral("position + 1"),
-        )
-        # TODO: recursively update ids and level for inner blocks
 
-    # Cannot change documents type and file
+        # Collapse positions for the removed document
+        collapse_tree_siblings("documents", document)
+
+        # Shift positions to free the space to insert document
+        expand_tree_siblings("documents", data)
+
+    # Cannot change documents type and upload
     del data["type"]
     del data["upload"]
 
@@ -138,32 +127,10 @@ def delete_document_by_id(document_id):
             _("Cannot edit or delete system files and folders."))
 
     # Collapse positions
-    db.update(
-        "documents",
-        where="parent_id = $parent_id AND position > $position AND "
-              "NOT is_deleted",
-        vars=document,
-        position=web.SQLLiteral("position - 1"),
-    )
+    collapse_tree_siblings("documents", document)
 
-    # delete recursively
-    return delete_document_tree(document)
-
-
-def delete_document_tree(document):
-    """
-        Recursively deletes document tree branch.
-        Ignores is_system flag, deletes everything.
-    """
-    db.update("documents", where="id = $id AND NOT is_deleted",
-              vars=document, is_deleted=1)
-    if document.type == "folder":
-        for doc in db.select(
-                "documents", what="id, type",
-                where="parent_id = $parent_id AND NOT is_deleted",
-                vars=locals()):
-            delete_document_tree(doc)
-    return document
+    # Delete branch recursively
+    return delete_tree_branch("documents", document)
 
 
 def get_document_path(document):
