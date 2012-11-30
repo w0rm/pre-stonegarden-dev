@@ -1,9 +1,11 @@
 # coding: utf-8
 import web
+import json
 from base import db
 from pytils.translit import slugify
 from config import config
 from models.tree import *
+from modules.utils import dthandler
 
 
 def get_page_by_id(page_id):
@@ -22,6 +24,84 @@ def get_pages_by_parent_id(parent_id):
     ).list()
 
 
+def create_page(page):
+    """Creates new page and pageblock"""
+
+    page.update(unique_path(page))
+
+    page.update(
+        user_id=auth.get_user().id,
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
+    if page.position:
+        page.position = int(page.position)
+        # Shift positions to free the space to insert page
+        expand_tree_siblings("pages", page)
+    else:
+        page.position = get_last_position("pages", page.parent_id)
+
+    page.id = db.insert("pages", **page)
+
+    # Generate pages initial blocks stucture
+    page_block = config.page_types[page.type]["block"]
+    create_tree_branch(
+        "blocks",
+        page_block,
+        page_id=page.id,
+        user_id=auth.get_user().id,
+        is_published=True,
+        is_system=True,
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        published_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
+    return page
+
+
+def update_page_by_id(page_id, data):
+
+    page = get_page_by_id(page_id)
+
+    # Cannot change page type
+    del data["type"]
+
+    if page.is_system:
+        # Cannot edit system
+        del data["slug"]
+        del data["path"]
+        # position can be changed, but not parent_id
+        data.parent_id = page.parent_id
+    else:
+        data.update(unique_path(data, page_id))
+
+    data.update(
+        parent_id=int(data.parent_id),
+        position=int(data.position),
+        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
+    with db.transaction():
+
+        # Transact changes to positions
+        if (page.position != page.position or
+                page.parent_id != page.parent_id):
+
+            # Collapse positions for the removed document
+            collapse_tree_siblings("pages", data)
+
+            # Shift positions to free the space to insert document
+            expand_tree_siblings("pages", data)
+
+        db.update(
+            "pages",
+            where="id = $page_id",
+            vars=locals(),
+            **data)
+
+    page.update(data)
+
+
 def join_path(path, slug=""):
     """Appends slug to path"""
     return web.cond(path.endswith("/"), path, path + "/") + slug
@@ -30,8 +110,6 @@ def join_path(path, slug=""):
 def unique_path(page, page_id=None):
     """Makes unique_path for page, returns new path and slug.
        Provided @page_id means do not check against self"""
-    if str(page_id) == "1":
-        return dict(path="/", slug="")
     slug = slugify(page.slug or page.name)
     parent_page = db.select("pages", page, where="id=$parent_id")[0]
     test_slug, i = slug, 1
@@ -110,3 +188,8 @@ def load_page_data(page):
                                page.ids).list() + [page]
                      if page.ids else [])
     )
+
+
+def page_to_json(page):
+    return json.dumps(page, default=dthandler,
+                      sort_keys=True, indent=2)
