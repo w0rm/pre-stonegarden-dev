@@ -48,10 +48,10 @@ class Documents(RESTfulController):
         """Lists documents by specified @parent_id"""
         form = self.filter_form()
         if form.validates():
-            web.header("Content-Type", "application/json")
             query = form.d
             documents = get_documents_by_parent_id(query.parent_id,
                                                    query.type)
+            web.header("Content-Type", "application/json")
             return documents_to_json(documents)
         raise form.validation_error()
 
