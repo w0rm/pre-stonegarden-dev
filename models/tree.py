@@ -7,7 +7,7 @@ def create_tree_branch(table_name, current_obj,
                        parent=None, func=None,
                        **data):
     """Recursively creates tree branch"""
-    obj = current_obj.clone()
+    obj = web.storage(current_obj.copy())
 
     children = obj.pop(table_name, [])
 
@@ -23,7 +23,7 @@ def create_tree_branch(table_name, current_obj,
             level=parent.level + 1,
         )
     else:
-        obj.level = 0
+        obj.update(ids=None, level=0)
 
     if func is not None:
         obj = func(obj, parent)
