@@ -212,16 +212,6 @@ class PageInfo:
         return json.dumps(dict(page), default=dthandler)
 
 
-class DeletePage:
-
-    @auth.restrict("admin", "editor")
-    def GET(self, page_id):
-        if page_id == "1":
-            raise flash.redirect(_(cannot_delete_root_text), "/", "error")
-        delete_branch(page_id, datetime.datetime.now())
-        raise flash.redirect(_(page_deleted_text), "/a/pages")
-
-
 class ToPage:
 
     def GET(self, page_id):
