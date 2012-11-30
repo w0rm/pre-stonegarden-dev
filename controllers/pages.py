@@ -16,6 +16,9 @@ from models.pages import *
 from models.blocks import (load_page_blocks, get_page_block_by_page_id,
                            block_to_json, template_blocks_to_json)
 
+
+page_access_forbidden_text = N_("Page access forbidden.")
+
 pageForm = Form(
     Textbox("name", notnull, description=N_("Name"), size=30, maxlength=255),
     Textbox("title", notnull, description=N_("Title"), size=30, maxlength=255),
@@ -199,16 +202,8 @@ class PageTree:
         return render.pages.tree()
 
 
-class PageInfo:
-
-    @auth.restrict("admin", "editor")
-    def GET(self, page_id):
-        page = get_page_by_id(page_id)
-        web.header("Content-Type", "application/json")
-        return json.dumps(dict(page), default=dthandler)
-
-
 class ToPage:
+    """Redirects to page by its id"""
 
     def GET(self, page_id):
         try:
@@ -222,6 +217,7 @@ class ToPage:
 
 
 class ViewPage:
+    """Displays page by path"""
 
     def GET(self, page_path):
         try:

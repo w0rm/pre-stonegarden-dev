@@ -23,10 +23,13 @@ def get_pages_by_parent_id(parent_id):
 
 
 def join_path(path, slug=""):
+    """Appends slug to path"""
     return web.cond(path.endswith("/"), path, path + "/") + slug
 
 
 def unique_path(page, page_id=None):
+    """Makes unique_path for page, returns new path and slug.
+       Provided @page_id means do not check against self"""
     if str(page_id) == "1":
         return dict(path="/", slug="")
     slug = slugify(page.slug or page.name)
@@ -42,9 +45,10 @@ def unique_path(page, page_id=None):
                     where=("path=$new_path" +
                            web.cond(page_id, " AND NOT id=$page_id", "")),
                 )[0]
-            test_slug = slug + "-" + str(i)
+            test_slug = "%s-%d" % (slug, i)
             i += 1
     except IndexError:
+        # Page with test_slug doesn't exist — take this slug
         if parent_page.ids:
             ids = parent_page.ids + "," + str(parent_page.id)
         else:
@@ -57,6 +61,7 @@ def unique_path(page, page_id=None):
 
 
 def update_branch(parent_id):
+    """Recursively updates branch setting correct ids, level, slug and path"""
     for page in get_pages_by_parent_id(parent_id):
         db.update(
             "pages", where="id=$id", vars=page,
@@ -72,13 +77,7 @@ def delete_page_by_id(page_id):
         raise flash.error(_("Cannot delete root and system pages."))
 
     # Collapse positions
-    db.update(
-        "pages",
-        where="parent_id = $parent_id AND position > $position AND "
-              "NOT is_deleted",
-        vars=page,
-        position=web.SQLLiteral("position - 1"),
-    )
+    collapse_tree_siblings("pages", page)
 
     # Delete recursively
     return delete_tree_branch("pages", page)
