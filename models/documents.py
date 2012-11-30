@@ -30,7 +30,6 @@ def create_document(document):
     document.update(
         ids=(parent.ids or "") + "," + str(parent.id),
         level=parent.level + 1,
-        position=int(document.position),
         parent_id=int(document.parent_id),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
@@ -58,8 +57,12 @@ def create_document(document):
         except:
             raise flash.error(_("File upload error."))
 
-    # Shift positions to free the space to insert document
-    expand_tree_siblings("documents", document)
+    if document.position:
+        document.position = int(document.position)
+        # Shift positions to free the space to insert document
+        expand_tree_siblings("documents", document)
+    else:
+        document.position = get_last_position("documents", document.parent_id)
 
     document.id = db.insert("documents", **document)
 
@@ -70,6 +73,12 @@ def create_document(document):
 def update_document_by_id(document_id, data):
 
     document = get_document_by_id(document_id)
+
+    # Cannot edit system files and folders
+    if document.is_system:
+        raise flash.error(
+            _("Cannot edit or delete system files and folders."))
+
     parent = get_document_by_id(data.parent_id)
 
     # TODO: custom input field that returns integer value
@@ -80,11 +89,6 @@ def update_document_by_id(document_id, data):
         parent_id=parent.id,
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
     )
-
-    # Cannot delete system files and folders
-    if document.is_system:
-        raise flash.error(
-            _("Cannot edit or delete system files and folders."))
 
     with db.transaction():
 
