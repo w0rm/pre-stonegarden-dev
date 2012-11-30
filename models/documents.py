@@ -11,6 +11,7 @@ from modules.translation import _
 from config import config
 from template import asset_url
 from pytils.translit import slugify
+from models.tree import *
 
 # Image resize
 import Image
@@ -209,16 +210,10 @@ def resize_image(image, size):
         "i/" + image.filename + "_" + size + image.extension
     )
     resize_image_file(original_name, destination_name, size)
-
-    if image.sizes:
-        sizes = set(image.sizes.split(","))
-    else:
-        sizes = set()
+    sizes = set(image.sizes.split(",")) if image.sizes else set()
     sizes.add(size)
     image.sizes = ",".join(sizes)
-
     db.update("documents", where="id = $id", vars=image, sizes=image.sizes)
-
     return image
 
 
@@ -272,7 +267,7 @@ def rem_file(filename):
 
 
 def delete_file(filename):
-    rem_file(os.path.join(config.upload_dir, filename))
+    # rem_file(os.path.join(config.upload_dir, filename))
     for size in config.image.keys():
         rem_file(os.path.join(config.static_dir,
                               filename + "_" + size + extension))

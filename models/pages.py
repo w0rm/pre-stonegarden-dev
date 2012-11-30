@@ -3,7 +3,7 @@ import web
 from base import db
 from pytils.translit import slugify
 from config import config
-from models.tree import delete_tree_branch
+from models.tree import *
 
 
 def get_page_by_id(page_id):

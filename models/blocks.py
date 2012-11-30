@@ -3,7 +3,7 @@ import json
 from base import db, auth, flash
 from modules.utils import dthandler
 from template import render_block, smarty, sanitize
-
+from models.tree import *
 
 def validate_row_block_form(form):
     if form.template == "row" and form.sizes:
@@ -75,13 +75,7 @@ def create_block(block):
             level=parent.level + 1,
         )
         # Shift blocks positions to free the place for new block
-        db.update(
-            "blocks",
-            where="position >= $position AND NOT is_deleted AND "
-                  "parent_id = $parent_id",
-            vars=block,
-            position=web.SQLLiteral("position + 1"),
-        )
+        expand_tree_siblings("blocks", block)
 
     else:
         block.level = 0
@@ -208,23 +202,11 @@ def delete_block_by_id(block_id):
             _("Cannot edit or delete system blocks."))
 
     # TODO: wrap the code below in transaction
-    db.update(
-        "blocks",
-        where="id = $id AND NOT is_deleted",
-        vars=block,
-        is_deleted=1)
-
     if block.parent_id:
         # Collapse positions of the blocks after deleted block
-        db.update(
-            "blocks",
-            where="parent_id = $parent_id AND NOT is_deleted AND "
-                  "position > $position",
-            vars=block,
-            position=web.SQLLiteral("position - 1"),
-        )
+        collapse_tree_siblings("blocks", block)
 
-    return block
+    return delete_tree_branch("blocks", block)
 
 
 def get_block_by_id(block_id):
@@ -240,7 +222,7 @@ def get_blocks_by_parent_id(parent_id=None):
     """Returns all blocks for specific parent block"""
     return db.select("blocks", locals(),
                      where="parent_id = $parent_id AND NOT is_deleted",
-                     order="position ASC").list()
+                     order="position").list()
 
 
 def get_page_block_by_page_id(page_id):
