@@ -25,7 +25,6 @@ define(["jquery"
 
     }, mixins.hasContextMenu.events),
 
-
     initialize: function() {
       this.model
         .on("document:delete", this.deleteDocument, this)
