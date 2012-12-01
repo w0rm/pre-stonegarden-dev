@@ -14,7 +14,7 @@ class Blocks(RESTfulController):
 
     form = ApiForm(
         web.form.Input("parent_id", notnull),
-        web.form.Input("position", notnull),
+        web.form.Input("position", notnull),  # TODO: calculate if null
         web.form.Input("template", notnull),
         web.form.Input("type"),
         # For row blocks

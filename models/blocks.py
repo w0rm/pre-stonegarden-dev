@@ -5,6 +5,7 @@ from modules.utils import dthandler
 from template import render_block, smarty, sanitize
 from models.tree import *
 
+
 def validate_row_block_form(form):
     if form.template == "row" and form.sizes:
         sizes = [int(s) for s in form.sizes]
