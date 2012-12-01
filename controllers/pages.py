@@ -37,6 +37,7 @@ class Pages(RESTfulController):
         web.form.Input("position"),  # if null then get last position
         web.form.Input("slug"),
         web.form.Input("type"),  # TODO: check available
+        web.form.Input("description"),  # wysiwyg
         web.form.Input("meta_description"),
         web.form.Input("meta_keywords"),
         web.form.Input("css_code"),

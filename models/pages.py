@@ -6,6 +6,7 @@ from pytils.translit import slugify
 from config import config
 from models.tree import *
 from modules.utils import dthandler
+from template import smarty, sanitize
 
 
 def get_page_by_id(page_id):
@@ -36,8 +37,11 @@ def order_pages_tree(root, pages):
        root
        -- (1) subpage
        ---- (1) subsubpage
+       ------ (1) subsubsubpage
+       ------ (2) subsubsubpage
        ---- (2) subsubpage
        -- (2) subpage
+       -- (3) subpage
     """
     return [root] + sum(
         [order_pages_tree(p, pages) for p in pages if p.parent_id == page.id],
@@ -53,6 +57,7 @@ def create_page(page):
     page.update(
         user_id=auth.get_user().id,
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        description_cached=smarty(sanitize(page.description)),
     )
 
     if page.position:
@@ -99,6 +104,7 @@ def update_page_by_id(page_id, data):
     data.update(
         parent_id=int(data.parent_id),
         position=int(data.position),
+        description_cached=smarty(sanitize(data.description)),
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
     )
 
@@ -206,4 +212,9 @@ def load_page_data(page):
 
 def page_to_json(page):
     return json.dumps(page, default=dthandler,
+                      sort_keys=True, indent=2)
+
+
+def pages_to_json(pages):
+    return json.dumps(pages, default=dthandler,
                       sort_keys=True, indent=2)

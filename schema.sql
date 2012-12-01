@@ -119,6 +119,7 @@ CREATE TABLE blocks (
 );
 
 
+
 CREATE TABLE documents (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	parent_id INTEGER,
