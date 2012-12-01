@@ -1,0 +1,81 @@
+<script type="text/template" id="document-storage-template">
+    <div class="row">
+        <div class="twelve columns">
+            <p></p>
+            <ul class="right button-group">
+                <li>
+                    <button class="button sg-ico-upload sg-file-input">
+                        $_("Upload files")
+                        <input type="file" multiple name="upload">
+                    </button>
+                </li>
+                <li>
+                    <button class="button sg-ico-folder-add js-create-folder">
+                        $_("Create folder")
+                    </button>
+                </li>
+            </p>
+        </div>
+        <ul class="twelve columns sg-document-tiles js-documents"></ul>
+    </div>
+</script>
+<script type="text/template" id="document-loader-template">
+    <li class='sg-document-loader'>
+        <span class='sg-document-title'>
+            <%= filename %>
+        </span>
+    </li>
+</script>
+<script type="text/template" id="document-back-template">
+    <li class='sg-document-back js-back'>
+        <span class="sg-ico-folder"></span>
+        <span class="sg-ico-arrow-l"></span>
+    </li>
+</script>
+<script type="text/template" id="document-template">
+    <span class="sg-document-title"><%= document.title %></span>
+    <% if (document.type === "folder") { %>
+        <span class="sg-ico-folder"></span>
+    <% } else if (document.type === "document") { %>
+        <span class="sg-ico-page sg-document-extension"><em><%= document.extension %></em></span>
+    <% } else if (document.type === "image") { %>
+        <span class="sg-document-image-container"><img src="<%= document.src %>" alt="<%= document.title %>"></span>
+    <% } %>
+</script>
+<script type="text/template" id="document-delete-template">
+    <h3>$_("Delete this file or folder?")</h3>
+    <p>$_("It will also delete all the nested files.")</p>
+    <p>
+        <button class="button js-ok">$_("Delete")</button>
+        <button class="button js-cancel">$_("Cancel")</button>
+    </p>
+</script>
+<script type="text/template" id="document-form-template">
+    <form>
+        <label>$_("Title")</label>
+        <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
+        <label>$_("Description")</label>
+        <textarea name="description"><%= document.description || "" %></textarea>
+        <div class="js-alert"></div>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
+<script type="text/template" id="document-attributes-template">
+    <form>
+        <label>$_("Title")</label>
+        <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
+        <label>$_("Description")</label>
+        <textarea name="description"><%= document.description || "" %></textarea>
+        <p>
+            <label><input <%= document.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
+        </p>
+        <div class="js-alert"></div>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>

@@ -13,8 +13,12 @@ $def with (page=None)
         <link rel="stylesheet" href="$asset_url("css/admin.css")">
         <script data-main="$asset_url("js/main.js", False)"
                 src="$asset_url("vendor/js/require-2.1.1.js")"></script>
+        $#TODO: conditional load of required templates
+        $:render.site.js_templates()
+        $:render.blocks.js_templates()
+        $:render.documents.js_templates()
+        $:render.pages.js_templates()
     <style>$:page.get("css_code")</style>
-    $:render.site.js_templates()
 </head>
 <body class="$page.get("class")">
     $if auth.get_user() and not ctx.get("page"):
