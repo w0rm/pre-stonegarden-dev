@@ -30,7 +30,7 @@ class Documents(RESTfulController):
 
     form = ApiForm(
         web.form.Input("parent_id", notnull),
-        web.form.Input("position", notnull),
+        web.form.Input("position"),
         web.form.Input("title"),
         web.form.Input("type"),
         web.form.Input("description"),
