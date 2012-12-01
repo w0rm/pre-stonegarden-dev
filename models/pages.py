@@ -24,6 +24,27 @@ def get_pages_by_parent_id(parent_id):
     ).list()
 
 
+def get_pages_in_tree_order():
+    all_pages = db.select("pages", where="NOT is_deleted",
+                          order="level, position").list()
+    root = next(p for p in pages if p.parent_id is None)
+    return order_pages_tree(root, all_pages)
+
+
+def order_pages_tree(root, pages):
+    """Returns list of pages sorted in a tree order
+       root
+       -- (1) subpage
+       ---- (1) subsubpage
+       ---- (2) subsubpage
+       -- (2) subpage
+    """
+    return [root] + sum(
+        [order_pages_tree(p, pages) for p in pages if p.parent_id == page.id],
+        [],
+    )
+
+
 def create_page(page):
     """Creates new page and pageblock"""
 
@@ -161,28 +182,21 @@ def delete_page_by_id(page_id):
     return delete_tree_branch("pages", page)
 
 
-def dropdown_pages(page, pages):
-    return [(page.id, u"  " * page.level + u"• " + page.name)] + sum(
-        [dropdown_pages(p, pages) for p in pages if p.parent_id == page.id],
-        [],
-    )
-
-
 def load_page_data(page):
     web.ctx.page = page
     web.ctx.nav = web.storage(
         root=db.select(
             "pages",
             where="level=1 AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
+            order="position").list(),
         children=db.select(
             "pages", page,
             where="parent_id=$id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
+            order="position").list(),
         siblings=db.select(
             "pages", page,
             where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
+            order="position").list(),
         breadcrumbs=(db.select("pages",
                                where="id in (%s) AND NOT is_deleted" %
                                page.ids).list() + [page]

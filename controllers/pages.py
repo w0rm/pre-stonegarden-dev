@@ -55,7 +55,10 @@ class Pages(RESTfulController):
         form = self.filter_form()
         if form.validates():
             query = form.d
-            pages = get_pages_by_parent_id(query.parent_id)
+            if form.d.parent_id:
+                pages = get_pages_by_parent_id(query.parent_id)
+            else:
+                pages = get_pages_in_tree_order()
             web.header("Content-Type", "application/json")
             return pages_to_json(pages)
         raise form.validation_error()
