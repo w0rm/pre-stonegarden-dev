@@ -28,7 +28,7 @@ def get_pages_by_parent_id(parent_id):
 def get_pages_in_tree_order():
     all_pages = db.select("pages", where="NOT is_deleted",
                           order="level, position").list()
-    root = next(p for p in pages if p.parent_id is None)
+    root = next(p for p in all_pages if p.parent_id is None)
     return order_pages_tree(root, all_pages)
 
 
@@ -44,7 +44,7 @@ def order_pages_tree(root, pages):
        -- (3) subpage
     """
     return [root] + sum(
-        [order_pages_tree(p, pages) for p in pages if p.parent_id == page.id],
+        [order_pages_tree(p, pages) for p in pages if p.parent_id == root.id],
         [],
     )
 
@@ -93,17 +93,20 @@ def update_page_by_id(page_id, data):
     del data["type"]
 
     if page.is_system:
-        # Cannot edit system
+        # Cannot edit slug of the system page
         del data["slug"]
-        del data["path"]
         # position can be changed, but not parent_id
         data.parent_id = page.parent_id
     else:
+        data.parent_id = int(data.parent_id)
         data.update(unique_path(data, page_id))
 
+    if data.position:
+        data.position = int(data.position)
+    else:
+        data.position = get_last_position("pages", page.parent_id)
+
     data.update(
-        parent_id=int(data.parent_id),
-        position=int(data.position),
         description_cached=smarty(sanitize(data.description)),
         updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
     )
@@ -111,8 +114,8 @@ def update_page_by_id(page_id, data):
     with db.transaction():
 
         # Transact changes to positions
-        if (page.position != page.position or
-                page.parent_id != page.parent_id):
+        if (data.position != page.position or
+                data.parent_id != page.parent_id):
 
             # Collapse positions for the removed document
             collapse_tree_siblings("pages", data)
