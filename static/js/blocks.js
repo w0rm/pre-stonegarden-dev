@@ -3,7 +3,9 @@ define(['jquery'
       , 'stonegarden'
       , 'views/blocks/block'
       , 'models/blocks/block'
-      , 'models/blocks/blocks'], function ($, _, sg) {
+      , 'models/blocks/blocks'
+      , 'views/pages/page'
+      , 'models/pages/page'], function ($, _, sg) {
 
 
   $(function() {
@@ -27,6 +29,17 @@ define(['jquery'
         model: sg.pageBlock,
         el: sg.pageBlock.get("html")
       }).render().$el.appendTo("body");
+
+    }
+
+    if (window.sgData && window.sgData.page ) {
+      sg.page = new models.Page;
+      sg.page.set(window.sgData.page);
+
+      new views.Page({
+        el: $("body"),
+        model: sg.page
+      }).render()
 
     }
 
