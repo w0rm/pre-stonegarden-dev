@@ -13,6 +13,7 @@
 	        "path": "/",
 	        "title": "Index page",
 	        "name": "Index page",
+        	"is_system": true,
 	        "block": {
 	        	"template": "page",
 	        	"is_system": true
