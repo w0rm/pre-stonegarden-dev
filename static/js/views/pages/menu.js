@@ -10,6 +10,45 @@ define(["jquery"
 
   views.PageMenu = Backbone.View.extend({
 
+    tagName: "nav",
+
+    className: "sg-pagemenu",
+
+    template: _.template($("#page-menu-template").html()),
+
+    events: {
+      "click .js-edit": "editPage",
+      "click .js-delete": "deletePage",
+      "click .js-code": "editPageCode"
+    },
+
+    getTemplateAttributes: function() {
+      return {
+        isEdit: window.location.search.indexOf("edit") >= 0
+      }
+    },
+
+    render: function() {
+      this.$el.html(this.template(this.getTemplateAttributes()));
+      return this
+    },
+
+    editPage: function(e) {
+      e.preventDefault();
+      this.model.edit();
+    },
+
+    editPageCode: function(e) {
+      e.preventDefault();
+      this.model.editCode();
+    },
+
+    deletePage: function(e) {
+      e.preventDefault();
+      this.model.delete();
+    }
+
+
 
 
   });
