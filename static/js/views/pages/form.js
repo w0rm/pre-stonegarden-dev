@@ -17,6 +17,10 @@ define(["jquery"
 
     serializeObject: function() {
       return _.extend(
+        {
+          is_published: this.$("[name=is_published]").is(":checked") ? true : "",
+          is_navigatable: this.$("[name=is_navigatable]").is(":checked") ? true : ""
+        },
         this.attrs,
         sg.utils.serializeObject(this.$el)
       );
@@ -25,12 +29,10 @@ define(["jquery"
     getTemplateAttributes: function() {
       return this.hasModel() ?
       {
-        page: this.model.toJSON(),
-        buttonText: t_("Save")
+        page: this.model.toJSON()
       } :
       {
-        page: {},
-        buttonText: t_("Add")
+        page: {}
       }
     },
 
