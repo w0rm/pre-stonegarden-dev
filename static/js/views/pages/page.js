@@ -4,6 +4,7 @@ define(["jquery"
       , "stonegarden"
       , "views/pages/menu"
       , "views/pages/form"
+      , "views/pages/delete"
       , "views/pages/code_form"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -14,15 +15,17 @@ define(["jquery"
 
     initialize: function() {
 
-      this.menu = new view.PageMenu({model: this.model});
+      this.menu = new views.PageMenu({model: this.model});
 
       this.model
         .on("page:edit", this.editPage, this)
+        .on("page:code", this.editPageCode, this)
+        .on("page:delete", this.deletePage, this)
         .on("change", this.redirect, this)
+        .on("destroy", this.redirectToParent, this)
 
-
-      this.collection
-        .on("add", this.redirect, this)
+      //this.collection
+      //  .on("add", this.redirect, this)
 
     },
 
@@ -37,6 +40,12 @@ define(["jquery"
       }).open();
     },
 
+    deletePage: function() {
+      new views.Modal({
+        contentView: new views.PageDelete({model: this.model})
+      }).open();
+    },
+
     editPageCode: function() {
       new views.Modal({
         contentView: new views.PageCodeForm({model: this.model})
@@ -45,12 +54,16 @@ define(["jquery"
 
     redirect: function(model) {
       window.location.replace(model.get("path"));
+    },
+
+    redirectToParent: function(model) {
+      window.location.replace(
+        utils.getParentPath(model.get("path"))
+      );
     }
 
   });
 
-
   return views.Page;
-
 
 });
