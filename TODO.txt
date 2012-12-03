@@ -1,16 +1,22 @@
-1. Storage plugin for tinymce
-2. Cut/copy/paste on blocks and documents
-3. Render the following forms in templates by parts:
-  edit page form
-  create page form
-  style and scripts form
-  user forms
-  login form
-  password reset form
-  password change form
+1. Create page dialog
+2. Edit page dialog
 
-TODO:
-Recursively delete blocks
+3. New page types (catalog, category, product) and their forms
 
+4. New block types:
 
-Do smth with navigation during upload
+	Page title block
+	Categories list with descriptions for catalog page
+	Subcategories list (simple dot-separated) for category page
+	Products list grouped by subcategories for category page
+	Page description block (for product page below title)
+
+5. Cut/copy/paste on blocks and documents
+6. Edit page code dialog
+
+7. Render the following forms in templates by parts:
+	user forms
+	login form
+	password reset form
+	password change form
+
