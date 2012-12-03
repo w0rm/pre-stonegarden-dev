@@ -73,6 +73,14 @@ define(["jquery"
       } else {
         return null;
       }
+    },
+
+    getParentPath: function(path) {
+      if (path.indexOf("/") > 0) {
+        return path.substr(0, path.lastIndexOf("/"))
+      } else {
+        return "/"
+      }
     }
 
   });
