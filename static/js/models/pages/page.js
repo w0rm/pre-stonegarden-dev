@@ -21,8 +21,16 @@ define(["jquery"
       this.trigger("page:delete");
     },
 
+    create: function() {
+      this.trigger("page:create");
+    },
+
     editCode: function() {
       this.trigger("page:code");
+    },
+
+    getIndentedName: function() {
+      return new Array(this.get("level") + 1).join("    ") + this.get("name");
     }
 
   });

@@ -13,6 +13,7 @@ define(["jquery"
 
     initialize: function() {
       this.attrs = this.options.attrs || {};
+      this.pages = this.options.pages;
     },
 
     serializeObject: function() {
@@ -27,12 +28,19 @@ define(["jquery"
     },
 
     getTemplateAttributes: function() {
+
+      var pagesList = this.pages.getIndentedList();
+
       return this.hasModel() ?
       {
-        page: this.model.toJSON()
+        page: this.model.toJSON(),
+        parentId: this.attrs.parent_id,
+        pagesList: pagesList
       } :
       {
-        page: {}
+        page: {},
+        parentId: this.attrs.parent_id,
+        pagesList: pagesList
       }
     },
 

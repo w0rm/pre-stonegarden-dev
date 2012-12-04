@@ -1,5 +1,26 @@
 <script type="text/template" id="page-form-template">
     <form>
+        <label>$_("Title")</label>
+        <input name="title" type="text" value="<%= page.title || "" %>">
+        <label>$_("Name")</label>
+        <input name="name" type="text" value="<%= page.name || "" %>">
+        <% if (!page.is_system) { %>
+        <p>
+            <label>$_("Parent")</label>
+            <select name="parent_id">
+            <% _.each(pagesList, function(p) { %>
+                <% if (p.id !== page.id) { %>
+                    <option <%= p.id == parentId && "selected" || "" %>
+                        value="<%= p.id %>"><%= p.name %></option>
+                <% }; %>
+            <% }); %>
+            </select>
+        </p>
+
+        <label>$_("Slug")</label>
+        <input name="slug" type="text" value="<%= page.slug || "" %>">
+
+        <% };%>
         <p>
             <label><input <%= page.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
         </p>
@@ -47,9 +68,9 @@
             <span class="sg-ico-menu-list"></span>
             <ul class="sg-contextmenu">
                 <li class="sg-contextmenu-item"><a href="/a/storage">$_("Storage")</a></li>
-                <li data-role="admin" class="sg-contextmenu-item"><a href="/a/users">$_("Users")</a></li>
-                <li data-role="admin" class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$_("My account")</a></li>
-                <li data-role="admin" class="sg-contextmenu-separator"></li>
+                <li class="sg-contextmenu-item"><a href="/a/users">$_("Users")</a></li>
+                <li class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$_("My account")</a></li>
+                <li class="sg-contextmenu-separator"></li>
                 <li class="sg-contextmenu-item"><a href="/logout">$_("Exit")</a></li>
             </ul>
         </div>

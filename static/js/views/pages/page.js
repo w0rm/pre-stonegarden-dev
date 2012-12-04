@@ -18,11 +18,12 @@ define(["jquery"
       this.menu = new views.PageMenu({model: this.model});
 
       this.model
+        .on("page:create", this.createPage, this)
         .on("page:edit", this.editPage, this)
         .on("page:code", this.editPageCode, this)
         .on("page:delete", this.deletePage, this)
         .on("change", this.redirect, this)
-        .on("destroy", this.redirectToParent, this)
+        .on("destroy", this.redirectToParent, this);
 
       //this.collection
       //  .on("add", this.redirect, this)
@@ -36,7 +37,25 @@ define(["jquery"
 
     editPage: function() {
       new views.Modal({
-        contentView: new views.PageForm({model: this.model})
+        contentView: new views.PageForm({
+          model: this.model,
+          pages: this.collection,
+          attrs: {
+            parent_id: this.model.get("parent_id")
+          }
+        })
+      }).open();
+    },
+
+    createPage: function() {
+      new views.Modal({
+        contentView: new views.PageForm({
+          collection: this.collection,
+          pages: this.collection,
+          attrs: {
+            parent_id: this.model.get("id")
+          }
+        })
       }).open();
     },
 

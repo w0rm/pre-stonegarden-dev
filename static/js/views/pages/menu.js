@@ -17,6 +17,7 @@ define(["jquery"
     template: _.template($("#page-menu-template").html()),
 
     events: {
+      "click .js-create": "createPage",
       "click .js-edit": "editPage",
       "click .js-delete": "deletePage",
       "click .js-code": "editPageCode"
@@ -31,6 +32,11 @@ define(["jquery"
     render: function() {
       this.$el.html(this.template(this.getTemplateAttributes()));
       return this
+    },
+
+    createPage: function(e) {
+      e.preventDefault();
+      this.model.create();
     },
 
     editPage: function(e) {
