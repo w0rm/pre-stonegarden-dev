@@ -1,9 +1,12 @@
-1. Create page dialog
-2. Edit page dialog
 
-3. New page types (catalog, category, product) and their forms
+1. New page types (catalog, category, product) and their forms
+	Templates for new page types (in config)
+	Config entry to specify page dependencies (do we need this?)
 
-4. New block types:
+	Models for catalog/category/product pages
+	Custom front-end menu and forms for catalog/category/product
+
+2. New block types:
 
 	Page title block
 	Categories list with descriptions for catalog page
@@ -11,12 +14,12 @@
 	Products list grouped by subcategories for category page
 	Page description block (for product page below title)
 
-5. Cut/copy/paste on blocks and documents
-6. Edit page code dialog
+3. Cut/copy/paste on blocks and documents
 
-7. Render the following forms in templates by parts:
+4. Edit page code dialog
+
+5. Render the following forms in templates by parts:
 	user forms
 	login form
 	password reset form
 	password change form
-
