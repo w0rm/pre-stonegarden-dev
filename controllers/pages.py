@@ -67,8 +67,9 @@ class Pages(RESTfulController):
     @auth.restrict("admin", "editor")
     def create(self):
         """Create new page"""
+        d = web.input(type="page")
         form = self.form()
-        if form.validates():
+        if form.validates(d):
             page = create_page(form.d)
             raise web.seeother(link_to("pages", page))
         raise form.validation_error()
