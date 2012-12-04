@@ -5,7 +5,8 @@ define(['jquery'
       , 'models/blocks/block'
       , 'models/blocks/blocks'
       , 'views/pages/page'
-      , 'models/pages/page'], function ($, _, sg) {
+      , 'models/pages/page'
+      , 'models/pages/pages'], function ($, _, sg) {
 
 
   $(function() {
@@ -35,11 +36,14 @@ define(['jquery'
     if (window.sgData && window.sgData.page ) {
       sg.page = new models.Page;
       sg.page.set(window.sgData.page);
+      sg.pages = new collections.Pages;
+      sg.pages.reset(window.sgData.pages);
 
       new views.Page({
         el: $("body"),
-        model: sg.page
-      }).render()
+        model: sg.page,
+        collection: sg.pages
+      }).render();
 
     }
 
