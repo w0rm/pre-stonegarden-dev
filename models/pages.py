@@ -1,7 +1,7 @@
 # coding: utf-8
 import web
 import json
-from base import db
+from base import db, auth
 from pytils.translit import slugify
 from config import config
 from models.tree import *
