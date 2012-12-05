@@ -23,3 +23,5 @@
 	login form
 	password reset form
 	password change form
+
+Fix: ensure correct ids for pages
