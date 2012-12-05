@@ -30,7 +30,15 @@ define(["jquery"
     },
 
     getIndentedName: function() {
-      return new Array(this.get("level") + 1).join("    ") + this.get("name");
+      return new Array(this.get("level") + 1).join("    ") + this.get("name");
+    },
+
+    getIds: function() {
+      var ids = (this.get("ids") || "").split(",");
+      ids = _.reject(ids, function(id){ return !id });
+      return _.map(ids, function(id) {
+        return parseInt(id, 10)
+      });
     }
 
   });

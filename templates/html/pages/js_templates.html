@@ -9,10 +9,11 @@
             <label>$_("Parent")</label>
             <select name="parent_id">
             <% _.each(pagesList, function(p) { %>
-                <% if (p.id !== page.id) { %>
-                    <option <%= p.id == parentId && "selected" || "" %>
-                        value="<%= p.id %>"><%= p.name %></option>
-                <% }; %>
+                <option <%= p.id === parentId && "selected" || "" %>
+                    <% if (p.id === page.id || _.contains(p.ids, page.id)) { %>
+                        disabled
+                    <% } %>
+                    value="<%= p.id %>"><%= p.name %></option>
             <% }); %>
             </select>
         </p>

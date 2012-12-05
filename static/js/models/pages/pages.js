@@ -29,7 +29,8 @@ define(["jquery"
       return this.map(function(page) {
         return {
           id: page.get("id"),
-          name: page.getIndentedName()
+          name: page.getIndentedName(),
+          ids: page.getIds()
         }
       });
     }
