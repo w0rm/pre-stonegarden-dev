@@ -129,7 +129,12 @@ def update_page_by_id(page_id, data):
             vars=locals(),
             **data)
 
+        # TODO: expand this for tree
+        if data.parent_id != page.parent_id:
+            update_branch(page.id)
+
     page.update(data)
+    return page
 
 
 def join_path(path, slug=""):
