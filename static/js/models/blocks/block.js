@@ -46,7 +46,7 @@ define(["jquery"
     // Contextmenu items
 
     hasContextMenu: function() {
-      return true;
+      return !this.isSystem();
     },
 
     getContextMenu: function() {
@@ -58,12 +58,13 @@ define(["jquery"
         click: this.edit
       });
 
+
       items.push({
         text: t_("Attributes"),
         click: this.editAttributes
       });
 
-      if (!this.isSystem() && !this.isContainer()) {
+      if (!this.isContainer()) {
         // System and container blocks cannot be deleted
         items.push({
           text: t_("Delete"),
@@ -71,9 +72,10 @@ define(["jquery"
         });
       };
 
+
       if (this.hasParent()) {
         parentMenu = this.parentBlock.getContextMenu();
-        if (parentMenu) {
+        if (parentMenu && !_.isEmpty(parentMenu.items)) {
           items.push(_.extend(
             {text: t_("Parent")},
             parentMenu

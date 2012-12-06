@@ -99,6 +99,7 @@ def create_columns(block, sizes, start_index=0):
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
         is_published=True,
+        is_system=True,
         page_id=block.page_id,
         parent_id=block.id,
         ids=block.ids + "," + str(block.id),
