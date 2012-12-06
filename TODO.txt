@@ -27,4 +27,7 @@
 	password reset form
 	password change form
 
-Fix: ensure correct ids for pages
+
+
+Fix: ensure correct position for created pages from .json
+	 improve default pages creation.
