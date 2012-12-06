@@ -22,11 +22,11 @@ define(["jquery"
         .on("page:edit", this.editPage, this)
         .on("page:code", this.editPageCode, this)
         .on("page:delete", this.deletePage, this)
-        .on("change", this.redirect, this)
+        .on("change:path", this.redirect, this)
         .on("destroy", this.redirectToParent, this);
 
-      //this.collection
-      //  .on("add", this.redirect, this)
+      this.collection
+        .on("add", this.redirect, this); // redirect to created page
 
     },
 
@@ -76,9 +76,7 @@ define(["jquery"
     },
 
     redirectToParent: function(model) {
-      window.location.replace(
-        utils.getParentPath(model.get("path"))
-      );
+      window.location.replace(model.getParentPath());
     }
 
   });
