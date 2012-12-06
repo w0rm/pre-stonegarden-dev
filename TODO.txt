@@ -8,11 +8,14 @@
 
 2. New block types:
 
+    в каталоге после заголовка выводить блок
+
 	Page title block
+
 	Categories list with descriptions for catalog page
 	Subcategories list (simple dot-separated) for category page
 	Products list grouped by subcategories for category page
-	Page description block (for product page below title)
+
 
 3. Cut/copy/paste on blocks and documents
 
