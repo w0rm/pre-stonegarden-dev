@@ -27,7 +27,10 @@ define(["jquery"
     },
 
     create: function() {
-      this.trigger("page:create");
+      this.trigger("page:create", {
+        parent_id: this.get("id"),
+        type: "page"
+      });
     },
 
     editCode: function() {
@@ -171,8 +174,155 @@ define(["jquery"
       }
     }
 
+  });
+
+
+  models.CatalogPage = models.Page.extend({
+
+    getCatalogMenuItems: function() {
+      return [
+        {
+          text: t_("Style and scripts"),
+          click: this.editCode
+        },
+        {
+          is_separator: true
+        },
+        {
+          text: t_("Create category"),
+          click: this.createCategory
+        },
+        {
+          text: t_("Create product"),
+          click: this.createProduct
+        }
+      ]
+    },
+
+    getPageMenu: function() {
+
+      var items = this.getCatalogMenuItems();
+
+      items.unshift({
+        text: t_("Catalog attributes"),
+        click: this.edit
+      });
+
+      return {
+        className: "sg-ico-electronics",
+        items: items,
+        text: "",
+        title: t_("Catalog"),
+        context: this
+      }
+
+    },
+
+    createCategory: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("id"),
+        type: "category"
+      });
+    },
+
+    createProduct: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("id"),
+        type: "product"
+      });
+    }
 
   });
+
+
+  models.CategoryPage = models.CatalogPage.extend({
+
+    getPageMenu: function() {
+
+      var items = this.getCatalogMenuItems();
+
+      items.unshift({
+        text: t_("Category attributes"),
+        click: this.edit
+      });
+
+      items.push({
+        text: t_("Delete this category"),
+        click: this.delete
+      });
+
+      return {
+        className: "sg-ico-electronics",
+        items: items,
+        text: "",
+        title: t_("Category"),
+        context: this
+      };
+
+    },
+
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this category?"),
+        message: t_("Are you sure to delete this category and its contents?")
+      }
+    }
+
+  });
+
+
+  models.ProductPage = models.CatalogPage.extend({
+
+    getPageMenu: function() {
+
+      var items = this.getCatalogMenuItems();
+
+      items.unshift({
+        text: t_("Product attributes"),
+        click: this.edit
+      });
+
+      items.push({
+        text: t_("Delete this product"),
+        click: this.delete
+      });
+
+
+      return {
+        className: "sg-ico-electronics",
+        items: items,
+        text: "",
+        title: t_("Product"),
+        context: this
+      };
+
+    },
+
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this product?"),
+        message: t_("Are you sure to delete this product?")
+      }
+    },
+
+    // Use parent_id
+
+    createProduct: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("parent_id"),
+        type: "product"
+      });
+    },
+
+    createCategory: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("parent_id"),
+        type: "category"
+      });
+    }
+
+  });
+
 
   return models.Page;
 

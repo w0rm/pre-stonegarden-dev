@@ -1,6 +1,7 @@
 define(['jquery'
       , 'underscore'
       , 'stonegarden'
+      , 'utils'
       , 'views/blocks/block'
       , 'models/blocks/block'
       , 'models/blocks/blocks'
@@ -13,12 +14,13 @@ define(['jquery'
 
     var views = sg.views
       , models = sg.models
-      , collections = sg.collections;
+      , collections = sg.collections
+      , utils = sg.utils;
 
 
     if (window.sgData && window.sgData.page ) {
 
-      sg.page = new models.Page;
+      sg.page = new models[utils.guessPageType(window.sgData.page) + "Page"];
       sg.page.set(window.sgData.page);
       sg.pages = new collections.Pages;
       sg.pages.reset(window.sgData.pages);

@@ -42,6 +42,7 @@ define(["jquery"
     isFormDataSupported: function(){ return !!window.FormData },
 
     guessBlockType: function(attrs) {
+      // TODO: use type instead of template
       switch (attrs.template) {
         case "page":
           return "Page";
@@ -53,6 +54,14 @@ define(["jquery"
           return "Nav";
         default:
           return "";
+      }
+    },
+
+    guessPageType: function(attrs) {
+      if (attrs.type === "page") {
+        return ""
+      } else {
+        return attrs.type.charAt(0).toUpperCase() + attrs.type.slice(1);
       }
     },
 

@@ -47,14 +47,12 @@ define(["jquery"
       }).open();
     },
 
-    createPage: function() {
+    createPage: function(attrs) {
       new views.Modal({
         contentView: new views.PageForm({
           collection: this.collection,
           pages: this.collection,
-          attrs: {
-            parent_id: this.model.get("id")
-          }
+          attrs: attrs
         })
       }).open();
     },
