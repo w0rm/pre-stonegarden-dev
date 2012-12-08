@@ -1,58 +1,20 @@
-$def with(page, blocks)
+$var page = ctx.page
 
-$code:
-    blocks = list(blocks)
-    root = None
-    for b in blocks:
-        if b.block_id is None and b.page_id == page.id:
-            root = b
-            break
-
-$var page = page
-
-$def render_block(block, blocks):
-    $_("Block"): $_(config.labels[block.template])
-    $code:
-        subblocks = [b for b in blocks if b.block_id == block.id]
-    $if block.template in config.containers:
+$def render_block(block):
+    $_("Block"): $block.template
+    $if block.blocks:
         <ul>
-        $for c in config.containers[block.template]:
-            <li>
-                $_("Container"): $_(config.labels[c])
-                <ul>
-                $for b in subblocks:
-                    $if b.container == c:
-                        <li>$:render_block(b, blocks)</li>
-                </ul>
-            </li>
+        $for b in block.blocks:
+            <li>$:render_block(b)</li>
         </ul>
 
-$# Navigation
-<div class="ui-toolbar">
-    <div class="ui-toolbar-left">
-        <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
-        <span class="ui-toolbar-separator"></span>
-        <span class="breadcrumbs">
-            <a href="/a/sitemap">$_("Sitemap")</a> →
-            <a href="$page.path">$page.name</a> →
-            $_("Page tree")
-        </span>
-    </div>
-</div>
-<div class="ui-toolbar-spacer"></div>
-
-$# Page
-<div class="admin-page">
-    <div class="admin-left-column-wrapper">
-        <div class="admin-left-column">
-            <div class="wrapper">
-                <div class="padding-block sitemap">
-                    <h1>$_("Page tree")</h1>
-                    <h2>$_("Page") «$page.title», $_("template") «$_(config.labels[root.template])»</h2>
-                    $:render_block(root, blocks)
-                </div>
-            </div>
+<div class="row">
+    <div class="eight columns">
+        <h1>$_("Page tree")</h1>
+        <h2>$_("Page") «$ctx.page.title»</h2>
+        <div class="sitemap">
+            $:render_block(ctx.page_block)
         </div>
     </div>
-    <aside class="admin-right-column"></aside>
+    <aside class="four columns"></aside>
 </div>

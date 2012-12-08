@@ -1,0 +1,8 @@
+
+rename pages, blocks, documents to ids
+rename page_id, block_id, document_id to parent_id
+
+rename documents.filetype to documents.type
+
+
+pages.type

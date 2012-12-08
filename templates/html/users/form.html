@@ -1,0 +1,13 @@
+$def with (users, user_form, user)
+<div class="row">
+    <div class="eight columns">
+        <h1>$_("Edit user")</h1>
+        <form action="$link_to("users", user, "edit")" method="post">
+            $:user_form.render()
+            <p><button class="button" type="submit">$_("Save")</button></p>
+        </form>
+    </div>
+    <aside class="four columns">
+        $:render.users.p_list(users)
+    </aside>
+</div>

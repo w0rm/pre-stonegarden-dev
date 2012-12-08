@@ -1,8 +1,0 @@
-$def with(block, blocks, page)
-$if ctx.children:
-    <nav>
-        <ul>
-        $for p in ctx.children:
-            <li><a href="$p.path">$p.name</a></li>
-        </ul>
-    </nav>

@@ -1,35 +1,13 @@
 $def with (page_code_form, page=None)
 $var page = page
-
-$# Navigation
-<div class="ui-toolbar">
-    <div class="ui-toolbar-left">
-        <a class="ui-toolbar-item" href="/"><span class="ui-icon ui-icon-edzo-home"></span></a>
-        <span class="ui-toolbar-separator"></span>
-        <span class="breadcrumbs">
-            <a href="/a/sitemap">$_("Sitemap")</a> →
-            <a href="$page.path">$page.name</a> →
-            $_("Style and scripts")
-        </span>
+<div class="row">
+    <div class="eight columns">
+        <h1>$_("Style and scripts")</h1>
+        <h2>$_("Page") «$page.title»</h2>
+        <form action="$link_to("pages", page, "edit_code")" method="post">
+            $:page_code_form.render()
+            <p><button class="button" type="submit">$_("Save")</button></p>
+        </form>
     </div>
-</div>
-<div class="ui-toolbar-spacer"></div>
-
-$# Page
-<div class="admin-page">
-    <div class="admin-left-column-wrapper">
-        <div class="admin-left-column">
-            <div class="wrapper">
-                <div class="padding-block">
-                    <h1>$_("Style and scripts")</h1>
-                    <h2>$_("Page") «$page.title»</h2>
-                    <form action="$link_to("pages", page, "edit_code")" method="post">
-                        $:page_code_form.render()
-                        <p><button type="submit">$_("Save")</button></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <aside class="admin-right-column"></aside>
+    <aside class="four columns"></aside>
 </div>
