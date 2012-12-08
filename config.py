@@ -97,16 +97,10 @@ config = web.storage(
                                 "template": "column",
                                 "size": 8,
                                 "is_system": True,
-                                "blocks": [
-                                    {
-                                        "template": "page_title",
-                                        "is_system": True
-                                    },
-                                    {
-                                        "template": "products",
-                                        "is_system": True
-                                    }
-                                ]
+                                "blocks": [{
+                                    "template": "products",
+                                    "is_system": True
+                                }]
                             },
                             {
                                 "template": "column",
