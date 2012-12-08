@@ -1,0 +1,112 @@
+
+
+.sg-document-storage {
+  background-color: #f2f2f2;
+  min-height: 180px * 3;
+}
+
+.sg-document-tiles {
+
+  list-style: none;
+
+  .sg-document, .sg-document-loader, .sg-document-back {
+    display: inline-block;
+    vertical-align: top;
+    width: 190px;
+    padding: 170px 15px 10px;
+    position: relative;
+    @include border-radius;
+  }
+
+  .sg-document, .sg-document-back {
+    &:hover {
+      @include box-shadow;
+      background: #fff;
+      .sg-ico-folder {
+        color: #f2f2f2;
+      }
+      .sg-ico-arrow-l {
+        color: #fff;
+      }
+    };
+    .sg-contextmenu-show {
+      top: 125px;
+      left: 25px;
+    }
+  }
+
+  .sg-document-loader  {
+    background: image-url("loader.gif") center center no-repeat;
+  }
+
+  .sg-document-image-container {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    width: 160px;
+    height: 160px;
+    line-height: 160px;
+    img {
+      vertical-align: bottom;
+    }
+  }
+
+  .sg-document-extension {
+    position: absolute;
+    top: 80px;
+    left: 90px;
+    margin-top: -24px;
+    margin-left: -24px;
+
+    &:before {
+      font-size: 48px;
+      color: #808285;
+    };
+
+    em {
+      display: inline-block;
+      position: relative;
+      text-transform: uppercase;
+      line-height: 14px;
+      height: 14px;
+      top: -10px;
+      left: -25px;
+      color: #fff;
+      background-color: #80c73a;
+      font-size: 12px;
+      font-weight: bold;
+      font-style: normal;
+      padding: 0 2px;
+    }
+  }
+
+  .sg-ico-arrow-l {
+    position: absolute;
+    top: 50px;
+    width: 160px;
+    text-align: center;
+    left: 15px;
+    font-size: 80px;
+    color: #e5e5e5;
+  }
+
+  .sg-ico-folder {
+    position: absolute;
+    top: 10px;
+    color: #fff;
+    left: 15px;
+    font-size: 160px;
+    line-height: 160px;
+    height: 160px;
+    overflow: hidden;
+    &:before {
+      vertical-align: -32px;
+    };
+  }
+
+  .sg-document-title {
+    font-size: 12px;
+    word-break: break-all
+  }
+
+}

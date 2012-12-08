@@ -1,10 +1,15 @@
-$def with (users, user_form, user)
+$def with (users, form, user)
 <div class="row">
     <div class="eight columns">
-        <h1>$_("Edit user")</h1>
         <form action="$link_to("users", user, "edit")" method="post">
-            $:user_form.render()
-            <p><button class="button" type="submit">$_("Save")</button></p>
+            <h1>$_("Edit user")</h1>
+
+            $:form.render_css()
+
+            $if not form.valid:
+                $:form.render_errors()
+
+            <p><button class="right button" type="submit">$_("Save")</button></p>
         </form>
     </div>
     <aside class="four columns">

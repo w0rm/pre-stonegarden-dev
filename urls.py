@@ -1,50 +1,78 @@
-urls=(
+urls = (
 
+    # ======================
     # Application
+    # ======================
+    # TODO: serve compiled config.js
     "/a/config.js", "controllers.application.Config",
 
+    # ======================
     # Users
+    # ======================
+
+    # TODO: restful api for users
     "/a/users", "controllers.users.Users",
     "/a/users/new", "controllers.users.NewUser",
     "/a/users/(\d+)/edit", "controllers.users.EditUser",
     "/a/users/(\d+)/(delete|undelete)", "controllers.users.DeleteUser",
 
-    # Auth
+    # ======================
+    # Authentication
+    # ======================
+
     "/login", "controllers.auth.Login",
     "/logout", "controllers.auth.Logout",
+    # password reset form
     "/password_reset", "controllers.auth.ResetToken",
-    "/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$", "controllers.auth.ResetChange",
+    # password change:
+    r'/password_reset/(?P<uid>[0-9]+)\$(?P<token>[0-9a-z\$\.]+)$',
+    "controllers.auth.ResetChange",
 
+    # ======================
     # Documents
-    "/a/documents/upload", "controllers.documents.DropUploadDocument",
-    "/a/documents/newfolder", "controllers.documents.NewFolderDocument",
-    "/uploads/(.*)", "controllers.documents.DownloadDocument",
-    "/a/documents/(\d+)(/|\.json)?", "controllers.documents.GetDocument",
+    # ======================
+
+    # storage page
+    "/a/storage(?:/[0-9]+)?", "controllers.documents.Storage",
+
+    # document download with access control
+    "/uploads/(.*)", "controllers.documents.Download",
+
+    # documents restfull controller
+    r'/a/documents(?:/(?P<resource_id>[0-9]+))?',
+    "controllers.documents.Documents",
+
+    # api to get image size
     "/a/documents/(\d+)/image_size", "controllers.documents.GetImageSize",
-    "/a/documents", "controllers.documents.GetDocuments",
-    "/a/documents/(\d+)/order", "controllers.documents.OrderDocument",
-    "/a/documents/(\d+)/edit_settings", "controllers.documents.EditDocumentSettings",
-    "/a/documents/(\d+)/delete", "controllers.documents.DeleteDocument",
 
+    # ======================
     # Blocks
-    "/a/blocks", "controllers.blocks.Blocks",
-    "/a/blocks/(\d+)", "controllers.blocks.Block",
-    "/a/blocks/(\d+)/edit_template", "controllers.blocks.EditBlockTemplate",
-    "/a/blocks/(\d+)/edit_settings", "controllers.blocks.EditBlockSettings",
-    "/a/blocks/(\d+)/wrap", "controllers.blocks.WrapBlock",
-    "/a/blocks/(\d+)/unwrap", "controllers.blocks.UnwrapBlock",
-    "/a/blocks/(\d+)/copy", "controllers.blocks.CopyBlock",
-    "/a/blocks/(\d+)/cut", "controllers.blocks.CutBlock",
-    "/a/blocks/paste", "controllers.blocks.PasteBlock",
+    # ======================
 
+    # blocks restfull controller
+    r'/a/blocks(?:/(?P<resource_id>[0-9]+))?', "controllers.blocks.Blocks",
+
+    # ======================
     # Pages
+    # ======================
+
+    # sitemap
     "/a/sitemap", "controllers.pages.Sitemap",
-    "/a/pages/new", "controllers.pages.NewPage",
-    "/a/pages/(\d+)/edit", "controllers.pages.EditPage",
-    "/a/pages/(\d+)/edit_code", "controllers.pages.EditPageCode",
-    "/a/pages/(\d+)", "controllers.pages.PageTree",
-    "/a/pages/(\d+)\.json", "controllers.pages.PageInfo",
-    "/a/pages/(\d+)/delete", "controllers.pages.DeletePage",
+
+    # pages restfull controller
+    r'/a/pages(?:/(?P<resource_id>[0-9]+))?', "controllers.pages.Pages",
+
+    #"/a/pages/new", "controllers.pages.NewPage",
+    #"/a/pages/(\d+)/edit", "controllers.pages.EditPage",
+    #"/a/pages/(\d+)/edit_code", "controllers.pages.EditPageCode",
+    #"/a/pages/(\d+)", "controllers.pages.PageTree",
+    #"/a/pages/(\d+)\.json", "controllers.pages.PageInfo",
+    #"/a/pages/(\d+)/delete", "controllers.pages.DeletePage",
+
+    # redirect to page by id
     "/to/(\d+)", "controllers.pages.ToPage",
+
+    # view page by path
     "(.*)", "controllers.pages.ViewPage",
+
 )

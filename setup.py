@@ -2,9 +2,23 @@
 import web
 from config import config
 from base import db, auth
+from models.tree import create_tree_branch
 import json
+import shutil
+import os
 
 if __name__ == "__main__":
+
+    shutil.rmtree(config.upload_dir, True)
+    os.mkdir(config.upload_dir)
+    shutil.rmtree(config.static_dir + "/i", True)
+    os.mkdir(config.static_dir + "/i")
+
+    schema_commands = open("schema.sql", "r").read().split(";")
+
+    for cmd in schema_commands:
+        if cmd.strip():
+            db.query(cmd)
 
     data = web.storage(json.loads(open("data.json", "r").read()))
 
@@ -15,27 +29,6 @@ if __name__ == "__main__":
         **data.user
     )
 
-    def insert_blocks(block, parent_id=None, page_id=None, level=0, ids=None):
-        blocks = block.pop("blocks", None)
-        block_id = db.insert(
-            "blocks",
-            user_id=user.id,
-            created_at=now,
-            page_id=page_id,
-            level=level,
-            parent_id=parent_id,
-            ids=ids,
-            is_published=True,
-            **block
-        )
-        if ids is None:
-            ids = str(block_id)
-        else:
-            ids += "," + str(block_id)
-        if blocks:
-            for b in blocks:
-                insert_blocks(b, block_id, page_id, level + 1, ids)
-
     # System root folder
     db.insert(
         "documents",
@@ -45,7 +38,7 @@ if __name__ == "__main__":
     )
 
     for p in data.pages:
-        page_block = p.pop("block")
+        block = p.pop("block")
         page_id = db.insert(
             "pages",
             is_published=False,
@@ -54,7 +47,22 @@ if __name__ == "__main__":
             created_at=now,
             **p
         )
-        insert_blocks(page_block, page_id=page_id)
+        create_tree_branch(
+            "blocks",
+            block,
+            page_id=page_id,
+            user_id=user.id,
+            is_published=True,
+            created_at=now,
+            published_at=now,
+        )
 
-    for b in data.template_blocks:
-        insert_blocks(b)
+    for block in data.template_blocks:
+        create_tree_branch(
+            "blocks",
+            block,
+            user_id=user.id,
+            is_published=True,
+            created_at=now,
+            published_at=now,
+        )

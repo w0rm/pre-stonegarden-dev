@@ -1,15 +1,16 @@
 $def with(block)
-$code:
-    global_header = ctx.template_blocks.get("global_header")
-    global_footer = ctx.template_blocks.get("global_footer")
 <header>
-    $:render_block(global_header)
+    <div class="row">
+        $:render_template_block("global_header")
+    </div>
 </header>
 <section class="row">
 	<div class="twelve columns">
-		$:render_blocks(block.blocks)
+	   $:render_blocks(block.get("blocks"))
 	</div>
 </section>
 <footer>
-    $:render_block(global_footer)
+    <div class="row">
+        $:render_template_block("global_footer")
+    </div>
 </footer>

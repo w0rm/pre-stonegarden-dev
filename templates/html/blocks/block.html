@@ -1,9 +1,17 @@
 $def with(block, contents)
+$# This file renders basic wrapping of the block
+$# Is used internally from template.py render_block
+$code:
+    if block.template == "column":
+        css_class = ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve")[block.size - 1]
+    else:
+        css_class = ""
 $if auth.get_user():
-	<div class="$block.css_class js-block" data-id="$block.id">
+	<div data-position="$block.position"
+         class="block $block.template $css_class $block.css_class ${not block.is_published and "sg-not-published" or ""} js-block">
 		$:contents
 	</div>
-$else:
-	<div class="$block.css_class">
+$elif block.is_published:
+	<div class="block $block.template $css_class $block.css_class">
 		$:contents
 	</div>

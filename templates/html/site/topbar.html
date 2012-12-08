@@ -1,0 +1,51 @@
+$def with(page)
+<div class="fixed contain-to-grid">
+    <nav class="top-bar">
+      <ul>
+        <!-- Title Area -->
+        <li class="name">
+          <h1>
+            <a href="/">$_("Stonegarden")</a>
+          </h1>
+        </li>
+        <li class="toggle-topbar"><a href="#"></a></li>
+      </ul>
+
+      <section>
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li class="divider"></li>
+          <li class="has-dropdown">
+            <a href="/a/sitemap">$_("Pages")</a>
+            <ul class="dropdown">
+              <li><a href="/a/sitemap">$_("Site map")</a></li>
+              $#TODO: export create page dialog here
+              <!--li><a href="/a/pages/new">$_("Create page")</a></li-->
+            </ul>
+          </li>
+          <li>
+            <a href="/a/storage">$_("Storage")</a>
+          </li>
+          <li class="has-dropdown">
+            <a href="/a/users">$_("Users")</a>
+            <ul class="dropdown">
+              <li><a href="/a/users">$_("Users")</a></li>
+              <li><a href="/a/users/new">$_("Create user")</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li>
+            <a href="$link_to("users", auth.get_user(), "edit")">$_("My account")</a>
+          </li>
+          <li class="divider show-for-medium-and-up"></li>
+          <li>
+            <a href="/logout">$_("Exit")</a>
+          </li>
+        </ul>
+      </section>
+    </nav>
+</div>
+<div class="sg-top-bar-spacer"></div>

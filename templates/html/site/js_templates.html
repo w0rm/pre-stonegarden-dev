@@ -1,0 +1,11 @@
+<script type="text/template" id="modal-template">
+    <a class="close-reveal-modal">&#215;</a>
+    <div class="js-content"></div>
+</script>
+<script type="text/template" id="alert-template">
+    <div class="alert-box alert">
+        <% _.each(errors, function(error){ %>
+            <%= error.note %>.
+        <% }); %>
+    </div>
+</script>

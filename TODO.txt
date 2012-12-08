@@ -1,8 +1,33 @@
 
-rename pages, blocks, documents to ids
-rename page_id, block_id, document_id to parent_id
+1. New page types (catalog, category, product) and their forms
+	Templates for new page types (in config)
+	Config entry to specify page dependencies (do we need this?)
 
-rename documents.filetype to documents.type
+	Models for catalog/category/product pages
+	Custom front-end menu and forms for catalog/category/product
+
+2. New block types:
+
+    в каталоге после заголовка выводить блок
+
+	Page title block
+
+	Categories list with descriptions for catalog page
+	Subcategories list (simple dot-separated) for category page
+	Products list grouped by subcategories for category page
 
 
-pages.type
+3. Cut/copy/paste on blocks and documents
+
+4. Edit page code dialog
+
+5. Render the following forms in templates by parts:
+	user forms
+	login form
+	password reset form
+	password change form
+
+
+
+Fix: ensure correct position for created pages from .json
+	 improve default pages creation.

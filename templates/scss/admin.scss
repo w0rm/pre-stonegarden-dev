@@ -1,0 +1,23 @@
+@import "config";
+@import "stone_icon_font";
+@import "admin/ui";
+@import "admin/form";
+@import "admin/documents";
+@import "admin/blocks"; // extends contextmenu from ui
+
+.debug {
+  @import "admin/debug";
+}
+
+.sg-hidden {
+  display: none;
+}
+
+.sg-not-published {
+  @include opacity(.5);
+}
+
+$navBarHeight: 45px !default;
+.sg-top-bar-spacer {
+  height: $navBarHeight;
+}

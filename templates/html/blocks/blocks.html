@@ -1,0 +1,8 @@
+$def with(blocks)
+$# This file renders list of blocks
+$# Is used internally from template.py render_blocks
+<div class="blocks js-blocks">
+$if blocks:
+    $for block in blocks:
+        $:render_block(block)
+</div>

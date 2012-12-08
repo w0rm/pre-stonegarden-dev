@@ -1,0 +1,10 @@
+$def with(block_name)
+$code:
+    if "template_blocks" in ctx:
+        block = ctx.template_blocks.get(block_name)
+    else:
+        block = None
+<div class="js-template-block" data-name="$block_name">
+$if block is not None:
+    $:render_block(block)
+</div>

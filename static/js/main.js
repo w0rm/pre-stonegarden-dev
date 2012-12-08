@@ -1,14 +1,16 @@
 require.config({
-  urlArgs: "bust=" + (new Date).getTime(),
+  urlArgs: 'bust=' + (new Date).getTime(),
   paths: {
-    jquery: "../vendor/js/jquery-1.8.1",
-    config: "/a/config",
-    "jquery-tinymce": "../vendor/js/tiny_mce/jquery.tinymce",
-    backbone: "../vendor/js/backbone-0.9.2",
-    underscore: "../vendor/js/underscore-1.4.2"
+    stonegarden: '/a/config',
+    jquery: '../vendor/js/jquery-1.8.1',
+    'jquery.foundation.reveal': '../vendor/js/jquery.foundation.reveal-1.1',
+    'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
+    backbone: '../vendor/js/backbone-0.9.2',
+    underscore: '../vendor/js/underscore-1.4.2'
   },
   shim: {
-    'jquery-tinymce': ['jquery'],
+    'jquery.tinymce': ['jquery'],
+    'jquery.foundation.reveal': ['jquery'],
     underscore: {
       exports: '_'
     },
@@ -19,4 +21,4 @@ require.config({
   }
 });
 
-require(["blocks"]);
+require(["blocks", "documents"]);

@@ -1,8 +1,12 @@
 # coding: utf-8
 import web
-from base import db
+import json
+from base import db, auth
 from pytils.translit import slugify
 from config import config
+from models.tree import *
+from modules.utils import dthandler
+from template import smarty, sanitize
 
 
 def get_page_by_id(page_id):
@@ -13,7 +17,7 @@ def get_page_by_id(page_id):
         limit=1)[0]
 
 
-def get_pages(parent_id):
+def get_pages_by_parent_id(parent_id):
     return db.select(
         "pages",
         locals(),
@@ -21,35 +25,126 @@ def get_pages(parent_id):
     ).list()
 
 
-def load_page_data(page):
-    web.ctx.page = page
-    web.ctx.nav = web.storage(
-        root=db.select(
-            "pages",
-            where="level=1 AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        children=db.select(
-            "pages", page,
-            where="parent_id=$id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        siblings=db.select(
-            "pages", page,
-            where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
-            order="position ASC").list(),
-        breadcrumbs=(db.select("pages",
-                               where="id in (%s) AND NOT is_deleted" %
-                               page.ids).list() + [page]
-                     if page.ids else [])
+def get_pages_in_tree_order():
+    all_pages = db.select("pages", where="NOT is_deleted",
+                          order="level, position").list()
+    root = next(p for p in all_pages if p.parent_id is None)
+    return order_pages_tree(root, all_pages)
+
+
+def order_pages_tree(root, pages):
+    """Returns list of pages sorted in a tree order
+       root
+       -- (1) subpage
+       ---- (1) subsubpage
+       ------ (1) subsubsubpage
+       ------ (2) subsubsubpage
+       ---- (2) subsubpage
+       -- (2) subpage
+       -- (3) subpage
+    """
+    return [root] + sum(
+        [order_pages_tree(p, pages) for p in pages if p.parent_id == root.id],
+        [],
     )
 
 
+def create_page(page):
+    """Creates new page and pageblock"""
+
+    page.update(unique_path(page))
+
+    page.update(
+        user_id=auth.get_user().id,
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        description_cached=smarty(sanitize(page.description)),
+    )
+
+    if page.position:
+        page.position = int(page.position)
+        # Shift positions to free the space to insert page
+        expand_tree_siblings("pages", page)
+    else:
+        page.position = get_last_position("pages", page.parent_id)
+
+    page.id = db.insert("pages", **page)
+
+    # Generate pages initial blocks stucture
+    page_block = config.page_types[page.type]["block"]
+    create_tree_branch(
+        "blocks",
+        page_block,
+        page_id=page.id,
+        user_id=auth.get_user().id,
+        is_published=True,
+        is_system=True,
+        created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+        published_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
+    return page
+
+
+def update_page_by_id(page_id, data):
+
+    page = get_page_by_id(page_id)
+
+    # Cannot change page type
+    del data["type"]
+
+    if page.is_system:
+        # Cannot edit slug of the system page
+        del data["slug"]
+        # position can be changed, but not parent_id
+        data.parent_id = page.parent_id
+    else:
+        data.parent_id = int(data.parent_id)
+        data.update(unique_path(data, page_id))
+
+    if data.position:
+        data.position = int(data.position)
+    else:
+        data.position = get_last_position("pages", page.parent_id)
+
+    data.update(
+        description_cached=smarty(sanitize(data.description)),
+        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
+    )
+
+    with db.transaction():
+
+        # Transact changes to positions
+        if (data.position != page.position or
+                data.parent_id != page.parent_id):
+
+            # Collapse positions for the removed document
+            collapse_tree_siblings("pages", data)
+
+            # Shift positions to free the space to insert document
+            expand_tree_siblings("pages", data)
+
+        db.update(
+            "pages",
+            where="id = $page_id",
+            vars=locals(),
+            **data)
+
+        # TODO: expand this for tree
+        if data.parent_id != page.parent_id:
+            update_branch(page.id)
+
+    page.update(data)
+    return page
+
+
 def join_path(path, slug=""):
+    """Appends slug to path"""
     return web.cond(path.endswith("/"), path, path + "/") + slug
 
 
 def unique_path(page, page_id=None):
-    if str(page_id) == "1":
-        return dict(path="/", slug="")
+    """Makes unique_path for page, returns new path and slug.
+       Provided @page_id means do not check against self"""
     slug = slugify(page.slug or page.name)
     parent_page = db.select("pages", page, where="id=$parent_id")[0]
     test_slug, i = slug, 1
@@ -63,9 +158,10 @@ def unique_path(page, page_id=None):
                     where=("path=$new_path" +
                            web.cond(page_id, " AND NOT id=$page_id", "")),
                 )[0]
-            test_slug = slug + "-" + str(i)
+            test_slug = "%s-%d" % (slug, i)
             i += 1
     except IndexError:
+        # Page with test_slug doesn't exist — take this slug
         if parent_page.ids:
             ids = parent_page.ids + "," + str(parent_page.id)
         else:
@@ -78,24 +174,55 @@ def unique_path(page, page_id=None):
 
 
 def update_branch(parent_id):
-    for page in get_pages(parent_id):
+    """Recursively updates branch setting correct ids, level, slug and path"""
+    for page in get_pages_by_parent_id(parent_id):
         db.update(
             "pages", where="id=$id", vars=page,
             **unique_path(page, page.id))
         update_branch(page.id)
 
 
-def delete_branch(page_id, deleted_at):
-    if str(page_id) == "1":
-        return
-    for page in get_pages(page_id):
-        delete_branch(page.id, deleted_at)
-    db.update("pages", where="id=$parent_id AND NOT is_deleted", vars=locals(),
-              is_deleted=True, deleted_at=deleted_at)
+def delete_page_by_id(page_id):
+
+    page = get_page_by_id(page_id)
+
+    if page.id == 1 or page.is_system:
+        raise flash.error(_("Cannot delete root and system pages."))
+
+    # Collapse positions
+    collapse_tree_siblings("pages", page)
+
+    # Delete recursively
+    return delete_tree_branch("pages", page)
 
 
-def dropdown_pages(page, pages):
-    return [(page.id, u"  " * page.level + u"• " + page.name)] + sum(
-        [dropdown_pages(p, pages) for p in pages if p.parent_id == page.id],
-        [],
+def load_page_data(page):
+    web.ctx.page = page
+    web.ctx.nav = web.storage(
+        root=db.select(
+            "pages",
+            where="level=1 AND NOT is_deleted AND is_navigatable",
+            order="position").list(),
+        children=db.select(
+            "pages", page,
+            where="parent_id=$id AND NOT is_deleted AND is_navigatable",
+            order="position").list(),
+        siblings=db.select(
+            "pages", page,
+            where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
+            order="position").list(),
+        breadcrumbs=(db.select("pages",
+                               where="id in (%s) AND NOT is_deleted" %
+                               page.ids).list() + [page]
+                     if page.ids else [])
     )
+
+
+def page_to_json(page):
+    return json.dumps(page, default=dthandler,
+                      sort_keys=True, indent=2)
+
+
+def pages_to_json(pages):
+    return json.dumps(pages, default=dthandler,
+                      sort_keys=True, indent=2)
