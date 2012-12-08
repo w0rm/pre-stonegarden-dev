@@ -1,8 +1,10 @@
 $def with(block)
 $# Categories block renders categories and subcategories
+$ categories = [c for c in ctx.nav.children if c.type == "category"]
 <section class="catalog-categories">
+$if categories:
     <ul>
-    $for category in (c for c in ctx.nav.children if c.type == "category"):
+    $for category in categories:
         <li>
             <a href="$category.path">$category.title</a>
             $if "pages" in category:
@@ -13,4 +15,6 @@ $# Categories block renders categories and subcategories
             $:category.description_cached
         </li>
     </ul>
+$else:
+    <p>$_("Catalog is empty.")</p>
 </section>
