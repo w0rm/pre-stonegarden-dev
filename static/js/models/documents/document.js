@@ -17,6 +17,13 @@ define(["jquery"
       return !!this.get("is_system");
     },
 
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this file or folder?"),
+        message: t_("It will also delete all the nested files.")
+      }
+    },
+
     // Contextmenu items
 
     hasContextMenu: function() {

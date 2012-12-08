@@ -38,11 +38,7 @@ define(["jquery"
     },
 
     deleteBlock: function() {
-      new views.DeleteModal({
-        model: this.model,
-        title: t_("Delete this block?"),
-        message: t_("It will also delete all the nested blocks.")
-      }).open();
+      new views.DeleteModal({model: this.model}).open();
     },
 
     editAttributes: function() {

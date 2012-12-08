@@ -60,11 +60,7 @@ define(["jquery"
     },
 
     deletePage: function() {
-      new views.DeleteModal({
-        model: this.model,
-        title: t_("Delete this page?"),
-        message: t_("Are you sure to delete this page and its subpages?")
-      }).open();
+      new views.DeleteModal({model: this.model}).open();
     },
 
     editPageCode: function() {

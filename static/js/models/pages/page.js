@@ -69,7 +69,7 @@ define(["jquery"
       if (this.isEdit()) {
         return {
           text: "",
-          className: "sg-ico-cursor",
+          className: "sg-active sg-ico-cursor",
           href: window.location.pathname,
           title: t_("Exit edit mode")
         }
@@ -162,6 +162,13 @@ define(["jquery"
           this.getGlobalMenu()
         ]
       };
+    },
+
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this page?"),
+        message: t_("Are you sure to delete this page and its subpages?")
+      }
     }
 
 

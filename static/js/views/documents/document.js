@@ -50,11 +50,7 @@ define(["jquery"
     },
 
     deleteDocument: function() {
-      new views.DeleteModal({
-        model: this.model,
-        title: t_("Delete this file or folder?"),
-        message: t_("It will also delete all the nested files.")
-      }).open();
+      new views.DeleteModal({model: this.model}).open();
     },
 
     editAttributes: function() {

@@ -43,6 +43,13 @@ define(["jquery"
       return !!this.parentBlock;
     },
 
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this block?"),
+        message: t_("It will also delete all the nested blocks.")
+      }
+    },
+
     // Contextmenu items
 
     hasContextMenu: function() {

@@ -17,10 +17,7 @@ define(["jquery"
     },
 
     getTemplateAttributes: function() {
-      return {
-        title: this.options.title,
-        message: this.options.message
-      }
+      return this.model.getDeleteOptions();
     },
 
     render: function() {
