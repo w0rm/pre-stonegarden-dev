@@ -13,7 +13,7 @@ define(["jquery"
 
     urlRoot: "/a/pages",
 
-    higlight: function(){},
+    highlight: function(){},
 
     lowlight: function(){},
 
@@ -158,8 +158,7 @@ define(["jquery"
           this.getEditMenu(),
           this.getPageMenu(),
           this.getGlobalMenu()
-        ],
-        context: this
+        ]
       };
     }
 

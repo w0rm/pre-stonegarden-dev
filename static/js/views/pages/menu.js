@@ -34,10 +34,12 @@ define(["jquery"
               this.renderMenu(item)
             );
           } else {
-            $item.hover(
-              function(){ menu.context.highlight(); },
-              function(){ menu.context.lowlight(); }
-            );
+            if (menu.context) {
+              $item.hover(
+                function(){ menu.context.highlight(); },
+                function(){ menu.context.lowlight(); }
+              );
+            }
             if (item.click) {
               $item.append(
                 $('<a href="#">' + item.text + '</a>').click(function(e){
