@@ -203,10 +203,7 @@ def load_page_data(page):
             "pages",
             where="level=1 AND NOT is_deleted AND is_navigatable",
             order="position").list(),
-        children=db.select(
-            "pages", page,
-            where="parent_id=$id AND NOT is_deleted AND is_navigatable",
-            order="position").list(),
+        children=get_page_children(page.id, True),
         siblings=db.select(
             "pages", page,
             where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
@@ -216,6 +213,29 @@ def load_page_data(page):
                                page.ids).list() + [page]
                      if page.ids else [])
     )
+
+
+def get_page_children(parent_id, with_subchildren=False):
+    children = db.select(
+        "pages",
+        locals(),
+        where="parent_id=$parent_id AND is_navigatable AND NOT is_deleted",
+        order="position",
+    ).list()
+    if with_subchildren:
+        ids = [p.id for p in children]
+        if ids:
+            subchildren = db.select(
+                "pages",
+                locals(),
+                where="parent_id in $ids AND is_navigatable AND "
+                      "NOT is_deleted",
+                order="position",
+            ).list()
+            for child in children:
+                child.pages = [p for p in subchildren
+                               if p.parent_id == child.id]
+    return children
 
 
 def page_to_json(page):

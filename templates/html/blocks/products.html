@@ -1,0 +1,18 @@
+$def with(block)
+$# Products list grouped by subcategories for category page
+$def render_items(page):
+    $if "pages" in page:
+        <ul class="catalog-items">
+        $for item in (p for p in page.pages if p.type == "item"):
+            <a href="$item.path">$item.title</a>
+        </ul>
+<section class="catalog-category">
+    <ul class="catalog-subcategories">
+    $for category in (for c in ctx.nav.children if c.type == "category"):
+        <li id="category_$category.id">
+            <a href="$category.path">$category.name</a>
+            $:render_items(category)
+        </li>
+    </ul>
+    $:render_items(category)
+</section>

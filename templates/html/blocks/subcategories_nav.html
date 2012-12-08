@@ -1,0 +1,10 @@
+$def with(block)
+$# Subcategories list (simple dot-separated) for category page
+<nav class="catalog-subcategories-nav">
+    <ul>
+    $for category in (c for c in ctx.nav.children if c.type == "category"):
+        <li>
+            <a href="#category_$category.id">$category.title</a>
+        </li>
+    </ul>
+</nav>

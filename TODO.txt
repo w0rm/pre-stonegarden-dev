@@ -6,16 +6,6 @@
 	Models for catalog/category/product pages
 	Custom front-end menu and forms for catalog/category/product
 
-2. New block types:
-
-    в каталоге после заголовка выводить блок
-
-	Page title block
-
-	Categories list with descriptions for catalog page
-	Subcategories list (simple dot-separated) for category page
-	Products list grouped by subcategories for category page
-
 
 3. Cut/copy/paste on blocks and documents
 
@@ -26,7 +16,6 @@
 	login form
 	password reset form
 	password change form
-
 
 
 Fix: ensure correct position for created pages from .json

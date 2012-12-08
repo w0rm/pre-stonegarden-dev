@@ -37,7 +37,97 @@ config = web.storage(
     ],
     user_roles=["admin", "editor", "user"],
     page_types=dict(
-        page=dict(block=dict(template="page")),
+        # Page constructors
+        page={
+            "block": {
+                "template": "page",
+                "is_system": True
+            }
+        },
+        catalog={
+            "block": {
+                "template": "page",
+                "is_system": True,
+                "blocks": [{
+                    "template": "row",
+                    "is_system": True,
+                    "blocks": [
+                        {
+                            "template": "column",
+                            "size": 8,
+                            "is_system": True,
+                            "blocks": [
+                                {
+                                    "template": "page_title",
+                                    "is_system": True
+                                },
+                                {
+                                    "template": "categories",
+                                    "is_system": True
+                                }
+                            ]
+                        },
+                        {
+                            "template": "column",
+                            "is_system": True,
+                            "size": 4
+                        }
+                    ]
+                }]
+            }
+        },
+        category={
+            "block": {
+                "template": "page",
+                "is_system": True,
+                "blocks": [
+                    {
+                        "template": "page_title",
+                        "is_system": True
+                    },
+                    {
+                        "template": "subcategories_nav",
+                        "is_system": True
+                    },
+                    {
+                        "template": "row",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 8,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "page_title",
+                                        "is_system": True
+                                    },
+                                    {
+                                        "template": "products",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        product={
+            "block": {
+                "template": "page",
+                "is_system": True,
+                "blocks": [{
+                    "template": "page_title",
+                    "is_system": True
+                }]
+            }
+        }
     ),
     image={
         # dst_width, dst_height, crop, sharp, watermark, quality, progressive
