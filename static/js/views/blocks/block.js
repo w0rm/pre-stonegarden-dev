@@ -48,7 +48,7 @@ define(["jquery"
         contentView: new views.BlockAttributes({
           model: this.model,
           attrs: {
-            page_id: sgData.pageId
+            page_id: sg.page.get("id")
           }
         })
       }).open();
@@ -59,7 +59,7 @@ define(["jquery"
                                 "BlockForm"]({
         model: this.model,
         attrs: {
-          page_id: sgData.pageId
+          page_id: sg.page.get("id")
         }
       })
         .on("success reset", function() {

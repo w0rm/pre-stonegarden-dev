@@ -100,7 +100,7 @@ define(["jquery"
 
       _.extend(attrs, {
         parent_id: this.collection.parentBlock.get("id"),
-        page_id: sgData.pageId
+        page_id: sg.page.get("id")
       });
 
       blockForm = new views[utils.guessBlockType(attrs) + "BlockForm"]({
