@@ -41,8 +41,9 @@ define(["jquery"
        return utils.getParentPath(this.get("path"));
     },
 
-    getIndentedName: function() {
-      return new Array(this.get("level") + 1).join("    ") + this.get("name");
+    getIndentedName: function(minLevel) {
+      var level = this.get("level") - (minLevel || 0)
+      return new Array(level + 1).join("    ") + this.get("name");
     },
 
     getIds: function() {
