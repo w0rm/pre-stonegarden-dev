@@ -25,7 +25,7 @@
         <p>
             <label><input <%= page.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
         </p>
-         <p>
+        <p>
             <label><input <%= page.is_navigatable && "checked" || "" %> type="checkbox" name="is_navigatable">$_("Show in navigation")</label>
         </p>
         <div class="js-alert"></div>
@@ -37,12 +37,4 @@
 </script>
 <script type="text/template" id="page-code-form-template">
 
-</script>
-<script type="text/template" id="page-delete-template">
-    <h3>$_("Delete this page?")</h3>
-    <p>$_("Are you sure to delete this page and its subpages?")</p>
-    <p>
-        <button class="button js-ok">$_("Delete")</button>
-        <button class="button js-cancel">$_("Cancel")</button>
-    </p>
 </script>

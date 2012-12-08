@@ -4,8 +4,8 @@ define(["jquery"
       , "stonegarden"
       , "views/mixins/has_contextmenu"
       , "views/modal"
-      , "views/documents/attributes"
-      , "views/documents/delete"], function ($, _, Backbone, sg) {
+      , "views/delete_modal"
+      , "views/documents/attributes"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -50,8 +50,10 @@ define(["jquery"
     },
 
     deleteDocument: function() {
-      new views.Modal({
-        contentView: new views.DocumentDelete({model: this.model})
+      new views.DeleteModal({
+        model: this.model,
+        title: t_("Delete this file or folder?"),
+        message: t_("It will also delete all the nested files.")
       }).open();
     },
 

@@ -2,9 +2,9 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "views/delete_modal"
       , "views/pages/menu"
       , "views/pages/form"
-      , "views/pages/delete"
       , "views/pages/code_form"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -60,8 +60,10 @@ define(["jquery"
     },
 
     deletePage: function() {
-      new views.Modal({
-        contentView: new views.PageDelete({model: this.model})
+      new views.DeleteModal({
+        model: this.model,
+        title: t_("Delete this page?"),
+        message: t_("Are you sure to delete this page and its subpages?")
       }).open();
     },
 

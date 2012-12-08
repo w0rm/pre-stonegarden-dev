@@ -4,10 +4,10 @@ define(["jquery"
       , "stonegarden"
       , "views/mixins/has_contextmenu"
       , "views/modal"
+      , "views/delete_modal"
       , "views/blocks/list"
       , "views/blocks/editable_list"
-      , "views/blocks/attributes"
-      , "views/blocks/delete"], function ($, _, Backbone, sg) {
+      , "views/blocks/attributes"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -38,8 +38,10 @@ define(["jquery"
     },
 
     deleteBlock: function() {
-      new views.Modal({
-        contentView: new views.BlockDelete({model: this.model})
+      new views.DeleteModal({
+        model: this.model,
+        title: t_("Delete this block?"),
+        message: t_("It will also delete all the nested blocks.")
       }).open();
     },
 
