@@ -27,21 +27,38 @@ define(["jquery"
       );
     },
 
-    getTemplateAttributes: function() {
+    pagesFilter: function(p) {
+      return true;
+    },
 
-      var pagesList = this.pages.getIndentedList();
-
-      return this.hasModel() ?
-      {
-        page: this.model.toJSON(),
-        parentId: this.attrs.parent_id,
-        pagesList: pagesList
-      } :
-      {
-        page: {},
-        parentId: this.attrs.parent_id,
-        pagesList: pagesList
+    disabledFilter: function(p) {
+      var modelId;
+      if (this.hasModel()) {
+        modelId = this.model.get("id");
+        return (p.get("id") === modelId || _.contains(p.getIds(), modelId))
+      } else {
+        return false
       }
+    },
+
+    selectedFilter: function(p) {
+      return p.get("id") === this.attrs.parent_id
+    },
+
+    getTemplateAttributes: function() {
+      var pagesList = this.pages.getIndentedList({
+                        filter: this.pagesFilter,
+                        disabledFilter: this.disabledFilter,
+                        selectedFilter: this.selectedFilter
+                      }, this)
+        , page = this.hasModel() ? this.model.toJSON() : {};
+
+      return {
+        hasModel: this.hasModel(),
+        page: page,
+        parentId: this.attrs.parent_id,
+        pagesList: pagesList
+      };
     },
 
     render: function() {
