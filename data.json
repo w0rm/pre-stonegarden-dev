@@ -37,42 +37,6 @@
 					"type": "breadcrumbs"
 				}]
 	        }
-		},
-		{
-			"parent_id": 1,
-			"level": 1,
-			"ids": "1",
-			"slug": "catalog",
-	        "path": "/catalog",
-	        "title": "Catalog",
-	        "name": "Catalog",
-	        "type": "page",
-	        "block": {
-	        	"template": "page",
-		        "is_system": true,
-				"blocks": [{
-					"template": "row",
-					"is_system": true,
-					"blocks": [
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true,
-							"blocks": [{
-								"template": "nav",
-								"type": "children",
-								"is_system": true
-							}]
-						},
-						{
-							"template": "column",
-							"is_system": true,
-							"size": 4
-						}
-					]
-				}]
-	        }
-
 		}
 	],
 
