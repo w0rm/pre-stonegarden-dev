@@ -17,3 +17,27 @@ footer {
 nav ul {
   list-style-type: none;
 }
+
+.catalog-categories, .catalog-subcategories {
+  list-style-type: none;
+}
+
+.catalog-products {
+  margin-left: 20px;
+  margin-bottom: 17px;
+}
+
+.catalog-subcategories-nav > ul {
+  margin-left: 0;
+  margin-bottom: 17px;
+  list-style-type: none;
+  > li {
+    display: inline;
+    &:before {
+      content: "•"
+    };
+    &:first-child:before {
+      display: none
+    }
+  }
+}

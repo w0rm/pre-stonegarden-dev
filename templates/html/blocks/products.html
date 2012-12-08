@@ -4,20 +4,20 @@ $# Products list grouped by subcategories for category page
 $def render_products(pages):
     $  products = [p for p in pages if p.type == "product"]
     $if products:
-        <ul class="catalog-items">
+        <ul class="catalog-products">
         $for product in products:
-            <a href="$product.path">$product.title</a>
+            <li><a href="$product.path">$product.title</a></li>
         </ul>
 
 <section class="catalog-category">
+    $:render_products(ctx.nav.children)
     $  categories = [c for c in ctx.nav.children if c.type == "category"]
     $if categories:
         <ul class="catalog-subcategories">
         $for category in categories:
             <li id="category_$category.id">
-                <a href="$category.path">$category.name</a>
+                <h3>$category.name</h3>
                 $:render_products(category.get("pages", []))
             </li>
         </ul>
-    $:render_products(ctx.nav.children)
 </section>
