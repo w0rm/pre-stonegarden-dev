@@ -1,22 +1,15 @@
 
-1. New page types (catalog, category, product) and their forms
-	Templates for new page types (in config)
+1. Forms for new page types (catalog, category, product)
 	Config entry to specify page dependencies (do we need this?)
-
 	Models for catalog/category/product pages
 	Custom front-end menu and forms for catalog/category/product
 
+2. Cut/copy/paste on blocks and documents
 
-3. Cut/copy/paste on blocks and documents
+3. Edit page code dialog
 
-4. Edit page code dialog
-
-5. Render the following forms in templates by parts:
+4. Render the following forms in templates by parts:
 	user forms
 	login form
 	password reset form
 	password change form
-
-
-Fix: ensure correct position for created pages from .json
-	 improve default pages creation.
