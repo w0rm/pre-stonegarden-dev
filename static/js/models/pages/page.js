@@ -6,7 +6,8 @@ define(["jquery"
       , "models/model"
       , "models/blocks/blocks"], function ($, _, Backbone, sg) {
 
-  var models = sg.models;
+  var models = sg.models
+    , utils = sg.utils;
 
 
   models.Page =  models.Model.extend({
@@ -55,6 +56,7 @@ define(["jquery"
     },
 
     isEdit: function() {
+      // TODO: check for pathname
       return window.location.search.indexOf("edit") >= 0
     },
 
