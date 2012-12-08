@@ -46,33 +46,3 @@
         <button class="button js-cancel">$_("Cancel")</button>
     </p>
 </script>
-<script type="text/template" id="page-menu-template">
-    <nav class="sg-pagemenu">
-        <% if (!isEdit) { %>
-            <a class="sg-pagemenu-item sg-ico-cursor" href="$changequery(edit=1)" title="$_("Enter edit mode")"></a>
-        <% } else { %>
-            <a class="sg-pagemenu-item sg-ico-cursor sg-active" href="$changequery(edit=None)" title="$_("Exit edit mode")"></a>
-        <% } %>
-        <div class="sg-pagemenu-item">
-            <span class="sg-ico-page" title="$_("Page")"></span>
-            <ul class="sg-contextmenu">
-                <li class="sg-contextmenu-item"><a href="#" class="js-edit">$_("Page properties")</a></li>
-                <li class="sg-contextmenu-item"><a href="#" class="js-code">$_("Style and scripts")</a></li>
-                <li class="sg-contextmenu-separator"></li>
-                <li class="sg-contextmenu-item"><a href="#" class="js-create">$_("Create page")</a></li>
-                <li class="sg-contextmenu-item"><a href="#" class="js-delete">$_("Delete this page")</a></li>
-            </ul>
-        </div>
-        <div class="sg-pagemenu-item">
-            <span class="sg-ico-menu-list"></span>
-            <ul class="sg-contextmenu">
-                <li class="sg-contextmenu-item"><a href="/a/sitemap">$_("Site map")</a></li>
-                <li class="sg-contextmenu-item"><a href="/a/storage">$_("Storage")</a></li>
-                <li class="sg-contextmenu-item"><a href="/a/users">$_("Users")</a></li>
-                <li class="sg-contextmenu-item"><a href="$link_to("users",auth.get_user(),"edit")">$_("My account")</a></li>
-                <li class="sg-contextmenu-separator"></li>
-                <li class="sg-contextmenu-item"><a href="/logout">$_("Exit")</a></li>
-            </ul>
-        </div>
-    </nav>
-</script>

@@ -43,6 +43,10 @@
       color: #fff;
     }
   }
+
+  [class*="sg-ico-"]:before {
+    margin-right: 4px;
+  }
 }
 
 .sg-contextmenu-root {

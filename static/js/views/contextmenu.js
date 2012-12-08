@@ -58,7 +58,16 @@ define(["jquery"
               );
             }
           }
+        };
+
+        if (item.title) {
+          $item.children(":first").attr("title", item.title)
         }
+
+        if (item.className) {
+          $item.children(":first").addClass(item.className)
+        }
+
       }, this);
       return $menu;
     }

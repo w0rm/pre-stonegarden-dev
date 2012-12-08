@@ -13,6 +13,10 @@ define(["jquery"
 
     urlRoot: "/a/pages",
 
+    higlight: function(){},
+
+    lowlight: function(){},
+
     edit: function() {
       this.trigger("page:edit");
     },
@@ -44,7 +48,121 @@ define(["jquery"
       return _.map(ids, function(id) {
         return parseInt(id, 10) // Ensure decimal conversion
       });
+    },
+
+    hasContextMenu: function() {
+      return true
+    },
+
+    isEdit: function() {
+      return window.location.search.indexOf("edit") >= 0
+    },
+
+    isSystem: function() {
+      return !!this.get("is_system");
+    },
+
+    getEditMenu: function() {
+
+      if (this.isEdit()) {
+        return {
+          text: "",
+          className: "sg-ico-cursor",
+          href: window.location.pathname,
+          title: t_("Exit edit mode")
+        }
+      } else {
+        return {
+          text: "",
+          className: "sg-ico-cursor",
+          href: window.location.pathname + "?edit",
+          title: t_("Enter edit mode")
+        }
+      }
+
+    },
+
+    getPageMenu: function() {
+
+      var items = [];
+
+      items.push({
+        text: t_("Page attributes"),
+        click: this.edit
+      });
+
+      items.push({
+        text: t_("Style and scripts"),
+        click: this.editCode
+      });
+
+      items.push({
+        is_separator: true
+      });
+
+      items.push({
+        text: t_("Create page"),
+        click: this.create
+      });
+
+      if (!this.isSystem()) {
+        items.push({
+          text: t_("Delete this page"),
+          click: this.delete
+        });
+      };
+
+      return {
+        className: "sg-ico-page",
+        items: items,
+        text: "",
+        title: t_("Page"),
+        context: this
+      }
+
+    },
+
+    getGlobalMenu: function() {
+      return {
+        text: "",
+        className: "sg-ico-menu-list",
+        items: [
+          {
+            text: t_("Site map"),
+            href: "/a/sitemap",
+          },
+          {
+            text: t_("Storage"),
+            href: "/a/storage"
+          },
+          {
+            text: t_("Users"),
+            href: "/a/users"
+          },
+          {
+            is_separator: true
+          },
+          {
+            text: t_("Exit"),
+            className: "sg-ico-exit",
+            href: "/logout"
+          }
+        ]
+      };
+
+    },
+
+    getContextMenu: function() {
+      return {
+        items: [
+          this.getEditMenu(),
+          this.getPageMenu(),
+          this.getGlobalMenu()
+        ],
+        context: this
+      };
     }
+
 
   });
 
