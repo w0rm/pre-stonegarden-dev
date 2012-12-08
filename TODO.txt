@@ -1,11 +1,5 @@
 
-1. Forms for new page types (catalog, category, product)
-
-	Show appropriate forms for edit and create based on page type
-
-	Custom pageList filtering (by providing functions to mark as disabled and to filter out pages)
-
-	Custom front-end menu and forms for catalog/category/product
+1. Prevent subcategories 2 levels deep
 
 2. Cut/copy/paste on blocks and documents
 
@@ -16,3 +10,6 @@
 	login form
 	password reset form
 	password change form
+
+
+5. Dont show unpublished in public site navigation
