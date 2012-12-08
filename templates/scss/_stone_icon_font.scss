@@ -68,10 +68,9 @@
 
 .sg-ico-folder:before{content: "\e023"}
 .sg-ico-folder-add:before{content: "\e024"}
-.sg-ico-upload{@extend .sg-ico-empty;}
+.sg-ico-upload:before{content: "\e113"}
 
 .sg-ico-edit:before{content: "\e03d"}
 .sg-ico-user:before{content: "\e03e"}
 .sg-ico-plus-arrow:before{content: "\e111"}
-
-.sg-ico-electronics{@extend .sg-ico-empty;}
+.sg-ico-electronics:before{content: "\e112"}
