@@ -13,20 +13,25 @@
   padding: 5px 0;
 }
 
-.sg-pagemenu-item, .sg-pagemenu-item > a {
+.sg-pagemenu-item {
   @extend .sg-contextmenu-item;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-  vertical-align: middle;
-  font-size: 16px;
-  text-decoration: none;
-  color: hsl(0, 0, 90%);
+
+  > a, > span {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    font-size: 16px;
+    text-decoration: none;
+    color: hsl(0, 0, 90%);
+  }
   &:hover, &.sg-active {
-    color: #fff;
-    background: hsl(0, 0, 20%);
+    > a, > span {
+      color: #fff;
+      background: hsl(0, 0, 20%);
+    }
   }
 }
