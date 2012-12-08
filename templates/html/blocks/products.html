@@ -1,18 +1,23 @@
 $def with(block)
 $# Products list grouped by subcategories for category page
-$def render_items(page):
-    $if "pages" in page:
+
+$def render_products(pages):
+    $  products = [p for p in pages if p.type == "product"]
+    $if products:
         <ul class="catalog-items">
-        $for item in (p for p in page.pages if p.type == "item"):
-            <a href="$item.path">$item.title</a>
+        $for product in products:
+            <a href="$product.path">$product.title</a>
         </ul>
+
 <section class="catalog-category">
-    <ul class="catalog-subcategories">
-    $for category in (for c in ctx.nav.children if c.type == "category"):
-        <li id="category_$category.id">
-            <a href="$category.path">$category.name</a>
-            $:render_items(category)
-        </li>
-    </ul>
-    $:render_items(category)
+    $  categories = [c for c in ctx.nav.children if c.type == "category"]
+    $if categories:
+        <ul class="catalog-subcategories">
+        $for category in categories:
+            <li id="category_$category.id">
+                <a href="$category.path">$category.name</a>
+                $:render_products(category.get("pages", []))
+            </li>
+        </ul>
+    $:render_products(ctx.nav.children)
 </section>
