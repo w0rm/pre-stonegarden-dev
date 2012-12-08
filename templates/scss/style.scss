@@ -35,7 +35,7 @@ nav ul {
   > li {
     display: inline;
     &:before {
-      content: "•"
+      content: " • "
     };
     &:first-child:before {
       display: none
