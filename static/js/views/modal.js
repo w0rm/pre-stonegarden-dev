@@ -23,9 +23,12 @@ define(["jquery"
       var self = this;
       this.$el.html(this.template());
       this.$(".js-content").empty().append(
-        this.contentView.render().el
+        this.contentView.el
       );
-      this.$el.appendTo("body").reveal({
+      this.$el.appendTo("body");
+      // Render content widget only when attached to body
+      this.contentView.render();
+      this.$el.reveal({
         opened: function(){ self.opened(); },
         closed: function(){ self.closed(); }
       });

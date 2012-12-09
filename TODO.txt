@@ -17,4 +17,3 @@
 TODO:
 	css hanging wysiwyg toolbar
 	allow edit html block on dblclick
-	fix wysiwyg init in category description
