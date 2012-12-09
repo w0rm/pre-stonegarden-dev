@@ -1,19 +1,23 @@
 
-1. Prevent subcategories 2 levels deep
+1. Wysiwyg improvements (tables, links)
 
-2. Cut/copy/paste on blocks and documents
+2. Image type block
 
-3. Edit page code dialog
+3. Cut/copy/paste on blocks and documents
 
-4. Render the following forms in templates by parts:
+4. Edit page code dialog
+
+5. Render the following forms in templates by parts:
 	user forms
 	login form
 	password reset form
 	password change form
 
 
-5. Dont show unpublished in public site navigation
+6. Dont show unpublished in public site navigation
 
 TODO:
 	css hanging wysiwyg toolbar
 	allow edit html block on dblclick
+	Prevent subcategories 2 levels deep
+    insert breadcrumbs
