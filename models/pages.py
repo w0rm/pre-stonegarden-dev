@@ -208,10 +208,12 @@ def load_page_data(page):
             "pages", page,
             where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
             order="position").list(),
-        breadcrumbs=(db.select("pages",
-                               where="id in (%s) AND NOT is_deleted" %
-                               page.ids).list() + [page]
-                     if page.ids else [])
+        breadcrumbs=(
+            db.select(
+                "pages",
+                where="id in (%s) AND NOT is_deleted AND is_navigatable" %
+                page.ids).list() + [page]
+            if page.ids else [])
     )
 
 
