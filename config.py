@@ -82,6 +82,11 @@ config = web.storage(
                 "is_system": True,
                 "blocks": [
                     {
+                        "template": "nav",
+                        "type": "breadcrumbs",
+                        "is_system": True
+                    },
+                    {
                         "template": "page_title",
                         "is_system": True
                     },
@@ -116,10 +121,17 @@ config = web.storage(
             "block": {
                 "template": "page",
                 "is_system": True,
-                "blocks": [{
-                    "template": "page_title",
-                    "is_system": True
-                }]
+                "blocks": [
+                    {
+                        "template": "nav",
+                        "type": "breadcrumbs",
+                        "is_system": True
+                    },
+                    {
+                        "template": "page_title",
+                        "is_system": True
+                    }
+                ]
             }
         }
     ),
