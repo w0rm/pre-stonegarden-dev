@@ -20,7 +20,7 @@ task 'i18n:extract', 'Exctracts messages for translation', (options) ->
   runCommand 'python', 'i18n/extract-messages.py'
 
 task 'i18n:update', 'Updates dictionary files with new messages', (options) ->
-  runCommand 'pybabel', 'update', '-i', 'i18n/messages.pot', '-d', 'i18n/'
+  runCommand 'pybabel', 'update', '--ignore-obsolete', '-i', 'i18n/messages.pot', '-d', 'i18n/'
 
 task 'i18n:compile', 'Compiles dictionary files', (options) ->
   runCommand 'pybabel', 'compile', '-d', 'i18n/', '-f', '--statistics'
