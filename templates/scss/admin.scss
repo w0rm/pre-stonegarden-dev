@@ -21,3 +21,25 @@ $navBarHeight: 45px !default;
 .sg-top-bar-spacer {
   height: $navBarHeight;
 }
+
+
+.mceExternalToolbar {
+  z-index: 100;
+  @include box-shadow;
+  background-color: $bg-grey!important;
+  @extend .ui-corner-br;
+  padding: 5px!important;
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  .mceToolbar {
+    border:none!important;
+    background-color: $bg-grey!important;
+  }
+}
+.defaultSkin table.mceLayout {
+  @include box-shadow;
+  &, tr.mceLast td, tr.mceFirst td {
+    border:none!important;
+  }
+}
