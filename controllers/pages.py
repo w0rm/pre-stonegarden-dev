@@ -98,6 +98,16 @@ class Pages(RESTfulController):
         return '{"status": 1}'
 
 
+class TinyMCELinkList:
+
+    """Returns tinymce_link_list.js for tinymce"""
+
+    def GET(self):
+        link_list = pages_to_tinymce_link_list_json(get_pages_in_tree_order())
+        web.header("Content-Type", "text/javascript; charset=utf-8")
+        return render_partial.site.tinymce_link_list(link_list)
+
+
 class ToPage:
     """Redirects to page by its id"""
 

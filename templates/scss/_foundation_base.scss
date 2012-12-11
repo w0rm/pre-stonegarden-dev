@@ -1,3 +1,15 @@
 
 // TODO: configure foundation;
 @import "foundation";
+
+ul {
+  margin-left: 20px;
+}
+
+.small {
+  font-size: 80%;
+}
+
+.exposed {
+  color: hsl(0, 0, 40%);
+}

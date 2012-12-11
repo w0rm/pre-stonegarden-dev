@@ -248,3 +248,8 @@ def page_to_json(page):
 def pages_to_json(pages):
     return json.dumps(pages, default=dthandler,
                       sort_keys=True, indent=2)
+
+
+def pages_to_tinymce_link_list_json(pages):
+    return json.dumps([(u"   " * page.level + page.name, u"/to/%d" % page.id)
+                       for page in pages])

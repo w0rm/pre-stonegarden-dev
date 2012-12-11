@@ -56,6 +56,9 @@ urls = (
     # Pages
     # ======================
 
+    # Link list in TinyMCE
+    "/a/tinymce_link_list.js", "controllers.pages.TinyMCELinkList",
+
     # sitemap
     "/a/sitemap", "controllers.pages.Sitemap",
 

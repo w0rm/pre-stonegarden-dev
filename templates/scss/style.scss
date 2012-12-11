@@ -1,6 +1,7 @@
 @import "config";
 @import "foundation_base";
 
+
 header, footer {
   padding-top: 20px;
   background: #eee;
@@ -15,15 +16,16 @@ footer {
 }
 
 nav ul {
+  margin-left: 0;
   list-style-type: none;
 }
 
 .catalog-categories, .catalog-subcategories {
+  margin-left: 0;
   list-style-type: none;
 }
 
 .catalog-products {
-  margin-left: 20px;
   margin-bottom: 34px;
   list-style-type: disc;
 }
