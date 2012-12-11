@@ -139,9 +139,9 @@ config = web.storage(
         # dst_width, dst_height, crop, sharp, watermark, quality, progressive
         "o": [None, None, False, False, False, 90, 0],
         "t": [160, 160, False, True, False, 90, 0],
-        "s": [400, 400, False, True, False, 90, 0],
-        "m": [700, 700, False, True, False, 90, 0],
-        "l": [1000, 1000, False, True, False, 90, 0],
+        "s": [400, 400, False, True, False, 80, 0],
+        "m": [800, 800, False, True, False, 75, 0],
+        "l": [1200, 1200, False, True, False, 70, 0],
     },
     nav_types=["root", "children", "siblings", "breadcrumbs"],
     labels=dict(
