@@ -169,6 +169,14 @@ define(["jquery"
 
   models.NavBlock = models.Block;
 
+  models.ImageBlock = models.Block.extend({
+
+    getImageAttributes: function() {
+      return $(this.get("content")).data()
+    }
+
+  });
+
   models.ColumnBlock = models.Block.extend({
 
     hasContextMenu: function() {
