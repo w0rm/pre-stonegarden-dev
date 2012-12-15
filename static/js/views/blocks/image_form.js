@@ -64,6 +64,7 @@ define(["jquery"
         filter: {type: "image"},
         isContextMenuEnabled: false
       })
+        .on("document:open", this.openDocument, this)
         .on("document:select", this.selectDocument, this)
         .on("document:unselect", this.unselectDocument, this);
 
@@ -75,6 +76,13 @@ define(["jquery"
 
       return this;
 
+    },
+
+    openDocument: function(model) {
+      if (model.get("type") === "image") {
+        this.selectDocument(model);
+        this.submit();
+      }
     },
 
     selectDocument: function(model) {

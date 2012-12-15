@@ -113,6 +113,7 @@ define(["jquery"
           data: _.extend({parent_id: model.get("id")}, this.filter)
         });
       };
+      this.trigger("document:open", model);
       return this;
     },
 
