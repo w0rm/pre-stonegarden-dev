@@ -68,7 +68,7 @@ define(["jquery"
       this.hideContextMenu();
       this.propagateInserter();
       this.$el.after(blockForm.el)
-      if (this.model.get("template") === "content") {
+      if (_.contains(["html", "wysiwyg"], this.model.get("type"))) {
         // Hide block only if editing inline
         this.$el.hide();
       }
