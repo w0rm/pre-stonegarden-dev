@@ -9,6 +9,8 @@ $def with (page=None)
     <meta name="keywords" content="$page.get("meta_keywords")">
     <link rel="shortcut icon" href="$asset_url("img/favicon.ico")" type="image/x-icon">
     <link rel="stylesheet" href="$asset_url("css/style.css")">
+    $if config.environment == "development":
+        <script>var environment = "$config.environment";</script>
     $if auth.get_user():
         <link rel="stylesheet" href="$asset_url("css/admin.css")">
         <script data-main="$asset_url("js/main.js", False)"
