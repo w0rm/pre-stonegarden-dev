@@ -9,6 +9,7 @@ define(["jquery"
   var utils = sg.utils
     , views = sg.views;
 
+
   views.DocumentStorage = Backbone.View.extend({
 
     template: _.template($("#document-storage-template").html()),
@@ -25,8 +26,10 @@ define(["jquery"
 
       this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
-        collection: this.collection
-      })
+        collection: this.collection,
+        filter: this.options.filter,
+        isContextMenuEnabled: true
+      });
 
       return this;
     },

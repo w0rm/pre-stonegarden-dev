@@ -21,7 +21,8 @@ define(["jquery"
 
     events: _.extend({
 
-      "dblclick": "openDocument"
+      "dblclick": "openDocument",
+      "click": "toggleSelected"
 
     }, mixins.hasContextMenu.events),
 
@@ -29,6 +30,8 @@ define(["jquery"
       this.model
         .on("document:delete", this.deleteDocument, this)
         .on("document:attributes", this.editAttributes, this)
+        .on("document:select document:unselect", this.changeSelected, this)
+        .on("document:unselect", this.unselectDocument, this)
         .on("destroy", this.remove, this)
         .on("change:title", this.render, this)
         .on("change:is_published", this.changePublished, this)
@@ -43,6 +46,14 @@ define(["jquery"
         .html(this.template({"document": this.model.toJSON()}));
       this.changePublished();
       return this;
+    },
+
+    toggleSelected: function() {
+      this.model.toggleSelected();
+    },
+
+    changeSelected: function() {
+      this.$el.toggleClass("sg-selected", this.model.isSelected);
     },
 
     changePublished: function() {
@@ -62,7 +73,6 @@ define(["jquery"
     openDocument: function() {
       this.model.trigger("document:open", this.model);
     }
-
 
   }));
 

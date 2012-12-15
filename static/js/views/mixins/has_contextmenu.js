@@ -16,16 +16,22 @@ define(["jquery"
       "mouseleave": "hideContextMenu"
     },
 
+    hasContextMenu: function(e) {
+      return this.model.hasContextMenu() && this.options.isContextMenuEnabled;
+    },
+
     showContextMenu: function(e) {
-      if (this.model.hasContextMenu()) {
+      if (this.hasContextMenu()) {
         e.stopPropagation()
-        this.$el.prepend(this.getContextMenu().render().el);
+        this.$el.prepend(
+          this.getContextMenu().render().el
+        );
         this.trigger("contextmenu:show");
       }
     },
 
     hideContextMenu: function() {
-      if (this.model.hasContextMenu()) {
+      if (this.hasContextMenu()) {
         this.getContextMenu().$el.detach();
         this.trigger("contextmenu:hide");
       }

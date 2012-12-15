@@ -16,8 +16,24 @@ define(["jquery"
     url: "/a/documents",
 
     initialize: function() {
-      this.on("add remove", this.updatePositions, this);
+      this
+        .on("add remove", this.updatePositions, this)
+        .on("document:select", this.unselectDocuments, this);
       this.ajaxQueue = $({});
+    },
+
+    unselectDocuments: function(selectedModel) {
+      this.each(function(model) {
+        if (selectedModel !== model) {
+          model.unselect();
+        }
+      })
+    },
+
+    getSelectedDocument: function() {
+      return this.find(function(model) {
+        return model.isSelected;
+      });
     },
 
     updatePositions: function(model, collection, options) {
@@ -32,7 +48,7 @@ define(["jquery"
 
       this.each(function(d, index) {
         if (d.get("type") === "folder") {
-          position = index + 2
+          position = index + 2;
         };
       });
 

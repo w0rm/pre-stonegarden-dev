@@ -69,6 +69,20 @@ define(["jquery"
       this.trigger("document:lowlight");
     },
 
+    select: function() {
+      this.isSelected = true;
+      this.trigger("document:select", this);
+    },
+
+    unselect: function() {
+      this.isSelected = false;
+      this.trigger("document:unselect", this);
+    },
+
+    toggleSelected: function() {
+      this.isSelected ? this.unselect() : this.select();
+    },
+
     delete: function() {
       this.trigger("document:delete");
     },
