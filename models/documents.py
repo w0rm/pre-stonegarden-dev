@@ -160,18 +160,25 @@ def get_document_by_filename(filename):
     )[0]
 
 
-def get_documents_by_parent_id(parent_id, type=None):
-    """Select and return documents from parent folder"""
-    #TODO: filter by type
-    return db.select("documents", locals(),
-                     where="parent_id = $parent_id AND NOT is_deleted",
+def get_documents_by_parent_id(parent_id, document_type=None):
+    """Select and return documents from parent folder
+       optionally filtered by @document_type"""
+    where = "parent_id = $parent_id AND NOT is_deleted"
+    if document_type == "folder":
+        where += " AND type == 'folder'"
+    elif document_type in ("image", "document"):
+        where += " AND type IN ('folder', '%s')" % document_type
+    return db.select("documents", locals(), where=where,
                      order="position ASC").list()
 
 
 def document_src(document):
     if document.type == "image":
         document.src = image_url(document, "t")
-        document.src_large = image_url(document, "l")
+        document.sizes = dict(
+            (size, image_url(document, size)) for size in ("s", "m", "l")
+        )
+
     elif document.type == "document":
         document.src = "/uploads/" + document.filename
     return document
@@ -227,7 +234,7 @@ def image_url(image, size):
         return asset_url("i/" + image.filename + "_" + size + image.extension,
                          version=False)
     except:
-        raise
+        pass
     return asset_url("img/broken_" + size + ".png")
 
 
