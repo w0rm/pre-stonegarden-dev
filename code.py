@@ -3,6 +3,11 @@
 This is the main executable file
 that runs application in development server or wsgi mode
 """
+# Add current directory to path
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from config import config
 from base import create_application
 
@@ -23,8 +28,4 @@ if __name__ == "__main__":
     if config.environment != "test":
         app.run()
 else:
-    # Add current directory to path
-    import os
-    import sys
-    sys.path.append(os.path.abspath(os.path.dirname(__file__)))
     application = app.wsgifunc()
