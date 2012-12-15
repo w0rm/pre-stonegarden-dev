@@ -22,10 +22,16 @@ def update_block_by_id(block_id, data):
         raise flash.error(
             _("Cannot edit or delete system blocks."))
 
-    data.update(
-        content_cached=smarty(sanitize(data.content)),
-        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
-    )
+    data.updated_at = web.SQLLiteral("CURRENT_TIMESTAMP")
+
+    # Cannot change type and template of block
+    del data["template"]
+    del data["type"]
+
+    if block.type == "wysiwyg":
+        data.content_cached = smarty(sanitize(data.content))
+    else:
+        data.content_cached = smarty(data.content)
 
     # Get column sizes from data
     sizes = data.pop("sizes")
@@ -59,9 +65,14 @@ def create_block(block):
         position=int(block.position),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
-        content_cached=smarty(sanitize(block.content)),
+
         is_published=True,
     )
+
+    if block.type == "wysiwyg":
+        block.content_cached = smarty(sanitize(block.content))
+    else:
+        block.content_cached = smarty(block.content)
 
     # TODO: wrap the code below in transaction
     if block.get("parent_id"):
