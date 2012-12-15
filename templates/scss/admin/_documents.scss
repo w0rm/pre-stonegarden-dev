@@ -5,11 +5,20 @@
   min-height: 180px * 3;
 }
 
-.sg-document-tiles {
+.sg-documents-scroller {
+  background-color: #f2f2f2;
+  padding: 10px;
+  max-height: 500px;
+  overflow: auto;
+  margin-bottom: 17px;
+}
 
+.sg-document-tiles {
   list-style: none;
+  margin: 0;
 
   .sg-document, .sg-document-loader, .sg-document-back {
+    @include user-select(none);
     display: inline-block;
     vertical-align: top;
     width: 190px;
@@ -19,7 +28,12 @@
   }
 
   .sg-document, .sg-document-back {
+
+    @include box-sizing(botder-box);
+    position: relative;
+
     &:hover {
+      z-index: 3;
       @include box-shadow;
       background: #fff;
       .sg-ico-folder {
@@ -29,6 +43,13 @@
         color: #fff;
       }
     };
+    &.sg-selected {
+      background: $bg-selected;
+      &:hover {
+        background: lighten($bg-selected, 2%)
+      };
+    }
+
     .sg-contextmenu-show {
       top: 125px;
       left: 25px;
@@ -105,6 +126,7 @@
   }
 
   .sg-document-title {
+    @include user-select(text);
     font-size: 12px;
     word-break: break-all
   }

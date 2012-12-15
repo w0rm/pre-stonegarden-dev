@@ -12,12 +12,12 @@ $grey40: darken(white, 40%);
 $grey60: darken(white, 60%);
 $grey80: darken(white, 80%);
 
-
-
 $bg-green: rgb(255, 255, 234);
 $bg-blue: rgb(239, 250, 255);
 $bg-grey: rgb(237, 237, 237);
 $bg-red: rgb(255, 229, 204);
+
+$bg-selected: $bg-blue;
 
 $default-box-shadow-h-offset: 2px;
 $default-box-shadow-v-offset: 2px;
@@ -46,3 +46,4 @@ $default-box-shadow-color: rgba(88, 88, 88, 0.6);
 
 
 @import "compass/css3";
+@import "compass/css3/user-interface";
