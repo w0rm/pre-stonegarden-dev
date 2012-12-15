@@ -21,15 +21,13 @@ define(["jquery"
     initialize: function() {
       this.attrs = this.options.attrs || {};
       this.folderId = 1; //TODO: change this setting;
-
       if (this.hasModel()) {
-        // TODO: ensure form doesnt work until we load this
-        this.image = new models.Document({
-          id: this.model.getImageAttributes().id
-        })
+        this.imageAttributes = this.model.getImageAttributes()
+        this.folderId = this.imageAttributes.parent_id;
+        //TODO: set this on document list load
+        this.image = new models.Document({id: this.imageAttributes.id});
         this.image.fetch();
       }
-
     },
 
     serializeObject: function() {
@@ -49,7 +47,7 @@ define(["jquery"
       return this.hasModel() ?
       {
         block: this.model.toJSON(),
-        image: this.model.getImageAttributes()
+        image: this.imageAttributes
       } :
       {
         block: {},
@@ -64,9 +62,10 @@ define(["jquery"
       this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
         filter: {type: "image"},
-        isContextmenuEnabled: true
+        isContextMenuEnabled: false
       })
         .on("document:select", this.selectDocument, this)
+        .on("document:unselect", this.unselectDocument, this);
 
       new models.Document({id: this.folderId})
         .on("change", function(model) {
@@ -81,6 +80,13 @@ define(["jquery"
     selectDocument: function(model) {
       this.image = model;
       this.$("[name=description]").val(model.get("title"));
+    },
+
+    unselectDocument: function(model) {
+      if (this.image === model) {
+        this.image = null;
+        this.$("[name=description]").val("");
+      }
     }
 
   });

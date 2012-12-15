@@ -34,7 +34,8 @@ define(["jquery"
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
         .on("document:open", this.openDocument, this)
-        .on("document:select", this.selectDocument, this);
+        .on("document:select", this.selectDocument, this)
+        .on("document:unselect", this.unselectDocument, this)
 
     },
 
@@ -44,6 +45,10 @@ define(["jquery"
       } else {
         model.unselect();
       }
+    },
+
+    unselectDocument: function(model) {
+      this.trigger("document:unselect", model);
     },
 
     render: function() {
