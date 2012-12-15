@@ -35,7 +35,7 @@ config = web.storage(
         "password_reset",
         "uploads",
     ],
-    user_roles=["admin", "editor", "user"],
+    user_roles=["admin"],  # "editor", "user"
     page_types=dict(
         # Page constructors
         page={
