@@ -20,7 +20,7 @@ define(['jquery'
 
       routes: {
         "": "folder",
-        "*folder_id": "folder"
+        ":folder_id": "folder"
       },
 
       initialize: function() {
