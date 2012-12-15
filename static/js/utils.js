@@ -53,7 +53,7 @@ define(["jquery"
         case "nav":
           return "Nav";
         default:
-          return "";
+          return attrs.type === "image" ? "Image" : "";
       }
     },
 
