@@ -174,7 +174,7 @@ def remove_columns(block, columns):
 
     for column in columns:
         orphans += get_blocks_by_parent_id(column.id)
-        delete_block_by_id(column.id)
+        delete_block_by_id(column.id, delete_system=True)
 
     # Shift positions of the blocks after orphans
     # Positions before:
@@ -204,13 +204,13 @@ def remove_columns(block, columns):
     return orphans
 
 
-def delete_block_by_id(block_id):
+def delete_block_by_id(block_id, delete_system=False):
     """Deletes block and returns deleted block."""
 
     block = get_block_by_id(block_id)
 
     # Cannot delete system blocks
-    if block.is_system:
+    if block.is_system and not delete_system:
         raise flash.error(
             _("Cannot edit or delete system blocks."))
 
