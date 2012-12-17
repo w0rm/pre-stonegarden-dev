@@ -335,7 +335,7 @@ config.sanitizer = tinymce_sanitizer(config.sanitizer)
 # Set directories
 config.rootdir = os.path.abspath(os.path.dirname(__file__))
 config.update(
-    static_dir=config.rootdir + "/static",
+    static_dir=config.get("static_dir" or (config.rootdir + "/static")),
     upload_dir=config.rootdir + "/upload",
     template_dir=config.rootdir + "/templates/html",
     locale_dir=config.rootdir + "/i18n",
