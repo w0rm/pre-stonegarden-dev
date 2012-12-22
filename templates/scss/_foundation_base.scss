@@ -13,3 +13,38 @@ ul, ol {
 .exposed {
   color: hsl(0, 0, 40%);
 }
+
+
+table {
+  min-width: 100%;
+  border-collapse: collapse;
+  p {
+    margin-bottom: 0;
+  }
+
+  thead {
+    background: transparent;
+    tr {
+      td, th {
+        @extend .exposed;
+        vertical-align: bottom;
+        border-bottom: 1px solid $grey40;
+      }
+    }
+    border-bottom: 2px solid $grey60;
+  }
+
+  tbody {
+    tr {
+      td, th {
+        border-bottom: 1px solid $grey40;
+      }
+    }
+    tr:nth-child(even) {
+      background: transparent;
+    }
+  }
+
+  border: 0;
+  border-bottom: 2px solid $grey60;
+}
