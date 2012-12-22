@@ -21,4 +21,8 @@ require.config({
   }
 });
 
-require(["blocks", "documents"]);
+require(["jquery", "plugins/jquery.responsive"], function($) {
+  $(function() {
+    $(".responsive").responsiveImage()
+  });
+});

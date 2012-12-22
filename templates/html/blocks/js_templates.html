@@ -117,6 +117,13 @@
             </label>
         </p>
         <p>
+            <label>
+                <input name="is_responsive"
+                       <%= image.is_responsive && "checked" || "" %>
+                       type="checkbox" >$_("Make responsive")
+            </label>
+        </p>
+        <p>
             <button class="button" type="submit">$_("Save")</button>
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
@@ -127,8 +134,19 @@
             data-parent_id="<%= image.parent_id %>"
             data-description="<%= image.description %>"
             data-show_description="<%= image.show_description %>"
+            data-is_responsive="<%= image.is_responsive %>"
     >
-        <img src="<%= image.sizes.l %>" alt="<%= image.description %>">
+        <% if (image.is_responsive) { %>
+            <img class="responsive"
+                 src="<%= image.sizes.s %>"
+                 data-m_src="<%= image.sizes.m %>"
+                 data-l_src="<%= image.sizes.l %>"
+                 alt="<%= image.description %>">
+        <% } else { %>
+            <img src="<%= image.sizes.l %>"
+                 alt="<%= image.description %>">
+        <% } %>
+
         <% if (image.show_description) { %>
             <figcaption><%= image.description %></figcaption>
         <% } %>

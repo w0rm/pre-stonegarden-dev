@@ -7,19 +7,23 @@ $def with (page=None)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="$page.get("meta_description")">
     <meta name="keywords" content="$page.get("meta_keywords")">
-    <link rel="shortcut icon" href="$asset_url("img/favicon.ico")" type="image/x-icon">
+    <link rel="shortcut icon" href="$asset_url("img/favicon.ico")"
+          type="image/x-icon">
     <link rel="stylesheet" href="$asset_url("css/style.css")">
     $if config.environment == "development":
         <script>var environment = "$config.environment";</script>
     $if auth.get_user():
         <link rel="stylesheet" href="$asset_url("css/admin.css")">
-        <script data-main="$asset_url("js/main.js", False)"
+        <script data-main="$asset_url("js/admin_main.js", False)"
                 src="$asset_url("vendor/js/require-2.1.1.js")"></script>
         $#TODO: conditional load of required templates
         $:render.site.js_templates()
         $:render.blocks.js_templates()
         $:render.documents.js_templates()
         $:render.pages.js_templates()
+    $else:
+        <script data-main="$asset_url("js/public_main.js", False)"
+                src="$asset_url("vendor/js/require-2.1.1.js")"></script>
     <style>$:page.get("css_code")</style>
 </head>
 <body class="$page.get("class")">
@@ -27,8 +31,6 @@ $def with (page=None)
         $:render.site.topbar(page)
     $:flash.render()
     $:page
-    $if not auth.get_user():
-        <script src="$asset_url("js/public.js")"></script>
     <script>
         $:page.get("js_code", None)
     </script>
