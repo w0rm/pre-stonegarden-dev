@@ -1,0 +1,24 @@
+
+.catalog-categories, .catalog-subcategories {
+  margin-left: 0;
+  list-style-type: none;
+}
+
+.catalog-products {
+  margin-bottom: 34px;
+  list-style-type: disc;
+}
+
+.catalog-subcategories-nav > ul {
+  margin-left: 0;
+  margin-bottom: 17px;
+  > li {
+    display: inline;
+    &:before {
+      content: " • "
+    };
+    &:first-child:before {
+      display: none
+    }
+  }
+}

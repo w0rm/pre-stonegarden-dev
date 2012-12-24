@@ -1,0 +1,12 @@
+.nav-breadcrumbs ul {
+  margin: 0;
+  > li {
+    display: inline;
+    &:before {
+      content: " → "
+    };
+    &:first-child:before {
+      display: none
+    }
+  }
+}

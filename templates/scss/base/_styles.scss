@@ -1,19 +1,8 @@
-
-// TODO: configure foundation;
 @import "foundation";
 
 ul, ol {
   margin-left: 20px;
 }
-
-.small {
-  font-size: 80%;
-}
-
-.exposed {
-  color: hsl(0, 0, 40%);
-}
-
 
 table {
   min-width: 100%;
@@ -57,4 +46,22 @@ table {
   }
 
   border: 0;
+}
+
+header, footer {
+  padding-top: 20px;
+  background: #eee;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+footer {
+  margin-top: 20px;
+}
+
+nav ul {
+  margin-left: 0;
+  list-style-type: none;
 }

@@ -5,8 +5,8 @@
 
 .block {
   // Prevent collapsing margins
-  padding-top: 1px;
-  padding-bottom: 1px;
+  @extend %cf;
+
   // Allow context menu positioning
   position: relative;
   // Set min height

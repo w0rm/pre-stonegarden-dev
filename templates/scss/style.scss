@@ -1,65 +1,9 @@
+
 @import "config";
-@import "foundation_base";
+@import "base/helpers";
+@import "base/styles";
 
-
-header, footer {
-  padding-top: 20px;
-  background: #eee;
-}
-
-header {
-  margin-bottom: 20px;
-}
-
-footer {
-  margin-top: 20px;
-}
-
-nav ul {
-  margin-left: 0;
-  list-style-type: none;
-}
-
-.catalog-categories, .catalog-subcategories {
-  margin-left: 0;
-  list-style-type: none;
-}
-
-.catalog-products {
-  margin-bottom: 34px;
-  list-style-type: disc;
-}
-
-.catalog-subcategories-nav > ul {
-  margin-left: 0;
-  margin-bottom: 17px;
-  > li {
-    display: inline;
-    &:before {
-      content: " • "
-    };
-    &:first-child:before {
-      display: none
-    }
-  }
-}
-
-.nav-breadcrumbs ul {
-  margin: 0;
-  > li {
-    display: inline;
-    &:before {
-      content: " → "
-    };
-    &:first-child:before {
-      display: none
-    }
-  }
-}
-
-.responsive {
-  width: 100%;
-}
-
-
-
+@import "modules/breadcrumbs";
+@import "modules/image";
+@import "modules/catalog";
+@import "modules/wysiwyg";
