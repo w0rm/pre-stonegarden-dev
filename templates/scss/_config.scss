@@ -25,25 +25,5 @@ $default-box-shadow-blur: 9px;
 $default-box-shadow-spread: false;
 $default-box-shadow-color: rgba(88, 88, 88, 0.6);
 
-/**
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    contenteditable attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that are clearfixed.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-%cf:before,
-%cf:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
-
-%cf:after {
-    clear: both;
-}
-
-
 @import "compass/css3";
 @import "compass/css3/user-interface";
