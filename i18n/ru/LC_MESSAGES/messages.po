@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2012-12-10 12:53+0400\n"
+"POT-Creation-Date: 2012-12-24 01:30+0400\n"
 "PO-Revision-Date: 2012-09-17 14:38+0400\n"
 "Last-Translator: Andrey Kuzmin <unsoundscapes@gmail.com>\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -35,16 +35,16 @@ msgid "Page"
 msgstr "Страница"
 
 #: stonegarden/config.py:155
-#: stonegarden/templates/html/blocks/js_templates.html:44
+#: stonegarden/templates/html/blocks/js_templates.html:46
 msgid "HTML code"
 msgstr "HTML код"
 
 #: stonegarden/config.py:156
 msgid "Rich text"
-msgstr "Форматный текст"
+msgstr "Текст с форматированием"
 
 #: stonegarden/config.py:158
-#: stonegarden/templates/html/blocks/js_templates.html:40
+#: stonegarden/templates/html/blocks/js_templates.html:42
 msgid "Navigation"
 msgstr "Навигация"
 
@@ -90,7 +90,7 @@ msgstr "Большой"
 
 #: stonegarden/template.py:112
 msgid "kb"
-msgstr ""
+msgstr "кб"
 
 #: stonegarden/template.py:117
 msgid "Images"
@@ -116,7 +116,7 @@ msgstr "Файлы"
 msgid "We've sent you the link to reset your password. Please check your email."
 msgstr ""
 "Мы отправили вам письмо со ссылкой для сброса пароля. Пожалуйста, "
-"проверьте свою почту."
+"проверьте почту."
 
 #: stonegarden/controllers/auth.py:17
 #, fuzzy
@@ -124,8 +124,8 @@ msgid ""
 "It seems that the link is outdated or incorect. You may create another "
 "one <a href='/password_reset'>here</a>."
 msgstr ""
-"Похоже ссылка, по которой вы перешли просроченная или неправильная. Вы "
-"можете создать ещё  одну <a href=\"/password_reset\">здесь</a>."
+"Похоже ссылка, по которой вы перешли просроченная или "
+"неправильная.Создайте <a href=\"/password_reset\">ещё одну</a>."
 
 #: stonegarden/controllers/auth.py:20
 msgid "Password was changed. You've been automatically logged in."
@@ -141,7 +141,7 @@ msgstr ""
 
 #: stonegarden/controllers/auth.py:23
 msgid "Your account has been blocked."
-msgstr ""
+msgstr "Ваш аккаунт заморожен"
 
 #: stonegarden/controllers/auth.py:26 stonegarden/controllers/auth.py:34
 #: stonegarden/controllers/users.py:24
@@ -162,7 +162,7 @@ msgstr "Повторите"
 
 #: stonegarden/controllers/blocks.py:28
 msgid "Sizes should be positive integers and  sum should equal 12"
-msgstr ""
+msgstr "Сумма колонок должна быть равна 12"
 
 #: stonegarden/controllers/pages.py:20
 msgid "Page access forbidden."
@@ -191,7 +191,7 @@ msgstr "Удаление пользователя: %s."
 #: stonegarden/controllers/users.py:18
 #, fuzzy
 msgid "User was restored."
-msgstr "Пользователь был восстановлен."
+msgstr "Пользователь восстановлен."
 
 #: stonegarden/controllers/users.py:19
 #, python-format
@@ -215,7 +215,7 @@ msgstr "Роль"
 msgid "Is active"
 msgstr "Активен"
 
-#: stonegarden/models/blocks.py:23 stonegarden/models/blocks.py:204
+#: stonegarden/models/blocks.py:23 stonegarden/models/blocks.py:215
 #, fuzzy
 msgid "Cannot edit or delete system blocks."
 msgstr "Невозможно изменить или удалить системные файл и каталог."
@@ -234,7 +234,7 @@ msgstr "Ошибка загрузки файла!"
 msgid "Cannot edit or delete system files and folders."
 msgstr "Невозможно изменить или удалить системные файл и каталог."
 
-#: stonegarden/models/documents.py:194
+#: stonegarden/models/documents.py:201
 msgid "Cannot download this document"
 msgstr "Невозможно скачать этот документ"
 
@@ -245,7 +245,7 @@ msgstr "Невозможно удалить главную страницу."
 
 #: stonegarden/modules/dbauth.py:46
 msgid "You don’t have permission to access this page."
-msgstr ""
+msgstr "Вам не добраться до этой страницы. Мало полномочий."
 
 #: stonegarden/modules/dbauth.py:47
 #, fuzzy
@@ -254,31 +254,31 @@ msgstr "Пользователя с таким адресом не сущест�
 
 #: stonegarden/modules/form.py:99 stonegarden/modules/form.py:172
 msgid "placeholder"
-msgstr ""
+msgstr "заполнитель"
 
 #: stonegarden/modules/form.py:266
 msgid "Cannot be empty."
-msgstr ""
+msgstr "Необходимо заполнить"
 
 #: stonegarden/modules/form.py:268
 msgid "From 6 to 180 characters"
-msgstr ""
+msgstr "О 6 до 180 символов"
 
 #: stonegarden/modules/form.py:272
 msgid "Password and confirmation do not match."
-msgstr ""
+msgstr "Пароли должны совпадать."
 
 #: stonegarden/modules/form.py:277
 msgid "Incorrect email."
-msgstr ""
+msgstr "Неправедный адрес эл. почты."
 
 #: stonegarden/modules/form.py:281
 msgid "Incorrect price value."
-msgstr ""
+msgstr "Неправедная цена"
 
 #: stonegarden/modules/form.py:286
 msgid "Incorrect date value."
-msgstr ""
+msgstr "Неправедная дата"
 
 #: stonegarden/templates/html/auth/login.html:9
 msgid "Login"
@@ -299,9 +299,10 @@ msgstr "Сброс пароля"
 
 #: stonegarden/templates/html/auth/reset_change.html:16
 #: stonegarden/templates/html/blocks/js_templates.html:15
-#: stonegarden/templates/html/blocks/js_templates.html:55
-#: stonegarden/templates/html/blocks/js_templates.html:74
-#: stonegarden/templates/html/blocks/js_templates.html:102
+#: stonegarden/templates/html/blocks/js_templates.html:57
+#: stonegarden/templates/html/blocks/js_templates.html:76
+#: stonegarden/templates/html/blocks/js_templates.html:104
+#: stonegarden/templates/html/blocks/js_templates.html:132
 #: stonegarden/templates/html/documents/js_templates.html:58
 #: stonegarden/templates/html/documents/js_templates.html:74
 #: stonegarden/templates/html/pages/js_templates.html:34
@@ -309,7 +310,7 @@ msgstr "Сброс пароля"
 #: stonegarden/templates/html/pages/js_templates.html:77
 #: stonegarden/templates/html/pages/js_templates.html:104
 #: stonegarden/templates/html/users/form.html:16
-#: stonegarden/templates/html/users/list.html:11
+#: stonegarden/templates/html/users/list.html:15
 msgid "Save"
 msgstr "Сохранить"
 
@@ -323,11 +324,11 @@ msgstr "Отправить"
 
 #: stonegarden/templates/html/blocks/categories.html:33
 msgid "Catalog is empty."
-msgstr ""
+msgstr "Каталог пуст"
 
 #: stonegarden/templates/html/blocks/js_templates.html:8
 msgid "CSS class"
-msgstr "CSS class"
+msgstr "Класс"
 
 #: stonegarden/templates/html/blocks/js_templates.html:11
 #: stonegarden/templates/html/documents/js_templates.html:70
@@ -339,9 +340,10 @@ msgid "Show on site"
 msgstr "Показывать на сайте"
 
 #: stonegarden/templates/html/blocks/js_templates.html:16
-#: stonegarden/templates/html/blocks/js_templates.html:56
-#: stonegarden/templates/html/blocks/js_templates.html:75
-#: stonegarden/templates/html/blocks/js_templates.html:103
+#: stonegarden/templates/html/blocks/js_templates.html:58
+#: stonegarden/templates/html/blocks/js_templates.html:77
+#: stonegarden/templates/html/blocks/js_templates.html:105
+#: stonegarden/templates/html/blocks/js_templates.html:133
 #: stonegarden/templates/html/documents/js_templates.html:59
 #: stonegarden/templates/html/documents/js_templates.html:75
 #: stonegarden/templates/html/pages/js_templates.html:35
@@ -366,22 +368,38 @@ msgid ""
 "website until you edit them."
 msgstr "Не беспокойтесь, на сайте такие пустые блоки не показываются."
 
-#: stonegarden/templates/html/blocks/js_templates.html:62
+#: stonegarden/templates/html/blocks/js_templates.html:64
 msgid "Select navigation type"
-msgstr ""
+msgstr "Вставить навигацию"
 
-#: stonegarden/templates/html/blocks/js_templates.html:81
+#: stonegarden/templates/html/blocks/js_templates.html:83
 #, fuzzy
 msgid "Insert columns"
-msgstr "Главная колонка"
+msgstr "Вставить многоколонник"
 
-#: stonegarden/templates/html/blocks/js_templates.html:88
+#: stonegarden/templates/html/blocks/js_templates.html:90
 msgid "Columns"
 msgstr "Колонки"
 
+#: stonegarden/templates/html/blocks/js_templates.html:114
+#: stonegarden/templates/html/documents/js_templates.html:54
+#: stonegarden/templates/html/documents/js_templates.html:67
+#: stonegarden/templates/html/pages/js_templates.html:70
+msgid "Description"
+msgstr "Подпись"
+
+#: stonegarden/templates/html/blocks/js_templates.html:121
+#, fuzzy
+msgid "Show description"
+msgstr "Показать подпись"
+
+#: stonegarden/templates/html/blocks/js_templates.html:128
+msgid "Make responsive"
+msgstr "Подстраиваться под обстоятельства"
+
 #: stonegarden/templates/html/documents/js_templates.html:13
 msgid "Upload files"
-msgstr ""
+msgstr "Загрузить файлы"
 
 #: stonegarden/templates/html/documents/js_templates.html:19
 msgid "Create folder"
@@ -396,12 +414,6 @@ msgstr "Создать каталог"
 msgid "Title"
 msgstr "Название"
 
-#: stonegarden/templates/html/documents/js_templates.html:54
-#: stonegarden/templates/html/documents/js_templates.html:67
-#: stonegarden/templates/html/pages/js_templates.html:70
-msgid "Description"
-msgstr "Описание"
-
 #: stonegarden/templates/html/pages/js_templates.html:15
 #: stonegarden/templates/html/pages/js_templates.html:58
 #: stonegarden/templates/html/pages/js_templates.html:87
@@ -412,7 +424,7 @@ msgstr "Родитель"
 #: stonegarden/templates/html/pages/js_templates.html:67
 #: stonegarden/templates/html/pages/js_templates.html:96
 msgid "Slug"
-msgstr ""
+msgstr "Часть адреса"
 
 #: stonegarden/templates/html/pages/js_templates.html:30
 msgid "Show in navigation"
@@ -429,7 +441,7 @@ msgstr "Удалить"
 
 #: stonegarden/templates/html/site/topbar.html:12
 msgid "Stonegarden"
-msgstr ""
+msgstr "СадКамней"
 
 #: stonegarden/templates/html/site/topbar.html:23
 #, fuzzy
@@ -457,12 +469,12 @@ msgstr "Создать пользователя"
 #: stonegarden/templates/html/site/topbar.html:45
 #, fuzzy
 msgid "My account"
-msgstr "Все пользователи"
+msgstr "Мой аккаунт"
 
 #: stonegarden/templates/html/site/topbar.html:49
 #, fuzzy
 msgid "Exit"
-msgstr "Текст"
+msgstr "Выход"
 
 #: stonegarden/templates/html/users/form.html:9
 msgid "Edit user"
