@@ -43,8 +43,18 @@ table {
     tr:nth-child(even) {
       background: transparent;
     }
+    border-bottom: 2px solid $grey60;
+
+  }
+
+  tfoot {
+    background: transparent;
+    tr {
+      td, th {
+        @extend .exposed;
+      }
+    }
   }
 
   border: 0;
-  border-bottom: 2px solid $grey60;
 }
