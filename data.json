@@ -127,8 +127,36 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "index_footer",
+			"template": "column",
+			"size": 12,
+	        "is_system": true,
+			"blocks": [
+				{
+					"template": "row",
+					"blocks": [
+						{
+							"template": "column",
+							"size": 8,
+							"is_system": true
+						},
+						{
+							"template": "column",
+							"size": 4,
+							"is_system": true,
+							"blocks": [{
+								"template": "content",
+								"type": "wysiwyg",
+								"content": "<p>© Site Authors</p>",
+								"content_cached": "<p>© Site Authors</p>"
+							}]
+						}
+					]
+				}
+			]
 		}
-
 	],
 
 	"documents_root": {

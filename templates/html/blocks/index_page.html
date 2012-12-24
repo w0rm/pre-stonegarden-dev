@@ -1,0 +1,16 @@
+$def with(block)
+<header>
+    <div class="row">
+        $:render_template_block("global_header")
+    </div>
+</header>
+<section class="row">
+    <div class="twelve columns">
+       $:render_blocks(block.get("blocks"))
+    </div>
+</section>
+<footer>
+    <div class="row">
+        $:render_template_block("index_footer")
+    </div>
+</footer>
