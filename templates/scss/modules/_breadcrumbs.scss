@@ -10,3 +10,9 @@
     }
   }
 }
+
+.nav-breadcrumbs_trimmed ul {
+  > li.active {
+    @extend %image-replacement;
+  }
+}
