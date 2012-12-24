@@ -28,11 +28,11 @@ define(["jquery"
     // State information
 
     isContainer: function() {
-      return _.contains(["page", "column"], this.get("template"));
+      return false;
     },
 
     hasBlocks: function() {
-      return _.contains(["page", "column", "row"], this.get("template"));
+      return false;
     },
 
     isSystem: function() {
@@ -129,7 +129,16 @@ define(["jquery"
 
     getContextMenu: function() {
       return false
+    },
+
+    hasBlocks: function() {
+      return true
+    },
+
+    isContainer: function() {
+      return true
     }
+
   });
 
   models.RowBlock = models.Block.extend({
@@ -163,6 +172,10 @@ define(["jquery"
       // Replace row's columns
       models.Block.prototype.updateBlocks.apply(this, arguments);
 
+    },
+
+    hasBlocks: function() {
+      return true
     }
 
   });
@@ -187,6 +200,14 @@ define(["jquery"
       if (this.hasParent()) {
         return this.parentBlock.getContextMenu()
       }
+    },
+
+    hasBlocks: function() {
+      return true
+    },
+
+    isContainer: function() {
+      return true
     }
 
   });
