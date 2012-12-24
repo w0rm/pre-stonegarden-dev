@@ -119,7 +119,6 @@ msgstr ""
 "проверьте почту."
 
 #: stonegarden/controllers/auth.py:17
-#, fuzzy
 msgid ""
 "It seems that the link is outdated or incorect. You may create another "
 "one <a href='/password_reset'>here</a>."
@@ -262,7 +261,7 @@ msgstr "Необходимо заполнить"
 
 #: stonegarden/modules/form.py:268
 msgid "From 6 to 180 characters"
-msgstr "О 6 до 180 символов"
+msgstr "От 6 до 180 символов"
 
 #: stonegarden/modules/form.py:272
 msgid "Password and confirmation do not match."
@@ -455,7 +454,7 @@ msgstr "СадКамней"
 #: stonegarden/templates/html/site/topbar.html:23
 #, fuzzy
 msgid "Pages"
-msgstr "Изображения"
+msgstr "Страницы"
 
 #: stonegarden/templates/html/site/topbar.html:27
 #: stonegarden/static/js/models/pages/page.js:110
@@ -503,123 +502,122 @@ msgstr "Последнее посещение"
 
 #: stonegarden/static/js/models/blocks/block.js:48
 msgid "Delete this block?"
-msgstr ""
+msgstr "Удалить блок?"
 
 #: stonegarden/static/js/models/blocks/block.js:49
 msgid "It will also delete all the nested blocks."
-msgstr ""
+msgstr "Также будут удалены все блоки внутри."
 
 #: stonegarden/static/js/models/blocks/block.js:64
-#, fuzzy
 msgid "Edit"
-msgstr "Средний"
+msgstr "Редактировать"
 
 #: stonegarden/static/js/models/blocks/block.js:70
 #: stonegarden/static/js/models/documents/document.js:38
 msgid "Attributes"
-msgstr ""
+msgstr "Свойства"
 
 #: stonegarden/static/js/models/documents/document.js:22
 msgid "Delete this file or folder?"
-msgstr ""
+msgstr "Удалить?"
 
 #: stonegarden/static/js/models/documents/document.js:23
 msgid "It will also delete all the nested files."
-msgstr ""
+msgstr "Также будут удалены все связанные файлы внутри."
 
 #: stonegarden/static/js/models/documents/document.js:52
 msgid "Download"
-msgstr ""
+msgstr "Скачать"
 
 #: stonegarden/static/js/models/pages/page.js:78
 msgid "Exit edit mode"
-msgstr ""
+msgstr "Выход из режима редактирования"
 
 #: stonegarden/static/js/models/pages/page.js:85
 msgid "Enter edit mode"
-msgstr ""
+msgstr "Режим редактирования"
 
 #: stonegarden/static/js/models/pages/page.js:96
 msgid "Page attributes"
-msgstr ""
+msgstr "Свойства страницы"
 
 #: stonegarden/static/js/models/pages/page.js:101
 #: stonegarden/static/js/models/pages/page.js:186
 msgid "Style and scripts"
-msgstr ""
+msgstr "Скрипты и стили"
 
 #: stonegarden/static/js/models/pages/page.js:116
 msgid "Delete this page"
-msgstr ""
+msgstr "Удалить страницу"
 
 #: stonegarden/static/js/models/pages/page.js:173
 msgid "Delete this page?"
-msgstr ""
+msgstr "Удалить эту страницу?"
 
 #: stonegarden/static/js/models/pages/page.js:174
 msgid "Are you sure to delete this page and its subpages?"
-msgstr ""
+msgstr "Вы уверены, что хотите удалить эту страницу и все подстраницы?"
 
 #: stonegarden/static/js/models/pages/page.js:193
-#, fuzzy
 msgid "Create category"
-msgstr "Создать пользователя"
+msgstr "Создать группу"
 
 #: stonegarden/static/js/models/pages/page.js:197
 msgid "Create product"
-msgstr ""
+msgstr "Создать товар"
 
 #: stonegarden/static/js/models/pages/page.js:208
 msgid "Catalog attributes"
-msgstr ""
+msgstr "Свойства каталога"
 
 #: stonegarden/static/js/models/pages/page.js:216
 msgid "Catalog"
-msgstr ""
+msgstr "Каталог"
 
 #: stonegarden/static/js/models/pages/page.js:246
 msgid "Category attributes"
-msgstr ""
+msgstr "Свойства группы"
 
 #: stonegarden/static/js/models/pages/page.js:251
 msgid "Delete this category"
-msgstr ""
+msgstr "Удалить группу"
 
 #: stonegarden/static/js/models/pages/page.js:259
 msgid "Category"
-msgstr ""
+msgstr "Группа"
 
 #: stonegarden/static/js/models/pages/page.js:267
 msgid "Delete this category?"
-msgstr ""
+msgstr "Удалить группу?"
 
 #: stonegarden/static/js/models/pages/page.js:268
 msgid "Are you sure to delete this category and its contents?"
-msgstr ""
+msgstr "Удалить группу со всеми товарами?"
 
 #: stonegarden/static/js/models/pages/page.js:282
 msgid "Product attributes"
-msgstr ""
+msgstr "Свойства товара"
+
 
 #: stonegarden/static/js/models/pages/page.js:287
 msgid "Delete this product"
-msgstr ""
+msgstr "Удалить товар"
 
 #: stonegarden/static/js/models/pages/page.js:296
 msgid "Product"
-msgstr ""
+msgstr "Товар"
 
 #: stonegarden/static/js/models/pages/page.js:304
 msgid "Delete this product?"
-msgstr ""
+msgstr "Удалить товар?"
 
 #: stonegarden/static/js/models/pages/page.js:305
 msgid "Are you sure to delete this product?"
-msgstr ""
+msgstr "Хотите удалить этот товар?"
 
 #: stonegarden/static/js/views/blocks/form.js:34
 #: stonegarden/static/js/views/documents/form.js:34
 #: stonegarden/static/js/views/pages/code_form.js:33
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
