@@ -44,6 +44,12 @@ config = web.storage(
                 "is_system": True
             }
         },
+        index_page={
+            "block": {
+                "template": "index_page",
+                "is_system": True
+            }
+        },
         catalog={
             "block": {
                 "template": "page",
@@ -84,6 +90,7 @@ config = web.storage(
                     {
                         "template": "nav",
                         "type": "breadcrumbs",
+                        "css_class": "nav-breadcrumbs_trimmed",
                         "is_system": True
                     },
                     {
@@ -125,6 +132,7 @@ config = web.storage(
                     {
                         "template": "nav",
                         "type": "breadcrumbs",
+                        "css_class": "nav-breadcrumbs_trimmed",
                         "is_system": True
                     },
                     {
