@@ -46,6 +46,8 @@ define(["jquery"
       switch (attrs.template) {
         case "page":
           return "Page";
+        case "index_page":
+          return "Page";
         case "column":
           return "Column";
         case "row":

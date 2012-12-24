@@ -292,11 +292,12 @@ def template_blocks_to_json():
     """Renders template blocks"""
     return json.dumps(
         build_template_blocks_tree(with_render=True),
-        default=dthandler, sort_keys=True, indent=2)
+        default=dthandler, sort_keys=True, indent=2).replace('</', '<\/')
 
 
 def block_to_json(block):
     """Renders block in JSON format."""
     page_blocks = get_page_blocks_by_page_id(block.page_id)
     build_block_tree(block, page_blocks, with_render=True)
-    return json.dumps(block, default=dthandler, sort_keys=True, indent=2)
+    return json.dumps(block, default=dthandler,
+                      sort_keys=True, indent=2).replace('</', '<\/')
