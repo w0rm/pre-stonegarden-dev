@@ -23,7 +23,7 @@ define(["jquery"
     showContextMenu: function(e) {
       if (this.hasContextMenu()) {
         e.stopPropagation()
-        this.$el.prepend(
+        this.$el.append(
           this.getContextMenu().render().el
         );
         this.trigger("contextmenu:show");
