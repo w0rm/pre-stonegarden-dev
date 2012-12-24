@@ -14,7 +14,7 @@
 	        "title": "Index page",
 	        "name": "Index page",
         	"is_system": true,
-        	"type": "page",
+        	"type": "index_page",
 	        "block": {
 	        	"template": "page",
 	        	"is_system": true
