@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2012-12-24 01:30+0400\n"
+"POT-Creation-Date: 2012-12-24 21:06+0400\n"
 "PO-Revision-Date: 2012-09-17 14:38+0400\n"
 "Last-Translator: Andrey Kuzmin <unsoundscapes@gmail.com>\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Редактор"
 msgid "User"
 msgstr "Пользователь"
 
-#: stonegarden/config.py:153
+#: stonegarden/config.py:153 stonegarden/static/js/models/pages/page.js:125
 msgid "Page"
 msgstr "Страница"
 
@@ -311,6 +311,11 @@ msgstr "Сброс пароля"
 #: stonegarden/templates/html/pages/js_templates.html:104
 #: stonegarden/templates/html/users/form.html:16
 #: stonegarden/templates/html/users/list.html:15
+#: stonegarden/static/js/views/blocks/attributes.js:33
+#: stonegarden/static/js/views/blocks/form.js:30
+#: stonegarden/static/js/views/documents/attributes.js:27
+#: stonegarden/static/js/views/documents/form.js:30
+#: stonegarden/static/js/views/pages/code_form.js:29
 msgid "Save"
 msgstr "Сохранить"
 
@@ -417,6 +422,7 @@ msgstr "Название"
 #: stonegarden/templates/html/pages/js_templates.html:15
 #: stonegarden/templates/html/pages/js_templates.html:58
 #: stonegarden/templates/html/pages/js_templates.html:87
+#: stonegarden/static/js/models/blocks/block.js:87
 msgid "Parent"
 msgstr "Родитель"
 
@@ -432,10 +438,13 @@ msgstr "Показывать в навигации"
 
 #: stonegarden/templates/html/pages/sitemap.html:27
 #: stonegarden/templates/html/site/topbar.html:25
+#: stonegarden/static/js/models/pages/page.js:137
 msgid "Site map"
 msgstr "Карта сайта"
 
 #: stonegarden/templates/html/site/js_templates.html:14
+#: stonegarden/static/js/models/blocks/block.js:77
+#: stonegarden/static/js/models/documents/document.js:45
 msgid "Delete"
 msgstr "Удалить"
 
@@ -449,16 +458,19 @@ msgid "Pages"
 msgstr "Изображения"
 
 #: stonegarden/templates/html/site/topbar.html:27
+#: stonegarden/static/js/models/pages/page.js:110
 msgid "Create page"
 msgstr "Создать страницу"
 
 #: stonegarden/templates/html/site/topbar.html:31
+#: stonegarden/static/js/models/pages/page.js:141
 msgid "Storage"
 msgstr "Склад"
 
 #: stonegarden/templates/html/site/topbar.html:34
 #: stonegarden/templates/html/site/topbar.html:36
 #: stonegarden/templates/html/users/p_list.html:7
+#: stonegarden/static/js/models/pages/page.js:145
 msgid "Users"
 msgstr "Пользователи"
 
@@ -472,6 +484,7 @@ msgid "My account"
 msgstr "Мой аккаунт"
 
 #: stonegarden/templates/html/site/topbar.html:49
+#: stonegarden/static/js/models/pages/page.js:152
 #, fuzzy
 msgid "Exit"
 msgstr "Выход"
@@ -487,4 +500,126 @@ msgstr "Новый пользователь"
 #: stonegarden/templates/html/users/p_list.html:16
 msgid "Last visit"
 msgstr "Последнее посещение"
+
+#: stonegarden/static/js/models/blocks/block.js:48
+msgid "Delete this block?"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:49
+msgid "It will also delete all the nested blocks."
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:64
+#, fuzzy
+msgid "Edit"
+msgstr "Средний"
+
+#: stonegarden/static/js/models/blocks/block.js:70
+#: stonegarden/static/js/models/documents/document.js:38
+msgid "Attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:22
+msgid "Delete this file or folder?"
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:23
+msgid "It will also delete all the nested files."
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:52
+msgid "Download"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:78
+msgid "Exit edit mode"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:85
+msgid "Enter edit mode"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:96
+msgid "Page attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:101
+#: stonegarden/static/js/models/pages/page.js:186
+msgid "Style and scripts"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:116
+msgid "Delete this page"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:173
+msgid "Delete this page?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:174
+msgid "Are you sure to delete this page and its subpages?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:193
+#, fuzzy
+msgid "Create category"
+msgstr "Создать пользователя"
+
+#: stonegarden/static/js/models/pages/page.js:197
+msgid "Create product"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:208
+msgid "Catalog attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:216
+msgid "Catalog"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:246
+msgid "Category attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:251
+msgid "Delete this category"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:259
+msgid "Category"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:267
+msgid "Delete this category?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:268
+msgid "Are you sure to delete this category and its contents?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:282
+msgid "Product attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:287
+msgid "Delete this product"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:296
+msgid "Product"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:304
+msgid "Delete this product?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:305
+msgid "Are you sure to delete this product?"
+msgstr ""
+
+#: stonegarden/static/js/views/blocks/form.js:34
+#: stonegarden/static/js/views/documents/form.js:34
+#: stonegarden/static/js/views/pages/code_form.js:33
+msgid "Add"
+msgstr ""
 
