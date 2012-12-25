@@ -73,7 +73,7 @@ def asset_url(filename="", version=True):
         if config.static_url:
             return_url = "http://" + config.static_url
         else:
-            return_url = web.ctx.home + "/static"
+            return_url = "/static"  # web.ctx.home + "/static"
         if filename:
             return_url += "/" + filename
             if version:
