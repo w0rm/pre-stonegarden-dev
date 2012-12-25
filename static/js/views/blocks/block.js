@@ -25,6 +25,7 @@ define(["jquery"
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("block:attributes", this.editAttributes, this)
+        .on("block:copy", this.hideContextMenu, this)
         .on("destroy", this.remove, this)
         .on("change", this.updateBlock, this);
     },

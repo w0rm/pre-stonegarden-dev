@@ -24,12 +24,14 @@ define(["jquery"
 
     initialize: function() {
       this.inserter = (new views.BlockInserter)
-        .on("block:create", this.createBlock, this);
+        .on("block:create", this.createBlock, this)
+        .on("block:paste", this.pasteBlock, this);
       this.placeholder = (new views.BlockPlaceholder)
         .on("block:create", this.createBlock, this);
       this.collection
         .on("remove", this.showPlaceholder, this)
         .on("add", this.addBlock, this);
+      this._isCreatingBlock = false;
     },
 
     addBlock: function(model, collection, options) {
@@ -88,6 +90,34 @@ define(["jquery"
     propagateInserter: function() {
       this.hideInserter();
       this.trigger("inserter:show");
+    },
+
+    pasteBlock: function(attrs) {
+
+      var self = this;
+
+      if (this._isCreatingBlock) {
+        return;
+      } else {
+        this._isCreatingBlock = true;
+      }
+
+      _.extend(attrs, {
+        parent_id: this.collection.parentBlock.get("id"),
+        page_id: sg.page.get("id")
+      });
+
+      this.hideInserter();
+
+      this.collection.create(attrs, {
+        at: attrs.position - 1,
+        wait: true,
+        success: function() {
+          self._isCreatingBlock = false;
+          self.showPlaceholder();
+        }
+      });
+
     },
 
     createBlock: function(attrs) {

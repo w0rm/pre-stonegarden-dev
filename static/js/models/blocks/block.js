@@ -3,11 +3,13 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "utils"
+      , "models/buffer"
       , "models/model"
       , "models/blocks/blocks"], function ($, _, Backbone, sg) {
 
   var collections = sg.collections
-    , models = sg.models;
+    , models = sg.models
+    , buffer = sg.buffer;
 
 
   models.Block =  models.Model.extend({
@@ -28,10 +30,12 @@ define(["jquery"
     // State information
 
     isContainer: function() {
+      // block allows other blocks to be inserted/created
       return false;
     },
 
     hasBlocks: function() {
+      // block may contain other blocks
       return false;
     },
 
@@ -71,13 +75,31 @@ define(["jquery"
         click: this.editAttributes
       });
 
-      if (!this.isContainer()) {
+
+      if (!this.hasBlocks()) {
+        items.push({
+          isSeparator: true
+        });
+        items.push({
+          text: t_("Cut"),
+          click: this.cut
+        });
+        items.push({
+          text: t_("Copy"),
+          click: this.copy
+        });
+        items.push({
+          isSeparator: true
+        });
+      }
+
+      //if (!this.isContainer()) {
         // System and container blocks cannot be deleted
         items.push({
           text: t_("Delete"),
           click: this.delete
         });
-      };
+      //};
 
 
       if (this.hasParent()) {
@@ -115,6 +137,23 @@ define(["jquery"
 
     lowlight: function() {
       this.trigger("block:lowlight");
+    },
+
+    copy: function() {
+      var data = {};
+      _.each(this.attributes, function(value, key) {
+        if (_.contains(["template", "type", "sizes", "content",
+                        "css_class", "is_published"], key)) {
+          data[key] = value;
+        }
+      })
+      buffer.save("block", data);
+      this.trigger("block:copy");
+    },
+
+    cut: function() {
+      this.copy();
+      this.destroy();
     }
 
   });
