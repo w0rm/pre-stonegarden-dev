@@ -103,7 +103,7 @@ define(["jquery"
       });
 
       items.push({
-        is_separator: true
+        isSeparator: true
       });
 
       items.push({
@@ -146,7 +146,7 @@ define(["jquery"
             href: "/a/users"
           },
           {
-            is_separator: true
+            isSeparator: true
           },
           {
             text: t_("Exit"),
@@ -187,7 +187,7 @@ define(["jquery"
           click: this.editCode
         },
         {
-          is_separator: true
+          isSeparator: true
         },
         {
           text: t_("Create category"),

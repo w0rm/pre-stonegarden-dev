@@ -31,7 +31,7 @@ define(["jquery"
       var $menu = $('<ul class="sg-contextmenu"/>');
       _.each(menu.items, function(item) {
         var $item = $('<li/>').appendTo($menu);
-        if (item.is_separator) {
+        if (item.isSeparator) {
           $item.addClass("sg-contextmenu-separator");
         } else {
           $item.addClass("sg-contextmenu-item");
