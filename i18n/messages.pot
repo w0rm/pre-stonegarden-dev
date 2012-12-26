@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2012-12-24 21:06+0400\n"
+"POT-Creation-Date: 2012-12-26 22:39+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,73 +17,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: stonegarden/config.py:149
+#: stonegarden/config.py:157
 msgid "Administrator"
 msgstr ""
 
-#: stonegarden/config.py:150
+#: stonegarden/config.py:158
 msgid "Editor"
 msgstr ""
 
-#: stonegarden/config.py:151
+#: stonegarden/config.py:159
 msgid "User"
 msgstr ""
 
-#: stonegarden/config.py:153 stonegarden/static/js/models/pages/page.js:125
+#: stonegarden/config.py:161 stonegarden/static/js/models/pages/page.js:125
 msgid "Page"
 msgstr ""
 
-#: stonegarden/config.py:155
+#: stonegarden/config.py:163
 #: stonegarden/templates/html/blocks/js_templates.html:46
 msgid "HTML code"
 msgstr ""
 
-#: stonegarden/config.py:156
+#: stonegarden/config.py:164
 msgid "Rich text"
 msgstr ""
 
-#: stonegarden/config.py:158
+#: stonegarden/config.py:166
 #: stonegarden/templates/html/blocks/js_templates.html:42
 msgid "Navigation"
 msgstr ""
 
-#: stonegarden/config.py:159
+#: stonegarden/config.py:167
 msgid "Subnavigation"
 msgstr ""
 
-#: stonegarden/config.py:160
+#: stonegarden/config.py:168
 msgid "Siblings navigation"
 msgstr ""
 
-#: stonegarden/config.py:161
+#: stonegarden/config.py:169
 msgid "Breadcrumbs"
 msgstr ""
 
-#: stonegarden/config.py:163
+#: stonegarden/config.py:171
 msgid "Site header"
 msgstr ""
 
-#: stonegarden/config.py:164
+#: stonegarden/config.py:172
 msgid "Site footer"
 msgstr ""
 
-#: stonegarden/config.py:166
+#: stonegarden/config.py:174
 msgid "Original"
 msgstr ""
 
-#: stonegarden/config.py:167
+#: stonegarden/config.py:175
 msgid "Thumbnail"
 msgstr ""
 
-#: stonegarden/config.py:168
+#: stonegarden/config.py:176
 msgid "Small"
 msgstr ""
 
-#: stonegarden/config.py:169
+#: stonegarden/config.py:177
 msgid "Medium"
 msgstr ""
 
-#: stonegarden/config.py:170
+#: stonegarden/config.py:178
 msgid "Large"
 msgstr ""
 
@@ -287,10 +287,10 @@ msgstr ""
 
 #: stonegarden/templates/html/auth/reset_change.html:16
 #: stonegarden/templates/html/blocks/js_templates.html:15
-#: stonegarden/templates/html/blocks/js_templates.html:57
-#: stonegarden/templates/html/blocks/js_templates.html:76
-#: stonegarden/templates/html/blocks/js_templates.html:104
-#: stonegarden/templates/html/blocks/js_templates.html:132
+#: stonegarden/templates/html/blocks/js_templates.html:60
+#: stonegarden/templates/html/blocks/js_templates.html:79
+#: stonegarden/templates/html/blocks/js_templates.html:107
+#: stonegarden/templates/html/blocks/js_templates.html:135
 #: stonegarden/templates/html/documents/js_templates.html:58
 #: stonegarden/templates/html/documents/js_templates.html:74
 #: stonegarden/templates/html/pages/js_templates.html:34
@@ -333,10 +333,10 @@ msgid "Show on site"
 msgstr ""
 
 #: stonegarden/templates/html/blocks/js_templates.html:16
-#: stonegarden/templates/html/blocks/js_templates.html:58
-#: stonegarden/templates/html/blocks/js_templates.html:77
-#: stonegarden/templates/html/blocks/js_templates.html:105
-#: stonegarden/templates/html/blocks/js_templates.html:133
+#: stonegarden/templates/html/blocks/js_templates.html:61
+#: stonegarden/templates/html/blocks/js_templates.html:80
+#: stonegarden/templates/html/blocks/js_templates.html:108
+#: stonegarden/templates/html/blocks/js_templates.html:136
 #: stonegarden/templates/html/documents/js_templates.html:59
 #: stonegarden/templates/html/documents/js_templates.html:75
 #: stonegarden/templates/html/pages/js_templates.html:35
@@ -361,30 +361,34 @@ msgid ""
 "until you edit them."
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:64
+#: stonegarden/templates/html/blocks/js_templates.html:49
+msgid "Paste"
+msgstr ""
+
+#: stonegarden/templates/html/blocks/js_templates.html:67
 msgid "Select navigation type"
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:83
+#: stonegarden/templates/html/blocks/js_templates.html:86
 msgid "Insert columns"
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:90
+#: stonegarden/templates/html/blocks/js_templates.html:93
 msgid "Columns"
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:114
+#: stonegarden/templates/html/blocks/js_templates.html:117
 #: stonegarden/templates/html/documents/js_templates.html:54
 #: stonegarden/templates/html/documents/js_templates.html:67
 #: stonegarden/templates/html/pages/js_templates.html:70
 msgid "Description"
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:121
+#: stonegarden/templates/html/blocks/js_templates.html:124
 msgid "Show description"
 msgstr ""
 
-#: stonegarden/templates/html/blocks/js_templates.html:128
+#: stonegarden/templates/html/blocks/js_templates.html:131
 msgid "Make responsive"
 msgstr ""
 
@@ -408,7 +412,7 @@ msgstr ""
 #: stonegarden/templates/html/pages/js_templates.html:15
 #: stonegarden/templates/html/pages/js_templates.html:58
 #: stonegarden/templates/html/pages/js_templates.html:87
-#: stonegarden/static/js/models/blocks/block.js:87
+#: stonegarden/static/js/models/blocks/block.js:109
 msgid "Parent"
 msgstr ""
 
@@ -429,7 +433,7 @@ msgid "Site map"
 msgstr ""
 
 #: stonegarden/templates/html/site/js_templates.html:14
-#: stonegarden/static/js/models/blocks/block.js:77
+#: stonegarden/static/js/models/blocks/block.js:99
 #: stonegarden/static/js/models/documents/document.js:45
 msgid "Delete"
 msgstr ""
@@ -484,21 +488,29 @@ msgstr ""
 msgid "Last visit"
 msgstr ""
 
-#: stonegarden/static/js/models/blocks/block.js:48
+#: stonegarden/static/js/models/blocks/block.js:52
 msgid "Delete this block?"
 msgstr ""
 
-#: stonegarden/static/js/models/blocks/block.js:49
+#: stonegarden/static/js/models/blocks/block.js:53
 msgid "It will also delete all the nested blocks."
 msgstr ""
 
-#: stonegarden/static/js/models/blocks/block.js:64
+#: stonegarden/static/js/models/blocks/block.js:68
 msgid "Edit"
 msgstr ""
 
-#: stonegarden/static/js/models/blocks/block.js:70
+#: stonegarden/static/js/models/blocks/block.js:74
 #: stonegarden/static/js/models/documents/document.js:38
 msgid "Attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:84
+msgid "Cut"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:88
+msgid "Copy"
 msgstr ""
 
 #: stonegarden/static/js/models/documents/document.js:22
