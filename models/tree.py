@@ -67,7 +67,7 @@ def delete_tree_branch(table_name, parent_obj, func=None):
                          what="id",
                          where="parent_id = $id AND NOT is_deleted",
                          vars=parent_obj):
-        delete_tree_branch(obj)
+        delete_tree_branch(table_name, obj)
 
     return parent_obj
 
