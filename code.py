@@ -18,10 +18,11 @@ app = create_application()
 if config.environment == "production":
     import web
     import template
-    app.internalerror = web.emailerrors(
-        config.email["email_from"],
-        lambda: web.internalerror(template.render.site.e500()),
-    )
+    #app.internalerror = web.emailerrors(
+    #    config.email["email_from"],
+    #    lambda: web.internalerror(template.render.site.e500()),
+    #)
+    app.internalerror = lambda: web.internalerror(template.render.site.e500())
     app.notfound = lambda: web.notfound(template.render.site.e404())
 
 if __name__ == "__main__":
