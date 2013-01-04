@@ -1,5 +1,25 @@
 @import "foundation";
 
+
+@media only screen and (min-width: $screenSmall) {
+  .row {
+    width: auto;
+    min-width: 768px - 180px;
+  }
+
+  .page {
+    margin: auto;
+    padding: 0 20px 0 160px;
+    //max-width: 1400px;
+  }
+
+  .pullout {
+    margin: 0 -35px 0 -175px;
+  }
+
+}
+
+
 ul, ol {
   margin-left: 20px;
 }
