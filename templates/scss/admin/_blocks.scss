@@ -5,8 +5,7 @@
 
 .block {
   // Prevent collapsing margins
-  // @extend %cf;
-
+  @extend %cf;
   // Allow context menu positioning
   position: relative;
   // Set min height
