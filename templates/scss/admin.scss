@@ -1,5 +1,6 @@
 @import "config";
 @import "base/stone_icon_font";
+@import "base/helpers";
 @import "admin/ui";
 @import "admin/form";
 @import "admin/documents";
@@ -21,7 +22,6 @@ $navBarHeight: 45px !default;
 .sg-top-bar-spacer {
   height: $navBarHeight;
 }
-
 
 .mceExternalToolbar {
   z-index: 100;
