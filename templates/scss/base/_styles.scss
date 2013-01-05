@@ -1,25 +1,9 @@
 @import "foundation";
 
 
-@media only screen and (min-width: $screenSmall) {
-  .row {
-    width: auto;
-    min-width: 768px - 180px;
-  }
-
-  .page {
-    margin: auto;
-    max-width: 1400px;
-    padding: 0 20px 0 160px;
-    overflow: hidden;
-  }
-
-  .pullout {
-    margin: 0 -35px 0 -175px;
-  }
-
+figure {
+  margin-bottom: ms(1);
 }
-
 
 ul, ol {
   margin-left: 20px;
@@ -70,16 +54,16 @@ table {
 }
 
 header, footer {
-  padding-top: 20px;
-  background: #eee;
+  padding-top: ms(1);
+  //background: #eee;
 }
 
 header {
-  margin-bottom: 20px;
+  margin-bottom: ms(1);
 }
 
 footer {
-  margin-top: 20px;
+  margin-top: ms(1);
 }
 
 nav ul {

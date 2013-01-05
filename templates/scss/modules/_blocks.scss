@@ -1,0 +1,77 @@
+
+$leftPagePadding: 160px !default;
+$rightPagePadding: 20px !default;
+$maxPageWidth: 1400px;
+
+.row {
+  width: auto;
+  min-width: $screenSmall - $leftPagePadding - $rightPagePadding;
+}
+
+.page {
+  margin: auto;
+  max-width: $maxPageWidth;
+  padding: 0 $rightPagePadding 0 $leftPagePadding;
+  overflow: hidden;
+}
+
+.pullout {
+  margin: 0 #{- $rightPagePadding - $columnGutter / 2} 0 #{- $leftPagePadding - $columnGutter / 2};
+  //.sg-contextmenu-show {
+  //  left: $leftPagePadding + $columnGutter / 2 - 32px;
+  // }
+}
+
+
+@include respondTo(smallScreen) {
+
+  .pullout {
+    margin: 0
+  }
+
+  .page {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .row {
+    min-width: 0;
+  }
+
+}
+
+.pullup {
+  position: relative;
+  top: - ms(1);
+}
+
+.pulldown {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0;
+  + .block, + .sg-block-inserter + .block {
+    @extend .pullup;
+  }
+}
+
+.okb-panel {
+  padding: 20px 20px 0;
+  @include border-radius;
+  @include border-top-right-radius(0);
+  *:first-child {
+    margin-top: 0;
+  };
+  background-color: $bg-grey
+}
+
+.blue.okb-panel {
+  background: $mainColor;
+  color: $white;
+  h1, h2, h3, h4, h5, h6 {
+    color: $white;
+  }
+  a {
+  }
+}
+
+
