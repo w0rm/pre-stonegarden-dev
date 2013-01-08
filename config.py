@@ -151,7 +151,7 @@ config = web.storage(
         "m": [800, 800, False, True, False, 75, 0],
         "l": [1200, 1200, False, True, False, 70, 0],
     },
-    nav_types=["root", "children", "siblings", "breadcrumbs"],
+    nav_types=["root", "secondary", "children", "siblings", "breadcrumbs"],
     labels=dict(
         # User Roles
         admin=N_("Administrator"),
@@ -164,6 +164,7 @@ config = web.storage(
         wysiwyg=N_("Rich text"),
         # Navigation blocks
         root=N_("Navigation"),
+        secondary=N_("Secondary navigation"),
         children=N_("Subnavigation"),
         siblings=N_("Siblings navigation"),
         breadcrumbs=N_("Breadcrumbs"),

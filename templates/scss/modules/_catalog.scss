@@ -12,13 +12,8 @@
 .catalog-subcategories-nav > ul {
   margin-left: 0;
   margin-bottom: 17px;
+  @extend %inline-block-list;
   > li {
-    display: inline;
-    &:before {
-      content: " • "
-    };
-    &:first-child:before {
-      display: none
-    }
+    margin-right: 20px;
   }
 }

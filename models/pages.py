@@ -196,13 +196,26 @@ def delete_page_by_id(page_id):
     return delete_tree_branch("pages", page)
 
 
+def normalize_page_ids(page):
+    if page.ids:
+        page.ids = map(int, page.ids.split(","))
+    return page
+
+
 def load_page_data(page):
+    page = normalize_page_ids(page)
     web.ctx.page = page
     web.ctx.nav = web.storage(
         root=db.select(
             "pages",
             where="level=1 AND NOT is_deleted AND is_navigatable",
             order="position").list(),
+        secondary=db.select(
+            "pages",
+            where="(parent_id in $ids OR parent_id = $id) AND "
+                  "level=2 AND NOT is_deleted AND is_navigatable",
+            order="position",
+            vars=page).list() if page.level > 0 else [],
         children=get_page_children(page.id, True),
         siblings=db.select(
             "pages", page,
@@ -211,8 +224,8 @@ def load_page_data(page):
         breadcrumbs=(
             db.select(
                 "pages",
-                where="id in (%s) AND NOT is_deleted AND is_navigatable" %
-                page.ids).list() + [page]
+                where="id in $ids AND NOT is_deleted AND is_navigatable",
+                vars=page).list() + [page]
             if page.ids else [])
     )
 

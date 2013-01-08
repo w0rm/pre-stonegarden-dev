@@ -7,6 +7,8 @@ $link: rgb(0, 110, 255);
 $hover: rgb(0, 0, 195);
 $wrong: #ea3d45;
 
+$grey05: darken(white, 5%);
+$grey10: darken(white, 10%);
 $grey30: darken(white, 30%);
 $grey40: darken(white, 40%);
 $grey60: darken(white, 60%);
@@ -25,19 +27,16 @@ $default-box-shadow-blur: 9px;
 $default-box-shadow-spread: false;
 $default-box-shadow-color: rgba(88, 88, 88, 0.6);
 
-
-
 $txtColor: $black;
 
 $headerFontFamily: Ubuntu, serif;
 $headerFontWeight: 700;
 $bodyFontFamily: $headerFontFamily;
 $bodyFontWeight: 400;
+$bodyFontColor: darken(white, 75%);
 
 $headerFontColor: $txtColor;
 $mainColor: #0082ff;
-
-
 
 @import "compass/css3";
 @import "compass/css3/user-interface";

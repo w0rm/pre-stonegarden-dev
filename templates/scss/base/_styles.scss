@@ -1,7 +1,27 @@
 @import "foundation";
 
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+h5, h6 { font-size: 14px; }
 
-figure {
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  };
+}
+
+figcaption {
   margin-bottom: ms(1);
 }
 
@@ -20,6 +40,10 @@ table {
     background: transparent;
     tr {
       td, th {
+        font-size: 12px;
+        p {
+          font-size: 12px;
+        }
         @extend .exposed;
         vertical-align: bottom;
         border-bottom: 1px solid $grey40;
@@ -45,6 +69,10 @@ table {
     background: transparent;
     tr {
       td, th {
+        font-size: 12px;
+        p {
+          font-size: 12px;
+        }
         @extend .exposed;
       }
     }
@@ -64,9 +92,15 @@ header {
 
 footer {
   margin-top: ms(1);
+  border-top: 1px solid $grey10;
 }
 
-nav ul {
-  margin-left: 0;
-  list-style-type: none;
+
+nav {
+  ul {
+    margin-left: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  margin-bottom: ms(1);
 }

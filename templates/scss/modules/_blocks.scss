@@ -12,21 +12,27 @@ $maxPageWidth: 1400px;
   margin: auto;
   max-width: $maxPageWidth;
   padding: 0 $rightPagePadding 0 $leftPagePadding;
-  overflow: hidden;
 }
 
 .pullout {
-  margin: 0 #{- $rightPagePadding - $columnGutter / 2} 0 #{- $leftPagePadding - $columnGutter / 2};
-  //.sg-contextmenu-show {
-  //  left: $leftPagePadding + $columnGutter / 2 - 32px;
-  // }
+  margin-right: #{- $rightPagePadding - $columnGutter / 2};
+  margin-left: #{- $leftPagePadding - $columnGutter / 2};
 }
 
+.padin {
+  padding-right: #{- $rightPagePadding - $columnGutter / 2};
+  padding-left: #{- $leftPagePadding - $columnGutter / 2};
+}
 
 @include respondTo(smallScreen) {
 
   .pullout {
-    margin: 0
+    margin: 0 #{- $columnGutter / 2};
+  }
+
+  .padin {
+    padding-right: $columnGutter / 2;
+    padding-left: $columnGutter / 2;
   }
 
   .page {
@@ -42,26 +48,21 @@ $maxPageWidth: 1400px;
 
 .pullup {
   position: relative;
-  top: - ms(1);
-}
-
-.pulldown {
-  position: relative;
-  z-index: 2;
-  margin-bottom: 0;
-  + .block, + .sg-block-inserter + .block {
-    @extend .pullup;
-  }
+  top: - ms(4);
+  margin-bottom: - ms(4);
 }
 
 .okb-panel {
-  padding: 20px 20px 0;
-  @include border-radius;
+  @extend %cf;
+  padding: ms(1) 20px 0;
+  position: relative;
+  z-index: 2;
+  @include border-radius(10px);
   @include border-top-right-radius(0);
   *:first-child {
     margin-top: 0;
   };
-  background-color: $bg-grey
+  background-color: $grey05;
 }
 
 .blue.okb-panel {

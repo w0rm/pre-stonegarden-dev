@@ -5,11 +5,11 @@
 
 .block {
   // Prevent collapsing margins
-  @extend %cf;
+  // @extend %cf;
   // Allow context menu positioning
   position: relative;
   // Set min height
-  min-height: 40px;
+  min-height: 36px;
 }
 
 .blocks {
@@ -21,4 +21,11 @@
 
 .sg-block-highlight {
   @include box-shadow;
+}
+
+
+.pullout.block {
+  .sg-contextmenu-show {
+    left: 15px;
+  }
 }
