@@ -8,7 +8,7 @@ $maxPageWidth: 1400px;
   min-width: $screenSmall - $leftPagePadding - $rightPagePadding;
 }
 
-.page {
+.page, .index_page {
   margin: auto;
   max-width: $maxPageWidth;
   padding: 0 $rightPagePadding 0 $leftPagePadding;
@@ -35,7 +35,7 @@ $maxPageWidth: 1400px;
     padding-left: $columnGutter / 2;
   }
 
-  .page {
+  .page, .index_page {
     padding: 0;
     overflow: visible;
   }
@@ -63,6 +63,7 @@ $maxPageWidth: 1400px;
     margin-top: 0;
   };
   background-color: $grey05;
+  margin-bottom: ms(1);
 }
 
 .blue.okb-panel {

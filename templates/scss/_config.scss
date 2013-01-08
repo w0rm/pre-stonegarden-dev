@@ -27,6 +27,9 @@ $default-box-shadow-blur: 9px;
 $default-box-shadow-spread: false;
 $default-box-shadow-color: rgba(88, 88, 88, 0.6);
 
+
+$mobileTotalColumns: 3;
+
 $txtColor: $black;
 
 $headerFontFamily: Ubuntu, serif;
@@ -37,6 +40,8 @@ $bodyFontColor: darken(white, 75%);
 
 $headerFontColor: $txtColor;
 $mainColor: #0082ff;
+
+
 
 @import "compass/css3";
 @import "compass/css3/user-interface";

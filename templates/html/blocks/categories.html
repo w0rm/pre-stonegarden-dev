@@ -5,7 +5,6 @@ $if categories:
     <ul class="catalog-categories">
     $for category in categories:
         <li>
-            <hr>
             <h3><a href="$category.path">$category.title</a></h3>
             $ subcategories = [c for c in category.get("pages", []) if c.type == "category"]
             $if subcategories:
