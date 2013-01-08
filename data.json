@@ -100,6 +100,39 @@
 			]
 		},
 		{
+			"name": "index_header",
+			"template": "column",
+			"size": 12,
+	        "is_system": true,
+			"blocks": [
+				{
+					"template": "row",
+					"blocks": [
+						{
+							"template": "column",
+							"size": 4,
+							"is_system": true,
+							"blocks": [{
+								"template": "content",
+								"type": "wysiwyg",
+								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
+								"content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
+							}]
+						},
+						{
+							"template": "column",
+							"size": 8,
+							"is_system": true,
+							"blocks": [{
+								"template": "nav",
+								"type": "root"
+							}]
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "global_footer",
 			"template": "column",
 			"size": 12,
