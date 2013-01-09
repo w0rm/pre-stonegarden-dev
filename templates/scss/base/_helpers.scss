@@ -58,3 +58,18 @@
   }
 }
 
+
+
+/* --------------------------------------------
+   PNG Sprites
+   -------------------------------------------- */
+$png-layout: smart;
+@import "png/*.png";
+
+@mixin svg-sprite($sprite) {
+  @include png-sprite-dimensions($sprite);
+  background: inline-image("svg/#{$sprite}.svg");
+  .no-svg & {
+    @include png-sprite($sprite);
+  }
+}

@@ -10,3 +10,25 @@
 @import "modules/catalog";
 @import "modules/wysiwyg";
 
+
+.logo {
+  &:before {
+    content: "";
+    display: inline-block;
+    @include svg-sprite(logo);
+    vertical-align: middle;
+    margin-right: 10px;
+  };
+
+  display: inline-block;
+
+  text-decoration: none;
+  font-size: 22px;
+  white-space: nowrap;
+  color: $grey60;
+  &:hover {
+    color: $grey60;
+  };
+}
+
+

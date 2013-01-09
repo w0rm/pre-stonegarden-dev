@@ -26,3 +26,13 @@ require(["jquery", "plugins/jquery.responsive"], function($) {
     $(".responsive").responsiveImage()
   });
 });
+
+
+$(function() {
+
+    var svg = !!('createElementNS' in document &&
+        document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
+
+    if (!svg) document.body.className += ' no-svg'
+
+})

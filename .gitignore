@@ -16,6 +16,7 @@ siteconfig.py
 upload/*
 static/i/*
 static/css/*
+static/img/sprites/*
 
 # Sublime Text 2 project files
 *.sublime-project
