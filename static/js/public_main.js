@@ -24,15 +24,16 @@ require.config({
 require(["jquery", "plugins/jquery.responsive"], function($) {
   $(function() {
     $(".responsive").responsiveImage()
+
+    var svg = !!('createElementNS' in document &&
+      document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
+
+    if (!svg) document.body.className += ' no-svg'
+
   });
 });
 
 
-$(function() {
 
-    var svg = !!('createElementNS' in document &&
-        document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
 
-    if (!svg) document.body.className += ' no-svg'
 
-})

@@ -39,7 +39,6 @@ define(["jquery"], function ($) {
     resize: function(size) {
       this.size = size
       if (this.options[size.name + "_src"]) {
-        console.log("resized", size.name)
         this.$element.attr("src", this.options[size.name + "_src"])
       }
     }

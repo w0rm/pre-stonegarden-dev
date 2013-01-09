@@ -12,18 +12,21 @@
 
 
 .logo {
-  &:before {
+  i {
     content: "";
     display: inline-block;
     @include svg-sprite(logo);
     vertical-align: middle;
     margin-right: 10px;
+    position: relative;
   };
 
-  display: inline-block;
-
+  display: block;
   text-decoration: none;
   font-size: 22px;
+  @include transition(font-size 0.2s ease-in-out);
+  margin: 0;
+  font-weight: normal;
   white-space: nowrap;
   color: $grey60;
   &:hover {
@@ -31,4 +34,16 @@
   };
 }
 
+@include respondTo(smallScreen) {
+  .logo {
+    float: right;
+    @include png-sprite-dimensions(logo);
+    overflow: hidden;
+  }
+}
 
+@media only screen and (max-width: 1000px) {
+  .logo {
+    font-size: 16px;
+  }
+}
