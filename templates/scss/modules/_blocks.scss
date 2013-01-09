@@ -20,8 +20,8 @@ $maxPageWidth: 1400px;
 }
 
 .padin {
-  padding-right: #{- $rightPagePadding - $columnGutter / 2};
-  padding-left: #{- $leftPagePadding - $columnGutter / 2};
+  padding-right: #{$rightPagePadding + $columnGutter / 2};
+  padding-left: #{$leftPagePadding + $columnGutter / 2};
 }
 
 @include respondTo(smallScreen) {
