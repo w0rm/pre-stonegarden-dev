@@ -8,11 +8,12 @@
 @import "modules/breadcrumbs";
 @import "modules/image";
 @import "modules/catalog";
+@import "modules/splash";
 @import "modules/wysiwyg";
 
 
 .logo {
-  i {
+  &:before {
     content: "";
     display: inline-block;
     @include svg-sprite(logo);

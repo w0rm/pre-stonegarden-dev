@@ -1,0 +1,32 @@
+
+.okb-splash {
+  height: 600px;
+  background-color: #000;
+  @extend %clearfix;
+}
+
+.okb-splash-thumbs {
+  position: relative;
+  margin-top: 300px;
+  > ul {
+    list-style-type: none;
+  }
+}
+
+.okb-splash-thumb {
+  display: block;
+  text-align: center;
+  height: 200px;
+  margin: 0 #{- $columnGutter / 2};
+  padding: $columnGutter / 2;
+  border: 1px solid transparent;
+  overflow: hidden;
+  @include border-radius(10px);
+  @include border-top-right-radius(0);
+  &.is-active, &:hover {
+    border-color: $link;
+    text-decoration: none;
+    color: #fff;
+  };
+}
+
