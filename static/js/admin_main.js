@@ -5,6 +5,7 @@ require.config({
     jquery: '../vendor/js/jquery-1.8.1',
     'jquery.foundation.reveal': '../vendor/js/jquery.foundation.reveal-1.1',
     'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
+    'ace': '../vendor/js/ace',
     backbone: '../vendor/js/backbone-0.9.2',
     underscore: '../vendor/js/underscore-1.4.2'
   },

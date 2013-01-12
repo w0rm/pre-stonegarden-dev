@@ -23,6 +23,14 @@ $navBarHeight: 45px !default;
   height: $navBarHeight;
 }
 
+
+.sg-ace {
+  @include box-shadow;
+  position: relative !important;
+  width: 100%;
+  height: 300px;
+}
+
 .mceExternalToolbar {
   z-index: 100;
   @include box-shadow;
