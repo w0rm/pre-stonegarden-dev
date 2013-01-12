@@ -70,6 +70,7 @@ $png-layout: smart;
   @include png-sprite-dimensions($sprite);
   background: inline-image("svg/#{$sprite}.svg");
   .no-svg & {
+    content: " "; // force ie8 redraw pseudo element
     @include png-sprite($sprite);
   }
 }
