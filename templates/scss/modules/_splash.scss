@@ -1,24 +1,46 @@
 
 .okb-splash {
+  position: relative;
   height: 600px;
   background-color: #000;
   @extend %clearfix;
+  margin-bottom: ms(1)
 }
+
+.okb-splash_narrow {
+  @extend .okb-splash;
+  height: 400px;
+}
+
 
 .okb-splash-thumbs {
   position: relative;
-  margin-top: 300px;
+  margin-top: 380px;
   > ul {
     list-style-type: none;
   }
+}
+
+.okb-splash-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.okb-splash-blueprint {
+  width: 100%;
+  height: 100%
 }
 
 .okb-splash-thumb {
   display: block;
   text-align: center;
   height: 200px;
-  margin: 0 #{- $columnGutter / 2};
-  padding: $columnGutter / 2;
+  white-space: nowrap;
+  padding: $columnGutter / 2 0;
+  padding-top: 150px;
   border: 1px solid transparent;
   overflow: hidden;
   @include border-radius(10px);
@@ -28,5 +50,17 @@
     text-decoration: none;
     color: #fff;
   };
+  font-weight: 700
 }
 
+.okb-lead {
+  background: $grey10;
+  @extend %clearfix;
+  padding-top: ms(1);
+  *:first-child {
+    margin-top: 0
+  };
+  position: relative;
+  top: - ms(1);
+  margin-bottom: - ms(1);
+}

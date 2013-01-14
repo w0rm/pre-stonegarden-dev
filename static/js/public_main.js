@@ -21,9 +21,11 @@ require.config({
   }
 });
 
-require(["jquery", "plugins/jquery.responsive"], function($) {
+require(["jquery", "plugins/jquery.responsive", "plugins/jquery.splash"], function($) {
   $(function() {
     $(".responsive").responsiveImage()
+
+    $(".js-splash").splash()
 
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
