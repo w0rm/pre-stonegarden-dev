@@ -34,8 +34,13 @@ define(["jquery"
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
         .on("document:open", this.openDocument, this)
-        .on("document:select", this.selectDocument, this)
-        .on("document:unselect", this.unselectDocument, this)
+
+      if (this.options.isSelectable) {
+        this.collection
+          .on("document:select", this.selectDocument, this)
+          .on("document:unselect", this.unselectDocument, this)
+      }
+
 
     },
 

@@ -10,8 +10,13 @@ css_dir = "../../static/css"
 javascripts_dir = "../../static/js"
 fonts_dir = "../../static/fonts"
 
+http_path = "/static"
+http_images_path = "/static/img"
+http_stylesheets_path = "/static/css"
+
+
 # To enable relative paths to assets via compass helper functions. Uncomment:
-relative_assets = true
+relative_assets = false
 environment = :development
 #output_style = :expanded # :compressed
 #line_comments = false

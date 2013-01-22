@@ -8,7 +8,8 @@ define(["jquery"
       , "views/blocks/form"
       , "views/blocks/nav_form"
       , "views/blocks/row_form"
-      , "views/blocks/image_form"], function ($, _, Backbone, sg) {
+      , "views/blocks/image_form"
+      , "views/blocks/gallery_form"], function ($, _, Backbone, sg) {
 
   var views = sg.views
     , utils = sg.utils;

@@ -165,7 +165,7 @@ def get_documents_by_parent_id(parent_id, document_type=None):
        optionally filtered by @document_type"""
     where = "parent_id = $parent_id AND NOT is_deleted"
     if document_type == "folder":
-        where += " AND type == 'folder'"
+        where += " AND type = 'folder'"
     elif document_type in ("image", "document"):
         where += " AND type IN ('folder', '%s')" % document_type
     return db.select("documents", locals(), where=where,

@@ -229,6 +229,16 @@ define(["jquery"
 
   });
 
+
+  models.GalleryBlock = models.Block.extend({
+
+    getGalleryAttributes: function() {
+      return $(this.get("content")).data("options")
+    }
+
+  });
+
+
   models.ColumnBlock = models.Block.extend({
 
     hasContextMenu: function() {
