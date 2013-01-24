@@ -4,7 +4,6 @@
   height: 600px;
   background-color: #000;
   @extend %clearfix;
-  margin-bottom: ms(1)
 }
 
 .okb-splash_narrow {
@@ -56,10 +55,33 @@
   background: $grey10;
   @extend %clearfix;
   padding-top: ms(1);
-  *:first-child {
+  > *:first-child {
     margin-top: 0
   };
   position: relative;
   top: - ms(1);
   margin-bottom: - ms(1);
 }
+
+.okb-panel {
+  @extend %cf;
+  padding: ms(1) 20px 0;
+  position: relative;
+  z-index: 2;
+  @include border-radius(10px);
+  @include border-top-right-radius(0);
+  > *:first-child {
+    margin-top: 0;
+  };
+  background-color: $grey05;
+}
+
+.blue.okb-panel {
+  background: $mainColor;
+  color: $white;
+  h1, h2, h3, h4, h5, h6 {
+    color: $white;
+  }
+}
+
+

@@ -1,0 +1,10 @@
+
+.gallery {
+  background: image-url("loader.gif") center center no-repeat;
+  height: 200px;
+}
+
+.gallery img { display: none; }
+
+.gallery.orbit { background: none; }
+.gallery.orbit img { display: block; }

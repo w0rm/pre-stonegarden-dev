@@ -24,26 +24,28 @@ $maxPageWidth: 1400px;
   padding-left: #{$leftPagePadding + $columnGutter / 2};
 }
 
-@include respondTo(smallScreen) {
+.padtop {
+  padding-top: ms(1);
+  > *:first-child {
+    margin-top: 0;
+  }
+}
 
+@include respondTo(smallScreen) {
   .pullout {
     margin: 0 #{- $columnGutter / 2};
   }
-
   .padin {
     padding-right: $columnGutter / 2;
     padding-left: $columnGutter / 2;
   }
-
   .page, .index_page {
     padding: 0;
     overflow: visible;
   }
-
   .row {
     min-width: 0;
   }
-
 }
 
 .pullup {
@@ -51,29 +53,3 @@ $maxPageWidth: 1400px;
   top: - ms(4);
   margin-bottom: - ms(4);
 }
-
-.okb-panel {
-  @extend %cf;
-  padding: ms(1) 20px 0;
-  position: relative;
-  z-index: 2;
-  @include border-radius(10px);
-  @include border-top-right-radius(0);
-  *:first-child {
-    margin-top: 0;
-  };
-  background-color: $grey05;
-  margin-bottom: ms(1);
-}
-
-.blue.okb-panel {
-  background: $mainColor;
-  color: $white;
-  h1, h2, h3, h4, h5, h6 {
-    color: $white;
-  }
-  a {
-  }
-}
-
-

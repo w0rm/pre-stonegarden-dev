@@ -3,50 +3,23 @@ require.config({
   paths: {
     stonegarden: '/a/config',
     jquery: '../vendor/js/jquery-1.8.1',
-    'jquery.foundation.reveal': '../vendor/js/foundation/jquery.foundation.reveal',
     'jquery.foundation.orbit': '../vendor/js/foundation/jquery.foundation.orbit',
-    'jquery.foundation.topbar': '../vendor/js/foundation/jquery.foundation.topbar',
-    'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
-    backbone: '../vendor/js/backbone-0.9.2',
-    underscore: '../vendor/js/underscore-1.4.2'
   },
   shim: {
-    'jquery.tinymce': ['jquery'],
-    'jquery.foundation.reveal': ['jquery'],
-    'jquery.foundation.orbit': ['jquery'],
-    'jquery.foundation.topbar': ['jquery'],
-    underscore: {
-      exports: '_'
-    },
-    backbone: {
-      deps: ['underscore', 'jquery'],
-      exports: 'Backbone'
-    }
+    'jquery.foundation.orbit': ['jquery']
   }
 });
-
 
 require(["jquery"
        , "plugins/jquery.responsive"
        , "plugins/jquery.splash"
-       , "jquery.foundation.orbit"], function($) {
+       , "plugins/jquery.gallery"], function($) {
 
   $(function() {
+
     $(".responsive").responsiveImage()
-
     $(".js-splash").splash()
-
-    $(".js-gallery").each(function(){
-      var $gallery = $(this)
-        , hasThumbs = $gallery.find("[data-thumb]").length > 0;
-
-      if (hasThumbs) {
-        $gallery.orbit({bullets: true, bulletThumbs: true});
-      } else {
-        $gallery.orbit({bullets: true});
-      }
-
-    });
+    $(".js-gallery").gallery()
 
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
@@ -55,6 +28,3 @@ require(["jquery"
 
   });
 });
-
-
-

@@ -1,17 +1,12 @@
 
 
-.nav + .nav, .nav + .sg-block-inserter + .nav {
-  position: relative;
-  top: - ms(1);
-  margin-bottom: - ms(1);
-}
-
 .nav-root, .nav-secondary {
   .active {
     color: inherit;
   }
   ul {
     @extend %inline-block-list;
+    margin-bottom: 0;
   }
 }
 

@@ -32,28 +32,15 @@ require(["blocks", "documents"]);
 require(["jquery"
        , "plugins/jquery.responsive"
        , "plugins/jquery.splash"
-       , "jquery.foundation.orbit"], function($) {
+       , "plugins/jquery.gallery"], function($) {
 
   $(function() {
     $(".responsive").responsiveImage()
-
     $(".js-splash").splash()
-
-    $(".js-gallery").each(function(){
-      var $gallery = $(this)
-        , hasThumbs = $gallery.find("[data-thumb]").length > 0;
-
-      if (hasThumbs) {
-        $gallery.orbit({bullets: true, bulletThumbs: true});
-      } else {
-        $gallery.orbit({bullets: true});
-      }
-
-    });
+    $(".js-gallery").gallery()
 
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
-
     if (!svg) document.body.className += ' no-svg'
 
   });

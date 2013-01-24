@@ -7,7 +7,8 @@ define(["jquery"
       , "views/delete_modal"
       , "views/blocks/list"
       , "views/blocks/editable_list"
-      , "views/blocks/attributes"], function ($, _, Backbone, sg) {
+      , "views/blocks/attributes"
+      , "plugins/jquery.gallery"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -114,6 +115,11 @@ define(["jquery"
           .on("inserter:show", this.propagateInserter, this)
           .render();
       };
+
+      // TODO: review for better implementation
+      setTimeout(function(){
+        self.$(".js-gallery").gallery();
+      }, 0)
 
       return this;
     },
