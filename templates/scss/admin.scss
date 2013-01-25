@@ -18,11 +18,9 @@
   @include opacity(.5);
 }
 
-$navBarHeight: 45px !default;
 .sg-top-bar-spacer {
   height: $navBarHeight;
 }
-
 
 .sg-ace {
   @include box-shadow;

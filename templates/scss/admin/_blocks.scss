@@ -17,12 +17,13 @@
   position: relative;
   // Increase vertical space between inserters
   padding: 5px 0;
+  // Prevent collapsing margins
+  // @extend %cf;
 }
 
 .sg-block-highlight {
   @include box-shadow;
 }
-
 
 .pullout.block {
   > .sg-contextmenu-show {
