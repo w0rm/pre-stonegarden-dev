@@ -22,10 +22,7 @@
 
   .sg-block-inserter-menu {
 
-    z-index: 2;
-
     @include border-radius;
-
     @include transition(opacity 0.5s 0.3s ease-in-out);
     @include transparent;
 
