@@ -19,6 +19,13 @@ define(["jquery"
   // then views.Block and views.Blocks subclass it.
 
   views.Block = Backbone.View.extend(_.extend({}, mixins.hasContextMenu, {
+
+    events: _.extend({
+
+      "dblclick" : "editOnDoubleClick"
+
+    }, mixins.hasContextMenu.events),
+
     initialize: function() {
       this.model
         .on("block:highlight", this.highlightBlock, this)
@@ -37,6 +44,12 @@ define(["jquery"
 
     lowlightBlock: function() {
       this.$el.removeClass("sg-block-highlight");
+    },
+
+    editOnDoubleClick: function() {
+      if (this.model.isEditableOnDoubleClick()) {
+        this.model.edit()
+      }
     },
 
     deleteBlock: function() {

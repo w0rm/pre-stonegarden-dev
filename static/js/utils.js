@@ -54,6 +54,8 @@ define(["jquery"
           return "Row";
         case "nav":
           return "Nav";
+        case "page_title":
+          return "PageTitle";
         default:
           if (attrs.type === "image") {
             return "Image"

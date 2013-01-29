@@ -17,11 +17,14 @@ define(["jquery"
     urlRoot: "/a/blocks",
 
     initialize: function() {
-      this.blocks = new collections.Blocks;
-      this.blocks.parentBlock = this;
-      this.on("change:blocks", this.updateBlocks);
-      this.updateBlocks();
+      this.blocks = new collections.Blocks
+      this.blocks.parentBlock = this
+      this.on("change:blocks", this.updateBlocks)
+      this.updateBlocks()
+      this.initBlock()
     },
+
+    initBlock: function() {},
 
     updateBlocks: function() {
       this.blocks.reset(this.get("blocks"));
@@ -69,12 +72,10 @@ define(["jquery"
         click: this.edit
       });
 
-
       items.push({
         text: t_("Attributes"),
         click: this.editAttributes
       });
-
 
       if (!this.hasBlocks()) {
         items.push({
@@ -93,14 +94,10 @@ define(["jquery"
         });
       }
 
-      //if (!this.isContainer()) {
-        // System and container blocks cannot be deleted
-        items.push({
-          text: t_("Delete"),
-          click: this.delete
-        });
-      //};
-
+      items.push({
+        text: t_("Delete"),
+        click: this.delete
+      });
 
       if (this.hasParent()) {
         parentMenu = this.parentBlock.getContextMenu();
@@ -154,12 +151,16 @@ define(["jquery"
     cut: function() {
       this.copy();
       this.destroy();
+    },
+
+    isEditableOnDoubleClick: function() {
+      // todo return false here and create separate class for
+      // wysiwyg block
+      return !this.isSystem() && this.get("type") === "wysiwyg";
     }
 
   });
 
-
-  models.WysiwygBlock = models.Block;
 
   models.PageBlock = models.Block.extend({
     hasContextMenu: function() {
@@ -179,6 +180,7 @@ define(["jquery"
     }
 
   });
+
 
   models.RowBlock = models.Block.extend({
 
@@ -219,7 +221,21 @@ define(["jquery"
 
   });
 
-  models.NavBlock = models.Block;
+
+  models.NavBlock = models.Block.extend({
+
+    initBlock: function() {
+      sg.page.on("change", function(){
+        this.fetch({
+          data: {
+            page_id: sg.page.get("id")
+          }
+        })
+      }, this)
+    }
+
+  });
+
 
   models.ImageBlock = models.Block.extend({
 
@@ -260,5 +276,56 @@ define(["jquery"
     }
 
   });
+
+
+  models.PageTitleBlock = models.Block.extend({
+
+    initBlock: function() {
+      sg.page.on("change", function(){
+        this.fetch({
+          data: {
+            page_id: sg.page.get("id")
+          }
+        })
+      }, this)
+    },
+
+    hasContextMenu: function() {
+      return true
+    },
+
+    getContextMenu: function() {
+
+      if (!this.isSystem()) {
+        return models.Block.getContextMenu.call(this)
+      }
+
+      var items = []
+        , parentMenu;
+
+      items.push({
+        text: t_("Edit"),
+        click: this.edit
+      });
+
+      return {
+        items: items,
+        context: this
+      };
+
+    },
+
+    edit: function() {
+      sg.page.trigger("page:edit")
+    },
+
+    isEditableOnDoubleClick: function() {
+      return true;
+    }
+
+  })
+
+
+
 
 });
