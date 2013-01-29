@@ -27,6 +27,7 @@ define(["jquery"
         .on("page:code", this.editPageCode, this)
         .on("page:delete", this.deletePage, this)
         .on("change:path", this.redirect, this)
+        .on("change:title", this.updateTitle, this)
         .on("destroy", this.redirectToParent, this);
 
       this.collection
@@ -73,8 +74,16 @@ define(["jquery"
       }).open();
     },
 
+    updateTitle: function(model) {
+      window.document.title = model.get("title")
+    },
+
     redirect: function(model) {
-      window.location.replace(model.get("path"));
+      if (model.isEdit()) {
+        window.history.replaceState({}, "", model.get("path") + window.location.search);
+      } else {
+        window.location.replace(model.get("path"));
+      }
     },
 
     redirectToParent: function(model) {
