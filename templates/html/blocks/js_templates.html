@@ -159,6 +159,7 @@
 </script>
 <script type="text/template" id="block-gallery-form-template">
     <form>
+        <p>$_("Images below will be inserted as a gallery.")</p>
         <div class="sg-documents-scroller">
             <ul class="sg-document-tiles js-documents"></ul>
         </div>
@@ -170,6 +171,13 @@
             </label>
         </p>
         <p>
+            <label>
+                <input name="autoplay"
+                       <%= gallery.autoplay && "checked" || "" %>
+                       type="checkbox" >$_("Autoplay")
+            </label>
+        </p>
+        <p>
             <button class="button" type="submit">$_("Save")</button>
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
@@ -178,6 +186,7 @@
 <script type="text/template" id="block-gallery-template">
     <div class="gallery js-gallery"
          data-options='<%= JSON.stringify(gallery) %>'
+         <%= gallery.autoplay && "data-timer='true'" || "" %>
     >
         <% _.each(gallery.images, function(image) { %>
             <% if (gallery.show_thumbs) { %>

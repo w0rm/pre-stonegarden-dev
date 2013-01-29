@@ -40,7 +40,8 @@ define(["jquery", "jquery.foundation.orbit"], function ($) {
   }
 
   $.fn.gallery.defaults = {
-    bullets: true
+    bullets: true,
+    timer: false
   }
 
   $.fn.gallery.Constructor = Gallery
