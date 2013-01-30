@@ -95,7 +95,8 @@ config = web.storage(
                     },
                     {
                         "template": "page_title",
-                        "is_system": True
+                        "is_system": True,
+                        "css_class": "okb-panel"
                     },
                     {
                         "template": "subcategories_nav",
@@ -137,7 +138,8 @@ config = web.storage(
                     },
                     {
                         "template": "page_title",
-                        "is_system": True
+                        "is_system": True,
+                        "css_class": "okb-panel"
                     }
                 ]
             }
