@@ -26,7 +26,7 @@ define(["jquery"
     },
 
     deleteModel: function(e) {
-      this.model.destroy();
+      this.model.destroy({wait: true});
       this.trigger("modal:close");
     },
 

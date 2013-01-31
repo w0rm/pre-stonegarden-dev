@@ -95,7 +95,7 @@ define(["jquery"
     },
 
     getParentPath: function(path) {
-      if (path.indexOf("/") > 0) {
+      if (path.lastIndexOf("/") > 0) {
         return path.substr(0, path.lastIndexOf("/"))
       } else {
         return "/"
