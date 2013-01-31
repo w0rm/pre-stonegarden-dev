@@ -31,7 +31,7 @@ define(["jquery"
         .on("destroy", this.redirectToParent, this);
 
       this.collection
-        .on("add", this.redirect, this); // redirect to created page
+        .on("add", this.hardRedirect, this); // redirect to created page
 
     },
 
@@ -82,12 +82,16 @@ define(["jquery"
       if (model.isEdit()) {
         window.history.replaceState({}, "", model.get("path") + window.location.search);
       } else {
-        window.location.replace(model.get("path"));
+        this.hardRedirect(model)
       }
     },
 
+    hardRedirect: function(model) {
+      window.location.replace(model.get("path") + window.location.search);
+    },
+
     redirectToParent: function(model) {
-      window.location.replace(model.getParentPath());
+      window.location.replace(model.getParentPath() + window.location.search);
     }
 
   });
