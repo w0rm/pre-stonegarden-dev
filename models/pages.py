@@ -133,7 +133,7 @@ def update_page_by_id(page_id, data):
             **data)
 
         # TODO: expand this for tree
-        if data.parent_id != page.parent_id:
+        if data.path != page.path:
             update_branch(page.id)
 
     page.update(data)
