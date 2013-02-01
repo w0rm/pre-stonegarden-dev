@@ -56,6 +56,12 @@ define(["jquery"
           return "Nav";
         case "page_title":
           return "PageTitle";
+        case "categories":
+          return "Categories";
+        case "products":
+          return "Products";
+        case "subcategories_nav":
+          return "SubcategoriesNav";
         default:
           if (attrs.type === "image") {
             return "Image"
