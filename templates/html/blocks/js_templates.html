@@ -165,13 +165,6 @@
         </div>
         <p>
             <label>
-                <input name="show_thumbs"
-                       <%= gallery.show_thumbs && "checked" || "" %>
-                       type="checkbox" >$_("Show thumbs")
-            </label>
-        </p>
-        <p>
-            <label>
                 <input name="autoplay"
                        <%= gallery.autoplay && "checked" || "" %>
                        type="checkbox" >$_("Autoplay")
@@ -189,11 +182,7 @@
          <%= gallery.autoplay && "data-timer='true'" || "" %>
     >
         <% _.each(gallery.images, function(image) { %>
-            <% if (gallery.show_thumbs) { %>
-                <img src="<%= image.sizes.l %>" data-thumb="<%= image.src %>">
-            <% } else { %>
-                <img src="<%= image.sizes.l %>">
-            <% } %>
+            <img src="<%= image.sizes.l %>">
         <% }) %>
     </div>
 </script>
