@@ -324,6 +324,10 @@ define(["jquery"
 
   });
 
+  models.NewsIndexPage = models.Page
+  models.NewsPage = models.Page
+  models.NewsArchivePage = models.Page
+
 
   return models.Page;
 

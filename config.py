@@ -33,7 +33,7 @@ config = web.storage(
         "login",
         "logout",
         "password_reset",
-        "uploads",
+        "uploads"
     ],
     user_roles=["admin"],  # "editor", "user"
     page_types=dict(
@@ -50,6 +50,194 @@ config = web.storage(
                 "is_system": True
             }
         },
+        news_index={
+            "block": {
+                "template": "page",
+                "is_system": True,
+                "blocks": [
+                    {
+                        "template": "row",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 9,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "news_recent",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 3,
+                                "blocks": [
+                                    {
+                                        "template": "news_years",
+                                        "is_system": True,
+                                        "css_class": "okb-gray"
+                                    },
+                                    {
+                                        "template": "news_contact",
+                                        "is_system": True,
+                                        "css_class": "okb-blue"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "template": "row",
+                        "css_class": "pullout padin okb-blue",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 9,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "news_list",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        news={
+            "block": {
+                "template": "page",
+                "blocks": [
+                    {
+                        "template": "nav",
+                        "type": "breadcrumbs",
+                        "css_class": "nav-breadcrumbs_trimmed",
+                        "is_system": True
+                    },
+                    {
+                        "template": "row",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 9,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "news_page_title",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 3,
+                                "blocks": [
+                                    {
+                                        "template": "news_years",
+                                        "is_system": True,
+                                        "css_class": "okb-gray"
+                                    },
+                                    {
+                                        "template": "news_contact",
+                                        "is_system": True,
+                                        "css_class": "okb-blue"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "template": "row",
+                        "css_class": "pullout padin okb-blue",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 9,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "news_nav",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 3
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        news_archive={
+            "block": {
+                "template": "page",
+                "blocks": [
+                    {
+                        "template": "nav",
+                        "type": "breadcrumbs",
+                        "css_class": "nav-breadcrumbs_trimmed",
+                        "is_system": True
+                    },
+                    {
+                        "template": "row",
+                        "is_system": True,
+                        "blocks": [
+                            {
+                                "template": "column",
+                                "size": 9,
+                                "is_system": True,
+                                "blocks": [
+                                    {
+                                        "template": "news_archive_title",
+                                        "is_system": True
+                                    },
+                                    {
+                                        "template": "news_list",
+                                        "is_system": True
+                                    }
+                                ]
+                            },
+                            {
+                                "template": "column",
+                                "is_system": True,
+                                "size": 3,
+                                "blocks": [
+                                    {
+                                        "template": "news_years",
+                                        "is_system": True,
+                                        "css_class": "okb-gray"
+                                    },
+                                    {
+                                        "template": "news_contact",
+                                        "is_system": True,
+                                        "css_class": "okb-blue"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+
+
         catalog={
             "block": {
                 "template": "page",

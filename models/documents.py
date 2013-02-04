@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import os
 import web
 import json
@@ -9,7 +10,7 @@ from base import db, auth, flash
 from modules.utils import dthandler
 from modules.translation import _
 from config import config
-from template import asset_url
+from template import asset_url, template_global
 from pytils.translit import slugify
 from models.tree import *
 
@@ -182,6 +183,26 @@ def document_src(document):
     elif document.type == "document":
         document.src = "/uploads/" + document.filename
     return document
+
+
+@template_global
+def describe_extension(doc):
+    if doc.filetype == "image":
+        return _("Images")
+    elif doc.filetype == "folder":
+        return _("Folders")
+    elif doc.extension in (".txt|.rtf|.rtf|.doc|.docx|.odt|"
+                           ".odc|.odp|.pdf|.ppt|.xls|.xlsx"):
+        return _("Documents")
+    elif doc.extension in ".zip|.rar|.tar|.gz|.bz|.tgz|.arj|.7z":
+        return _("Archives")
+    else:
+        return _("Files")
+
+
+@template_global
+def filesize(doc):
+    return unicode((doc.filesize or 0) / 1024) + " " + _("kb")
 
 
 def document_to_json(document):

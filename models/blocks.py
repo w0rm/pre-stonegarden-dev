@@ -2,7 +2,7 @@ import web
 import json
 from base import db, auth, flash
 from modules.utils import dthandler
-from template import render_block, smarty, sanitize
+from template import smarty, sanitize, template_global, render_partial
 from models.tree import *
 
 
@@ -301,3 +301,21 @@ def block_to_json(block):
     build_block_tree(block, page_blocks, with_render=True)
     return json.dumps(block, default=dthandler,
                       sort_keys=True, indent=2).replace('</', '<\/')
+
+
+@template_global
+def render_block(block):
+    return render_partial.blocks.block(
+        block,
+        getattr(render_partial.blocks, block.template)(block)
+    )
+
+
+@template_global
+def render_template_block(block_name):
+    return render_partial.blocks.template_block(block_name)
+
+
+@template_global
+def render_blocks(blocks):
+    return render_partial.blocks.blocks(blocks)

@@ -42,6 +42,7 @@ class Pages(RESTfulController):
         web.form.Input("meta_keywords"),
         web.form.Input("css_code"),
         web.form.Input("js_code"),
+        DateInput("published_at", validDate),  # defaults to NOW
         web.form.Checkbox("is_published"),
         web.form.Checkbox("is_navigatable"),
     )
@@ -110,14 +111,15 @@ class TinyMCELinkList:
 
 class ToPage:
     """Redirects to page by its id"""
+    # TODO: capture page params as well eg /to/<id>/2009
 
     def GET(self, page_id):
         try:
             page = get_page_by_id(page_id)
-            if not page.is_published and not auth.get_user():
-                raise flash.redirect(_(page_access_forbidden_text), "/login")
-            else:
+            if auth.get_user() or is_page_published(page):
                 raise web.seeother(page.path)
+            else:
+                raise flash.redirect(_(page_access_forbidden_text), "/login")
         except IndexError:
             raise web.notfound()
 
@@ -127,8 +129,7 @@ class ViewPage:
 
     def GET(self, page_path):
         try:
-            page = db.select("pages", locals(),
-                             where="path=$page_path AND NOT is_deleted")[0]
+            page = get_page_by_path(page_path)
             if not page.is_published and not auth.get_user():
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             load_page_data(page)

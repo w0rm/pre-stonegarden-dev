@@ -21,3 +21,6 @@ TODO:
 	allow edit html block on dblclick
 	Prevent subcategories 2 levels deep
     insert breadcrumbs
+
+
+INSERT INTO `blocks` (`user_id`, `level`, `name`, `position`, `template`, `size`, `is_published`) VALUES ('1', '0', 'news_contact', '1', 'column', '12', '1');

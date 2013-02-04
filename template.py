@@ -3,7 +3,6 @@
 Provides helper methods to template
 """
 import os
-import re
 import pytils
 import json
 import datetime
@@ -18,29 +17,6 @@ from dateutil import parser, tz
 
 TZ_LOCAL = tz.tzlocal()
 TZ_UTC = tz.tzutc()
-
-
-# TODO: move this out of template
-REPLACE_LINKS_RE = re.compile("href=[\"']/to/(?P<page_id>\d+)[\"']")
-
-
-def replace_links_match(match):
-    page_id = match.group("page_id")
-    try:
-        page = db.select("pages", locals(), what="path",
-                         where="id=$page_id AND NOT is_deleted")[0]
-        return 'href="%(path)s"' % page
-    except IndexError:
-        return 'href="#"'
-
-
-def replace_links(input_content):
-    if input_content:
-        return REPLACE_LINKS_RE.sub(replace_links_match, input_content)
-    else:
-        return input_content
-
-# END TODO
 
 
 def datify(dtime=None, format=u"%x %H:%M", convert_to_utc=False, lang=None):
@@ -93,39 +69,6 @@ def link_to(obj_type, obj=None, method=None, **kw):
     return web.url(link, **params)
 
 
-def render_block(block):
-    return render_partial.blocks.block(
-        block,
-        getattr(render_partial.blocks, block.template)(block)
-    )
-
-
-def render_template_block(block_name):
-    return render_partial.blocks.template_block(block_name)
-
-
-def render_blocks(blocks):
-    return render_partial.blocks.blocks(blocks)
-
-
-def filesize(doc):
-    return unicode((doc.filesize or 0) / 1024) + u" " + _("kb")
-
-
-def describe_extension(doc):
-    if doc.filetype == "image":
-        return _("Images")
-    elif doc.filetype == "folder":
-        return _("Folders")
-    elif doc.extension in (".txt|.rtf|.rtf|.doc|.docx|.odt|"
-                           ".odc|.odp|.pdf|.ppt|.xls|.xlsx"):
-        return _("Documents")
-    elif doc.extension in ".zip|.rar|.tar|.gz|.bz|.tgz|.arj|.7z":
-        return _("Archives")
-    else:
-        return _("Files")
-
-
 template_globals = {
     'link_to': link_to,
     'flash': flash,
@@ -142,15 +85,25 @@ template_globals = {
     'ctx': ctx,
     '_': _,
     'n_': n_,
-    'render_block': render_block,
-    'render_template_block': render_template_block,
-    'render_blocks': render_blocks,
-    'describe_extension': describe_extension,
-    'replace_links': replace_links,
-    'filesize': filesize,
     'url': web.url,
     'changequery': web.changequery,
 }
+
+
+class template_global(object):
+    """Registers func for use in templates"""
+
+    def __init__(self, f):
+        name = f.__name__
+        if name in template_globals:
+            raise Exception("Name already registered: %s" % name)
+        else:
+            template_globals[name] = f
+        self.f = f
+
+    def __call__(self):
+        self.f()
+
 
 render_partial = template.render(config.template_dir, globals=template_globals)
 render = template.render(config.template_dir, globals=template_globals,

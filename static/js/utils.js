@@ -77,7 +77,11 @@ define(["jquery"
       if (attrs.type === "page") {
         return ""
       } else {
-        return attrs.type.charAt(0).toUpperCase() + attrs.type.slice(1);
+        var t = attrs.type.charAt(0).toUpperCase() + attrs.type.slice(1)
+        t = t.replace("_", "-")
+        t = $.camelCase(t)
+        console.log(t)
+        return t
       }
     },
 

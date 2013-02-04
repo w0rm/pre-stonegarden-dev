@@ -18,6 +18,15 @@
             <label>$_("Slug")</label>
             <input name="slug" type="text" value="<%= page.slug || "" %>">
         <% };%>
+        <% if (!page.id) { %>
+            <p>
+                <label>$_("Page type")</label>
+                <select name="type">
+                $for page in config.page_types.keys():
+                    <option value="$page">$page</option>
+                </select>
+            </p>
+        <% };%>
         <p>
             <label><input <%= page.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
         </p>
