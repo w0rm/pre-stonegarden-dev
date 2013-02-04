@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+# coding: utf-8
 import os
 import web
 import json
@@ -202,7 +202,7 @@ def describe_extension(doc):
 
 @template_global
 def filesize(doc):
-    return unicode((doc.filesize or 0) / 1024) + " " + _("kb")
+    return unicode((doc.filesize or 0) / 1024) + u" " + _("kb")
 
 
 def document_to_json(document):
