@@ -16,7 +16,8 @@ REPLACE_LINKS_RE = re.compile("href=[\"']/to/(?P<page_id>\d+)[\"']")
 
 
 def is_page_published(page):
-    return page.is_published and page.published_at < datetime.datetime.now()
+    return (page.is_published and page.published_at is not None and
+            page.published_at < datetime.datetime.now())
 
 
 def get_page_by_path(path):
@@ -119,6 +120,7 @@ def update_page_by_id(page_id, data):
         del data["slug"]
         # position can be changed, but not parent_id
         data.parent_id = page.parent_id
+        data.path = page.path
     else:
         data.parent_id = int(data.parent_id)
         data.update(unique_path(data, page_id))
@@ -302,6 +304,14 @@ def replace_links_match(match):
         return 'href="%(path)s"' % page
     except IndexError:
         return 'href="#"'
+
+
+@template_global
+def page_unpublished_class(page):
+    if not is_page_published(page):
+        return "sg-page-unpublished"
+    else:
+        return ""
 
 
 @template_global

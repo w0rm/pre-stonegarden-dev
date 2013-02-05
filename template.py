@@ -101,8 +101,8 @@ class template_global(object):
             template_globals[name] = f
         self.f = f
 
-    def __call__(self):
-        self.f()
+    def __call__(self, *k, **kw):
+        return self.f(*k, **kw)
 
 
 render_partial = template.render(config.template_dir, globals=template_globals)

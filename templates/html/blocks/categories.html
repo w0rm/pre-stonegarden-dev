@@ -5,13 +5,15 @@ $if categories:
     <ul class="catalog-categories">
     $for category in categories:
         <li>
-            <h3><a href="$category.path">$category.title</a></h3>
+            <h3><a class="$page_unpublished_class(category)"
+                   href="$category.path">$category.title</a></h3>
             $ subcategories = [c for c in category.get("pages", []) if c.type == "category"]
             $if subcategories:
                 <nav class="catalog-subcategories-nav">
                     <ul>
                     $for subcategory in subcategories:
-                        <li><a href="$subcategory.path">$subcategory.title</a></li>
+                        <li><a class="$page_unpublished_class(subcategory)"
+                               href="$subcategory.path">$subcategory.title</a></li>
                     </ul>
                 </nav>
             <div class="row">

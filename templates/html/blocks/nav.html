@@ -5,10 +5,10 @@ $if ctx.nav.get(block.type):
         <ul>
         $for p in ctx.nav.get(block.type):
             $if p.id == ctx.page.id:
-                <li><span class="active">$p.name</span>
+                <li><span class="active $page_unpublished_class(p)">$p.name</span>
             $elif ctx.page.ids and p.id in ctx.page.ids:
-                <li><a class="active" href="$p.path">$p.name</a>
+                <li><a class="active $page_unpublished_class(p)" href="$p.path">$p.name</a>
             $else:
-                <li><a href="$p.path">$p.name</a>
+                <li><a class="$page_unpublished_class(p)" href="$p.path">$p.name</a>
         </ul>
     </nav>

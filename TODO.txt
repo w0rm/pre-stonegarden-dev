@@ -3,7 +3,7 @@
 
 2. Image type block
 
-3. Cut/copy/paste on blocks and documents
+3. Cut/copy/paste on documents
 
 4. Edit page code dialog
 
@@ -24,3 +24,4 @@ TODO:
 
 
 INSERT INTO `blocks` (`user_id`, `level`, `name`, `position`, `template`, `size`, `is_published`) VALUES ('1', '0', 'news_contact', '1', 'column', '12', '1');
+UPDATE pages SET published_at = CURRENT_TIMESTAMP WHERE is_published;

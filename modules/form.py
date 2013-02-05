@@ -262,7 +262,6 @@ class PriceInput(Textbox):
             return None
 
 
-# TODO: translate these messages below:
 notnull = web.form.Validator(N_("Cannot be empty."), bool)
 validPassword = web.form.Validator(
     N_("From 6 to 180 characters"),
@@ -283,14 +282,13 @@ validPrice = web.form.Validator(
 )
 
 
-def validDate(message=N_("Incorrect date value.")):
+def valid_date(code):
+    if code is None or type(code) in (datetime.datetime, datetime.date):
+        return True
+    try:
+        date = parser.parse(code)
+        return True
+    except:
+        return False
 
-    def valid_date(code):
-        if code is None or type(code) in (datetime.datetime, datetime.date):
-            return True
-        try:
-            date = parser.parse(code)
-            return True
-        except:
-            return False
-    return web.form.Validator(message, valid_date)
+validDate = web.form.Validator(N_("Incorrect date value."), valid_date)

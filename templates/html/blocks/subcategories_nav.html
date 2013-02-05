@@ -6,7 +6,8 @@ $if subcategories:
         <ul>
         $for category in subcategories:
             <li>
-                <a href="$category.path">$category.title</a>
+                <a class="$page_unpublished_class(category)"
+                   href="$category.path">$category.title</a>
             </li>
         </ul>
     </nav>

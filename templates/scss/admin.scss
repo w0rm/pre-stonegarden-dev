@@ -29,6 +29,21 @@
   height: 300px;
 }
 
+.sg-page-unpublished {
+  @extend %sg-ico;
+  @extend .sg-ico-hidden;
+  color: #aaa;
+  &:before {
+    margin-right: .2em;
+  }
+}
+a.sg-page-unpublished {
+  &:hover {
+    color: darken(#aaa, 5%);
+  };
+}
+
+
 .mceExternalToolbar {
   z-index: 100;
   @include box-shadow;
