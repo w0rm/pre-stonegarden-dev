@@ -56,6 +56,8 @@ define(["jquery"
           return "Nav";
         case "page_title":
           return "PageTitle";
+        case "news_page_title":
+          return "PageTitle";
         case "categories":
           return "Categories";
         case "products":
@@ -79,9 +81,7 @@ define(["jquery"
       } else {
         var t = attrs.type.charAt(0).toUpperCase() + attrs.type.slice(1)
         t = t.replace("_", "-")
-        t = $.camelCase(t)
-        console.log(t)
-        return t
+        return $.camelCase(t)
       }
     },
 

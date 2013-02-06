@@ -80,7 +80,7 @@ template_globals = {
     'choose_plural': pytils.numeral.choose_plural,
     'sanitize': sanitize,
     'smarty': smarty,
-    'str': unicode,
+    #'str': unicode,
     'to_json': json.dumps,
     'ctx': ctx,
     '_': _,

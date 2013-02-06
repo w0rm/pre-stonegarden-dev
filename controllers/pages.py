@@ -12,7 +12,9 @@ from template import render, render_partial, link_to
 from modules.form import *
 from modules.restful_controller import RESTfulController
 
+import models.news
 from models.pages import *
+
 from models.blocks import (load_page_blocks, get_page_block_by_page_id,
                            block_to_json, template_blocks_to_json)
 

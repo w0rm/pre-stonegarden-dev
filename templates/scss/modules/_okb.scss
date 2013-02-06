@@ -61,6 +61,22 @@
   position: relative;
 }
 
+.okb-gray {
+  @extend .okb-lead;
+  background: #f2f2f2;
+}
+
+.okb-blue {
+  @extend .okb-lead;
+  background: #f3f8ff;
+}
+
+.okb-box {
+  @extend .okb-lead;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .okb-panel {
   @extend %cf;
   padding: ms(1) 20px 0;

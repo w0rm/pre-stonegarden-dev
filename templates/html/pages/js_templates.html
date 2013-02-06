@@ -110,3 +110,33 @@
         </p>
     </form>
 </script>
+<script type="text/template" id="news-form-template">
+    <form>
+        <label>$_("Title")</label>
+        <input name="title" type="text" value="<%= page.title || "" %>">
+        <label>$_("Date")</label>
+        <input name="published_at" type="datetime" value="<%= page.published_at || "" %>">
+        <p>
+            <label>$_("Parent")</label>
+            <select name="parent_id">
+            <% _.each(pagesList, function(p) { %>
+                <option <%= p.selected %> <%= p.disabled %>
+                        value="<%= p.id %>"><%= p.name %></option>
+            <% }); %>
+            </select>
+        </p>
+
+        <% if (hasModel) { %>
+            <label>$_("Slug")</label>
+            <input name="slug" type="text" value="<%= page.slug || "" %>">
+            <p>
+                <label><input <%= page.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
+            </p>
+        <% } %>
+        <div class="js-alert"></div>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>

@@ -9,6 +9,7 @@ define(["jquery"
       , "views/pages/catalog_form"
       , "views/pages/category_form"
       , "views/pages/product_form"
+      , "views/pages/news_form"
       , "views/pages/code_form"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -87,7 +88,7 @@ define(["jquery"
     },
 
     hardRedirect: function(model) {
-      window.location.replace(model.get("path") + window.location.search);
+      window.location.replace(model.get("path") + "?edit");
     },
 
     redirectToParent: function(model) {

@@ -78,12 +78,12 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray"
+                                        "css_class": "okb-gray okb-box"
                                     },
                                     {
                                         "template": "news_contact",
                                         "is_system": True,
-                                        "css_class": "okb-blue"
+                                        "css_class": "okb-blue okb-box"
                                     }
                                 ]
                             }
@@ -118,6 +118,7 @@ config = web.storage(
         news={
             "block": {
                 "template": "page",
+                "is_system": True,
                 "blocks": [
                     {
                         "template": "nav",
@@ -133,10 +134,21 @@ config = web.storage(
                                 "template": "column",
                                 "size": 9,
                                 "is_system": True,
+                                "css_class": "news_content",
                                 "blocks": [
                                     {
                                         "template": "news_page_title",
                                         "is_system": True
+                                    },
+                                    {
+                                        "template": "content",
+                                        "content": "",
+                                        "content_cached":
+                                        "<p>Double-click to update "
+                                        "with actual "
+                                        "text of the news.</p>",
+                                        "type": "wysiwyg",
+                                        "is_system": False
                                     }
                                 ]
                             },
@@ -148,12 +160,12 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray"
+                                        "css_class": "okb-gray okb-box"
                                     },
                                     {
                                         "template": "news_contact",
                                         "is_system": True,
-                                        "css_class": "okb-blue"
+                                        "css_class": "okb-blue okb-box"
                                     }
                                 ]
                             }
@@ -188,6 +200,7 @@ config = web.storage(
         news_archive={
             "block": {
                 "template": "page",
+                "is_system": True,
                 "blocks": [
                     {
                         "template": "nav",
@@ -222,12 +235,12 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray"
+                                        "css_class": "okb-gray okb-box"
                                     },
                                     {
                                         "template": "news_contact",
                                         "is_system": True,
-                                        "css_class": "okb-blue"
+                                        "css_class": "okb-blue okb-box"
                                     }
                                 ]
                             }
@@ -236,8 +249,6 @@ config = web.storage(
                 ]
             }
         },
-
-
         catalog={
             "block": {
                 "template": "page",

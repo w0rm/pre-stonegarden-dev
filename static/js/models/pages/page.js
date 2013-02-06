@@ -324,8 +324,99 @@ define(["jquery"
 
   });
 
-  models.NewsIndexPage = models.Page
-  models.NewsPage = models.Page
+
+  models.NewsIndexPage = models.Page.extend({
+
+    getNewsMenuItems: function() {
+      return [
+        {
+          text: t_("Style and scripts"),
+          click: this.editCode
+        },
+        {
+          isSeparator: true
+        },
+        {
+          text: t_("Create news"),
+          click: this.createNews
+        }
+      ]
+    },
+
+    getPageMenu: function() {
+
+      var items = this.getNewsMenuItems();
+
+      items.unshift({
+        text: t_("News index attributes"),
+        click: this.edit
+      });
+
+      return {
+        className: "sg-ico-electronics",
+        items: items,
+        text: "",
+        title: t_("News Index"),
+        context: this
+      }
+
+    },
+
+    createNews: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("id"),
+        type: "news"
+      });
+    }
+
+  });
+
+
+  models.NewsPage = models.NewsIndexPage.extend({
+
+    getPageMenu: function() {
+
+      var items = this.getNewsMenuItems();
+
+      items.unshift({
+        text: t_("News attributes"),
+        click: this.edit
+      });
+
+      items.push({
+        text: t_("Delete this news"),
+        click: this.delete
+      });
+
+      return {
+        className: "sg-ico-electronics",
+        items: items,
+        text: "",
+        title: t_("News"),
+        context: this
+      };
+
+    },
+
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this news?"),
+        message: t_("Are you sure to delete this product?")
+      }
+    },
+
+    // Use parent_id
+
+    createNews: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("parent_id"),
+        type: "news"
+      });
+    }
+
+  });
+
+
   models.NewsArchivePage = models.Page
 
 

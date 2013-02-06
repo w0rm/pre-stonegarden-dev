@@ -1,3 +1,11 @@
 $def with(block)
 $# Outputs news years
+$code:
+    years = get_news_years()
+
+$if years:
+    <ul>
+    $for year in years:
+        <li>$year</li>
+    </ul>
 
