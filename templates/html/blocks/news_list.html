@@ -4,6 +4,8 @@ $# Outputs  news list
 $code:
     if ctx.page.type == "news_index":
         news_list = get_recent_news(5, 1)
+    elif ctx.page.type == "news_archive":
+        news_list = get_news_for_year(ctx.page.args[0])
     else:
         news_list = get_recent_news(5)
 

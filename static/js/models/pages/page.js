@@ -417,8 +417,32 @@ define(["jquery"
   });
 
 
-  models.NewsArchivePage = models.Page
+  models.NewsArchivePage = models.NewsIndexPage.extend({
 
+    getPageMenu: function() {
+
+      var items = this.getNewsMenuItems();
+
+      return {
+        className: "sg-ico-news",
+        items: items,
+        text: "",
+        title: t_("News"),
+        context: this
+      };
+
+    },
+
+    // Use parent_id
+
+    createNews: function() {
+      this.trigger("page:create", {
+        parent_id: this.get("parent_id"),
+        type: "news"
+      });
+    }
+
+  });
 
   return models.Page;
 

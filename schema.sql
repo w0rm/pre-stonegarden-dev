@@ -50,7 +50,7 @@ CREATE TABLE sessions (
 CREATE TABLE pages (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	path VARCHAR(255),
-	params INTEGER,
+	params INTEGER DEFAULT '0',
 	slug VARCHAR(255),
 	parent_id INTEGER,
 	user_id INTEGER,

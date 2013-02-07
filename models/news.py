@@ -26,6 +26,17 @@ def get_recent_news(limit=5, offset=0):
 
 
 @template_global
+def get_news_for_year(year):
+    return db.select(
+        "pages",
+        where="`type` = 'news' AND NOT is_deleted "
+              "AND YEAR(published_at) = $year" + page_where(),
+        order="published_at DESC",
+        vars=locals()
+    ).list()
+
+
+@template_global
 def render_news_content(news, css_class="news_content"):
     news_blocks = get_page_blocks_by_page_id(news.id)
     parent_block = next(b for b in news_blocks if b.css_class == css_class)
@@ -43,12 +54,11 @@ def get_news_years():
         what="MAX(published_at) AS max_date, MIN(published_at) AS min_date",
         where="`type` = 'news' AND NOT is_deleted" + page_where(),
     ).list()
-    if years:
-        if years[0].min_date and years[0].max_date:
-            year_min = years[0].min_date.year
-            year_max = years[0].max_date.year
-            if year_max > year_min:
-                return list(range(year_min, year_max + 1))
+    if years and years[0].min_date and years[0].max_date:
+        year_min = years[0].min_date.year
+        year_max = years[0].max_date.year
+        if year_max > year_min:
+            return list(range(year_min, year_max + 1))
 
 
 @template_global
@@ -70,3 +80,25 @@ def get_news_next_prev_links(news):
         vars=news
     )), None)
     return prev_link, next_link
+
+
+@template_global
+def link_year(year):
+    try:
+        news_archive = web.ctx.news_archive
+    except:
+        news_archive = db.select("pages", where="type='news_archive'",
+                                 limit=1)[0]
+        web.ctx.news_archive = news_archive
+    return web.ctx.news_archive.path + "/" + str(year)
+
+
+@template_global
+def get_current_year_state(year):
+    """Returns two booleans: link, active state"""
+    if web.ctx.page.type == "news_archive":
+        return str(year) != web.ctx.page.args[0], False
+    elif web.ctx.page.type == "news":
+        return True, web.ctx.page.published_at.year == year
+    else:
+        return True, False

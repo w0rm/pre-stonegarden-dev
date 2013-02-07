@@ -6,6 +6,16 @@ $code:
 $if years:
     <ul>
     $for year in years:
-        <li>$year</li>
+        $code:
+            link, active = get_current_year_state(year)
+        <li>
+        $if link:
+            $if active:
+                <a href="$link_year(year)" class="active">$year</a>
+            $else:
+                <a href="$link_year(year)">$year</a>
+        $else:
+            $year
+        </li>
     </ul>
 

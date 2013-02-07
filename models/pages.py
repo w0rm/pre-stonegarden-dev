@@ -3,6 +3,7 @@ import web
 import json
 import re
 import datetime
+import os
 from base import db, auth
 from pytils.translit import slugify
 from config import config
@@ -28,11 +29,26 @@ def is_page_published(page):
 
 
 def get_page_by_path(path):
-    return db.select(
-        "pages",
-        locals(),
-        where="path = $path AND NOT is_deleted" + page_where(),
-        limit=1)[0]
+    params = 0
+    args = []
+    while True:
+        page = next(iter(db.select(
+            "pages",
+            locals(),
+            where="path = $path AND NOT is_deleted"
+                  " AND params = $params" +
+                  page_where(),
+            limit=1)), None)
+        if page is not None:
+            page.args = args
+            return page
+        else:
+            params += 1
+            path, arg = os.path.split(path)
+            if path == "/":
+                break
+            args.append(arg)
+    raise web.notfound()
 
 
 def get_page_by_id(page_id):
