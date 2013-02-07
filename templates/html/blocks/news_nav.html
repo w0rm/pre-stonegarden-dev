@@ -1,2 +1,16 @@
 $def with(block)
 $# Prev and Next news links
+$code:
+    prev_link, next_link = get_news_next_prev_links(ctx.page)
+<nav class="row">
+$if prev_link is not None:
+    <div class="six columns">
+        <time>$datify(prev_link.published_at, u"%d %B %Y")</time>
+        <h4><a href="$prev_link.path" class="$page_unpublished_class(prev_link)">$prev_link.title</a></h4>
+    </div>
+$if next_link is not None:
+    <div class="six columns">
+        <time>$datify(next_link.published_at, u"%d %B %Y")</time>
+        <h4><a href="$next_link.path" class="$page_unpublished_class(next_link)">$next_link.title</a></h4>
+    </div>
+</nav>

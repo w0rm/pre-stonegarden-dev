@@ -353,7 +353,7 @@ define(["jquery"
       });
 
       return {
-        className: "sg-ico-electronics",
+        className: "sg-ico-news",
         items: items,
         text: "",
         title: t_("News Index"),
@@ -389,7 +389,7 @@ define(["jquery"
       });
 
       return {
-        className: "sg-ico-electronics",
+        className: "sg-ico-news",
         items: items,
         text: "",
         title: t_("News"),
@@ -401,7 +401,7 @@ define(["jquery"
     getDeleteOptions: function() {
       return {
         title: t_("Delete this news?"),
-        message: t_("Are you sure to delete this product?")
+        message: t_("Are you sure to delete this news?")
       }
     },
 

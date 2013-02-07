@@ -1,27 +1,17 @@
 
-1. Wysiwyg improvements (tables, links)
+1. Cut/copy/paste on documents
 
-2. Image type block
+2. Edit page code dialog
 
-3. Cut/copy/paste on documents
-
-4. Edit page code dialog
-
-5. Render the following forms in templates by parts:
+3. Render the following forms in templates by parts:
 	user forms
 	login form
 	password reset form
 	password change form
 
 
-6. Dont show unpublished in public site navigation
-
-TODO:
-	css hanging wysiwyg toolbar
-	allow edit html block on dblclick
-	Prevent subcategories 2 levels deep
-    insert breadcrumbs
-
-
 INSERT INTO `blocks` (`user_id`, `level`, `name`, `position`, `template`, `size`, `is_published`) VALUES ('1', '0', 'news_contact', '1', 'column', '12', '1');
+
+ALTER TABLE `pages` ADD COLUMN `params` INT(1) NULL DEFAULT NULL AFTER `path`;
+
 UPDATE pages SET published_at = CURRENT_TIMESTAMP WHERE is_published;

@@ -52,5 +52,21 @@ def get_news_years():
 
 
 @template_global
-def get_news_next_prev_links():
-    return None, None
+def get_news_next_prev_links(news):
+    next_link = next(iter(db.select(
+        "pages",
+        where="published_at > $published_at AND `type` = 'news' "
+              "AND NOT is_deleted" + page_where(),
+        order="published_at ASC",
+        limit=1,
+        vars=news
+    )), None)
+    prev_link = next(iter(db.select(
+        "pages",
+        where="published_at < $published_at AND `type` = 'news' "
+              "AND NOT is_deleted" + page_where(),
+        order="published_at DESC",
+        limit=1,
+        vars=news
+    )), None)
+    return prev_link, next_link

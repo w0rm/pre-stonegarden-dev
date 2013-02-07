@@ -95,10 +95,10 @@ class template_global(object):
 
     def __init__(self, f):
         name = f.__name__
-        if name in template_globals:
-            raise Exception("Name already registered: %s" % name)
-        else:
-            template_globals[name] = f
+        #if name in template_globals:
+        #    raise Exception("Name already registered: %s" % name)
+        #else:
+        template_globals[name] = f
         self.f = f
 
     def __call__(self, *k, **kw):

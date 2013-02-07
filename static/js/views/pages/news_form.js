@@ -37,5 +37,4 @@ define(["jquery"
 
   return views.CategoryPageForm;
 
-
 });

@@ -233,7 +233,9 @@ class DateInput(Textbox):
 
     def get_value(self):
         try:
-            if type(self.value) in (datetime.datetime, datetime.date):
+            if not self.value:
+                return None
+            elif type(self.value) in (datetime.datetime, datetime.date):
                 return self.value
             else:
                 return parser.parse(self.value)
