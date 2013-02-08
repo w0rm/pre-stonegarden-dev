@@ -107,15 +107,19 @@
         <input name="title" type="text" value="<%= page.title || "" %>">
         <label>$_("Date")</label>
         <input name="published_at" type="datetime" value="<%= page.published_at || "" %>">
-        <p>
-            <label>$_("Parent")</label>
-            <select name="parent_id">
-            <% _.each(pagesList, function(p) { %>
-                <option <%= p.selected %> <%= p.disabled %>
-                        value="<%= p.id %>"><%= p.name %></option>
-            <% }); %>
-            </select>
-        </p>
+        <% if (pagesList.length === 1) { %>
+            <input type="hidden" name="parent_id" value="<%= pagesList[0].id %>">
+        <% } else { %>
+            <p>
+                <label>$_("Parent")</label>
+                <select name="parent_id">
+                <% _.each(pagesList, function(p) { %>
+                    <option <%= p.selected %> <%= p.disabled %>
+                            value="<%= p.id %>"><%= p.name %></option>
+                <% }); %>
+                </select>
+            </p>
+        <% } %>
 
         <% if (hasModel) { %>
             <label>$_("Slug")</label>
