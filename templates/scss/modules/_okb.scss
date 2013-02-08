@@ -38,18 +38,51 @@
   height: 200px;
   white-space: nowrap;
   padding: $columnGutter / 2 0;
-  padding-top: 150px;
   border: 1px solid transparent;
   overflow: hidden;
   @include border-radius(10px);
   @include border-top-right-radius(0);
   &.is-active, &:hover {
-    border-color: $link;
+    border-color: #fff;
     text-decoration: none;
     color: #fff;
   };
   font-weight: 700
 }
+
+
+@each $category in microelectronika, radiotehnika, elektrotehnika, other {
+
+  .okb-splash-#{$category} {
+    &:before {
+      content: "";
+      display: block;
+      margin:  10px auto;
+      @include svg-sprite("#{$category}130");
+    }
+  }
+
+  .okb-title-#{$category} {
+    &:before {
+      content: "";
+      display: inline-block;
+      @include svg-sprite("#{$category}50");
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .catalog-categories {
+    .okb-title-#{$category} {
+      &:before {
+        margin-left: -60px;
+      }
+
+    }
+  }
+
+}
+
 
 .okb-lead {
   background: $grey10;

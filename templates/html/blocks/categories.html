@@ -5,7 +5,7 @@ $if categories:
     <ul class="catalog-categories">
     $for category in categories:
         <li>
-            <h3><a class="$page_unpublished_class(category)"
+            <h3 class="okb-title-$category.slug"><a class="$page_unpublished_class(category)"
                    href="$category.path">$category.title</a></h3>
             $ subcategories = [c for c in category.get("pages", []) if c.type == "category"]
             $if subcategories:
