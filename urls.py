@@ -7,6 +7,11 @@ urls = (
     "/a/config.js", "controllers.application.Config",
 
     # ======================
+    # News
+    # ======================
+    "/newsfeed.rss", "controllers.news.Feed",
+
+    # ======================
     # Users
     # ======================
 

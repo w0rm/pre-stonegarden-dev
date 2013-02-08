@@ -39,7 +39,10 @@ def get_news_for_year(year):
 @template_global
 def render_news_content(news, css_class="news_content"):
     news_blocks = get_page_blocks_by_page_id(news.id)
-    parent_block = next(b for b in news_blocks if b.css_class == css_class)
+    parent_block = next((b for b in news_blocks if
+                        b.css_class == css_class), None)
+    if parent_block is None:
+        return ""
     news_blocks = [b for b in news_blocks
                    if not b.template == "news_page_title"]
     parent_block = build_block_tree(parent_block, news_blocks)
