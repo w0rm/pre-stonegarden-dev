@@ -85,30 +85,51 @@ define(["jquery"
       }
     },
 
-    timify: function(time) {
-      if (time < 10) {
-        return "0" + time;
-      } else {
-        return time;
-      }
-    },
-
-    dateFromString: function(dateAsString) {
-      var parts, pattern;
-      pattern = new RegExp("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})");
-      parts = dateAsString.match(pattern);
-      if (parts) {
-        return new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10), 0);
-      } else {
-        return null;
-      }
-    },
-
     getParentPath: function(path) {
       if (path.lastIndexOf("/") > 0) {
         return path.substr(0, path.lastIndexOf("/"))
       } else {
         return "/"
+      }
+    },
+
+    // Returns a range object
+    // Author: Matthias Miller
+    // Site:   http://blog.outofhanwell.com/2006/03/29/javascript-range-function/
+    range:  function() {
+      var min, max, step, a = [];
+      if ( !arguments.length ) {
+          return [];
+      }
+      if ( arguments.length == 1 ) {
+          min  = 0;
+          max  = arguments[ 0 ] - 1;
+          step = 1;
+      } else {
+          // default step to 1 if it's zero or undefined
+          min  = arguments[ 0 ];
+          max  = arguments[ 1 ] - 1;
+          step = arguments[ 2 ] || 1;
+      }
+      // convert negative steps to positive and reverse min/max
+      if ( step < 0 && min >= max ) {
+          step *= -1;
+          var tmp = min;
+          min = max;
+          max = tmp;
+          min += ( ( max - min ) % step );
+      }
+      for ( var i = min; i <= max; i += step ) {
+          a.push( i );
+      }
+      return a;
+    },
+
+    timify: function(time) {
+      if (time < 10) {
+        return "0" + time;
+      } else {
+        return time;
       }
     }
 

@@ -106,7 +106,24 @@
         <label>$_("Title")</label>
         <input name="title" type="text" value="<%= page.title || "" %>">
         <label>$_("Date")</label>
-        <input name="published_at" type="datetime" value="<%= page.published_at || "" %>">
+        <div class="row">
+            <input type="text" class="six columns"
+                   name="published_date" readonly>
+            <div class="six columns sg-datepicker-time">
+                <select name="published_hours">
+                    <% _.each(hoursValues, function(h) { %>
+                        <option value="<%= h %>"><%= h %></option>
+                    <% }); %>
+                </select>
+                <span class="sg-datepicker-dots">:</span>
+                <select name="published_minutes">
+                    <% _.each(minutesValues, function(m) { %>
+                        <option value="<%= m %>"><%= m %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+
         <% if (pagesList.length === 1) { %>
             <input type="hidden" name="parent_id" value="<%= pagesList[0].id %>">
         <% } else { %>
