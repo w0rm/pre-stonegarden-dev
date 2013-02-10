@@ -384,7 +384,7 @@ define(["jquery"
       });
 
       items.push({
-        text: t_("Delete this news"),
+        text: t_("Delete news"),
         click: this.delete
       });
 
@@ -400,8 +400,8 @@ define(["jquery"
 
     getDeleteOptions: function() {
       return {
-        title: t_("Delete this news?"),
-        message: t_("Are you sure to delete this news?")
+        title: t_("Delete news?"),
+        message: t_("Are you sure to delete news?")
       }
     },
 

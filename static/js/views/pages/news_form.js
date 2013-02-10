@@ -44,10 +44,8 @@ define(["jquery"
       var date = this.$("[name=published_date]").datepicker("getDate")
         , hours = parseInt(this.$("[name=published_hours]").val())
         , minutes = parseInt(this.$("[name=published_minutes]").val())
-
       date.setHours(hours)
       date.setMinutes(minutes)
-
       return date
     },
 
@@ -59,6 +57,7 @@ define(["jquery"
 
       if (this.model) {
         dateTime = new Date(this.model.get("published_at"))
+        // Convert UTC to local time
         dateTime.setHours(dateTime.getHours() + timeOffsetInHours)
       } else {
         dateTime = new Date;
