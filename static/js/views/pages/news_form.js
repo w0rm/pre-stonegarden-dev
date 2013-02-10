@@ -17,7 +17,8 @@ define(["jquery"
         {
           is_published: this.$("[name=is_published]").is(":checked") ? true : "",
           is_navigatable: "",
-          published_at: this.getPublishedDateTime()
+          published_at: this.getPublishedDateTime(),
+          slug: this.getSlug()
         },
         this.attrs,
         sg.utils.serializeObject(this.$el)
@@ -47,6 +48,13 @@ define(["jquery"
       date.setHours(hours)
       date.setMinutes(minutes)
       return date
+    },
+
+    getSlug: function() {
+      var date = this.getPublishedDateTime();
+      return date.getFullYear() + "-" +
+             sg.utils.timify(date.getMonth() + 1) + "-" +
+             sg.utils.timify(date.getDate())
     },
 
     render: function() {
