@@ -1,10 +1,11 @@
-$def with(json_data)
+$def with(json_data=None)
 
 $var title = ctx.page.title
 $var meta_description = ctx.page.meta_description
 $var meta_keywords = ctx.page.meta_keywords
 $var js_code = ctx.page.js_code
 $var css_code = ctx.page.css_code
+
 
 $if not "page_block" in json_data:
     $:render_block(ctx.page_block)
@@ -15,8 +16,9 @@ $else:
         sgData.templateBlocks = $:json_data.template_blocks;
     </script>
 
-<script>
-    var sgData = sgData || {};
-    sgData.page = $:json_data.page;
-    sgData.pages = $:json_data.pages;
-</script>
+$if json_data:
+    <script>
+        var sgData = sgData || {};
+        sgData.page = $:json_data.page;
+        sgData.pages = $:json_data.pages;
+    </script>

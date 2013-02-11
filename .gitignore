@@ -14,6 +14,7 @@
 #Stonegarden
 siteconfig.py
 upload/*
+static/static.tar
 static/i/*
 static/css/*
 static/img/sprites/*

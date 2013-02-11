@@ -136,10 +136,15 @@ class ViewPage:
             if not page.is_published and not auth.get_user():
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             load_page_data(page)
-            json_data = web.storage(
-                page=page_to_json(page),
-                pages=pages_to_json(get_pages_in_tree_order()),
-            )
+
+            if auth.has_role("admin", "editor"):
+                json_data = web.storage(
+                    page=page_to_json(page),
+                    pages=pages_to_json(get_pages_in_tree_order()),
+                )
+            else:
+                json_data = web.storage()
+
             if "edit" in web.input() and auth.has_role("admin", "editor"):
                 json_data.update(
                     page_block=block_to_json(

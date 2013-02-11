@@ -33,7 +33,8 @@ config = web.storage(
         "login",
         "logout",
         "password_reset",
-        "uploads"
+        "uploads",
+        "newsfeed.rss",
     ],
     user_roles=["admin"],  # "editor", "user"
     page_types=dict(
