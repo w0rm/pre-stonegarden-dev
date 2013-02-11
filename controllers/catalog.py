@@ -77,8 +77,8 @@ def format_soup(soup, path):
 
 class Export:
 
+    @auth.restrict("admin", "editor")
     def GET(self):
-
         browser = web.browser.Browser()
 
         catalogPages = db.select(
@@ -125,5 +125,5 @@ class Export:
                 raise
 
         tar.close()
-        return (u"<a href=\"/static/static.tar\">Теперь скачайте "
-                u"статическую версию сайта по этой ссылке</a>")
+        return (u"<p><a href=\"/static/static.tar\">Теперь скачайте "
+                u"статическую версию сайта по этой ссылке</a></p>")
