@@ -94,7 +94,7 @@
         </p>
         <div class="sg-block-row js-columns">
         <% for(var i = 1; i <= 6; i++) { %>
-            <div class="sg-block-column-<%= sizes[i-1] %> <%= (i > sizes.length) ? 'sg-hidden' : '' %>">
+            <div class="sg-block-col-<%= sizes[i-1] %> <%= (i > sizes.length) ? 'sg-hidden' : '' %>">
                 <input name="sizes" value="<%= sizes[i-1] %>" >
             </div>
         <% } %>

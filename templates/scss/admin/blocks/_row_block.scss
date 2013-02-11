@@ -1,17 +1,19 @@
 $row-color: $grey40;
 
 .sg-block-row {
-  overflow: hidden;
   margin-bottom: 17px;
+  display: table;
 }
 
-%sg-block-column {
-  float: left;
+%sg-block-col {
+  display: table-cell;
   @include box-sizing(border-box);
   padding: 0 2px;
   input {
     display: block;
+    @include box-sizing(border-box);
     width: 100%;
+    border: 1px solid $grey40;
   }
   &:before {
     content: "";
@@ -35,8 +37,8 @@ $row-color: $grey40;
 }
 
 @for $i from 1 through 12 {
-  .sg-block-column-#{$i} {
+  .sg-block-col-#{$i} {
     width: 100% * $i / 12;
-    @extend %sg-block-column;
+    @extend %sg-block-col;
   }
 }
