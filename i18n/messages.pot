@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2013-02-10 16:15+0400\n"
+"POT-Creation-Date: 2013-02-11 22:18+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "Repeat"
 msgstr ""
 
 #: stonegarden/controllers/blocks.py:28
-msgid "Sizes should be positive integers and  sum should equal 12"
+msgid "Sizes should be positive integers and sum should equal 12"
 msgstr ""
 
 #: stonegarden/controllers/pages.py:23

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2013-02-10 16:15+0400\n"
-"PO-Revision-Date: 2013-02-10 16:28+0400\n"
+"POT-Creation-Date: 2013-02-11 22:18+0400\n"
+"PO-Revision-Date: 2013-02-11 22:18+0400\n"
 "Last-Translator: Andrey Kuzmin <unsoundscapes@gmail.com>\n"
 "Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: stonegarden/config.py:358
 msgid "Administrator"
@@ -142,7 +142,7 @@ msgid "Repeat"
 msgstr "Повторите"
 
 #: stonegarden/controllers/blocks.py:28
-msgid "Sizes should be positive integers and  sum should equal 12"
+msgid "Sizes should be positive integers and sum should equal 12"
 msgstr "Сумма колонок должна быть равна 12"
 
 #: stonegarden/controllers/pages.py:23

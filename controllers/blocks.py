@@ -26,7 +26,7 @@ class Blocks(RESTfulController):
         web.form.Checkbox("is_published"),
         validators=[
             web.form.Validator(N_("Sizes should be positive integers and "
-                                  " sum should equal 12"),
+                                  "sum should equal 12"),
                                validate_row_block_form)
         ]
     )

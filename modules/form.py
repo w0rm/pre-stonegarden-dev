@@ -27,7 +27,7 @@ class ApiForm(web.form.Form):
         result = web.storage(errors={})
         if self.note:
             result.errors["_form"] = web.storage(
-                note=self.note
+                note=_(self.note)
             )
         for i in self.inputs:
             if i.note:
