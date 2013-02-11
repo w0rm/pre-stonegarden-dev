@@ -4,6 +4,8 @@ import web
 import datetime
 import StringIO
 import tarfile
+import urllib2
+from BeautifulSoup import BeautifulSoup
 import os
 from base import db, auth, flash
 from modules.translation import N_, _
@@ -79,14 +81,13 @@ class Export:
 
     @auth.restrict("admin", "editor")
     def GET(self):
-        browser = web.browser.Browser()
 
         catalogPages = db.select(
             "pages",
             what="path",
             where="`type` IN $types AND NOT is_deleted " +
                   page_where(with_auth_check=False),
-            limit=4,
+            #limit=4,
             vars={"types": EXPORT_PAGE_TYPES}
         )
 
@@ -99,13 +100,14 @@ class Export:
         all_files = []
 
         for p in catalogPages:
-            browser.open(web.ctx.home + p.path)
-            soup = browser.get_soup()
+            html = urllib2.urlopen(web.ctx.home + p.path).read()
+            soup = BeautifulSoup(html)
             soup, files = format_soup(soup, p.path)
             all_files += files
             add_string(tar, str(soup), p.path + ".html")
 
         all_files += STATIC_INCLUDES
+        all_files = set(all_files)
         for name in all_files:
             try:
                 tar_path = "static/" + name
@@ -116,13 +118,14 @@ class Export:
                             tar.add(
                                 root + "/" + filename,
                                 substract_root(
-                                    root + "/" + filename, config.rootdir + "/"
+                                    root + "/" + filename,
+                                    config.rootdir + "/"
                                 )
                             )
                 else:
                     tar.add(sys_path, tar_path)
             except:
-                raise
+                pass
 
         tar.close()
         return (u"<p><a href=\"/static/static.tar\">Теперь скачайте "
