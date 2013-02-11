@@ -1,3 +1,5 @@
+$row-color: $grey40;
+
 .sg-block-row {
   overflow: hidden;
   margin-bottom: 17px;
@@ -11,6 +13,25 @@
     display: block;
     width: 100%;
   }
+  &:before {
+    content: "";
+    display: block;
+    height: 55px;
+    @include background(
+      linear-gradient(
+        $row-color 0, $row-color 10px,
+        #fff 10px, #fff 15px,
+        $row-color 15px, $row-color 20px,
+        #fff 20px, #fff 25px,
+        $row-color 25px, $row-color 30px,
+        #fff 30px, #fff 35px,
+        $row-color 35px, $row-color 40px,
+        #fff 40px, #fff 45px,
+        $row-color 45px, $row-color 50px,
+        #fff 50px
+      )
+    );
+  };
 }
 
 @for $i from 1 through 12 {
