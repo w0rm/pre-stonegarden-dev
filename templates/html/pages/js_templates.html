@@ -1,4 +1,19 @@
-<script type="text/template" id="page-code-form-template"></script>
+<script type="text/template" id="page-code-form-template">
+    <form>
+        <p>
+        <label>$_("CSS code")</label>
+        <textarea data-mode="css" name="css_code" rows="10"><%= page.css_code || "" %></textarea>
+        </p>
+        <p>
+        <label>$_("JS code")</label>
+        <textarea data-mode="javascript" name="js_code" rows="10"><%= page.js_code || "" %></textarea>
+        </p>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
 <script type="text/template" id="page-form-template">
     <form>
         <label>$_("Title")</label>

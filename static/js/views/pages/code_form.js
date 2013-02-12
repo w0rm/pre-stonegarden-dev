@@ -2,6 +2,7 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "plugins/jquery.ace"
       , "views/alert_form"], function ($, _, Backbone, sg) {
 
   var views = sg.views;
@@ -36,6 +37,10 @@ define(["jquery"
 
     render: function() {
       this.$el.html(this.template(this.getTemplateAttributes()));
+
+      this.$("[name=js_code]").ace();
+      this.$("[name=css_code]").ace();
+
       return this;
     }
 
