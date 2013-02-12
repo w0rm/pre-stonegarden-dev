@@ -18,6 +18,9 @@
     z-index: 1;
     width: 100%;
     border-bottom: 2px dashed $grey80;
+    .js-template-block & {
+      border-bottom-style: dotted
+    }
   }
 
   .sg-block-inserter-menu {

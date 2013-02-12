@@ -1,5 +1,4 @@
 
-
 .nav-root, .nav-secondary {
   .active, .active:hover {
     color: inherit;
@@ -16,13 +15,13 @@
     padding: 7px 10px;
   }
   .active {
-    background: $grey05;
+    background: $greyBackgroundColor;
     @include border-top-left-radius(10px)
   }
 }
 
 .nav-secondary {
-  background: $grey05;
+  background: $greyBackgroundColor;
   @include border-bottom-radius(10px);
   padding: 7px 0;
   a, span {

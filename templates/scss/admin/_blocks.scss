@@ -1,32 +1,36 @@
+
+
 @import "blocks/inserter";
 @import "blocks/placeholder";
 @import "blocks/row_block";
 
+.sg-page-edit {
 
-.block {
-  // Prevent collapsing margins
-  // @extend %cf;
-  // Allow context menu positioning
-  position: relative;
-  // Set min height
-  min-height: 36px;
-}
+  .block {
+    // Prevent collapsing margins
+    // @extend %cf;
+    // Allow context menu positioning
+    position: relative;
+    // Set min height
+    min-height: 36px;
+  }
 
-.blocks {
-  // Allow inserter positioning
-  position: relative;
-  // Increase vertical space between inserters
-  padding: 5px 0;
-  // Prevent collapsing margins
-  @extend %cf;
-}
+  .blocks {
+    // Allow inserter positioning
+    position: relative;
+    // Increase vertical space between inserters
+    padding: 5px 0;
+    // Prevent collapsing margins
+    @extend %cf;
+  }
 
-.sg-block-highlight {
-  @include box-shadow;
-}
+  .sg-block-highlight {
+    @include box-shadow;
+  }
 
-.pullout.block {
-  > .sg-contextmenu-show {
-    left: 15px;
+  .pullout.block {
+    > .sg-contextmenu-show {
+      left: 15px;
+    }
   }
 }

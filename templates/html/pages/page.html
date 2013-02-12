@@ -10,6 +10,7 @@ $var css_code = ctx.page.css_code
 $if not "page_block" in json_data:
     $:render_block(ctx.page_block)
 $else:
+    $var class = "sg-page-edit"
     <script>
         var sgData = sgData || {};
         sgData.pageBlock = $:json_data.page_block;

@@ -1,6 +1,6 @@
 .nav-breadcrumbs ul {
   @extend .small;
-  margin: 0;
+  margin: 0 0 ms(1);
   > li {
     display: inline;
     &:before {

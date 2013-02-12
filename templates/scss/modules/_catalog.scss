@@ -10,14 +10,13 @@
 }
 
 .catalog-products {
-  margin-bottom: 34px;
+  margin-top: ms(1);
   list-style-type: disc;
 }
 
 .catalog-subcategories-nav > ul {
-  margin-left: 0;
-  margin-bottom: 17px;
   @extend %inline-block-list;
+  margin: ms(1) 0;
   > li {
     margin-right: 20px;
   }

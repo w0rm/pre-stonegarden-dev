@@ -25,10 +25,12 @@ $maxPageWidth: 1400px;
 }
 
 .padtop {
+  @extend %clearfix;
   padding-top: ms(1);
   > *:first-child {
-    margin-top: 0;
-  }
+    margin-top: 0
+  };
+  position: relative;
 }
 
 @include respondTo(smallScreen) {
