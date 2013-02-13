@@ -83,6 +83,15 @@
 }
 
 
+@each $category in catalog, about {
+  .okb-splash-image-#{$category} {
+    background: image-url("splash/images/#{$category}.jpg") 50% 0% no-repeat;
+  }
+  .okb-splash-blueprint-#{$category} {
+    background: image-url("splash/blueprints/#{$category}.png") 50% 0% no-repeat;
+  }
+}
+
 .okb-box {
   @extend .padtop;
   padding-left: 20px;
