@@ -17,7 +17,7 @@ define(["jquery"
         {
           is_published: this.$("[name=is_published]").is(":checked") ? true : "",
           is_navigatable: "",
-          published_at: this.getPublishedDateTime(),
+          published_at: this.getSerializedDate(),
           slug: this.getSlug()
         },
         this.attrs,
@@ -25,6 +25,15 @@ define(["jquery"
       );
       result.name = result.title
       return result
+    },
+
+    getSerializedDate: function() {
+      var date = this.getPublishedDateTime();
+      return date.getFullYear() + "-" +
+             sg.utils.timify(date.getMonth() + 1) + "-" +
+             sg.utils.timify(date.getDate()) + "T" +
+             sg.utils.timify(date.getHours()) + ":" +
+             sg.utils.timify(date.getMinutes()) + ":00"
     },
 
     getTemplateAttributes: function() {

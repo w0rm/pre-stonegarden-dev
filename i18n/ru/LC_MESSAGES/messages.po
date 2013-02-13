@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
 "POT-Creation-Date: 2013-02-11 22:18+0400\n"
-"PO-Revision-Date: 2013-02-11 22:18+0400\n"
+"PO-Revision-Date: 2013-02-13 23:05+0400\n"
 "Last-Translator: Andrey Kuzmin <unsoundscapes@gmail.com>\n"
 "Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -269,15 +269,15 @@ msgstr "Пароли должны совпадать."
 
 #: stonegarden/modules/form.py:278
 msgid "Incorrect email."
-msgstr "Неправедный адрес эл. почты."
+msgstr "Неправельный адрес эл. почты."
 
 #: stonegarden/modules/form.py:282
 msgid "Incorrect price value."
-msgstr "Неправедная цена"
+msgstr "Неправельная цена"
 
 #: stonegarden/modules/form.py:296
 msgid "Incorrect date value."
-msgstr "Неправедная дата"
+msgstr "Неправельная дата"
 
 #: stonegarden/templates/html/auth/login.html:9
 msgid "Login"

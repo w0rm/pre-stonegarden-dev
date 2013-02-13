@@ -38,8 +38,6 @@ define(["jquery"
         isContextMenuEnabled: true
       });
 
-
-
       return this;
     },
 

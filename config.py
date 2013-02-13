@@ -79,7 +79,7 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray okb-box"
+                                        "css_class": "okb-grey okb-box"
                                     },
                                     {
                                         "template": "news_contact",
@@ -92,7 +92,7 @@ config = web.storage(
                     },
                     {
                         "template": "row",
-                        "css_class": "pullout padin okb-blue",
+                        "css_class": "pullout padin padtop okb-blue",
                         "is_system": True,
                         "blocks": [
                             {
@@ -161,7 +161,7 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray okb-box"
+                                        "css_class": "okb-grey okb-box"
                                     },
                                     {
                                         "template": "news_contact",
@@ -174,7 +174,7 @@ config = web.storage(
                     },
                     {
                         "template": "row",
-                        "css_class": "pullout padin okb-blue",
+                        "css_class": "pullout padin padtop okb-blue",
                         "is_system": True,
                         "blocks": [
                             {
@@ -236,7 +236,7 @@ config = web.storage(
                                     {
                                         "template": "news_years",
                                         "is_system": True,
-                                        "css_class": "okb-gray okb-box"
+                                        "css_class": "okb-grey okb-box"
                                     },
                                     {
                                         "template": "news_contact",
