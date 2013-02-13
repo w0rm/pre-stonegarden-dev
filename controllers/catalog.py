@@ -84,11 +84,9 @@ class Export:
             "pages",
             what="path",
             where="`type` IN $types AND NOT is_deleted " +
-                  #"AND path = $path " +
                   page_where(with_auth_check=False),
             vars={
                 "types": EXPORT_PAGE_TYPES,
-                #"path": "/catalog/microelectronics/diodyi/2d136a91"
             }
         )
 
@@ -106,10 +104,10 @@ class Export:
             soup, files = format_soup(soup, p.path)
             # Add html page to archive
             add_string(tar, str(soup), p.path + ".html")
-            # Add static files to archive
+            # Add static files to list
             all_files += files
 
-        # Add static files to set
+        # Add static files to list
         for name in STATIC_INCLUDES:
             sys_path = config.rootdir + "/static/" + name
             if os.path.isdir(sys_path):
