@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2013-02-11 22:18+0400\n"
+"POT-Creation-Date: 2013-02-15 02:08+0400\n"
 "PO-Revision-Date: 2011-09-24 11:39+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,77 +17,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: stonegarden/config.py:358
+#: stonegarden/config.py:359
 msgid "Administrator"
 msgstr ""
 
-#: stonegarden/config.py:359
+#: stonegarden/config.py:360
 msgid "Editor"
 msgstr ""
 
-#: stonegarden/config.py:360
+#: stonegarden/config.py:361
 msgid "User"
 msgstr ""
 
-#: stonegarden/config.py:362 stonegarden/static/js/models/pages/page.js:125
+#: stonegarden/config.py:363 stonegarden/static/js/models/pages/page.js:125
 msgid "Page"
 msgstr ""
 
-#: stonegarden/config.py:364
+#: stonegarden/config.py:365
 #: stonegarden/templates/html/blocks/js_templates.html:48
 msgid "HTML code"
 msgstr ""
 
-#: stonegarden/config.py:365
+#: stonegarden/config.py:366
 msgid "Rich text"
 msgstr ""
 
-#: stonegarden/config.py:367
+#: stonegarden/config.py:368
 #: stonegarden/templates/html/blocks/js_templates.html:44
 msgid "Navigation"
 msgstr ""
 
-#: stonegarden/config.py:368
+#: stonegarden/config.py:369
 msgid "Secondary navigation"
 msgstr ""
 
-#: stonegarden/config.py:369
+#: stonegarden/config.py:370
 msgid "Subnavigation"
 msgstr ""
 
-#: stonegarden/config.py:370
+#: stonegarden/config.py:371
 msgid "Siblings navigation"
 msgstr ""
 
-#: stonegarden/config.py:371
+#: stonegarden/config.py:372
 msgid "Breadcrumbs"
 msgstr ""
 
-#: stonegarden/config.py:373
+#: stonegarden/config.py:374
 msgid "Site header"
 msgstr ""
 
-#: stonegarden/config.py:374
+#: stonegarden/config.py:375
 msgid "Site footer"
 msgstr ""
 
-#: stonegarden/config.py:376
+#: stonegarden/config.py:377
 msgid "Original"
 msgstr ""
 
-#: stonegarden/config.py:377
+#: stonegarden/config.py:378
 msgid "Thumbnail"
 msgstr ""
 
-#: stonegarden/config.py:378
+#: stonegarden/config.py:379
 msgid "Small"
 msgstr ""
 
-#: stonegarden/config.py:379
+#: stonegarden/config.py:380
 msgid "Medium"
 msgstr ""
 
-#: stonegarden/config.py:380
+#: stonegarden/config.py:381
 msgid "Large"
 msgstr ""
 
@@ -138,6 +138,10 @@ msgstr ""
 msgid "Sizes should be positive integers and sum should equal 12"
 msgstr ""
 
+#: stonegarden/controllers/catalog.py:76
+msgid "Link opens in new window"
+msgstr ""
+
 #: stonegarden/controllers/pages.py:23
 msgid "Page access forbidden."
 msgstr ""
@@ -176,7 +180,7 @@ msgid "Self delete forbidden."
 msgstr ""
 
 #: stonegarden/controllers/users.py:26
-#: stonegarden/templates/html/pages/js_templates.html:11
+#: stonegarden/templates/html/pages/js_templates.html:26
 msgid "Name"
 msgstr ""
 
@@ -298,18 +302,19 @@ msgstr ""
 #: stonegarden/templates/html/blocks/js_templates.html:179
 #: stonegarden/templates/html/documents/js_templates.html:58
 #: stonegarden/templates/html/documents/js_templates.html:74
-#: stonegarden/templates/html/pages/js_templates.html:34
-#: stonegarden/templates/html/pages/js_templates.html:48
-#: stonegarden/templates/html/pages/js_templates.html:77
-#: stonegarden/templates/html/pages/js_templates.html:104
-#: stonegarden/templates/html/pages/js_templates.html:155
+#: stonegarden/templates/html/pages/js_templates.html:17
+#: stonegarden/templates/html/pages/js_templates.html:49
+#: stonegarden/templates/html/pages/js_templates.html:63
+#: stonegarden/templates/html/pages/js_templates.html:92
+#: stonegarden/templates/html/pages/js_templates.html:119
+#: stonegarden/templates/html/pages/js_templates.html:170
 #: stonegarden/templates/html/users/form.html:16
 #: stonegarden/templates/html/users/list.html:15
 #: stonegarden/static/js/views/blocks/attributes.js:33
-#: stonegarden/static/js/views/blocks/form.js:31
+#: stonegarden/static/js/views/blocks/form.js:30
 #: stonegarden/static/js/views/documents/attributes.js:27
 #: stonegarden/static/js/views/documents/form.js:30
-#: stonegarden/static/js/views/pages/code_form.js:29
+#: stonegarden/static/js/views/pages/code_form.js:30
 msgid "Save"
 msgstr ""
 
@@ -331,11 +336,11 @@ msgstr ""
 
 #: stonegarden/templates/html/blocks/js_templates.html:11
 #: stonegarden/templates/html/documents/js_templates.html:70
-#: stonegarden/templates/html/pages/js_templates.html:27
-#: stonegarden/templates/html/pages/js_templates.html:44
-#: stonegarden/templates/html/pages/js_templates.html:73
-#: stonegarden/templates/html/pages/js_templates.html:100
-#: stonegarden/templates/html/pages/js_templates.html:150
+#: stonegarden/templates/html/pages/js_templates.html:42
+#: stonegarden/templates/html/pages/js_templates.html:59
+#: stonegarden/templates/html/pages/js_templates.html:88
+#: stonegarden/templates/html/pages/js_templates.html:115
+#: stonegarden/templates/html/pages/js_templates.html:165
 msgid "Show on site"
 msgstr ""
 
@@ -347,11 +352,12 @@ msgstr ""
 #: stonegarden/templates/html/blocks/js_templates.html:180
 #: stonegarden/templates/html/documents/js_templates.html:59
 #: stonegarden/templates/html/documents/js_templates.html:75
-#: stonegarden/templates/html/pages/js_templates.html:35
-#: stonegarden/templates/html/pages/js_templates.html:49
-#: stonegarden/templates/html/pages/js_templates.html:78
-#: stonegarden/templates/html/pages/js_templates.html:105
-#: stonegarden/templates/html/pages/js_templates.html:156
+#: stonegarden/templates/html/pages/js_templates.html:18
+#: stonegarden/templates/html/pages/js_templates.html:50
+#: stonegarden/templates/html/pages/js_templates.html:64
+#: stonegarden/templates/html/pages/js_templates.html:93
+#: stonegarden/templates/html/pages/js_templates.html:120
+#: stonegarden/templates/html/pages/js_templates.html:171
 #: stonegarden/templates/html/site/js_templates.html:15
 msgid "Cancel"
 msgstr ""
@@ -389,7 +395,7 @@ msgstr ""
 #: stonegarden/templates/html/blocks/js_templates.html:119
 #: stonegarden/templates/html/documents/js_templates.html:54
 #: stonegarden/templates/html/documents/js_templates.html:67
-#: stonegarden/templates/html/pages/js_templates.html:70
+#: stonegarden/templates/html/pages/js_templates.html:85
 msgid "Description"
 msgstr ""
 
@@ -413,6 +419,12 @@ msgstr ""
 msgid "No news found"
 msgstr ""
 
+#: stonegarden/templates/html/catalog/export.html:8
+#: stonegarden/templates/html/site/topbar.html:32
+#: stonegarden/static/js/models/pages/page.js:145
+msgid "Export catalog"
+msgstr ""
+
 #: stonegarden/templates/html/documents/js_templates.html:13
 msgid "Upload files"
 msgstr ""
@@ -423,38 +435,50 @@ msgstr ""
 
 #: stonegarden/templates/html/documents/js_templates.html:52
 #: stonegarden/templates/html/documents/js_templates.html:65
-#: stonegarden/templates/html/pages/js_templates.html:9
-#: stonegarden/templates/html/pages/js_templates.html:41
-#: stonegarden/templates/html/pages/js_templates.html:55
-#: stonegarden/templates/html/pages/js_templates.html:84
+#: stonegarden/templates/html/pages/js_templates.html:24
+#: stonegarden/templates/html/pages/js_templates.html:56
+#: stonegarden/templates/html/pages/js_templates.html:70
+#: stonegarden/templates/html/pages/js_templates.html:99
 msgid "Title"
 msgstr ""
 
-#: stonegarden/templates/html/pages/js_templates.html:15
-#: stonegarden/templates/html/pages/js_templates.html:58
-#: stonegarden/templates/html/pages/js_templates.html:87
-#: stonegarden/templates/html/pages/js_templates.html:136
+#: stonegarden/templates/html/pages/js_templates.html:9
+msgid "CSS code"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:13
+msgid "JS code"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:30
+#: stonegarden/templates/html/pages/js_templates.html:73
+#: stonegarden/templates/html/pages/js_templates.html:102
+#: stonegarden/templates/html/pages/js_templates.html:151
 #: stonegarden/static/js/models/blocks/block.js:106
 msgid "Parent"
 msgstr ""
 
-#: stonegarden/templates/html/pages/js_templates.html:23
-#: stonegarden/templates/html/pages/js_templates.html:67
-#: stonegarden/templates/html/pages/js_templates.html:96
-#: stonegarden/templates/html/pages/js_templates.html:147
+#: stonegarden/templates/html/pages/js_templates.html:38
+#: stonegarden/templates/html/pages/js_templates.html:82
+#: stonegarden/templates/html/pages/js_templates.html:111
+#: stonegarden/templates/html/pages/js_templates.html:162
 msgid "Slug"
 msgstr ""
 
-#: stonegarden/templates/html/pages/js_templates.html:30
+#: stonegarden/templates/html/pages/js_templates.html:45
 msgid "Show in navigation"
 msgstr ""
 
-#: stonegarden/templates/html/pages/js_templates.html:111
+#: stonegarden/templates/html/pages/js_templates.html:126
 msgid "News title"
 msgstr ""
 
-#: stonegarden/templates/html/pages/js_templates.html:113
+#: stonegarden/templates/html/pages/js_templates.html:128
 msgid "Publish date"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:176
+msgid "Sort subpages"
 msgstr ""
 
 #: stonegarden/templates/html/pages/sitemap.html:27
@@ -477,33 +501,28 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: stonegarden/templates/html/site/topbar.html:27
-#: stonegarden/static/js/models/pages/page.js:110
-msgid "Create page"
-msgstr ""
-
-#: stonegarden/templates/html/site/topbar.html:31
+#: stonegarden/templates/html/site/topbar.html:29
 #: stonegarden/static/js/models/pages/page.js:141
 msgid "Storage"
 msgstr ""
 
-#: stonegarden/templates/html/site/topbar.html:34
-#: stonegarden/templates/html/site/topbar.html:36
+#: stonegarden/templates/html/site/topbar.html:35
+#: stonegarden/templates/html/site/topbar.html:37
 #: stonegarden/templates/html/users/p_list.html:7
-#: stonegarden/static/js/models/pages/page.js:145
+#: stonegarden/static/js/models/pages/page.js:149
 msgid "Users"
 msgstr ""
 
-#: stonegarden/templates/html/site/topbar.html:37
+#: stonegarden/templates/html/site/topbar.html:38
 msgid "Create user"
 msgstr ""
 
-#: stonegarden/templates/html/site/topbar.html:45
+#: stonegarden/templates/html/site/topbar.html:46
 msgid "My account"
 msgstr ""
 
-#: stonegarden/templates/html/site/topbar.html:49
-#: stonegarden/static/js/models/pages/page.js:152
+#: stonegarden/templates/html/site/topbar.html:50
+#: stonegarden/static/js/models/pages/page.js:156
 msgid "Exit"
 msgstr ""
 
@@ -570,115 +589,119 @@ msgid "Page attributes"
 msgstr ""
 
 #: stonegarden/static/js/models/pages/page.js:101
-#: stonegarden/static/js/models/pages/page.js:186
-#: stonegarden/static/js/models/pages/page.js:333
+#: stonegarden/static/js/models/pages/page.js:190
+#: stonegarden/static/js/models/pages/page.js:337
 msgid "Style and scripts"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:110
+msgid "Create page"
 msgstr ""
 
 #: stonegarden/static/js/models/pages/page.js:116
 msgid "Delete this page"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:173
+#: stonegarden/static/js/models/pages/page.js:177
 msgid "Delete this page?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:174
+#: stonegarden/static/js/models/pages/page.js:178
 msgid "Are you sure to delete this page and its subpages?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:193
+#: stonegarden/static/js/models/pages/page.js:197
 msgid "Create category"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:197
+#: stonegarden/static/js/models/pages/page.js:201
 msgid "Create product"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:208
+#: stonegarden/static/js/models/pages/page.js:212
 msgid "Catalog attributes"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:216
+#: stonegarden/static/js/models/pages/page.js:220
 msgid "Catalog"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:246
+#: stonegarden/static/js/models/pages/page.js:250
 msgid "Category attributes"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:251
+#: stonegarden/static/js/models/pages/page.js:255
 msgid "Delete this category"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:259
+#: stonegarden/static/js/models/pages/page.js:263
 msgid "Category"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:267
+#: stonegarden/static/js/models/pages/page.js:271
 msgid "Delete this category?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:268
+#: stonegarden/static/js/models/pages/page.js:272
 msgid "Are you sure to delete this category and its contents?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:282
+#: stonegarden/static/js/models/pages/page.js:286
 msgid "Product attributes"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:287
+#: stonegarden/static/js/models/pages/page.js:291
 msgid "Delete this product"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:296
+#: stonegarden/static/js/models/pages/page.js:300
 msgid "Product"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:304
+#: stonegarden/static/js/models/pages/page.js:308
 msgid "Delete this product?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:305
+#: stonegarden/static/js/models/pages/page.js:309
 msgid "Are you sure to delete this product?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:340
+#: stonegarden/static/js/models/pages/page.js:344
 msgid "Create news"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:351
+#: stonegarden/static/js/models/pages/page.js:355
 msgid "News index attributes"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:359
+#: stonegarden/static/js/models/pages/page.js:363
 msgid "News Index"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:382
+#: stonegarden/static/js/models/pages/page.js:386
 msgid "News attributes"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:387
+#: stonegarden/static/js/models/pages/page.js:391
 msgid "Delete news"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:395
-#: stonegarden/static/js/models/pages/page.js:430
+#: stonegarden/static/js/models/pages/page.js:399
+#: stonegarden/static/js/models/pages/page.js:434
 msgid "News"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:403
+#: stonegarden/static/js/models/pages/page.js:407
 msgid "Delete news?"
 msgstr ""
 
-#: stonegarden/static/js/models/pages/page.js:404
+#: stonegarden/static/js/models/pages/page.js:408
 msgid "Are you sure to delete news?"
 msgstr ""
 
-#: stonegarden/static/js/views/blocks/form.js:35
+#: stonegarden/static/js/views/blocks/form.js:34
 #: stonegarden/static/js/views/documents/form.js:34
-#: stonegarden/static/js/views/pages/code_form.js:33
+#: stonegarden/static/js/views/pages/code_form.js:34
 msgid "Add"
 msgstr ""
 

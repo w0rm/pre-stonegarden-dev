@@ -142,6 +142,10 @@ define(["jquery"
             href: "/a/storage"
           },
           {
+            text: t_("Export catalog"),
+            href: "/a/catalog/export",
+          },
+          {
             text: t_("Users"),
             href: "/a/users"
           },

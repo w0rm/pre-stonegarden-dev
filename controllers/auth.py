@@ -47,7 +47,7 @@ class Login:
 
     def GET(self):
         if auth.get_user():
-            raise web.found("/")
+            raise web.found("/a")
         if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             return render_partial.auth.login(loginForm())
         else:
@@ -60,7 +60,7 @@ class Login:
         if not form.validates():
             return render.auth.login(form)
         next = web.ctx.session.get("next", web.ctx.env.get("HTTP_REFERER",
-                                                           "/"))
+                                                           "/a"))
         try:
             del web.ctx.session["next"]
         except KeyError:

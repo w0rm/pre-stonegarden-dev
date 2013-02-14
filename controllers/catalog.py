@@ -7,9 +7,10 @@ import tarfile
 import urllib2
 from BeautifulSoup import BeautifulSoup
 import os
+import time
 from base import db, auth, flash
 from modules.translation import N_, _
-from template import render_partial
+from template import render
 from config import config
 from models.pages import *
 
@@ -71,6 +72,8 @@ def format_soup(soup, path):
                 link[attr] = web.ctx.home + link[attr]
                 if link.name == "a":
                     link['class'] = link['class'] + " external"
+                    link['target'] = "_blank"
+                    link['title'] = _("Link opens in new window")
 
     return soup, files
 
@@ -79,6 +82,13 @@ class Export:
 
     @auth.restrict("admin", "editor")
     def GET(self):
+        export_time = datetime.datetime.fromtimestamp(
+            os.path.getctime(config.rootdir + "/static/static.tar")
+        )
+        return render.catalog.export(export_time)
+
+    @auth.restrict("admin", "editor")
+    def POST(self):
 
         catalogPages = db.select(
             "pages",
@@ -133,5 +143,4 @@ class Export:
                 raise
 
         tar.close()
-        return (u"<p><a href=\"/static/static.tar\">Теперь скачайте "
-                u"статическую версию сайта по этой ссылке</a></p>")
+        raise web.seeother("/a/catalog/export")

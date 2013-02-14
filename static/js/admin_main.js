@@ -35,8 +35,10 @@ require(["jquery"
        , "jquery.ui"
        , "plugins/jquery.responsive"
        , "plugins/jquery.splash"
-       , "plugins/jquery.gallery"], function($) {
+       , "plugins/jquery.gallery"
+       , "jquery.foundation.topbar"], function($) {
 
+  $(document).foundationTopBar();
 
   $.datepicker.regional[ "ru" ] = {
     closeText: "Закрыть",

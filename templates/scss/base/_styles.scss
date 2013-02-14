@@ -19,6 +19,9 @@ a {
   &:hover {
     text-decoration: none;
   };
+  &.external {
+    color: #0071bc !important;
+  }
 }
 .close-reveal-modal {
   text-decoration: none

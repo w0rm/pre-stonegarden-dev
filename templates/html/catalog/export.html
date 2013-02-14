@@ -1,0 +1,27 @@
+$def with(export_date=None)
+<section class="row">
+    <div class="twelve columns">
+        <h1>$_("Export catalog")</h1>
+    </div>
+    <div class="six columns">
+        <p>Мы собрали каталог продукции ОКБ (Со всеми текстами и картинками) и упаковали в архив для просмотра в браузере без подключения к интернету или записи на флешку</p>
+        <p>
+            <a href="/static/static.tar" class="button radius large">
+                Скачать каталог ОКБ-Планета
+            </a>
+        </p>
+    </div>
+    <div class="six columns">
+        <form action="" method="post">
+            <p>
+                <strong>$datify(export_date, u"%d %B %Y, %H:%M")</strong><br>
+                был сгенерирован архив каталога<br>
+            </p>
+            <p>
+                <button type="submit" class="secondary small button radius">Сгенерировать сейчас</button>
+            </p>
+        </form>
+    </div>
+</section>
+
+

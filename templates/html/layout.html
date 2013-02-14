@@ -32,10 +32,14 @@ $def with (page=None)
     <style>$:page.get("css_code")</style>
 </head>
 <body class="$page.get("class")">
+    $:flash.render()
     $if auth.get_user() and not ctx.get("page"):
         $:render.site.topbar(page)
-    $:flash.render()
-    $:page
+        <div class="page">
+            $:page
+        </div>
+    $else:
+        $:page
     <script>
         $:page.get("js_code", None)
     </script>
