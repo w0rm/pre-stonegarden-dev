@@ -72,9 +72,13 @@ define(["jquery"
     },
 
     sortSubpages: function() {
+      var self = this
       new views.Modal({
         contentView: new views.SortSubpages({
           collection: sg.subPages
+        })
+        .on("reset", function(){
+          self.redirect(self.model)
         })
       }).open();
     },
@@ -94,12 +98,14 @@ define(["jquery"
       if (model.isEdit()) {
         window.history.replaceState({}, "", model.get("path") + window.location.search);
       } else {
-        this.hardRedirect(model)
+        this.hardRedirect(model, false)
       }
     },
 
-    hardRedirect: function(model) {
-      window.location.replace(model.get("path") + "?edit");
+    hardRedirect: function(model, withEdit) {
+      // withEdit is true when not specified explicitly
+      var withEdit = arguments.length == 1 || withEdit;
+      window.location.replace(model.get("path") + (withEdit ? "?edit" : ""))
     },
 
     redirectToParent: function(model) {

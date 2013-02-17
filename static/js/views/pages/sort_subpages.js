@@ -38,7 +38,6 @@ define(["jquery"
         sg.page.trigger("change:title", sg.page, sg.page.get("title"))
       })
 
-
     },
 
     render: function() {

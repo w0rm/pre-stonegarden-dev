@@ -225,7 +225,7 @@ define(["jquery"
   models.NavBlock = models.Block.extend({
 
     initBlock: function() {
-      sg.page.on("change:path, change:title", function(){
+      sg.page.on("change:path change:title", function(){
         this.fetch({
           data: {
             page_id: sg.page.get("id")

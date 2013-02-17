@@ -17,6 +17,7 @@
 
 .nav-breadcrumbs_trimmed ul {
   > li:last-child {
-    display: none;
+    @extend .sg-ico-arrow-d;
+    > span, a {   display: none; }
   };
 }
