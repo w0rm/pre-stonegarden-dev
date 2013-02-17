@@ -10,7 +10,8 @@ define(["jquery"
       , "views/pages/category_form"
       , "views/pages/product_form"
       , "views/pages/news_form"
-      , "views/pages/code_form"], function ($, _, Backbone, sg) {
+      , "views/pages/code_form"
+      , "views/pages/sort_subpages"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views;
@@ -27,6 +28,7 @@ define(["jquery"
         .on("page:edit", this.editPage, this)
         .on("page:code", this.editPageCode, this)
         .on("page:delete", this.deletePage, this)
+        .on("page:sortSubpages", this.sortSubpages, this)
         .on("change:path", this.redirect, this)
         .on("change:title", this.updateTitle, this)
         .on("destroy", this.redirectToParent, this);
@@ -69,9 +71,18 @@ define(["jquery"
       new views.DeleteModal({model: this.model}).open();
     },
 
+    sortSubpages: function() {
+      new views.Modal({
+        contentView: new views.SortSubpages({
+          collection: sg.subPages
+        })
+      }).open();
+    },
+
     editPageCode: function() {
       new views.Modal({
-        contentView: new views.PageCodeForm({model: this.model})
+        contentView: new views.PageCodeForm({model: this.model}),
+        sizeClass: "xlarge"
       }).open();
     },
 

@@ -33,6 +33,10 @@ define(["jquery"
       });
     },
 
+    sortSubpages: function() {
+      this.trigger("page:sortSubpages");
+    },
+
     editCode: function() {
       this.trigger("page:code");
     },
@@ -95,6 +99,11 @@ define(["jquery"
       items.push({
         text: t_("Page attributes"),
         click: this.edit
+      });
+
+      items.push({
+        text: t_("Sort subpages"),
+        click: this.sortSubpages
       });
 
       items.push({
@@ -189,6 +198,10 @@ define(["jquery"
         {
           text: t_("Style and scripts"),
           click: this.editCode
+        },
+        {
+          text: t_("Sort subpages"),
+          click: this.sortSubpages
         },
         {
           isSeparator: true

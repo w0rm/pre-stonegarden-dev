@@ -3,7 +3,7 @@ require.config({
   paths: {
     stonegarden: '/a/config',
     jquery: '../vendor/js/jquery-1.8.1',
-    'jquery.ui': '../vendor/js/jquery-ui-1.10.0.custom',
+    'jquery.ui': '../vendor/js/jquery-ui-1.10.1.custom',
     'jquery.foundation.reveal': '../vendor/js/foundation/jquery.foundation.reveal',
     'jquery.foundation.orbit': '../vendor/js/foundation/jquery.foundation.orbit',
     'jquery.foundation.topbar': '../vendor/js/foundation/jquery.foundation.topbar',

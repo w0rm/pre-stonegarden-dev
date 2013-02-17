@@ -1,5 +1,4 @@
 @import "config";
-@import "base/stone_icon_font";
 @import "base/helpers";
 @import "admin/ui";
 @import "admin/form";
@@ -31,7 +30,7 @@
 
 .sg-page-unpublished {
   @extend %sg-ico;
-  @extend .sg-ico-hidden;
+  &:before{content: "\e009"};
   color: #aaa;
   &:before {
     margin-right: .2em;

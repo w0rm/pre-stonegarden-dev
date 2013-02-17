@@ -7,19 +7,6 @@
   "normal"
 );
 
-%sg-ico {
-  &:before {
-    font-family: "StoneIcon";
-    font-weight: normal;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    font-smooth: always;
-    display: inline-block;
-    text-decoration: none;
-  }
-}
 
 [class*="sg-ico-"] {
   @extend %sg-ico;
@@ -85,7 +72,7 @@
 .sg-ico-arrow-u:before{content: "\e121"}
 .sg-ico-bracket-d:before{content: "\e122"}
 .sg-ico-bracket-u:before{content: "\e123"}
-
 .sg-ico-drag-handler:before{content: "\e116"}
 .sg-ico-x-close:before{content: "\e128"}
+
 

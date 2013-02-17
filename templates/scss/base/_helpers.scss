@@ -74,3 +74,19 @@ $png-layout: smart;
     @include png-sprite($sprite);
   }
 }
+
+/* Icon font */
+%sg-ico {
+  &:before {
+    font-family: "StoneIcon";
+    font-weight: normal;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-smooth: always;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+

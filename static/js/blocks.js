@@ -25,6 +25,14 @@ define(['jquery'
       sg.pages = new collections.Pages;
       sg.pages.reset(window.sgData.pages);
 
+      //TODO: integrate this into page, that has pages tree
+      sg.subPages = new collections.Pages;
+      sg.subPages.reset(
+        _.filter(window.sgData.pages, function(p) {
+          return p.parent_id === sg.page.get("id")
+        })
+      );
+
       new views.Page({
         el: $("body"),
         model: sg.page,

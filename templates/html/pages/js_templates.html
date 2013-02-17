@@ -167,11 +167,14 @@
         </p>
     </form>
 </script>
-<script type="text/template" id="page-sort-template">
+<script type="text/template" id="page-sort-subpages-template">
     <h3>$_("Sort subpages")</h3>
-    <ul class="sg-page-sort js-page-sort">
+    <ul class="sg-sort-subpages js-sort-subpages">
         <% _.each(pagesList, function(p) { %>
-
+            <li data-id="<%= p.id %>">
+                <i class="js-handle sg-sort-subpages-handle sg-ico-empty"></i>
+                <%= p.position %> <%= p.name %>
+            </li>
         <% }); %>
     </ul>
 </script>

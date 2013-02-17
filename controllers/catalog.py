@@ -94,7 +94,8 @@ class Export:
             "pages",
             what="path",
             where="`type` IN $types AND NOT is_deleted " +
-                  page_where(with_auth_check=False),
+                  page_where(with_auth_check=False,
+                             with_published_check=True),
             vars={
                 "types": EXPORT_PAGE_TYPES,
             }
