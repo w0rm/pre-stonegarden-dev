@@ -152,10 +152,11 @@ def update_page_by_id(page_id, data):
         data.parent_id = int(data.parent_id)
         data.update(unique_path(data, page_id))
 
-    if data.position:
+    # if position specified and parent has not changed
+    if data.position and data.parent_id == page.parent_id:
         data.position = int(data.position)
     else:
-        data.position = get_last_position("pages", page.parent_id)
+        data.position = get_last_position("pages", data.parent_id)
 
     data.update(
         description_cached=smarty(sanitize(data.description)),
