@@ -132,7 +132,7 @@ def delete_document_by_id(document_id):
     collapse_tree_siblings("documents", document)
 
     # Delete branch recursively
-    return delete_tree_branch("documents", document)
+    return delete_tree_branch("documents", document, func=delete_document_file)
 
 
 def get_document_path(document):
@@ -295,11 +295,17 @@ def rem_file(filename):
         os.unlink(filename)
 
 
-def delete_file(filename):
+def delete_document_file(document):
     # rem_file(os.path.join(config.upload_dir, filename))
-    for size in config.image.keys():
-        rem_file(os.path.join(config.static_dir,
-                              filename + "_" + size + extension))
+    if document.type == "image":
+        for size in config.image.keys():
+            print "i/" + document.filename + "_" + size + document.extension
+            rem_file(
+                os.path.join(
+                    config.static_dir,
+                    "i/" + document.filename + "_" + size + document.extension
+                )
+            )
 
 
 def resize_image_file(original_name, destination, prefix):

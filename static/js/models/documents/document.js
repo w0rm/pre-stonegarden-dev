@@ -54,11 +54,22 @@ define(["jquery"
         });
       }
 
+      if(this.get("type") === "image") {
+        items.push({
+          text: t_("Download"),
+          click: this.openImage
+        });
+      }
+
       return {
         items: items,
         context: this
       };
 
+    },
+
+    openImage: function() {
+      window.open(this.get("sizes").l, "_blank")
     },
 
     highlight: function() {
