@@ -2,7 +2,7 @@
 import web
 from base import auth
 from template import link_to, render
-from modules.form import ApiForm, notnull
+from modules.form import ApiForm, notnull, Checkbox
 from modules.restful_controller import RESTfulController
 from modules.translation import N_
 from models.documents import *
@@ -34,7 +34,7 @@ class Documents(RESTfulController):
         web.form.Input("title"),
         web.form.Input("type"),
         web.form.Input("description"),
-        web.form.Checkbox("is_published"),
+        Checkbox("is_published"),
         web.form.Input("upload"),
     )
 

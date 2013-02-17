@@ -9,7 +9,7 @@ from base import db, auth, flash
 from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, link_to
-from modules.form import *
+from modules.form import ApiForm, DateInput, Checkbox, validDate, notnull
 from modules.restful_controller import RESTfulController
 
 import models.news

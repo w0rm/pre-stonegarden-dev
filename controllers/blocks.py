@@ -3,7 +3,7 @@
 import web
 from base import auth
 from template import link_to
-from modules.form import ApiForm, notnull
+from modules.form import ApiForm, notnull, Checkbox
 from modules.restful_controller import RESTfulController
 from modules.translation import N_
 from models.blocks import *
@@ -23,7 +23,7 @@ class Blocks(RESTfulController):
         web.form.Input("content"),
         # For all blocks (settings)
         web.form.Input("css_class"),
-        web.form.Checkbox("is_published"),
+        Checkbox("is_published"),
         validators=[
             web.form.Validator(N_("Sizes should be positive integers and "
                                   "sum should equal 12"),
