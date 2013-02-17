@@ -39,6 +39,7 @@ define(["jquery"], function ($) {
     },
 
     positionBackground: function() {
+      if (this.$activeThumb.length !== 1) return;
 
       var thumbOffset = this.$activeThumb.offset()
         , imageOffset = this.$element.offset()
