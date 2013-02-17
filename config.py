@@ -353,6 +353,7 @@ config = web.storage(
         "m": [800, 800, False, True, False, 75, 0],
         "l": [1200, 1200, False, True, False, 70, 0],
     },
+    css_classes={},
     nav_types=["root", "secondary", "children", "siblings", "breadcrumbs"],
     labels=dict(
         # User Roles

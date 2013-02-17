@@ -1,7 +1,15 @@
 <script type="text/template" id="block-attributes-template">
     <form>
+
         <label>$_("CSS class")</label>
         <input name="css_class" type="text" value="<%= block.css_class || "" %>">
+        <p>
+        <% _.each(css_classes, function(v, k) { %>
+            <a href="#" class="sg-block-css-class-label secondary label js-label"
+               data-value="<%= v[0] %>"
+               title="<%= v[2] %>"><%= v[1] %></a>
+        <% }) %>
+        </p>
         <p>
             <label><input <%= block.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
         </p>
