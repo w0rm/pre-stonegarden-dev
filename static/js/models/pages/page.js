@@ -77,15 +77,19 @@ define(["jquery"
       if (this.isEdit()) {
         return {
           text: "",
-          className: "sg-active sg-ico-cursor",
-          href: window.location.pathname,
+          className: "sg-ico-close",
+          click: function(){
+            window.location.replace(this.get("path"))
+          },
           title: t_("Exit edit mode")
         }
       } else {
         return {
           text: "",
           className: "sg-ico-cursor",
-          href: window.location.pathname + "?edit",
+          click: function(){
+            window.location.replace(this.get("path") + "?edit")
+          },
           title: t_("Enter edit mode")
         }
       }
@@ -177,7 +181,8 @@ define(["jquery"
           this.getEditMenu(),
           this.getPageMenu(),
           this.getGlobalMenu()
-        ]
+        ],
+        context: this
       };
     },
 
