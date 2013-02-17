@@ -171,9 +171,9 @@
     <h3>$_("Sort subpages")</h3>
     <ul class="sg-sort-subpages js-sort-subpages">
         <% _.each(pagesList, function(p) { %>
-            <li data-id="<%= p.id %>">
+            <li data-id="<%= p.id %>" data-position="p.position">
                 <i class="js-handle sg-sort-subpages-handle sg-ico-handle"></i>
-                <%= p.position %> <%= p.name %>
+                <%= p.name %>
             </li>
         <% }); %>
     </ul>

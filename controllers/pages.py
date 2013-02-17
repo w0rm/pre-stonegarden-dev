@@ -46,8 +46,8 @@ class Pages(RESTfulController):
         web.form.Input("css_code"),
         web.form.Input("js_code"),
         DateInput("published_at", validDate),  # defaults to NOW
-        web.form.Checkbox("is_published"),
-        web.form.Checkbox("is_navigatable"),
+        Checkbox("is_published"),
+        Checkbox("is_navigatable"),
     )
 
     filter_form = ApiForm(

@@ -155,7 +155,12 @@ class Dropdown(web.form.Dropdown):
 
 
 class Checkbox(web.form.Checkbox):
-    pass
+
+    def set_value(self, value):
+        if value in ("0", "false"):
+            self.checked = False
+        else:
+            self.checked = bool(value)
 
 
 class Textarea(web.form.Input):
