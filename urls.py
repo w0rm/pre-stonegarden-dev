@@ -14,7 +14,7 @@ urls = (
     # ======================
     # Catalog
     # ======================
-    "/a/catalog/export", "controllers.catalog.Export",
+    # "/a/catalog/export", "controllers.catalog.Export",
 
     # ======================
     # Users
@@ -74,13 +74,6 @@ urls = (
 
     # pages restfull controller
     r'/a/pages(?:/(?P<resource_id>[0-9]+))?', "controllers.pages.Pages",
-
-    #"/a/pages/new", "controllers.pages.NewPage",
-    #"/a/pages/(\d+)/edit", "controllers.pages.EditPage",
-    #"/a/pages/(\d+)/edit_code", "controllers.pages.EditPageCode",
-    #"/a/pages/(\d+)", "controllers.pages.PageTree",
-    #"/a/pages/(\d+)\.json", "controllers.pages.PageInfo",
-    #"/a/pages/(\d+)/delete", "controllers.pages.DeletePage",
 
     # redirect to page by id
     "/to/(\d+)", "controllers.pages.ToPage",
