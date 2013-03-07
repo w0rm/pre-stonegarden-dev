@@ -62,7 +62,8 @@ define(["jquery"
       this.documentListView = new views.DocumentList({
         el: this.$(".js-documents"),
         filter: {type: "image"},
-        isContextMenuEnabled: false
+        isContextMenuEnabled: false,
+        isSelectable: true
       })
         .on("document:open", this.openDocument, this)
         .on("document:select", this.selectDocument, this)
