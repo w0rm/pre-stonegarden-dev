@@ -16,13 +16,7 @@ $if categories:
                                href="$subcategory.path">$subcategory.title</a></li>
                     </ul>
                 </nav>
-            <div class="row">
-                <div class="four columns">
-                </div>
-                <div class="eight columns">
-                    $:category.description_cached
-                </div>
-            </div>
+            $:category.description_cached
         </li>
     </ul>
 $else:
