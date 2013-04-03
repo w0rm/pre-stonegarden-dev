@@ -258,8 +258,8 @@ class DBAuth(object):
             where='id = $user_id',
             vars={'user_id': user_id},
             **data)
-        if not data.is_active or data.get("is_deleted"):
-            auth.delete_user_session(user_id)
+        if not data.get('is_active', True) or data.get("is_deleted"):
+            self.delete_user_session(user_id)
         if auth_user and auth_user.id == user_id:
             web.ctx.session.user = self.get_user(user_id)
 

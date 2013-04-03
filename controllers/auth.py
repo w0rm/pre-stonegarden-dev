@@ -132,7 +132,7 @@ class ResetChange:
                 if not user or not check_token(user, token,
                                                auth.config.reset_expire_after):
                     raise AuthError
-                auth.setPassword(user.email, form.d.password)
+                auth.set_password(user.email, form.d.password)
                 auth.login(user)
                 flash.set(_(changed_text))
             except AuthError:

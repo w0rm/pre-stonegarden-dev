@@ -151,3 +151,22 @@ CREATE TABLE documents (
 	CHECK (is_system IN (0, 1)),
 	CHECK (is_deleted IN (0, 1))
 );
+
+
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `obj_type` varchar(10) DEFAULT NULL,
+  `obj_id` int(11) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `browser` varchar(255) DEFAULT NULL,
+  `message` text,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `level` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(user_id) REFERENCES users (id)
+);
+
+
+
