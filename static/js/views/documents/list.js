@@ -4,7 +4,8 @@ define(["jquery"
       , "stonegarden"
       , "models/documents/document"
       , "models/documents/documents"
-      , "views/documents/document"], function ($, _, Backbone, sg) {
+      , "views/documents/document"
+      , "jquery.ui"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -21,7 +22,9 @@ define(["jquery"
     tagName: "ul",
 
     events: {
-      "dblclick .js-back": "openParent"
+      "dblclick .js-back": "openParent",
+      "sortupdate": "sortupdateEvent",
+      "sortstart": "sortstartEvent"
     },
 
     initialize: function() {
@@ -40,7 +43,6 @@ define(["jquery"
           .on("document:select", this.selectDocument, this)
           .on("document:unselect", this.unselectDocument, this)
       }
-
 
     },
 
@@ -62,6 +64,11 @@ define(["jquery"
         this.$el.append(this.backTemplate())
       };
       this.collection.each(this.appendDocument, this);
+
+      if (this.options.isSortable) {
+        this.$el.sortable({forcePlaceholderSize: true, items: '.sg-document'})
+      }
+
       return this;
     },
 
@@ -129,6 +136,25 @@ define(["jquery"
               this.collection.trigger("document:open", model);
             }, this)
             .fetch();
+    },
+
+    sortstartEvent: function(e, ui) {
+      // Fix the bug when placeholder doesn't get its height
+      ui.placeholder.height(ui.helper.height())
+    },
+
+    sortupdateEvent: function(e, ui) {
+      var docId = ui.item.data("id")
+        , position = this.$el.children('.sg-document').index(ui.item) + 1
+        , doc = this.collection.get(docId)
+
+      this.collection
+        .remove(doc, {silent: true})
+        .add(doc, {at: position - 1, silent: true})
+        .each(function(m, index) {
+          m.set({position: index + 1})
+        })
+      doc.save();
     }
 
   });

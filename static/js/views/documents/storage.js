@@ -35,7 +35,8 @@ define(["jquery"
         el: this.$documents,
         collection: this.collection,
         filter: this.options.filter,
-        isContextMenuEnabled: true
+        isContextMenuEnabled: true,
+        isSortable: true
       });
 
       return this;

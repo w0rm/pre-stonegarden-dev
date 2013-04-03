@@ -43,7 +43,8 @@ define(["jquery"
     render: function() {
       this.$el
         .attr("class", "sg-document sg-document-" + this.model.get("type"))
-        .html(this.template({"document": this.model.toJSON()}));
+        .html(this.template({"document": this.model.toJSON()}))
+        .data({id: this.model.get('id')})
       this.changePublished();
       return this;
     },
