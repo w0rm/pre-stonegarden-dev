@@ -75,6 +75,7 @@ define(["jquery"
     makeItemView: function(model) {
       return new views.Document({
         model: model,
+        isSelectable: this.options.isSelectable,
         isContextMenuEnabled: this.options.isContextMenuEnabled
       }).render()
     },

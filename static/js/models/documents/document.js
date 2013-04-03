@@ -52,6 +52,10 @@ define(["jquery"
           text: t_("Download"),
           href: this.get("src")
         });
+        items.push({
+          text: t_("Copy link"),
+          click: this.copyLink
+        });
       }
 
       if(this.get("type") === "image") {
@@ -100,6 +104,10 @@ define(["jquery"
 
     editAttributes: function() {
       this.trigger("document:attributes");
+    },
+
+    copyLink: function() {
+      this.trigger("document:copyLink");
     }
 
 

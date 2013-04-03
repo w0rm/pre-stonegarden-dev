@@ -5,6 +5,7 @@ define(["jquery"
       , "views/mixins/has_contextmenu"
       , "views/modal"
       , "views/delete_modal"
+      , "views/documents/copy_link"
       , "views/documents/attributes"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -30,6 +31,7 @@ define(["jquery"
       this.model
         .on("document:delete", this.deleteDocument, this)
         .on("document:attributes", this.editAttributes, this)
+        .on("document:copyLink", this.copyLink, this)
         .on("document:select document:unselect", this.changeSelected, this)
         .on("document:unselect", this.unselectDocument, this)
         .on("destroy", this.remove, this)
@@ -50,7 +52,9 @@ define(["jquery"
     },
 
     toggleSelected: function() {
-      this.model.toggleSelected();
+      if (this.options.isSelectable) {
+        this.model.toggleSelected();
+      }
     },
 
     changeSelected: function() {
@@ -68,6 +72,12 @@ define(["jquery"
     editAttributes: function() {
       new views.Modal({
         contentView: new views.DocumentAttributes({model: this.model})
+      }).open();
+    },
+
+    copyLink: function() {
+      new views.Modal({
+        contentView: new views.DocumentCopyLink({model: this.model})
       }).open();
     },
 

@@ -36,7 +36,8 @@ define(["jquery"
         collection: this.collection,
         filter: this.options.filter,
         isContextMenuEnabled: true,
-        isSortable: true
+        isSortable: true,
+        isSelectable: false
       });
 
       return this;
