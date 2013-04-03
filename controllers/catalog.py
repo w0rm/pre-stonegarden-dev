@@ -5,7 +5,7 @@ import datetime
 import StringIO
 import tarfile
 import urllib2
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import os
 import time
 from base import db, auth, flash
@@ -71,7 +71,7 @@ def format_soup(soup, path):
             elif not href.startswith("http://"):
                 link[attr] = web.ctx.home + link[attr]
                 if link.name == "a":
-                    link['class'] = link['class'] + " external"
+                    link['class'] = link.get('class', []) + ["external"]
                     link['target'] = "_blank"
                     link['title'] = _("Link opens in new window")
 
