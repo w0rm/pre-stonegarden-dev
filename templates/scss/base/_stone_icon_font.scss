@@ -1,8 +1,12 @@
 
 @include font-face(
   "StoneIcon",
-  font-files('stoneicon-regular.otf'),
-  null,
+  font-files('stoneicon-regular.woff',
+             'stoneicon-regular.ttf',
+             'stoneicon-regular.otf',
+             'stoneicon-regular.svg#stoneiconregular'
+             ),
+  'stoneicon-regular.eot',
   "normal",
   "normal"
 );
