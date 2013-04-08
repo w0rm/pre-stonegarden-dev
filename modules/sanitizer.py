@@ -1,7 +1,7 @@
 import re
 from urlparse import urljoin
 from config import config
-from bs4 import BeautifulSoup, Comment
+from BeautifulSoup import BeautifulSoup, Comment
 
 rjs = r'[\s]*(&#x.{1,7})?'.join(list('javascript:'))
 rvb = r'[\s]*(&#x.{1,7})?'.join(list('vbscript:'))
