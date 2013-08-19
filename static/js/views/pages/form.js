@@ -68,6 +68,5 @@ define(["jquery"
 
   });
 
-  views.NewsIndexPageForm = views.PageForm;
-
+   
 });

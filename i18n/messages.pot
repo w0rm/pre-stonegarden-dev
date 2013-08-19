@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2013-04-03 20:16+0400\n"
+"POT-Creation-Date: 2013-08-15 14:58+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,697 +17,556 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: okbplaneta/config.py:360
+#: stonegarden/config.py:67
 msgid "Administrator"
 msgstr ""
 
-#: okbplaneta/config.py:361
+#: stonegarden/config.py:68
 msgid "Editor"
 msgstr ""
 
-#: okbplaneta/config.py:362
+#: stonegarden/config.py:69
 msgid "User"
 msgstr ""
 
-#: okbplaneta/config.py:364 okbplaneta/static/js/models/pages/page.js:138
+#: stonegarden/config.py:71 stonegarden/static/js/models/pages/page.js:137
 msgid "Page"
 msgstr ""
 
-#: okbplaneta/config.py:366 okbplaneta/templates/html/blocks/js_templates.html:56
+#: stonegarden/config.py:73 stonegarden/templates/html/blocks/js_templates.html:56
 msgid "HTML code"
 msgstr ""
 
-#: okbplaneta/config.py:367
+#: stonegarden/config.py:74
 msgid "Rich text"
 msgstr ""
 
-#: okbplaneta/config.py:369 okbplaneta/templates/html/blocks/js_templates.html:52
+#: stonegarden/config.py:76 stonegarden/templates/html/blocks/js_templates.html:52
 msgid "Navigation"
 msgstr ""
 
-#: okbplaneta/config.py:370
+#: stonegarden/config.py:77
 msgid "Secondary navigation"
 msgstr ""
 
-#: okbplaneta/config.py:371
+#: stonegarden/config.py:78
 msgid "Subnavigation"
 msgstr ""
 
-#: okbplaneta/config.py:372
+#: stonegarden/config.py:79
 msgid "Siblings navigation"
 msgstr ""
 
-#: okbplaneta/config.py:373
+#: stonegarden/config.py:80
 msgid "Breadcrumbs"
 msgstr ""
 
-#: okbplaneta/config.py:375
+#: stonegarden/config.py:82
 msgid "Site header"
 msgstr ""
 
-#: okbplaneta/config.py:376
+#: stonegarden/config.py:83
 msgid "Site footer"
 msgstr ""
 
-#: okbplaneta/config.py:378
+#: stonegarden/config.py:85
 msgid "Original"
 msgstr ""
 
-#: okbplaneta/config.py:379
+#: stonegarden/config.py:86
 msgid "Thumbnail"
 msgstr ""
 
-#: okbplaneta/config.py:380
+#: stonegarden/config.py:87
 msgid "Small"
 msgstr ""
 
-#: okbplaneta/config.py:381
+#: stonegarden/config.py:88
 msgid "Medium"
 msgstr ""
 
-#: okbplaneta/config.py:382
+#: stonegarden/config.py:89
 msgid "Large"
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:15
+#: stonegarden/controllers/auth.py:15
 msgid "We've sent you the link to reset your password. Please check your email."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:17
+#: stonegarden/controllers/auth.py:17
 msgid ""
 "It seems that the link is outdated or incorect. You may create another one "
 "<a href='/password_reset'>here</a>."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:20
+#: stonegarden/controllers/auth.py:20
 msgid "Password was changed. You've been automatically logged in."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:21
+#: stonegarden/controllers/auth.py:21
 msgid "User with this email doesn't exist."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:22
+#: stonegarden/controllers/auth.py:22
 msgid "Incorrect login credentials."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:23
+#: stonegarden/controllers/auth.py:23
 msgid "Your account has been blocked."
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:26 okbplaneta/controllers/auth.py:34
-#: okbplaneta/controllers/users.py:24
+#: stonegarden/controllers/auth.py:26 stonegarden/controllers/auth.py:34
+#: stonegarden/controllers/users.py:25
 msgid "Email"
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:28
+#: stonegarden/controllers/auth.py:28
 msgid "Password"
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:38
+#: stonegarden/controllers/auth.py:38
 msgid "New password"
 msgstr ""
 
-#: okbplaneta/controllers/auth.py:40
+#: stonegarden/controllers/auth.py:40
 msgid "Repeat"
 msgstr ""
 
-#: okbplaneta/controllers/blocks.py:28
+#: stonegarden/controllers/blocks.py:28
 msgid "Sizes should be positive integers and sum should equal 12"
 msgstr ""
 
-#: okbplaneta/controllers/catalog.py:76
-msgid "Link opens in new window"
-msgstr ""
-
-#: okbplaneta/controllers/pages.py:23
+#: stonegarden/controllers/pages.py:23
 msgid "Page access forbidden."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:14
+#: stonegarden/controllers/users.py:15
 #, python-format
 msgid "New user in system: %s."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:15
+#: stonegarden/controllers/users.py:16
 #, python-format
 msgid "User detailes changed: %s."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:16
+#: stonegarden/controllers/users.py:17
 #, python-format
 msgid "User was deleted. <a href=\"%s\">Undo delete?</a>"
 msgstr ""
 
-#: okbplaneta/controllers/users.py:17
+#: stonegarden/controllers/users.py:18
 #, python-format
 msgid "User deleted: %s."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:18
+#: stonegarden/controllers/users.py:19
 msgid "User was restored."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:19
+#: stonegarden/controllers/users.py:20
 #, python-format
 msgid "User restored: %s."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:20
+#: stonegarden/controllers/users.py:21
 msgid "Self delete forbidden."
 msgstr ""
 
-#: okbplaneta/controllers/users.py:26
-#: okbplaneta/templates/html/pages/js_templates.html:26
+#: stonegarden/controllers/users.py:27
+#: stonegarden/templates/html/pages/js_templates.html:26
 msgid "Name"
 msgstr ""
 
-#: okbplaneta/controllers/users.py:29
+#: stonegarden/controllers/users.py:30
 msgid "Role"
 msgstr ""
 
-#: okbplaneta/controllers/users.py:30
+#: stonegarden/controllers/users.py:31
 msgid "Is active"
 msgstr ""
 
-#: okbplaneta/models/blocks.py:23 okbplaneta/models/blocks.py:215
+#: stonegarden/models/blocks.py:23 stonegarden/models/blocks.py:215
 msgid "Cannot edit or delete system blocks."
 msgstr ""
 
-#: okbplaneta/models/documents.py:43
+#: stonegarden/models/documents.py:43
 msgid "Untitled Folder"
 msgstr ""
 
-#: okbplaneta/models/documents.py:59
+#: stonegarden/models/documents.py:59
 msgid "File upload error."
 msgstr ""
 
-#: okbplaneta/models/documents.py:81 okbplaneta/models/documents.py:129
+#: stonegarden/models/documents.py:81 stonegarden/models/documents.py:129
 msgid "Cannot edit or delete system files and folders."
 msgstr ""
 
-#: okbplaneta/models/documents.py:191
+#: stonegarden/models/documents.py:191
 msgid "Images"
 msgstr ""
 
-#: okbplaneta/models/documents.py:193
+#: stonegarden/models/documents.py:193
 msgid "Folders"
 msgstr ""
 
-#: okbplaneta/models/documents.py:196
+#: stonegarden/models/documents.py:196
 msgid "Documents"
 msgstr ""
 
-#: okbplaneta/models/documents.py:198
+#: stonegarden/models/documents.py:198
 msgid "Archives"
 msgstr ""
 
-#: okbplaneta/models/documents.py:200
+#: stonegarden/models/documents.py:200
 msgid "Files"
 msgstr ""
 
-#: okbplaneta/models/documents.py:205
+#: stonegarden/models/documents.py:205
 msgid "kb"
 msgstr ""
 
-#: okbplaneta/models/documents.py:222
+#: stonegarden/models/documents.py:222
 msgid "Cannot download this document"
 msgstr ""
 
-#: okbplaneta/models/pages.py:246
+#: stonegarden/models/pages.py:246
 msgid "Cannot delete root and system pages."
 msgstr ""
 
-#: okbplaneta/modules/dbauth.py:46
+#: stonegarden/modules/dbauth.py:46
 msgid "You don’t have permission to access this page."
 msgstr ""
 
-#: okbplaneta/modules/dbauth.py:47
+#: stonegarden/modules/dbauth.py:47
 msgid "User with this email already exists."
 msgstr ""
 
-#: okbplaneta/modules/form.py:99 okbplaneta/modules/form.py:177
+#: stonegarden/modules/form.py:99 stonegarden/modules/form.py:177
 msgid "placeholder"
 msgstr ""
 
-#: okbplaneta/modules/form.py:272
+#: stonegarden/modules/form.py:272
 msgid "Cannot be empty."
 msgstr ""
 
-#: okbplaneta/modules/form.py:274
+#: stonegarden/modules/form.py:274
 msgid "From 6 to 180 characters"
 msgstr ""
 
-#: okbplaneta/modules/form.py:278
+#: stonegarden/modules/form.py:278
 msgid "Password and confirmation do not match."
 msgstr ""
 
-#: okbplaneta/modules/form.py:283
+#: stonegarden/modules/form.py:283
 msgid "Incorrect email."
 msgstr ""
 
-#: okbplaneta/modules/form.py:287
+#: stonegarden/modules/form.py:287
 msgid "Incorrect price value."
 msgstr ""
 
-#: okbplaneta/modules/form.py:301
+#: stonegarden/modules/form.py:301
 msgid "Incorrect date value."
 msgstr ""
 
-#: okbplaneta/templates/html/auth/login.html:9
+#: stonegarden/templates/html/auth/login.html:9
 msgid "Login"
 msgstr ""
 
-#: okbplaneta/templates/html/auth/login.html:23
+#: stonegarden/templates/html/auth/login.html:23
 msgid "Reset forgotten password"
 msgstr ""
 
-#: okbplaneta/templates/html/auth/login.html:26
+#: stonegarden/templates/html/auth/login.html:26
 msgid "Log in"
 msgstr ""
 
-#: okbplaneta/templates/html/auth/reset_change.html:9
-#: okbplaneta/templates/html/auth/reset_token.html:9
+#: stonegarden/templates/html/auth/reset_change.html:9
+#: stonegarden/templates/html/auth/reset_token.html:9
 msgid "Password reset"
 msgstr ""
 
-#: okbplaneta/templates/html/auth/reset_change.html:16
-#: okbplaneta/templates/html/blocks/js_templates.html:23
-#: okbplaneta/templates/html/blocks/js_templates.html:70
-#: okbplaneta/templates/html/blocks/js_templates.html:89
-#: okbplaneta/templates/html/blocks/js_templates.html:117
-#: okbplaneta/templates/html/blocks/js_templates.html:145
-#: okbplaneta/templates/html/blocks/js_templates.html:187
-#: okbplaneta/templates/html/documents/js_templates.html:58
-#: okbplaneta/templates/html/documents/js_templates.html:74
-#: okbplaneta/templates/html/pages/js_templates.html:17
-#: okbplaneta/templates/html/pages/js_templates.html:49
-#: okbplaneta/templates/html/pages/js_templates.html:63
-#: okbplaneta/templates/html/pages/js_templates.html:92
-#: okbplaneta/templates/html/pages/js_templates.html:119
-#: okbplaneta/templates/html/pages/js_templates.html:170
-#: okbplaneta/templates/html/users/form.html:16
-#: okbplaneta/templates/html/users/list.html:15
-#: okbplaneta/static/js/views/blocks/attributes.js:38
-#: okbplaneta/static/js/views/blocks/form.js:30
-#: okbplaneta/static/js/views/documents/attributes.js:27
-#: okbplaneta/static/js/views/documents/form.js:30
-#: okbplaneta/static/js/views/pages/code_form.js:30
+#: stonegarden/templates/html/auth/reset_change.html:16
+#: stonegarden/templates/html/blocks/js_templates.html:23
+#: stonegarden/templates/html/blocks/js_templates.html:70
+#: stonegarden/templates/html/blocks/js_templates.html:89
+#: stonegarden/templates/html/blocks/js_templates.html:117
+#: stonegarden/templates/html/blocks/js_templates.html:145
+#: stonegarden/templates/html/blocks/js_templates.html:187
+#: stonegarden/templates/html/documents/js_templates.html:58
+#: stonegarden/templates/html/documents/js_templates.html:74
+#: stonegarden/templates/html/pages/js_templates.html:17
+#: stonegarden/templates/html/pages/js_templates.html:49
+#: stonegarden/templates/html/users/form.html:16
+#: stonegarden/templates/html/users/list.html:15
+#: stonegarden/static/js/views/blocks/attributes.js:38
+#: stonegarden/static/js/views/blocks/form.js:30
+#: stonegarden/static/js/views/documents/attributes.js:27
+#: stonegarden/static/js/views/documents/form.js:30
+#: stonegarden/static/js/views/pages/code_form.js:30
 msgid "Save"
 msgstr ""
 
-#: okbplaneta/templates/html/auth/reset_token.html:13
+#: stonegarden/templates/html/auth/reset_token.html:13
 msgid "For example: name@example.com. Will send you link to reset your password."
 msgstr ""
 
-#: okbplaneta/templates/html/auth/reset_token.html:18
+#: stonegarden/templates/html/auth/reset_token.html:18
 msgid "Send"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/categories.html:27
-msgid "Catalog is empty."
-msgstr ""
-
-#: okbplaneta/templates/html/blocks/js_templates.html:9
+#: stonegarden/templates/html/blocks/js_templates.html:9
 msgid "CSS class"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:19
-#: okbplaneta/templates/html/documents/js_templates.html:70
-#: okbplaneta/templates/html/pages/js_templates.html:42
-#: okbplaneta/templates/html/pages/js_templates.html:59
-#: okbplaneta/templates/html/pages/js_templates.html:88
-#: okbplaneta/templates/html/pages/js_templates.html:115
-#: okbplaneta/templates/html/pages/js_templates.html:165
+#: stonegarden/templates/html/blocks/js_templates.html:19
+#: stonegarden/templates/html/documents/js_templates.html:70
+#: stonegarden/templates/html/pages/js_templates.html:42
 msgid "Show on site"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:24
-#: okbplaneta/templates/html/blocks/js_templates.html:71
-#: okbplaneta/templates/html/blocks/js_templates.html:90
-#: okbplaneta/templates/html/blocks/js_templates.html:118
-#: okbplaneta/templates/html/blocks/js_templates.html:146
-#: okbplaneta/templates/html/blocks/js_templates.html:188
-#: okbplaneta/templates/html/documents/js_templates.html:59
-#: okbplaneta/templates/html/documents/js_templates.html:75
-#: okbplaneta/templates/html/pages/js_templates.html:18
-#: okbplaneta/templates/html/pages/js_templates.html:50
-#: okbplaneta/templates/html/pages/js_templates.html:64
-#: okbplaneta/templates/html/pages/js_templates.html:93
-#: okbplaneta/templates/html/pages/js_templates.html:120
-#: okbplaneta/templates/html/pages/js_templates.html:171
-#: okbplaneta/templates/html/site/js_templates.html:15
+#: stonegarden/templates/html/blocks/js_templates.html:24
+#: stonegarden/templates/html/blocks/js_templates.html:71
+#: stonegarden/templates/html/blocks/js_templates.html:90
+#: stonegarden/templates/html/blocks/js_templates.html:118
+#: stonegarden/templates/html/blocks/js_templates.html:146
+#: stonegarden/templates/html/blocks/js_templates.html:188
+#: stonegarden/templates/html/documents/js_templates.html:59
+#: stonegarden/templates/html/documents/js_templates.html:75
+#: stonegarden/templates/html/pages/js_templates.html:18
+#: stonegarden/templates/html/pages/js_templates.html:50
+#: stonegarden/templates/html/site/js_templates.html:15
 msgid "Cancel"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:30
+#: stonegarden/templates/html/blocks/js_templates.html:30
 msgid "This text is not written yet."
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:31
+#: stonegarden/templates/html/blocks/js_templates.html:31
 msgid "Click to write the text."
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:34
+#: stonegarden/templates/html/blocks/js_templates.html:34
 msgid ""
 "Do not worry, such placeholder texts are not visible on the public website "
 "until you edit them."
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:59
+#: stonegarden/templates/html/blocks/js_templates.html:59
 msgid "Paste"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:77
+#: stonegarden/templates/html/blocks/js_templates.html:77
 msgid "Select navigation type"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:96
+#: stonegarden/templates/html/blocks/js_templates.html:96
 msgid "Insert columns"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:103
+#: stonegarden/templates/html/blocks/js_templates.html:103
 msgid "Columns"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:127
-#: okbplaneta/templates/html/documents/js_templates.html:54
-#: okbplaneta/templates/html/documents/js_templates.html:67
-#: okbplaneta/templates/html/pages/js_templates.html:85
+#: stonegarden/templates/html/blocks/js_templates.html:127
+#: stonegarden/templates/html/documents/js_templates.html:54
+#: stonegarden/templates/html/documents/js_templates.html:67
 msgid "Description"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:134
+#: stonegarden/templates/html/blocks/js_templates.html:134
 msgid "Show description"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:141
+#: stonegarden/templates/html/blocks/js_templates.html:141
 msgid "Make responsive"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:175
+#: stonegarden/templates/html/blocks/js_templates.html:175
 msgid "Images below will be inserted as a gallery."
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/js_templates.html:183
+#: stonegarden/templates/html/blocks/js_templates.html:183
 msgid "Autoplay"
 msgstr ""
 
-#: okbplaneta/templates/html/blocks/news_list.html:25
-msgid "No news found"
-msgstr ""
-
-#: okbplaneta/templates/html/catalog/export.html:8
-#: okbplaneta/templates/html/site/topbar.html:32
-#: okbplaneta/static/js/models/pages/page.js:158
-msgid "Export catalog"
-msgstr ""
-
-#: okbplaneta/templates/html/documents/js_templates.html:13
+#: stonegarden/templates/html/documents/js_templates.html:13
 msgid "Upload files"
 msgstr ""
 
-#: okbplaneta/templates/html/documents/js_templates.html:19
+#: stonegarden/templates/html/documents/js_templates.html:19
 msgid "Create folder"
 msgstr ""
 
-#: okbplaneta/templates/html/documents/js_templates.html:52
-#: okbplaneta/templates/html/documents/js_templates.html:65
-#: okbplaneta/templates/html/pages/js_templates.html:24
-#: okbplaneta/templates/html/pages/js_templates.html:56
-#: okbplaneta/templates/html/pages/js_templates.html:70
-#: okbplaneta/templates/html/pages/js_templates.html:99
+#: stonegarden/templates/html/documents/js_templates.html:52
+#: stonegarden/templates/html/documents/js_templates.html:65
+#: stonegarden/templates/html/pages/js_templates.html:24
 msgid "Title"
 msgstr ""
 
-#: okbplaneta/templates/html/documents/js_templates.html:80
-#: okbplaneta/static/js/models/documents/document.js:56
+#: stonegarden/templates/html/documents/js_templates.html:80
+#: stonegarden/static/js/models/documents/document.js:56
 msgid "Copy link"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:9
+#: stonegarden/templates/html/pages/js_templates.html:9
 msgid "CSS code"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:13
+#: stonegarden/templates/html/pages/js_templates.html:13
 msgid "JS code"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:30
-#: okbplaneta/templates/html/pages/js_templates.html:73
-#: okbplaneta/templates/html/pages/js_templates.html:102
-#: okbplaneta/templates/html/pages/js_templates.html:151
-#: okbplaneta/static/js/models/blocks/block.js:106
+#: stonegarden/templates/html/pages/js_templates.html:30
+#: stonegarden/static/js/models/blocks/block.js:106
 msgid "Parent"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:38
-#: okbplaneta/templates/html/pages/js_templates.html:82
-#: okbplaneta/templates/html/pages/js_templates.html:111
-#: okbplaneta/templates/html/pages/js_templates.html:162
+#: stonegarden/templates/html/pages/js_templates.html:38
 msgid "Slug"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:45
+#: stonegarden/templates/html/pages/js_templates.html:45
 msgid "Show in navigation"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/js_templates.html:126
-msgid "News title"
-msgstr ""
-
-#: okbplaneta/templates/html/pages/js_templates.html:128
-msgid "Publish date"
-msgstr ""
-
-#: okbplaneta/templates/html/pages/js_templates.html:176
-#: okbplaneta/static/js/models/pages/page.js:109
-#: okbplaneta/static/js/models/pages/page.js:208
+#: stonegarden/templates/html/pages/js_templates.html:56
+#: stonegarden/static/js/models/pages/page.js:108
 msgid "Sort subpages"
 msgstr ""
 
-#: okbplaneta/templates/html/pages/sitemap.html:27
-#: okbplaneta/templates/html/site/topbar.html:25
-#: okbplaneta/static/js/models/pages/page.js:150
+#: stonegarden/templates/html/pages/sitemap.html:27
+#: stonegarden/templates/html/site/topbar.html:25
+#: stonegarden/static/js/models/pages/page.js:149
 msgid "Site map"
 msgstr ""
 
-#: okbplaneta/templates/html/site/js_templates.html:14
-#: okbplaneta/static/js/models/blocks/block.js:98
-#: okbplaneta/static/js/models/documents/document.js:45
+#: stonegarden/templates/html/site/js_templates.html:14
+#: stonegarden/static/js/models/blocks/block.js:98
+#: stonegarden/static/js/models/documents/document.js:45
 msgid "Delete"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:12
+#: stonegarden/templates/html/site/topbar.html:12
 msgid "Stonegarden"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:23
+#: stonegarden/templates/html/site/topbar.html:23
 msgid "Pages"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:29
-#: okbplaneta/static/js/models/pages/page.js:154
+#: stonegarden/templates/html/site/topbar.html:29
+#: stonegarden/static/js/models/pages/page.js:153
 msgid "Storage"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:35
-#: okbplaneta/templates/html/site/topbar.html:37
-#: okbplaneta/templates/html/users/p_list.html:7
-#: okbplaneta/static/js/models/pages/page.js:162
+#: stonegarden/templates/html/site/topbar.html:32
+msgid "Export catalog"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:35
+#: stonegarden/templates/html/users/p_list.html:7
+#: stonegarden/static/js/models/pages/page.js:157
 msgid "Users"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:38
-msgid "Create user"
-msgstr ""
-
-#: okbplaneta/templates/html/site/topbar.html:46
+#: stonegarden/templates/html/site/topbar.html:42
 msgid "My account"
 msgstr ""
 
-#: okbplaneta/templates/html/site/topbar.html:50
-#: okbplaneta/static/js/models/pages/page.js:169
+#: stonegarden/templates/html/site/topbar.html:46
+#: stonegarden/static/js/models/pages/page.js:164
 msgid "Exit"
 msgstr ""
 
-#: okbplaneta/templates/html/users/form.html:9
+#: stonegarden/templates/html/users/form.html:9
 msgid "Edit user"
 msgstr ""
 
-#: okbplaneta/templates/html/users/list.html:8
+#: stonegarden/templates/html/users/list.html:8
 msgid "New user"
 msgstr ""
 
-#: okbplaneta/templates/html/users/p_list.html:16
+#: stonegarden/templates/html/users/p_list.html:16
 msgid "Last visit"
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:55
+#: stonegarden/static/js/models/blocks/block.js:55
 msgid "Delete this block?"
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:56
+#: stonegarden/static/js/models/blocks/block.js:56
 msgid "It will also delete all the nested blocks."
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:71
-#: okbplaneta/static/js/models/blocks/block.js:307
+#: stonegarden/static/js/models/blocks/block.js:71
+#: stonegarden/static/js/models/blocks/block.js:307
 msgid "Edit"
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:76
-#: okbplaneta/static/js/models/documents/document.js:38
+#: stonegarden/static/js/models/blocks/block.js:76
+#: stonegarden/static/js/models/documents/document.js:38
 msgid "Attributes"
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:85
+#: stonegarden/static/js/models/blocks/block.js:85
 msgid "Cut"
 msgstr ""
 
-#: okbplaneta/static/js/models/blocks/block.js:89
+#: stonegarden/static/js/models/blocks/block.js:89
 msgid "Copy"
 msgstr ""
 
-#: okbplaneta/static/js/models/documents/document.js:22
+#: stonegarden/static/js/models/documents/document.js:22
 msgid "Delete this file or folder?"
 msgstr ""
 
-#: okbplaneta/static/js/models/documents/document.js:23
+#: stonegarden/static/js/models/documents/document.js:23
 msgid "It will also delete all the nested files."
 msgstr ""
 
-#: okbplaneta/static/js/models/documents/document.js:52
-#: okbplaneta/static/js/models/documents/document.js:63
+#: stonegarden/static/js/models/documents/document.js:52
+#: stonegarden/static/js/models/documents/document.js:63
 msgid "Download"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:84
+#: stonegarden/static/js/models/pages/page.js:83
 msgid "Exit edit mode"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:93
+#: stonegarden/static/js/models/pages/page.js:92
 msgid "Enter edit mode"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:104
+#: stonegarden/static/js/models/pages/page.js:103
 msgid "Page attributes"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:114
-#: okbplaneta/static/js/models/pages/page.js:204
-#: okbplaneta/static/js/models/pages/page.js:355
+#: stonegarden/static/js/models/pages/page.js:113
 msgid "Style and scripts"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:123
+#: stonegarden/static/js/models/pages/page.js:122
 msgid "Create page"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:129
+#: stonegarden/static/js/models/pages/page.js:128
 msgid "Delete this page"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:191
+#: stonegarden/static/js/models/pages/page.js:186
 msgid "Delete this page?"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:192
+#: stonegarden/static/js/models/pages/page.js:187
 msgid "Are you sure to delete this page and its subpages?"
 msgstr ""
 
-#: okbplaneta/static/js/models/pages/page.js:215
-msgid "Create category"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:219
-msgid "Create product"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:230
-msgid "Catalog attributes"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:238
-msgid "Catalog"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:268
-msgid "Category attributes"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:273
-msgid "Delete this category"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:281
-msgid "Category"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:289
-msgid "Delete this category?"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:290
-msgid "Are you sure to delete this category and its contents?"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:304
-msgid "Product attributes"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:309
-msgid "Delete this product"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:318
-msgid "Product"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:326
-msgid "Delete this product?"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:327
-msgid "Are you sure to delete this product?"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:362
-msgid "Create news"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:373
-msgid "News index attributes"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:381
-msgid "News Index"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:404
-msgid "News attributes"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:409
-msgid "Delete news"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:417
-#: okbplaneta/static/js/models/pages/page.js:452
-msgid "News"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:425
-msgid "Delete news?"
-msgstr ""
-
-#: okbplaneta/static/js/models/pages/page.js:426
-msgid "Are you sure to delete news?"
-msgstr ""
-
-#: okbplaneta/static/js/views/blocks/form.js:34
-#: okbplaneta/static/js/views/documents/form.js:34
-#: okbplaneta/static/js/views/pages/code_form.js:34
+#: stonegarden/static/js/views/blocks/form.js:34
+#: stonegarden/static/js/views/documents/form.js:34
+#: stonegarden/static/js/views/pages/code_form.js:34
 msgid "Add"
 msgstr ""
 

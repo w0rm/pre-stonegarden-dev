@@ -4,11 +4,10 @@ define(["jquery"
       , "stonegarden"
       , "utils"
       , "models/model"
-      , "models/blocks/blocks"], function ($, _, Backbone, sg) {
+      , "models/blocks/blocks"], function ($, _, Backbone, sg){
 
   var models = sg.models
     , utils = sg.utils;
-
 
   models.Page =  models.Model.extend({
 
@@ -50,7 +49,7 @@ define(["jquery"
       return new Array(level + 1).join("    ") + this.get("name");
     },
 
-    getIds: function() {
+    getIds: function(){
       // Returns array of parents (breadcrumbs) ids
       var ids = (this.get("ids") || "").split(",");
       ids = _.reject(ids, function(id){ return !id });
@@ -155,10 +154,6 @@ define(["jquery"
             href: "/a/storage"
           },
           {
-            text: t_("Export catalog"),
-            href: "/a/catalog/export",
-          },
-          {
             text: t_("Users"),
             href: "/a/users"
           },
@@ -191,277 +186,6 @@ define(["jquery"
         title: t_("Delete this page?"),
         message: t_("Are you sure to delete this page and its subpages?")
       }
-    }
-
-  });
-
-
-  models.CatalogPage = models.Page.extend({
-
-    getCatalogMenuItems: function() {
-      return [
-        {
-          text: t_("Style and scripts"),
-          click: this.editCode
-        },
-        {
-          text: t_("Sort subpages"),
-          click: this.sortSubpages
-        },
-        {
-          isSeparator: true
-        },
-        {
-          text: t_("Create category"),
-          click: this.createCategory
-        },
-        {
-          text: t_("Create product"),
-          click: this.createProduct
-        }
-      ]
-    },
-
-    getPageMenu: function() {
-
-      var items = this.getCatalogMenuItems();
-
-      items.unshift({
-        text: t_("Catalog attributes"),
-        click: this.edit
-      });
-
-      return {
-        className: "sg-ico-electronics",
-        items: items,
-        text: "",
-        title: t_("Catalog"),
-        context: this
-      }
-
-    },
-
-    createCategory: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("id"),
-        type: "category"
-      });
-    },
-
-    createProduct: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("id"),
-        type: "product"
-      });
-    }
-
-  });
-
-
-  models.CategoryPage = models.CatalogPage.extend({
-
-    getPageMenu: function() {
-
-      var items = this.getCatalogMenuItems();
-
-      items.unshift({
-        text: t_("Category attributes"),
-        click: this.edit
-      });
-
-      items.push({
-        text: t_("Delete this category"),
-        click: this.delete
-      });
-
-      return {
-        className: "sg-ico-electronics",
-        items: items,
-        text: "",
-        title: t_("Category"),
-        context: this
-      };
-
-    },
-
-    getDeleteOptions: function() {
-      return {
-        title: t_("Delete this category?"),
-        message: t_("Are you sure to delete this category and its contents?")
-      }
-    }
-
-  });
-
-
-  models.ProductPage = models.CatalogPage.extend({
-
-    getPageMenu: function() {
-
-      var items = this.getCatalogMenuItems();
-
-      items.unshift({
-        text: t_("Product attributes"),
-        click: this.edit
-      });
-
-      items.push({
-        text: t_("Delete this product"),
-        click: this.delete
-      });
-
-
-      return {
-        className: "sg-ico-electronics",
-        items: items,
-        text: "",
-        title: t_("Product"),
-        context: this
-      };
-
-    },
-
-    getDeleteOptions: function() {
-      return {
-        title: t_("Delete this product?"),
-        message: t_("Are you sure to delete this product?")
-      }
-    },
-
-    // Use parent_id
-
-    createProduct: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("parent_id"),
-        type: "product"
-      });
-    },
-
-    createCategory: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("parent_id"),
-        type: "category"
-      });
-    }
-
-  });
-
-
-  models.NewsIndexPage = models.Page.extend({
-
-    getNewsMenuItems: function() {
-      return [
-        {
-          text: t_("Style and scripts"),
-          click: this.editCode
-        },
-        {
-          isSeparator: true
-        },
-        {
-          text: t_("Create news"),
-          click: this.createNews
-        }
-      ]
-    },
-
-    getPageMenu: function() {
-
-      var items = this.getNewsMenuItems();
-
-      items.unshift({
-        text: t_("News index attributes"),
-        click: this.edit
-      });
-
-      return {
-        className: "sg-ico-news",
-        items: items,
-        text: "",
-        title: t_("News Index"),
-        context: this
-      }
-
-    },
-
-    createNews: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("id"),
-        type: "news"
-      });
-    }
-
-  });
-
-
-  models.NewsPage = models.NewsIndexPage.extend({
-
-    getPageMenu: function() {
-
-      var items = this.getNewsMenuItems();
-
-      items.unshift({
-        text: t_("News attributes"),
-        click: this.edit
-      });
-
-      items.push({
-        text: t_("Delete news"),
-        click: this.delete
-      });
-
-      return {
-        className: "sg-ico-news",
-        items: items,
-        text: "",
-        title: t_("News"),
-        context: this
-      };
-
-    },
-
-    getDeleteOptions: function() {
-      return {
-        title: t_("Delete news?"),
-        message: t_("Are you sure to delete news?")
-      }
-    },
-
-    // Use parent_id
-
-    createNews: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("parent_id"),
-        type: "news"
-      });
-    }
-
-  });
-
-
-  models.NewsArchivePage = models.NewsIndexPage.extend({
-
-    getPageMenu: function() {
-
-      var items = this.getNewsMenuItems();
-
-      return {
-        className: "sg-ico-news",
-        items: items,
-        text: "",
-        title: t_("News"),
-        context: this
-      };
-
-    },
-
-    // Use parent_id
-
-    createNews: function() {
-      this.trigger("page:create", {
-        parent_id: this.get("parent_id"),
-        type: "news"
-      });
     }
 
   });

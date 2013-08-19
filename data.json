@@ -19,50 +19,7 @@
 	        	"template": "page",
 	        	"is_system": true
 	        }
-		},
-		{
-			"parent_id": 1,
-			"level": 1,
-			"position": 1,
-			"ids": "1",
-			"slug": "catalog",
-	        "path": "/catalog",
-	        "title": "Catalog",
-	        "name": "Catalog",
-	        "type": "catalog",
-           	"is_system": true,
-	        "block": {
-	        	"template": "page",
-		        "is_system": true,
-				"blocks": [{
-					"template": "row",
-					"is_system": true,
-					"blocks": [
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true,
-							"blocks": [
-								{
-									"template": "page_title",
-									"is_system": true
-								},
-								{
-									"template": "categories",
-									"is_system": true
-								}
-							]
-						},
-						{
-							"template": "column",
-							"is_system": true,
-							"size": 4
-						}
-					]
-				}]
-	        }
-
-		}
+		} 	 
 	],
 
 	"template_blocks": [
@@ -83,7 +40,7 @@
 								"template": "content",
 								"type": "wysiwyg",
 								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-								"content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
+								"content_cached": "<p><a href='/'><strong>Stonegarden welcomes you</strong></a></p>"
 							}]
 						},
 						{

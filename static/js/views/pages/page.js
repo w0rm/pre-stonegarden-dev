@@ -6,10 +6,6 @@ define(["jquery"
       , "views/delete_modal"
       , "views/pages/menu"
       , "views/pages/form"
-      , "views/pages/catalog_form"
-      , "views/pages/category_form"
-      , "views/pages/product_form"
-      , "views/pages/news_form"
       , "views/pages/code_form"
       , "views/pages/sort_subpages"], function ($, _, Backbone, sg) {
 

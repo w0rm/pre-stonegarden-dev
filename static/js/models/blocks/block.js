@@ -326,10 +326,5 @@ define(["jquery"
   })
 
 
-  /* Catalog blocks */
-  models.CategoriesBlock = models.NavBlock
-  models.ProductsBlock = models.NavBlock
-  models.SubcategoriesNavBlock = models.NavBlock
-
 
 });

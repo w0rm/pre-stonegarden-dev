@@ -29,6 +29,7 @@ define(["jquery"
     },
 
     model: function(attrs, options) {
+      console.log(attrs,'>>',options, utils.guessBlockType(attrs))
       var modelClass = models[utils.guessBlockType(attrs) + "Block"]
         , model = new modelClass(attrs, options);
       return model;

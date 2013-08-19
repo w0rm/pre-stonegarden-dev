@@ -1,4 +1,0 @@
-$def with(block)
-$# News page title block renders news page title
-<time>$datify(ctx.page.published_at, u"%d %B %Y")</time>
-<h1 class="$page_unpublished_class(ctx.page)">$ctx.page.title</h1>

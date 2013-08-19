@@ -1,9 +1,3 @@
-DROP TABLE IF EXISTS `blocks`;
-DROP TABLE IF EXISTS `pages`;
-DROP TABLE IF EXISTS `messages`;
-DROP TABLE IF EXISTS `sessions`;
-DROP TABLE IF EXISTS `documents`;
-DROP TABLE IF EXISTS `users`;
 
 
 

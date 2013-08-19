@@ -43,7 +43,8 @@ define(["jquery"
 
     guessBlockType: function(attrs) {
       // TODO: use type instead of template
-      switch (attrs.template) {
+      templ = attrs.template
+      switch (templ) {
         case "page":
           return "Page";
         case "index_page":
@@ -56,21 +57,13 @@ define(["jquery"
           return "Nav";
         case "page_title":
           return "PageTitle";
-        case "news_page_title":
-          return "PageTitle";
-        case "categories":
-          return "Categories";
-        case "products":
-          return "Products";
-        case "subcategories_nav":
-          return "SubcategoriesNav";
         default:
           if (attrs.type === "image") {
             return "Image"
           } else if (attrs.type === "gallery") {
             return "Gallery"
           } else {
-            return ""
+            return "" 
           }
       }
     },

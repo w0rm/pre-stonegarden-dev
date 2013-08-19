@@ -19,7 +19,7 @@ define(['jquery'
 
 
     if (window.sgData && window.sgData.page ) {
-
+      console.log(window.sgData.page.template )
       sg.page = new models[utils.guessPageType(window.sgData.page) + "Page"];
       sg.page.set(window.sgData.page);
       sg.pages = new collections.Pages;
