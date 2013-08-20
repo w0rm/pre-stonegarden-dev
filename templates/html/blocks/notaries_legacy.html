@@ -1,0 +1,70 @@
+$def with(block)
+$code:
+    notaries = get_notaries(with_images=True)
+    regions = get_regions()
+<div class="js-legacy">
+    <div class="row">
+        <div class="six columns">
+            <form class="js-step1 box n-shadowed">
+                <h3>Шаг 1</h3>
+                <label>Выберите нотариальный округ:</label>
+                <p>
+                <select name="region_id" class="js-region">
+                    <option value="">ничего не выбрано</option>
+                $for r in regions:
+                    <option value="$r.id"
+                    $if r.notaries_count == 0:
+                        disabled
+                    >$r.title ($r.notaries_count)</option>
+                </select>
+                </p>
+            </form>
+        </div>
+        <div class="six columns">
+            <form class="js-step2 box n-shadowed is-hidden">
+                <h3>Шаг 2</h3>
+                <label>Введите фамилию наследодателя (умершего):</label>
+                <input name="surname" type="text" class="js-surname">
+                <p>
+                    <button type="submit" class="sg-ico-search button">
+                        Найти нотариуса
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="js-results is-hidden">
+        <table>
+            <tbody>
+            $for notary in notaries:
+                <tr class="is-hidden js-notary"
+                    data-region_id="$notary.region_id"
+                    data-legacy_letters="$notary.legacy_letters_cached">
+                    <td class="notary-image">
+                        $if notary.notary_image:
+                            <img data-lightbox="$notary.notary_image.sizes['m']"
+                                 src="$notary.notary_image.src" >
+                    </td>
+                    <td>
+                        <p><strong>$notary.title</strong></p>
+                        <p><span data-longitude="$notary.longitude"
+                                 data-latitude="$notary.latitude"
+                                 href="#">$notary.address</span></p>
+                        $if notary.phone:
+                            <p>$notary.phone</p>
+                    </td>
+                    <td>
+                        $:notary.description_cached
+                    </td>
+                    <td>
+                        Фамилия наследодателя:<br>
+                        $notary.legacy_letters
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="js-fail is-hidden">
+        <h3>Ничего не найдено, попробуйте другие параметры поиска.</h3>
+    </div>
+</div>

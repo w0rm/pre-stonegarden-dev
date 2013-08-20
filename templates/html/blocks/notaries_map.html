@@ -1,0 +1,48 @@
+$def with(block)
+$code:
+    notaries_json = notaries_to_map_json(
+        get_notaries(with_images=True)
+    )
+    regions = get_regions()
+
+<div class="js-notaries-map n-shadowed">
+    <div class="padin padtop">
+        <form class="row js-filter">
+            <div class="four columns">
+                <p>
+                <label>
+                    Нотариальный округ:
+                    <select name="region_id" class="js-region">
+                    $for r in regions:
+                        <option value="$r.id"
+                        $if r.notaries_count == 0:
+                            disabled
+                        >$r.title ($r.notaries_count)</option>
+                    </select>
+                </label>
+                </p>
+            </div>
+            <div class="four columns">
+                <p>
+                <label>
+                    <input type="checkbox" class="js-late"
+                           name="late">
+                    Работает до 19:00 сегодня
+                </label>
+                </p>
+            </div>
+            <div class="four columns">
+                <p>
+                <button class="button small sg-ico-search">
+                    Найти на карте
+                </button>
+                </p>
+            </div>
+        </form>
+    </div>
+    <div class="notaries-map js-map"></div>
+    <script>
+        var sgData = sgData || {};
+        sgData.notaries_for_map = $:notaries_json;
+    </script>
+</div>

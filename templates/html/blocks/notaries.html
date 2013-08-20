@@ -1,0 +1,45 @@
+$def with(block)
+$code:
+    regions = get_regions(with_notaries=True, with_images=True)
+
+<table>
+    <tbody>
+    $for region in regions:
+        <tr>
+        $if region.notaries_count == 0:
+            <td colspan="2">
+                <h4>$region.title</h4>
+            </td>
+            <td colspan="2">
+                <p>Частно практикующих нотариусов в округе нет. За информацией о замещениях просим обращаться в Нотариальную палату Новгородской области.</p>
+            </td>
+        $else:
+            <td colspan="4">
+                <h4>$region.title ($region.notaries_count)</h4>
+            </td>
+        </tr>
+        $for notary in region.notaries:
+            <tr>
+                <td class="notary-image">
+                    $if notary.notary_image:
+                        <img data-lightbox="$notary.notary_image.sizes['m']"
+                             src="$notary.notary_image.src" >
+                </td>
+                <td>
+                    <p><strong>$notary.title</strong></p>
+                    <p><span data-longitude="$notary.longitude"
+                             data-latitude="$notary.latitude"
+                             href="#">$notary.address</span></p>
+                    $if notary.phone:
+                        <p>$notary.phone</p>
+                </td>
+                <td>
+                    $:notary.description_cached
+                </td>
+                <td>
+                    Фамилия наследодателя:<br>
+                    $notary.legacy_letters
+                </td>
+            </tr>
+    </tbody>
+</table>

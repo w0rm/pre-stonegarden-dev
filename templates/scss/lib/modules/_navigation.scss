@@ -1,0 +1,31 @@
+
+.nav-root, .nav-secondary {
+  .active, .active:hover {
+    color: inherit;
+  }
+  ul {
+    @extend %inline-block-list;
+    margin-bottom: 0;
+  }
+}
+
+.nav-root {
+  a, span {
+    display: block;
+    padding: 7px 10px;
+  }
+  .active {
+    background: $greyBackgroundColor;
+    @include border-top-left-radius(10px)
+  }
+}
+
+.nav-secondary {
+  background: $greyBackgroundColor;
+  @include border-bottom-radius(10px);
+  padding: 7px 0;
+  a, span {
+    display: block;
+    padding: 0 10px;
+  }
+}

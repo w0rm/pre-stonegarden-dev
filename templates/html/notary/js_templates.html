@@ -1,0 +1,146 @@
+<script type="text/template" id="notary-regions-template">
+    <div class="page">
+        <div class="row">
+            <div class="twelve columns">
+                <h1>Нотариусы</h1>
+            </div>
+            <div class="six columns js-notary-regions"></div>
+            <div class="six columns js-notary-notaries"></div>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="regions-template">
+    <h3>Нотариальные округа</h3>
+    <p>
+        <button class="button tiny sg-ico-folder-add js-create-region">
+            Создать округ
+        </button>
+    </p>
+    <ul class="sg-regions js-regions"></ul>
+</script>
+<script type="text/template" id="notaries-template">
+    <h3>Нотариусы округа «<%= region.title %>»</h3>
+    <p>
+        <button class="button tiny sg-ico-folder-add js-create-notary">
+            Создать нотариуса
+        </button>
+    </p>
+    <ul class="sg-notaries js-notaries"></ul>
+</script>
+<script type="text/template" id="region-template">
+    <h5><a href="#" class="js-show-notaries"><%= region.title %> (<%= region.notaries_count %>)</a></h5>
+</script>
+<script type="text/template" id="notary-template">
+    <h5><%= notary.title %></h5>
+</script>
+<script type="text/template" id="region-form-template">
+    <form>
+        <label>Название нотариального округа</label>
+        <input name="title" type="text" value="<%= region.title || "" %>">
+        <div class="js-location">
+            <input type="hidden" name="longitude" value="<%= region.longitude || "" %>">
+            <input type="hidden" name="latitude" value="<%= region.latitude || "" %>">
+            <label>Адрес</label>
+            <div class="sg-map js-map"></div>
+            <div class="row collapse">
+                <div class="ten mobile-two columns">
+                    <input name="address" type="text" value="<%= region.address || "" %>">
+                </div>
+                <div class="two mobile-one columns">
+                    <a class="button expand postfix js-locate"><i class="sg-ico-search"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="js-alert"></div>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
+<script type="text/template" id="notary-form-template">
+    <form>
+        <label>ФИО нотариуса</label>
+        <input name="title" type="text" value="<%= notary.title || "" %>">
+        <div class="row collapse">
+            <div class="four columns expand">
+                <label>Фото нотариуса</label>
+                <div class="sg-image-upload js-notary_image-upload"
+                     data-parent_id="$config.upload_parent_id">
+                    <input type="hidden" class="js-image_id"
+                           name="notary_image_id"
+                           value="<%= notary.notary_image_id || "" %>">
+                    <button class="tiny button sg-ico-upload sg-file-input">
+                        загрузить
+                        <input type="file" name="upload">
+                    </button>
+                </div>
+            </div>
+            <div class="eight columns">
+                <div class="js-location">
+                    <input type="hidden" name="longitude" value="<%= notary.longitude || region.longitude  %>">
+                    <input type="hidden" name="latitude" value="<%= notary.latitude || region.latitude %>">
+                    <label>Адрес</label>
+                    <div class="sg-map js-map"></div>
+                    <div class="row collapse">
+                        <div class="ten mobile-two columns">
+                            <input name="address" type="text" value="<%= notary.address || region.address %>">
+                        </div>
+                        <div class="two mobile-one columns">
+                            <a class="button expand postfix js-locate"><i class="sg-ico-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="four columns expand">
+                <label>Фото крыльца</label>
+                <div class="sg-image-upload js-office_image-upload"
+                     data-parent_id="$config.upload_parent_id">
+                    <input type="hidden" class="js-image_id"
+                           name="office_image_id"
+                           value="<%= notary.office_image_id || "" %>">
+                    <button class="tiny button sg-ico-upload sg-file-input">
+                        загрузить
+                        <input type="file" name="upload">
+                    </button>
+                </div>
+            </div>
+            <div class="eight columns">
+                <label>Телефон</label>
+                <input name="phone" type="text" value="<%= notary.phone || "" %>">
+                <label>Режим работы, № лицензии</label>
+                <textarea name="description"><%= notary.description || "" %></textarea>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="row collapse">
+            <div class="six columns">
+                <label>Дни работы до 19:00</label>
+                <input name="late_days" type="hidden" value="<%= notary.late_days || "" %>">
+                <p>
+                <% _.each(["понедельник", "вторник", "среда", "четверг",
+                           "пятница", "суббота"], function(v, k) { %>
+                    <a href="#" class="sg-block-css-class-label secondary label js-label"
+                       data-value="<%= k + 1 %>"><%= v %></a>
+                <% }) %>
+                </p>
+            </div>
+            <div class="six columns">
+                <label>Буквы ведения наследственных дел,<br>
+                       например: «А-З, И (муж), О-Т (жен)»</label>
+                <input name="legacy_letters" type="text"
+                       value="<%= notary.legacy_letters || "" %>">
+            </div>
+        </div>
+
+        <div class="js-alert"></div>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
+
