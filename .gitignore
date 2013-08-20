@@ -11,6 +11,10 @@
 .DS_Store
 .sass-cache
 
+templates/scss/_config.scss
+templates/scss/_modules.scss
+templates/scss/modules
+
 #Stonegarden
 siteconfig.py
 upload/*

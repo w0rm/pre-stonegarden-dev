@@ -2,6 +2,7 @@ require 'zurb-foundation'
 
 # Set this to the root of your project when deployed:
 sass_dir = "."
+additional_import_paths = ["./lib"]
 sprite_load_path = "./templates/scss/sprites"
 generated_images_dir = "../../static/img/sprites"
 
@@ -17,6 +18,6 @@ http_stylesheets_path = "/static/css"
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 relative_assets = true
-environment = :development
-#output_style = :expanded # :compressed
-#line_comments = false
+#environment = :development
+output_style =  :compressed #:expanded
+line_comments = false

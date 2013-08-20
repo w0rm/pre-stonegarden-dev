@@ -28,6 +28,10 @@
   height: 300px;
 }
 
+.sg-map {
+  height: 200px;
+}
+
 .sg-page-unpublished {
   @extend %sg-ico;
   &:before{content: "\e009"};
@@ -44,7 +48,7 @@ a.sg-page-unpublished {
 
 
 .mceExternalToolbar {
-  z-index: 100;
+  z-index: 1000!important;
   @include box-shadow;
   background-color: $bg-grey !important;
   padding: 5px!important;
@@ -60,5 +64,42 @@ a.sg-page-unpublished {
   @include box-shadow;
   &, tr.mceLast td, tr.mceFirst td {
     border:none!important;
+  }
+}
+
+
+.sg-notaries, .sg-regions {
+  list-style-type: none;
+  margin: 0
+}
+.sg-notary, .sg-region {
+  position: relative;
+  margin: 0;
+  padding: 1px 0;
+  h5 {
+    margin: 10px 0;
+  }
+}
+
+.sg-image-upload {
+  position: relative;
+  margin-bottom: 20px;
+  img {
+    display: block;
+    margin-bottom: 5px;
+  }
+  padding: 0 10px 10px 0;
+  @include border-radius;
+  &.is-loading {
+    &:before {
+      content: image-url("loader.gif");
+      width: image-width("loader.gif");
+      height: image-height("loader.gif");
+      display: block;
+      margin: 10px auto 20px
+    };
+  }
+  &.is-dropped {
+      background-color: $blueBackgroundColor;
   }
 }

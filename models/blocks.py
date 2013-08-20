@@ -24,9 +24,9 @@ def update_block_by_id(block_id, data):
 
     data.updated_at = web.SQLLiteral("CURRENT_TIMESTAMP")
 
-    # Cannot change type and template of block
+    # Cannot change template of block
     del data["template"]
-    del data["type"]
+    #del data["type"]
 
     if block.type == "wysiwyg":
         data.content_cached = smarty(sanitize(data.content))

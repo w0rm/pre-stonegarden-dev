@@ -1,111 +1,66 @@
 @import "foundation";
 
-h1 { font-size: 24px; }
-h2 { font-size: 20px; }
-h3 { font-size: 18px; }
-h4 { font-size: 16px; }
-h5, h6 { font-size: 14px; }
-
-strong {
-  font-weight: 700;
+body {
+  background: image-url("paper.png");
 }
 
-em {
-  font-family: sans-serif;
+
+header {
+  margin-bottom: 30px;
 }
 
-a {
-  text-decoration: underline;
-  &:hover {
-    text-decoration: none;
-  };
-  &.external {
-    color: #0071bc !important;
-  }
-}
-.close-reveal-modal {
-  text-decoration: none
+footer {
+  margin-top: 50px;
 }
 
-figcaption {
-  margin-bottom: ms(1);
-}
 
 ul, ol {
   margin-left: 20px;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 table {
+
   min-width: 100%;
   border-collapse: collapse;
   p {
     margin-bottom: 0;
   }
 
+  background: transparent;
+
   thead {
     background: transparent;
     tr {
       td, th {
-        font-size: 12px;
-        p {
-          font-size: 12px;
-        }
-        @extend .exposed;
+        color: $headerFontColor;
         vertical-align: bottom;
-        border-bottom: 1px solid $grey40;
+        border-bottom: 1px solid lighten($headerFontColor, 70%);
       }
     }
-    border-bottom: 2px solid $grey60;
+    border-bottom: 2px solid $headerFontColor;
   }
 
   tbody {
+    background: $white;
     tr {
       td, th {
-        border-bottom: 1px solid $grey40;
+        border-bottom: 1px solid $bg-grey;
       }
     }
     tr:nth-child(even) {
       background: transparent;
     }
-    border-bottom: 2px solid $grey60;
+    border-bottom: 2px solid $headerFontColor;
 
   }
 
   tfoot {
     background: transparent;
-    tr {
-      td, th {
-        font-size: 12px;
-        p {
-          font-size: 12px;
-        }
-        @extend .exposed;
-      }
-    }
   }
 
   border: 0;
-}
-
-header, footer {
-  padding-top: ms(1);
-  //background: #eee;
-}
-
-header {
-  margin-bottom: ms(1);
-}
-
-footer {
-  margin-top: ms(1);
-  border-top: 1px solid $grey10;
-}
-
-
-nav {
-  > ul {
-    margin-bottom: 0;
-    margin-left: 0;
-    list-style-type: none;
-  }
 }

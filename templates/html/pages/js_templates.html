@@ -20,6 +20,7 @@
         <input name="title" type="text" value="<%= page.title || "" %>">
         <label>$_("Name")</label>
         <input name="name" type="text" value="<%= page.name || "" %>">
+        <input name="type" type="text" value="<%= page.type || "" %>">
         <% if (!page.is_system) { %>
             <p>
                 <label>$_("Parent")</label>

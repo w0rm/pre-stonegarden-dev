@@ -25,7 +25,7 @@ class Mailer:
             del headers['ContentType']
         if reply_to:
             headers['Reply-To'] = reply_to
-        message = dict(
+        message = web.storage(
             to=to,
             subject=subject,
             headers=headers,

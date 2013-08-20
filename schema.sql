@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS `messages`;
 DROP TABLE IF EXISTS `sessions`;
 DROP TABLE IF EXISTS `documents`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `regions`;
+DROP TABLE IF EXISTS `notaries`;
 
 
 
@@ -22,6 +24,50 @@ CREATE TABLE users (
     UNIQUE (email),
     CHECK (is_active IN (0, 1)),
     CHECK (is_deleted IN (0, 1))
+);
+
+
+
+CREATE TABLE regions (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255),
+    address TEXT,
+    longitude FLOAT,
+    latitude FLOAT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    deleted_at TIMESTAMP NULL,
+    is_deleted BOOL DEFAULT '0',
+    PRIMARY KEY (id),
+	CHECK (is_deleted IN (0, 1))
+);
+
+
+
+CREATE TABLE notaries (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    region_id INTEGER NOT NULL,
+    notary_image_id INTEGER NULL,
+    office_image_id INTEGER NULL,
+    title VARCHAR(255),
+    phone VARCHAR(255),
+    address TEXT,
+    legacy_letters TEXT,
+    legacy_letters_cached TEXT,
+    late_days TEXT,
+    description TEXT,
+    description_cached TEXT,
+    longitude FLOAT,
+    latitude FLOAT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    deleted_at TIMESTAMP NULL,
+    is_deleted BOOL DEFAULT '0',
+    PRIMARY KEY (id),
+  	FOREIGN KEY(region_id) REFERENCES regions (id),
+  	FOREIGN KEY(notary_image_id) REFERENCES documents (id),
+  	FOREIGN KEY(office_image_id) REFERENCES documents (id),
+	CHECK (is_deleted IN (0, 1))
 );
 
 

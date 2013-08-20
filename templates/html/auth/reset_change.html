@@ -1,21 +1,15 @@
 $def with (form)
 <div class="row">
-    <div class="eight columns">
-	    <form action="" method="post">
-	        <h1>$_("Password reset")</h1>
+    <div class="eight centered columns">
+        <form action="" method="post">
+            <h1>$_("Password reset")</h1>
 
             $:form.render_css()
 
             $if not form.valid:
                 $:form.render_errors()
 
-	        <p><button class="right button" type="submit">$_("Save")</button></p>
-	    </form>
-	</div>
+            <p><button class="right button" type="submit">$_("Save")</button></p>
+        </form>
+    </div>
 </div>
-
-
-
-
-
-

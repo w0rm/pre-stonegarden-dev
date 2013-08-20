@@ -10,7 +10,8 @@ require.config({
     'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
     'ace': '../vendor/js/ace',
     backbone: '../vendor/js/backbone-0.9.2',
-    underscore: '../vendor/js/underscore-1.4.2'
+    underscore: '../vendor/js/underscore-1.4.2',
+    ymaps: "http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU"
   },
   shim: {
     'stonegarden': ['jquery'],
@@ -25,18 +26,24 @@ require.config({
     backbone: {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
+    },
+    ymaps: {
+      exports: "ymaps"
     }
   }
 });
 
-require(["blocks", "documents"]);
+require(["blocks", "documents", "notary"]);
 
 require(["jquery"
        , "jquery.ui"
        , "plugins/jquery.responsive"
        , "plugins/jquery.splash"
        , "plugins/jquery.gallery"
-       , "jquery.foundation.topbar"], function($) {
+       , "jquery.foundation.topbar"
+       , "plugins/jquery.legacy"
+       , "plugins/jquery.lightbox"
+       , "plugins/jquery.notaries_map"], function($) {
 
   $(document).foundationTopBar();
 
@@ -67,6 +74,9 @@ require(["jquery"
     $(".responsive").responsiveImage()
     $(".js-splash").splash()
     $(".js-gallery").gallery()
+    $(".js-legacy").legacy()
+    $(".js-notaries-map").notariesMap()
+
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
     if (!svg) document.body.className += ' no-svg'

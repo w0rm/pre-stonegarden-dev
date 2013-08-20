@@ -1,14 +1,18 @@
+
 .small {
-  font-size: 85%;
-  font-weight: 300;
+  font-size: 80%;
 }
 
 .exposed {
-  color: hsl(0, 0, 60%);
+  color: hsl(0, 0, 40%);
 }
 
 .subheader {
   font-size: 100%;
   font-weight: 300;
   color: inherit;
+}
+
+.is-hidden {
+  display: none
 }

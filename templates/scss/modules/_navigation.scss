@@ -1,31 +1,35 @@
 
-.nav-root, .nav-secondary {
-  .active, .active:hover {
-    color: inherit;
-  }
-  ul {
-    @extend %inline-block-list;
-    margin-bottom: 0;
-  }
-}
-
 .nav-root {
+  ul {
+    margin: 0;
+    padding: 10px 0;
+  }
+  li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px
+  }
   a, span {
-    display: block;
-    padding: 7px 10px;
+    vertical-align: top;
+    line-height: 1;
+    text-align: center;
+    display: inline-block;
+    color: #dcc;
+    padding: 5px 10px;
+    font-weight: bold;
+    @include transition(color .2s ease-in-out);
+    @include border-radius(6px);
+    @include text-shadow(0 -1px rgba(0,0,0,.8));
+    &.active, &.active:hover {
+      color: $txtColor;
+      @include background(linear-gradient(#fff, #ddd));
+      @include box-shadow;
+      background-color: #fff;
+      @include text-shadow(none)
+    }
   }
-  .active {
-    background: $greyBackgroundColor;
-    @include border-top-left-radius(10px)
-  }
+  a:hover {
+    color: #fff;
+  };
 }
 
-.nav-secondary {
-  background: $greyBackgroundColor;
-  @include border-bottom-radius(10px);
-  padding: 7px 0;
-  a, span {
-    display: block;
-    padding: 0 10px;
-  }
-}

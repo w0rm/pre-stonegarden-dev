@@ -1,6 +1,26 @@
 urls = (
 
     # ======================
+    # Regions
+    # ======================
+
+    # regions restfull controller
+    r'/a/regions(?:/(?P<resource_id>[0-9]+))?',
+    "controllers.regions.Regions",
+
+    # ======================
+    # Notaries
+    # ======================
+
+    # notaries restfull controller
+    r'/a/notaries(?:/(?P<resource_id>[0-9]+))?',
+    "controllers.notaries.Notaries",
+
+    # notary pages
+    "/a/notary", "controllers.notary.Notary",
+
+
+    # ======================
     # Application
     # ======================
     # TODO: serve compiled config.js

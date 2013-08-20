@@ -9,6 +9,7 @@ from config import config
 from modules.translation import N_, _
 from base import db, auth, flash, mailer, applog
 from template import render, render_partial, render_email, link_to
+from modules.dbauth import AuthError, make_token, check_token, temp_password
 from modules.form import *
 
 new_user_text = N_("New user in system: %s.")
@@ -48,9 +49,9 @@ class NewUser:
         if user_form.valid:
             user = user_form.d
             email = user.pop("email")
-            password = tempPassword()
+            password = temp_password()
             user.update(password=password)
-            user = auth.get_user(user_id=auth.create_user(email, **user))
+            user = auth.create_user(email, **user)
             mailer.send(
                 user.email,
                 render_email.register(user, password),

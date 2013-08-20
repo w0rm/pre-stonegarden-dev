@@ -26,7 +26,9 @@ def get_recent_news(limit=5, offset=0):
 
 
 @template_global
-def get_news_for_year(year):
+def get_news_for_year(year=None):
+    if year is None:
+        year = datetime.date.today().year
     return db.select(
         "pages",
         where="`type` = 'news' AND NOT is_deleted "
@@ -60,7 +62,7 @@ def get_news_years():
     if years and years[0].min_date and years[0].max_date:
         year_min = years[0].min_date.year
         year_max = years[0].max_date.year
-        if year_max > year_min:
+        if year_max >= year_min:
             return list(range(year_min, year_max + 1))
 
 

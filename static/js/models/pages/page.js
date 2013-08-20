@@ -154,10 +154,10 @@ define(["jquery"
             text: t_("Storage"),
             href: "/a/storage"
           },
-          /*  {
-            text: t_("Export catalog"),
-            href: "/a/catalog/export",
-          }, */
+          {
+            text: "Нотариусы",
+            href: "/a/notary",
+          },
           {
             text: t_("Users"),
             href: "/a/users"

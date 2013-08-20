@@ -47,7 +47,7 @@ class Login:
 
     def GET(self):
         if auth.get_user():
-            raise web.found("/a")
+            raise web.found("/a/sitemap")
         if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             return render_partial.auth.login(loginForm())
         else:
@@ -60,7 +60,7 @@ class Login:
         if not form.validates():
             return render.auth.login(form)
         next = web.ctx.session.get("next", web.ctx.env.get("HTTP_REFERER",
-                                                           "/a"))
+                                                           "/a/sitemap"))
         try:
             del web.ctx.session["next"]
         except KeyError:
@@ -132,7 +132,7 @@ class ResetChange:
                 if not user or not check_token(user, token,
                                                auth.config.reset_expire_after):
                     raise AuthError
-                auth.setPassword(user.email, form.d.password)
+                auth.set_password(user.email, form.d.password)
                 auth.login(user)
                 flash.set(_(changed_text))
             except AuthError:
