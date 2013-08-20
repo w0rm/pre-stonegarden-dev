@@ -1,5 +1,5 @@
 @import "config";
-@import "stone_icon_font";
+@import "base/helpers";
 @import "admin/ui";
 @import "admin/form";
 @import "admin/documents";
@@ -17,7 +17,48 @@
   @include opacity(.5);
 }
 
-$navBarHeight: 45px !default;
 .sg-top-bar-spacer {
   height: $navBarHeight;
+}
+
+.sg-ace {
+  @include box-shadow;
+  position: relative !important;
+  width: 100%;
+  height: 300px;
+}
+
+.sg-page-unpublished {
+  @extend %sg-ico;
+  &:before{content: "\e009"};
+  color: #aaa;
+  &:before {
+    margin-right: .2em;
+  }
+}
+a.sg-page-unpublished {
+  &:hover {
+    color: darken(#aaa, 5%);
+  };
+}
+
+
+.mceExternalToolbar {
+  z-index: 100;
+  @include box-shadow;
+  background-color: $bg-grey !important;
+  padding: 5px!important;
+  position: fixed!important;
+  top: 0!important;
+  left: 0!important;
+  .mceToolbar {
+    border:none!important;
+    background-color: $bg-grey !important;
+  }
+}
+.defaultSkin table.mceLayout {
+  @include box-shadow;
+  &, tr.mceLast td, tr.mceFirst td {
+    border:none!important;
+  }
 }

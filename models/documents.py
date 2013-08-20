@@ -1,3 +1,4 @@
+# coding: utf-8
 import os
 import web
 import json
@@ -9,7 +10,7 @@ from base import db, auth, flash
 from modules.utils import dthandler
 from modules.translation import _
 from config import config
-from template import asset_url
+from template import asset_url, template_global
 from pytils.translit import slugify
 from models.tree import *
 
@@ -131,7 +132,7 @@ def delete_document_by_id(document_id):
     collapse_tree_siblings("documents", document)
 
     # Delete branch recursively
-    return delete_tree_branch("documents", document)
+    return delete_tree_branch("documents", document, func=delete_document_file)
 
 
 def get_document_path(document):
@@ -160,21 +161,48 @@ def get_document_by_filename(filename):
     )[0]
 
 
-def get_documents_by_parent_id(parent_id, type=None):
-    """Select and return documents from parent folder"""
-    #TODO: filter by type
-    return db.select("documents", locals(),
-                     where="parent_id = $parent_id AND NOT is_deleted",
+def get_documents_by_parent_id(parent_id, document_type=None):
+    """Select and return documents from parent folder
+       optionally filtered by @document_type"""
+    where = "parent_id = $parent_id AND NOT is_deleted"
+    if document_type == "folder":
+        where += " AND type = 'folder'"
+    elif document_type in ("image", "document"):
+        where += " AND type IN ('folder', '%s')" % document_type
+    return db.select("documents", locals(), where=where,
                      order="position ASC").list()
 
 
 def document_src(document):
     if document.type == "image":
         document.src = image_url(document, "t")
-        document.src_large = image_url(document, "l")
+        document.sizes = dict(
+            (size, image_url(document, size)) for size in ("s", "m", "l")
+        )
+
     elif document.type == "document":
         document.src = "/uploads/" + document.filename
     return document
+
+
+@template_global
+def describe_extension(doc):
+    if doc.filetype == "image":
+        return _("Images")
+    elif doc.filetype == "folder":
+        return _("Folders")
+    elif doc.extension in (".txt|.rtf|.rtf|.doc|.docx|.odt|"
+                           ".odc|.odp|.pdf|.ppt|.xls|.xlsx"):
+        return _("Documents")
+    elif doc.extension in ".zip|.rar|.tar|.gz|.bz|.tgz|.arj|.7z":
+        return _("Archives")
+    else:
+        return _("Files")
+
+
+@template_global
+def filesize(doc):
+    return unicode((doc.filesize or 0) / 1024) + u" " + _("kb")
 
 
 def document_to_json(document):
@@ -227,7 +255,7 @@ def image_url(image, size):
         return asset_url("i/" + image.filename + "_" + size + image.extension,
                          version=False)
     except:
-        raise
+        pass
     return asset_url("img/broken_" + size + ".png")
 
 
@@ -267,11 +295,17 @@ def rem_file(filename):
         os.unlink(filename)
 
 
-def delete_file(filename):
+def delete_document_file(document):
     # rem_file(os.path.join(config.upload_dir, filename))
-    for size in config.image.keys():
-        rem_file(os.path.join(config.static_dir,
-                              filename + "_" + size + extension))
+    if document.type == "image":
+        for size in config.image.keys():
+            print "i/" + document.filename + "_" + size + document.extension
+            rem_file(
+                os.path.join(
+                    config.static_dir,
+                    "i/" + document.filename + "_" + size + document.extension
+                )
+            )
 
 
 def resize_image_file(original_name, destination, prefix):

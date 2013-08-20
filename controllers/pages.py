@@ -9,10 +9,11 @@ from base import db, auth, flash
 from modules.translation import _, N_
 from modules.utils import dthandler
 from template import render, render_partial, link_to
-from modules.form import *
+from modules.form import ApiForm, DateInput, Checkbox, validDate, notnull
 from modules.restful_controller import RESTfulController
 
 from models.pages import *
+
 from models.blocks import (load_page_blocks, get_page_block_by_page_id,
                            block_to_json, template_blocks_to_json)
 
@@ -42,8 +43,9 @@ class Pages(RESTfulController):
         web.form.Input("meta_keywords"),
         web.form.Input("css_code"),
         web.form.Input("js_code"),
-        web.form.Checkbox("is_published"),
-        web.form.Checkbox("is_navigatable"),
+        DateInput("published_at", validDate),  # defaults to NOW
+        Checkbox("is_published"),
+        Checkbox("is_navigatable"),
     )
 
     filter_form = ApiForm(
@@ -98,16 +100,27 @@ class Pages(RESTfulController):
         return '{"status": 1}'
 
 
+class TinyMCELinkList:
+
+    """Returns tinymce_link_list.js for tinymce"""
+
+    def GET(self):
+        link_list = pages_to_tinymce_link_list_json(get_pages_in_tree_order())
+        web.header("Content-Type", "text/javascript; charset=utf-8")
+        return render_partial.site.tinymce_link_list(link_list)
+
+
 class ToPage:
     """Redirects to page by its id"""
+    # TODO: capture page params as well eg /to/<id>/2009
 
     def GET(self, page_id):
         try:
             page = get_page_by_id(page_id)
-            if not page.is_published and not auth.get_user():
-                raise flash.redirect(_(page_access_forbidden_text), "/login")
-            else:
+            if auth.get_user() or is_page_published(page):
                 raise web.seeother(page.path)
+            else:
+                raise flash.redirect(_(page_access_forbidden_text), "/login")
         except IndexError:
             raise web.notfound()
 
@@ -117,15 +130,19 @@ class ViewPage:
 
     def GET(self, page_path):
         try:
-            page = db.select("pages", locals(),
-                             where="path=$page_path AND NOT is_deleted")[0]
+            page = get_page_by_path(page_path)
             if not page.is_published and not auth.get_user():
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             load_page_data(page)
-            json_data = web.storage(
-                page=page_to_json(page),
-                pages=pages_to_json(get_pages_in_tree_order()),
-            )
+
+            if auth.has_role("admin", "editor"):
+                json_data = web.storage(
+                    page=page_to_json(page),
+                    pages=pages_to_json(get_pages_in_tree_order()),
+                )
+            else:
+                json_data = web.storage()
+
             if "edit" in web.input() and auth.has_role("admin", "editor"):
                 json_data.update(
                     page_block=block_to_json(

@@ -42,14 +42,6 @@
         <span class="sg-document-image-container"><img src="<%= document.src %>" alt="<%= document.title %>"></span>
     <% } %>
 </script>
-<script type="text/template" id="document-delete-template">
-    <h3>$_("Delete this file or folder?")</h3>
-    <p>$_("It will also delete all the nested files.")</p>
-    <p>
-        <button class="button js-ok">$_("Delete")</button>
-        <button class="button js-cancel">$_("Cancel")</button>
-    </p>
-</script>
 <script type="text/template" id="document-form-template">
     <form>
         <label>$_("Title")</label>
@@ -78,4 +70,8 @@
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
     </form>
+</script>
+<script type="text/template" id="document-copy-link-template">
+    <label>$_("Copy link")</label>
+    <input name="link" type="text" value="<%= document.src %>">
 </script>

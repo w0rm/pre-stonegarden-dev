@@ -2,9 +2,11 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "models/buffer"
       , "views/contextmenu"], function ($, _, Backbone, sg) {
 
-  var views = sg.views;
+  var views = sg.views
+    , buffer = sg.buffer;
 
 
   // TODO: generate context menu using view
@@ -16,7 +18,22 @@ define(["jquery"
 
     events: {
       "mousemove": "mousemoveEvent",
-      "click .js-create": "createBlock"
+      "click .js-create": "createBlock",
+      "click .js-paste": "pasteBlock"
+    },
+
+    initialize: function() {
+
+      buffer.on("save:block", this.showPaste, this);
+
+    },
+
+    showPaste: function(key) {
+      this.$(".js-paste").show()
+    },
+
+    hidePaste: function(key) {
+      this.$(".js-paste").hide()
     },
 
     mousemoveEvent: function(e) {
@@ -25,7 +42,24 @@ define(["jquery"
 
     render: function() {
       this.$el.html(this.template());
+      if (buffer.has("block")) {
+        this.showPaste();
+      } else {
+        this.hidePaste();
+      }
       return this;
+    },
+
+    getPosition: function() {
+      return this.$el.parent().children().index(this.el) + 1;
+    },
+
+    pasteBlock: function(e) {
+      var block = buffer.load("block");
+      console.log(block)
+      e.preventDefault();
+      _.extend(block, {position: this.getPosition()});
+      this.trigger("block:paste", block);
     },
 
     createBlock: function(e) {
@@ -38,7 +72,7 @@ define(["jquery"
       this.trigger("block:create", {
         template: template,
         type: type,
-        position: this.$el.parent().children().index(this.el) + 1
+        position: this.getPosition()
       });
 
     }

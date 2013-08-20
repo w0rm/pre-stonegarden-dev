@@ -47,7 +47,7 @@ class Login:
 
     def GET(self):
         if auth.get_user():
-            raise web.found("/")
+            raise web.found("/a")
         if web.ctx.env.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             return render_partial.auth.login(loginForm())
         else:
@@ -60,7 +60,7 @@ class Login:
         if not form.validates():
             return render.auth.login(form)
         next = web.ctx.session.get("next", web.ctx.env.get("HTTP_REFERER",
-                                                           "/"))
+                                                           "/a"))
         try:
             del web.ctx.session["next"]
         except KeyError:
@@ -91,9 +91,9 @@ class ResetToken:
         form = passwordResetForm()
         if form.validates():
             try:
-                user = auth.get_user(email=form.d.email, password=True)
+                user = auth.get_user(email=form.d.email, with_password=True)
                 token_url = "%s%s/%s$%s" % (web.ctx.home, "/password_reset",
-                                            user.id, makeToken(user))
+                                            user.id, make_token(user))
                 mailer.send(
                     user.email,
                     render_email.password_reset(user, token_url),
@@ -113,9 +113,9 @@ class ResetChange:
         # artificial delay (to slow down brute force attacks)
         sleep(0.5)
         try:
-            user = auth.get_user(user_id=uid, password=True)
-            if not user or not checkToken(user, token,
-                                          auth.config.reset_expire_after):
+            user = auth.get_user(user_id=uid, with_password=True)
+            if not user or not check_token(user, token,
+                                           auth.config.reset_expire_after):
                 raise AuthError
             return render.auth.reset_change(passwordChangeForm)
         except AuthError:
@@ -128,11 +128,11 @@ class ResetChange:
         form = passwordChangeForm(web.input())
         if form.valid:
             try:
-                user = auth.get_user(user_id=uid, password=True)
-                if not user or not checkToken(user, token,
-                                              auth.config.reset_expire_after):
+                user = auth.get_user(user_id=uid, with_password=True)
+                if not user or not check_token(user, token,
+                                               auth.config.reset_expire_after):
                     raise AuthError
-                auth.setPassword(user.email, form.d.password)
+                auth.set_password(user.email, form.d.password)
                 auth.login(user)
                 flash.set(_(changed_text))
             except AuthError:

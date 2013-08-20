@@ -5,7 +5,7 @@ import datetime
 import re
 import json
 from dateutil import parser
-from translation import _
+from translation import _, N_
 from itertools import groupby
 
 
@@ -27,7 +27,7 @@ class ApiForm(web.form.Form):
         result = web.storage(errors={})
         if self.note:
             result.errors["_form"] = web.storage(
-                note=self.note
+                note=_(self.note)
             )
         for i in self.inputs:
             if i.note:
@@ -155,7 +155,12 @@ class Dropdown(web.form.Dropdown):
 
 
 class Checkbox(web.form.Checkbox):
-    pass
+
+    def set_value(self, value):
+        if value in ("0", "false"):
+            self.checked = False
+        else:
+            self.checked = bool(value)
 
 
 class Textarea(web.form.Input):
@@ -233,7 +238,9 @@ class DateInput(Textbox):
 
     def get_value(self):
         try:
-            if type(self.value) in (datetime.datetime, datetime.date):
+            if not self.value:
+                return None
+            elif type(self.value) in (datetime.datetime, datetime.date):
                 return self.value
             else:
                 return parser.parse(self.value)
@@ -262,35 +269,33 @@ class PriceInput(Textbox):
             return None
 
 
-# TODO: translate these messages below:
-notnull = web.form.Validator(u"Необходимо заполнить", bool)
+notnull = web.form.Validator(N_("Cannot be empty."), bool)
 validPassword = web.form.Validator(
-    u"От 6 до 180 символов",
+    N_("From 6 to 180 characters"),
     lambda x: (x and len(x) >= 6 and len(x) <= 180)
 )
 passwordMatch = web.form.Validator(
-    u"Пароль и подтверждение не совпадают",
+    N_("Password and confirmation do not match."),
     lambda form: form.password == form.password2
 )
 validEmail = web.form.regexp(
     r"^\s*[a-zA-Z0-9._%\-\+]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}\s*$",
-    u"Некорректный электронный адрес"
+    N_("Incorrect email.")
 )
 price_regexp = re.compile(r"^\s*\d{1,11}([.,]\d{1,3})?\s*$")
 validPrice = web.form.Validator(
-    u"Некорректная цена",
+    N_("Incorrect price value."),
     lambda x: not x or bool(price_regexp.match(str(x)))
 )
 
 
-def validDate(message=u"Некорректное значение даты"):
+def valid_date(code):
+    if code is None or type(code) in (datetime.datetime, datetime.date):
+        return True
+    try:
+        date = parser.parse(code)
+        return True
+    except:
+        return False
 
-    def valid_date(code):
-        if code is None or type(code) in (datetime.datetime, datetime.date):
-            return True
-        try:
-            date = parser.parse(code)
-            return True
-        except:
-            return False
-    return web.form.Validator(message, valid_date)
+validDate = web.form.Validator(N_("Incorrect date value."), valid_date)

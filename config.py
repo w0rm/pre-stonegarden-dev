@@ -34,20 +34,34 @@ config = web.storage(
         "logout",
         "password_reset",
         "uploads",
+        "newsfeed.rss",
     ],
-    user_roles=["admin", "editor", "user"],
+    user_roles=["admin"],  # "editor", "user"
     page_types=dict(
-        page=dict(block=dict(template="page")),
+        # Page constructors
+        page={
+            "block": {
+                "template": "page",
+                "is_system": True
+            }
+        },
+        index_page={
+            "block": {
+                "template": "index_page",
+                "is_system": True
+            }
+        }        
     ),
     image={
         # dst_width, dst_height, crop, sharp, watermark, quality, progressive
         "o": [None, None, False, False, False, 90, 0],
         "t": [160, 160, False, True, False, 90, 0],
-        "s": [400, 400, False, True, False, 90, 0],
-        "m": [700, 700, False, True, False, 90, 0],
-        "l": [1000, 1000, False, True, False, 90, 0],
+        "s": [400, 400, False, True, False, 80, 0],
+        "m": [800, 800, False, True, False, 75, 0],
+        "l": [1200, 1200, False, True, False, 70, 0],
     },
-    nav_types=["root", "children", "siblings", "breadcrumbs"],
+    css_classes={},
+    nav_types=["root", "secondary", "children", "siblings", "breadcrumbs"],
     labels=dict(
         # User Roles
         admin=N_("Administrator"),
@@ -60,6 +74,7 @@ config = web.storage(
         wysiwyg=N_("Rich text"),
         # Navigation blocks
         root=N_("Navigation"),
+        secondary=N_("Secondary navigation"),
         children=N_("Subnavigation"),
         siblings=N_("Siblings navigation"),
         breadcrumbs=N_("Breadcrumbs"),
@@ -239,7 +254,7 @@ config.sanitizer = tinymce_sanitizer(config.sanitizer)
 # Set directories
 config.rootdir = os.path.abspath(os.path.dirname(__file__))
 config.update(
-    static_dir=config.rootdir + "/static",
+    static_dir=config.get("static_dir", config.rootdir + "/static"),
     upload_dir=config.rootdir + "/upload",
     template_dir=config.rootdir + "/templates/html",
     locale_dir=config.rootdir + "/i18n",

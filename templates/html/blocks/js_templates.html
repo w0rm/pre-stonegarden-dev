@@ -1,7 +1,15 @@
 <script type="text/template" id="block-attributes-template">
     <form>
+
         <label>$_("CSS class")</label>
         <input name="css_class" type="text" value="<%= block.css_class || "" %>">
+        <p>
+        <% _.each(css_classes, function(v, k) { %>
+            <a href="#" class="sg-block-css-class-label secondary label js-label"
+               data-value="<%= v[0] %>"
+               title="<%= v[2] %>"><%= v[1] %></a>
+        <% }) %>
+        </p>
         <p>
             <label><input <%= block.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
         </p>
@@ -11,14 +19,6 @@
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
     </form>
-</script>
-<script type="text/template" id="block-delete-template">
-    <h3>$_("Delete this block?")</h3>
-    <p>$_("It will also delete all the nested blocks.")</p>
-    <p>
-        <button class="button js-ok">$_("Delete")</button>
-        <button class="button js-cancel">$_("Cancel")</button>
-    </p>
 </script>
 <script type="text/template" id="block-placeholder-template">
     <p>
@@ -33,6 +33,10 @@
     <div class="sg-block-inserter-menu">
         <a class="sg-block-inserter-item sg-ico-text js-create"
            data-template="content" data-type="wysiwyg" href="#"></a>
+        <a class="sg-block-inserter-item sg-ico-image js-create"
+           data-template="content" data-type="image" href="#"></a>
+        <a class="sg-block-inserter-item sg-ico-gallery js-create"
+           data-template="content" data-type="gallery" href="#"></a>
         <a class="sg-block-inserter-item sg-ico-cols-3 js-create"
            data-template="row" href="#"></a>
         <div class="sg-block-inserter-item">
@@ -45,6 +49,9 @@
                 <li class="sg-contextmenu-item">
                     <a class="js-create" data-template="content"
                        data-type="html" href="#" >$_("HTML code")</a>
+                </li>
+                <li class="sg-contextmenu-item">
+                    <a class="js-paste" href="#" >$_("Paste")</a>
                 </li>
             </ul>
         </div>
@@ -84,7 +91,7 @@
         <h3>$_("Insert columns")</h3>
         <p>
             <select class="js-size">
-            <% _.each([2,3,4,5,6], function(size){ %>
+            <% _.each([1, 2, 3, 4, 5, 6], function(size){ %>
                 <option value="<%= size %>"
                         <%= sizes.length === size ? "selected" : "" %>
                 >
@@ -94,8 +101,8 @@
             </select>
         </p>
         <div class="sg-block-row js-columns">
-        <% for(var i=1; i<=6; i++) { %>
-            <div class="sg-block-column-<%= sizes[i-1] %> <%= (i > sizes.length) ? 'sg-hidden' : '' %>">
+        <% for(var i = 1; i <= 6; i++) { %>
+            <div class="sg-block-col-<%= sizes[i-1] %> <%= (i > sizes.length) ? 'sg-hidden' : '' %>">
                 <input name="sizes" value="<%= sizes[i-1] %>" >
             </div>
         <% } %>
@@ -106,4 +113,84 @@
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
     </form>
+</script>
+<script type="text/template" id="block-image-form-template">
+    <form>
+        <div class="sg-documents-scroller">
+            <ul class="sg-document-tiles js-documents"></ul>
+        </div>
+        <label>$_("Description")</label>
+        <input name="description" type="text"
+               value="<%= image.description || "" %>">
+        <p>
+            <label>
+                <input name="show_description"
+                       <%= image.show_description && "checked" || "" %>
+                       type="checkbox" >$_("Show description")
+            </label>
+        </p>
+        <p>
+            <label>
+                <input name="is_responsive"
+                       <%= image.is_responsive && "checked" || "" %>
+                       type="checkbox" >$_("Make responsive")
+            </label>
+        </p>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
+<script type="text/template" id="block-image-template">
+    <figure data-id="<%= image.id %>"
+            data-parent_id="<%= image.parent_id %>"
+            data-description="<%= image.description %>"
+            data-show_description="<%= image.show_description %>"
+            data-is_responsive="<%= image.is_responsive %>"
+    >
+        <% if (image.is_responsive) { %>
+            <img class="responsive"
+                 src="<%= image.sizes.s %>"
+                 data-m_src="<%= image.sizes.m %>"
+                 data-l_src="<%= image.sizes.l %>"
+                 alt="<%= image.description %>">
+        <% } else { %>
+            <img src="<%= image.sizes.l %>"
+                 alt="<%= image.description %>">
+        <% } %>
+
+        <% if (image.show_description) { %>
+            <figcaption><%= image.description %></figcaption>
+        <% } %>
+    </figure>
+</script>
+<script type="text/template" id="block-gallery-form-template">
+    <form>
+        <p>$_("Images below will be inserted as a gallery.")</p>
+        <div class="sg-documents-scroller">
+            <ul class="sg-document-tiles js-documents"></ul>
+        </div>
+        <p>
+            <label>
+                <input name="autoplay"
+                       <%= gallery.autoplay && "checked" || "" %>
+                       type="checkbox" >$_("Autoplay")
+            </label>
+        </p>
+        <p>
+            <button class="button" type="submit">$_("Save")</button>
+            <button class="button" type="reset">$_("Cancel")</button>
+        </p>
+    </form>
+</script>
+<script type="text/template" id="block-gallery-template">
+    <div class="gallery js-gallery"
+         data-options='<%= JSON.stringify(gallery) %>'
+         <%= gallery.autoplay && "data-timer='true'" || "" %>
+    >
+        <% _.each(gallery.images, function(image) { %>
+            <img src="<%= image.sizes.l %>">
+        <% }) %>
+    </div>
 </script>

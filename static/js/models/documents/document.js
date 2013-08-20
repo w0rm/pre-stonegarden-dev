@@ -17,6 +17,13 @@ define(["jquery"
       return !!this.get("is_system");
     },
 
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this file or folder?"),
+        message: t_("It will also delete all the nested files.")
+      }
+    },
+
     // Contextmenu items
 
     hasContextMenu: function() {
@@ -45,6 +52,17 @@ define(["jquery"
           text: t_("Download"),
           href: this.get("src")
         });
+        items.push({
+          text: t_("Copy link"),
+          click: this.copyLink
+        });
+      }
+
+      if(this.get("type") === "image") {
+        items.push({
+          text: t_("Download"),
+          click: this.openImage
+        });
       }
 
       return {
@@ -52,6 +70,10 @@ define(["jquery"
         context: this
       };
 
+    },
+
+    openImage: function() {
+      window.open(this.get("sizes").l, "_blank")
     },
 
     highlight: function() {
@@ -62,12 +84,30 @@ define(["jquery"
       this.trigger("document:lowlight");
     },
 
+    select: function() {
+      this.isSelected = true;
+      this.trigger("document:select", this);
+    },
+
+    unselect: function() {
+      this.isSelected = false;
+      this.trigger("document:unselect", this);
+    },
+
+    toggleSelected: function() {
+      this.isSelected ? this.unselect() : this.select();
+    },
+
     delete: function() {
       this.trigger("document:delete");
     },
 
     editAttributes: function() {
       this.trigger("document:attributes");
+    },
+
+    copyLink: function() {
+      this.trigger("document:copyLink");
     }
 
 

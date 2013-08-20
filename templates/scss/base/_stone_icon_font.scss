@@ -1,0 +1,82 @@
+
+@include font-face(
+  "StoneIcon",
+  font-files('stoneicon-regular.woff',
+             'stoneicon-regular.ttf',
+             'stoneicon-regular.otf',
+             'stoneicon-regular.svg#stoneiconregular'
+             ),
+  'stoneicon-regular.eot',
+  "normal",
+  "normal"
+);
+
+
+[class*="sg-ico-"] {
+  @extend %sg-ico;
+}
+
+.sg-ico-edzo:before{content: "\0070"}
+.sg-ico-empty:before{content: "\0061"; color: red!important;}
+.sg-ico-stone:before{content: "\e001"}
+.sg-ico-cursor:before{content: "\e002"}
+.sg-ico-page:before{content: "\e003"}
+.sg-ico-documents:before{content: "\e004"}
+.sg-ico-trash:before{content: "\e005"}
+.sg-ico-settings:before{content: "\e006"}
+.sg-ico-help:before{content: "\e007"}
+.sg-ico-published:before{content: "\e008"}
+.sg-ico-hidden:before{content: "\e009"}
+.sg-ico-calendar:before{content: "\e00a"}
+.sg-ico-login:before{content: "\e00b"}
+.sg-ico-search:before{content: "\e00c"}
+.sg-ico-comments:before{content: "\e00d"}
+.sg-ico-placemark:before{content: "\e00e"}
+.sg-ico-checked:before{content: "\e00f"}
+.sg-ico-menu:before{content: "\e010"}
+.sg-ico-menu-list:before{content: "\e011"}
+.sg-ico-cols-2:before{content: "\e012"}
+.sg-ico-cols-3:before{content: "\e013"}
+.sg-ico-paste:before{content: "\e014"}
+.sg-ico-copy:before{content: "\e015"}
+.sg-ico-cut:before{content: "\e016"}
+.sg-ico-image:before{content: "\e017"}
+.sg-ico-gallery:before{content: "\e018"}
+.sg-ico-text:before{content: "\e019"}
+.sg-ico-plus-light:before{content: "\e01a"}
+.sg-ico-plus-bold:before{content: "\e01b"}
+.sg-ico-warning:before{content: "\e01c"}
+.sg-ico-download:before{content: "\e01d"}
+.sg-ico-arrow-r:before{content: "\e01e"}
+.sg-ico-arrow-l:before{content: "\e027"}
+.sg-ico-arrow-right:before{content: "\e03b"}
+.sg-ico-arrow-left:before{content: "\e03a"}
+.sg-ico-exit:before{content: "\e01f"}
+
+.sg-ico-heart:before{content: "\e105"}
+.sg-ico-unheart:before{content: "\e106"}
+.sg-ico-reload45:before{content: "\e021"}
+.sg-ico-reload:before{content: "\e022"}
+.sg-ico-tile:before{content: "\e025"}
+.sg-ico-list:before{content: "\e026"}
+.sg-ico-bracket-l:before{content: "\e028"}
+.sg-ico-bracket-r:before{content: "\e029"}
+
+.sg-ico-folder:before{content: "\e023"}
+.sg-ico-folder-add:before{content: "\e024"}
+.sg-ico-upload:before{content: "\e113"}
+
+.sg-ico-edit:before{content: "\e03d"}
+.sg-ico-user:before{content: "\e03e"}
+.sg-ico-plus-arrow:before{content: "\e111"}
+.sg-ico-electronics:before{content: "\e112"}
+.sg-ico-news:before{content: "\e115"}
+
+.sg-ico-arrow-d:before{content: "\e120"}
+.sg-ico-arrow-u:before{content: "\e121"}
+.sg-ico-bracket-d:before{content: "\e122"}
+.sg-ico-bracket-u:before{content: "\e123"}
+.sg-ico-handle:before{content: "\e116"}
+.sg-ico-close:before{content: "\e128"}
+
+

@@ -1,0 +1,11 @@
+
+.sg-sort-subpages {
+  @extend %unstyled-list;
+}
+
+.sg-sort-subpages-handle {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  cursor: move;
+}

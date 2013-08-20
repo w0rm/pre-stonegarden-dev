@@ -15,7 +15,11 @@ define(["jquery"
     },
 
     makeBlockView: function(block) {
-      return new views.Block({model: block, el: block.get("html")})
+      return new views.Block({
+        model: block,
+        el: block.get("html"),
+        isContextMenuEnabled: true
+      })
         .on("contextmenu:show", this.propagateContextMenu, this)
         .on("inserter:show", this.propagateInserter, this)
         .render()

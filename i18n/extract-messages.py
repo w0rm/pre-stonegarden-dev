@@ -6,12 +6,12 @@
     Extract messages into a PO-Template.
     :copyright: 2008 by Armin Ronacher.
     :license: GNU GPL.
-    
+
     pybabel init -i i18n/messages.pot -d i18n/ -l ru
     pybabel init -i i18n/messages.pot -d i18n/ -l en
-    pybabel update -i i18n/messages.pot -d i18n/ 
+    pybabel update -i i18n/messages.pot -d i18n/
     pybabel compile  -d i18n/ -f --statistics
-    
+
 """
 from os import path, makedirs
 from babel.messages import Catalog
@@ -82,9 +82,9 @@ def main():
     extracted_py = extract_from_dir(root, PY_METHODS, {}, PY_KEYWORDS,
                                 COMMENT_TAGS, callback=callback,
                                 strip_comment_tags=True)
-    
+
     # TODO: extract only from unminified files
-    extracted_js = extract_from_dir(root, [("static/js/*.js", "javascript")], {}, JS_KEYWORDS,
+    extracted_js = extract_from_dir(root, [("static/js/**.js", "javascript")], {}, JS_KEYWORDS,
                                 COMMENT_TAGS, callback=callback,
                                 strip_comment_tags=True)
 

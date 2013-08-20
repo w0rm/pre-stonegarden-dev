@@ -3,11 +3,13 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "utils"
+      , "models/buffer"
       , "models/model"
       , "models/blocks/blocks"], function ($, _, Backbone, sg) {
 
   var collections = sg.collections
-    , models = sg.models;
+    , models = sg.models
+    , buffer = sg.buffer;
 
 
   models.Block =  models.Model.extend({
@@ -15,11 +17,14 @@ define(["jquery"
     urlRoot: "/a/blocks",
 
     initialize: function() {
-      this.blocks = new collections.Blocks;
-      this.blocks.parentBlock = this;
-      this.on("change:blocks", this.updateBlocks);
-      this.updateBlocks();
+      this.blocks = new collections.Blocks
+      this.blocks.parentBlock = this
+      this.on("change:blocks", this.updateBlocks)
+      this.updateBlocks()
+      this.initBlock()
     },
+
+    initBlock: function() {},
 
     updateBlocks: function() {
       this.blocks.reset(this.get("blocks"));
@@ -28,11 +33,13 @@ define(["jquery"
     // State information
 
     isContainer: function() {
-      return _.contains(["page", "column"], this.get("template"));
+      // block allows other blocks to be inserted/created
+      return false;
     },
 
     hasBlocks: function() {
-      return _.contains(["page", "column", "row"], this.get("template"));
+      // block may contain other blocks
+      return false;
     },
 
     isSystem: function() {
@@ -41,6 +48,13 @@ define(["jquery"
 
     hasParent: function() {
       return !!this.parentBlock;
+    },
+
+    getDeleteOptions: function() {
+      return {
+        title: t_("Delete this block?"),
+        message: t_("It will also delete all the nested blocks.")
+      }
     },
 
     // Contextmenu items
@@ -58,20 +72,32 @@ define(["jquery"
         click: this.edit
       });
 
-
       items.push({
         text: t_("Attributes"),
         click: this.editAttributes
       });
 
-      if (!this.isContainer()) {
-        // System and container blocks cannot be deleted
+      if (!this.hasBlocks()) {
         items.push({
-          text: t_("Delete"),
-          click: this.delete
+          isSeparator: true
         });
-      };
+        items.push({
+          text: t_("Cut"),
+          click: this.cut
+        });
+        items.push({
+          text: t_("Copy"),
+          click: this.copy
+        });
+        items.push({
+          isSeparator: true
+        });
+      }
 
+      items.push({
+        text: t_("Delete"),
+        click: this.delete
+      });
 
       if (this.hasParent()) {
         parentMenu = this.parentBlock.getContextMenu();
@@ -108,12 +134,33 @@ define(["jquery"
 
     lowlight: function() {
       this.trigger("block:lowlight");
+    },
+
+    copy: function() {
+      var data = {};
+      _.each(this.attributes, function(value, key) {
+        if (_.contains(["template", "type", "sizes", "content",
+                        "css_class", "is_published"], key)) {
+          data[key] = value;
+        }
+      })
+      buffer.save("block", data);
+      this.trigger("block:copy");
+    },
+
+    cut: function() {
+      this.copy();
+      this.destroy();
+    },
+
+    isEditableOnDoubleClick: function() {
+      // todo return false here and create separate class for
+      // wysiwyg block
+      return !this.isSystem() && this.get("type") === "wysiwyg";
     }
 
   });
 
-
-  models.WysiwygBlock = models.Block;
 
   models.PageBlock = models.Block.extend({
     hasContextMenu: function() {
@@ -122,8 +169,18 @@ define(["jquery"
 
     getContextMenu: function() {
       return false
+    },
+
+    hasBlocks: function() {
+      return true
+    },
+
+    isContainer: function() {
+      return true
     }
+
   });
+
 
   models.RowBlock = models.Block.extend({
 
@@ -156,11 +213,47 @@ define(["jquery"
       // Replace row's columns
       models.Block.prototype.updateBlocks.apply(this, arguments);
 
+    },
+
+    hasBlocks: function() {
+      return true
     }
 
   });
 
-  models.NavBlock = models.Block;
+
+  models.NavBlock = models.Block.extend({
+
+    initBlock: function() {
+      sg.page.on("change:path change:title", function(){
+        this.fetch({
+          data: {
+            page_id: sg.page.get("id")
+          }
+        })
+      }, this)
+    }
+
+  });
+
+
+  models.ImageBlock = models.Block.extend({
+
+    getImageAttributes: function() {
+      return $(this.get("content")).data()
+    }
+
+  });
+
+
+  models.GalleryBlock = models.Block.extend({
+
+    getGalleryAttributes: function() {
+      return $(this.get("content")).data("options")
+    }
+
+  });
+
 
   models.ColumnBlock = models.Block.extend({
 
@@ -172,8 +265,66 @@ define(["jquery"
       if (this.hasParent()) {
         return this.parentBlock.getContextMenu()
       }
+    },
+
+    hasBlocks: function() {
+      return true
+    },
+
+    isContainer: function() {
+      return true
     }
 
   });
+
+
+  models.PageTitleBlock = models.Block.extend({
+
+    initBlock: function() {
+      sg.page.on("change:title", function(){
+        this.fetch({
+          data: {
+            page_id: sg.page.get("id")
+          }
+        })
+      }, this)
+    },
+
+    hasContextMenu: function() {
+      return true
+    },
+
+    getContextMenu: function() {
+
+      if (!this.isSystem()) {
+        return models.Block.getContextMenu.call(this)
+      }
+
+      var items = []
+        , parentMenu;
+
+      items.push({
+        text: t_("Edit"),
+        click: this.edit
+      });
+
+      return {
+        items: items,
+        context: this
+      };
+
+    },
+
+    edit: function() {
+      sg.page.trigger("page:edit")
+    },
+
+    isEditableOnDoubleClick: function() {
+      return true;
+    }
+
+  })
+
+
 
 });

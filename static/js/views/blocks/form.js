@@ -3,10 +3,10 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "views/form"
-      , "jquery.tinymce"], function ($, _, Backbone, sg) {
+      , "jquery.tinymce"
+      , "plugins/jquery.ace"], function ($, _, Backbone, sg) {
 
   var views = sg.views;
-
 
   views.BlockForm = views.Form.extend({
 
@@ -40,9 +40,15 @@ define(["jquery"
     },
 
     render: function() {
+      var self = this;
+
       this.$el.html(this.template(this.getTemplateAttributes()));
+      this.$textarea = this.$("[name=content]");
+
       if (this.getBlockType() === "wysiwyg") {
-        this.$("[name=content]").tinymce(sg.config.tinymce);
+        this.$textarea.tinymce(sg.config.tinymce);
+      } else {
+        this.$textarea.ace()
       }
       return this;
     }

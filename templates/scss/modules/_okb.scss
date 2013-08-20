@@ -1,0 +1,120 @@
+
+.okb-splash {
+  position: relative;
+  height: 600px;
+  background-color: #000;
+  @extend %clearfix;
+}
+
+.okb-splash_narrow {
+  @extend .okb-splash;
+  height: 400px;
+}
+
+.okb-splash-thumbs {
+  position: relative;
+  margin-top: 380px;
+  > ul {
+    list-style-type: none;
+  }
+}
+
+.okb-splash-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.okb-splash-blueprint {
+  width: 100%;
+  height: 100%
+}
+
+.okb-splash-thumb {
+  display: block;
+  text-align: center;
+  height: 200px;
+  white-space: nowrap;
+  padding: $columnGutter / 2 0;
+  border: 1px solid transparent;
+  overflow: hidden;
+  @include border-radius(10px);
+  @include border-top-right-radius(0);
+  &.is-active, &:hover {
+    border-color: #fff;
+    text-decoration: none;
+    color: #fff;
+  };
+  font-weight: 700
+}
+
+
+@each $category in microelectronika, radiotehnika, elektrotehnika, other {
+
+  .okb-splash-#{$category} {
+    &:before {
+      content: "";
+      display: block;
+      margin:  10px auto;
+      @include svg-sprite("#{$category}130");
+    }
+  }
+
+  .okb-title-#{$category} {
+    &:before {
+      content: "";
+      display: inline-block;
+      @include svg-sprite("#{$category}50");
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .catalog-categories {
+    .okb-title-#{$category} {
+      &:before {
+        margin-left: -60px;
+      }
+    }
+  }
+
+}
+
+
+@each $category in catalog, about {
+  .okb-splash-image-#{$category} {
+    background: image-url("splash/images/#{$category}.jpg") 50% 0% no-repeat;
+  }
+  .okb-splash-blueprint-#{$category} {
+    background: image-url("splash/blueprints/#{$category}.png") 50% 0% no-repeat;
+  }
+}
+
+.okb-box {
+  @extend .padtop;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.okb-round {
+  @include border-radius(10px);
+  @include border-top-right-radius(0);
+}
+
+.okb-grey {
+  background-color: $greyBackgroundColor;
+}
+
+.okb-blue {
+  background: $blueBackgroundColor;
+}
+
+.okb-important {
+  position: relative;
+  z-index: 2;
+  background: $mainColor;
+  color: $white;
+  h1, h2, h3, h4, h5, h6 { color: $white; }
+}

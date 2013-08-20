@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2012 Andrey Kuzmin
+# Copyright (C) 2013 Andrey Kuzmin
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: andreivk@gmail.com\n"
-"POT-Creation-Date: 2012-09-17 14:35+0400\n"
+"POT-Creation-Date: 2013-08-15 14:58+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,683 +17,556 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: urbansystem/config.py:90
+#: stonegarden/config.py:67
 msgid "Administrator"
 msgstr ""
 
-#: urbansystem/config.py:91
+#: stonegarden/config.py:68
 msgid "Editor"
 msgstr ""
 
-#: urbansystem/config.py:92
+#: stonegarden/config.py:69
 msgid "User"
 msgstr ""
 
-#: urbansystem/config.py:94
-msgid "Main page"
+#: stonegarden/config.py:71 stonegarden/static/js/models/pages/page.js:137
+msgid "Page"
 msgstr ""
 
-#: urbansystem/config.py:95
-msgid "Inner page"
-msgstr ""
-
-#: urbansystem/config.py:96
-msgid "50% + 50%"
-msgstr ""
-
-#: urbansystem/config.py:97
-msgid "67% + 33%"
-msgstr ""
-
-#: urbansystem/config.py:98
-msgid "33% + 67%"
-msgstr ""
-
-#: urbansystem/config.py:99
-msgid "33% + 33% + 33%"
-msgstr ""
-
-#: urbansystem/config.py:100
-msgid "25% + 50% + 25%"
-msgstr ""
-
-#: urbansystem/config.py:101
+#: stonegarden/config.py:73 stonegarden/templates/html/blocks/js_templates.html:56
 msgid "HTML code"
 msgstr ""
 
-#: urbansystem/config.py:102
+#: stonegarden/config.py:74
 msgid "Rich text"
 msgstr ""
 
-#: urbansystem/config.py:103 urbansystem/templates/html/ui/insert.html:14
+#: stonegarden/config.py:76 stonegarden/templates/html/blocks/js_templates.html:52
 msgid "Navigation"
 msgstr ""
 
-#: urbansystem/config.py:104
+#: stonegarden/config.py:77
+msgid "Secondary navigation"
+msgstr ""
+
+#: stonegarden/config.py:78
 msgid "Subnavigation"
 msgstr ""
 
-#: urbansystem/config.py:105
+#: stonegarden/config.py:79
 msgid "Siblings navigation"
 msgstr ""
 
-#: urbansystem/config.py:106
+#: stonegarden/config.py:80
 msgid "Breadcrumbs"
 msgstr ""
 
-#: urbansystem/config.py:108
-msgid "Main column"
-msgstr ""
-
-#: urbansystem/config.py:109
-msgid "Secondary column 1"
-msgstr ""
-
-#: urbansystem/config.py:110
-msgid "Secondary column 2"
-msgstr ""
-
-#: urbansystem/config.py:111
-msgid "Secondary column 3"
-msgstr ""
-
-#: urbansystem/config.py:112
+#: stonegarden/config.py:82
 msgid "Site header"
 msgstr ""
 
-#: urbansystem/config.py:113
+#: stonegarden/config.py:83
 msgid "Site footer"
 msgstr ""
 
-#: urbansystem/config.py:114
-msgid "Subpage header"
-msgstr ""
-
-#: urbansystem/config.py:116
+#: stonegarden/config.py:85
 msgid "Original"
 msgstr ""
 
-#: urbansystem/config.py:117
+#: stonegarden/config.py:86
 msgid "Thumbnail"
 msgstr ""
 
-#: urbansystem/config.py:118
+#: stonegarden/config.py:87
 msgid "Small"
 msgstr ""
 
-#: urbansystem/config.py:119
+#: stonegarden/config.py:88
 msgid "Medium"
 msgstr ""
 
-#: urbansystem/config.py:120
+#: stonegarden/config.py:89
 msgid "Large"
 msgstr ""
 
-#: urbansystem/template.py:213
-msgid "Images"
-msgstr ""
-
-#: urbansystem/template.py:215
-msgid "Folders"
-msgstr ""
-
-#: urbansystem/template.py:217
-msgid "Documents"
-msgstr ""
-
-#: urbansystem/template.py:219
-msgid "Archives"
-msgstr ""
-
-#: urbansystem/template.py:221
-msgid "Files"
-msgstr ""
-
-#: urbansystem/controller/auth.py:15
+#: stonegarden/controllers/auth.py:15
 msgid "We've sent you the link to reset your password. Please check your email."
 msgstr ""
 
-#: urbansystem/controller/auth.py:16
+#: stonegarden/controllers/auth.py:17
 msgid ""
 "It seems that the link is outdated or incorect. You may create another one "
-"<a href=\"/password_reset\">here</a>."
+"<a href='/password_reset'>here</a>."
 msgstr ""
 
-#: urbansystem/controller/auth.py:17
+#: stonegarden/controllers/auth.py:20
 msgid "Password was changed. You've been automatically logged in."
 msgstr ""
 
-#: urbansystem/controller/auth.py:18
+#: stonegarden/controllers/auth.py:21
+msgid "User with this email doesn't exist."
+msgstr ""
+
+#: stonegarden/controllers/auth.py:22
+msgid "Incorrect login credentials."
+msgstr ""
+
+#: stonegarden/controllers/auth.py:23
+msgid "Your account has been blocked."
+msgstr ""
+
+#: stonegarden/controllers/auth.py:26 stonegarden/controllers/auth.py:34
+#: stonegarden/controllers/users.py:25
+msgid "Email"
+msgstr ""
+
+#: stonegarden/controllers/auth.py:28
+msgid "Password"
+msgstr ""
+
+#: stonegarden/controllers/auth.py:38
+msgid "New password"
+msgstr ""
+
+#: stonegarden/controllers/auth.py:40
+msgid "Repeat"
+msgstr ""
+
+#: stonegarden/controllers/blocks.py:28
+msgid "Sizes should be positive integers and sum should equal 12"
+msgstr ""
+
+#: stonegarden/controllers/pages.py:23
+msgid "Page access forbidden."
+msgstr ""
+
+#: stonegarden/controllers/users.py:15
 #, python-format
 msgid "New user in system: %s."
 msgstr ""
 
-#: urbansystem/controller/auth.py:19
+#: stonegarden/controllers/users.py:16
 #, python-format
 msgid "User detailes changed: %s."
 msgstr ""
 
-#: urbansystem/controller/auth.py:20
+#: stonegarden/controllers/users.py:17
 #, python-format
 msgid "User was deleted. <a href=\"%s\">Undo delete?</a>"
 msgstr ""
 
-#: urbansystem/controller/auth.py:21
+#: stonegarden/controllers/users.py:18
 #, python-format
 msgid "User deleted: %s."
 msgstr ""
 
-#: urbansystem/controller/auth.py:22
-msgid "User was  restored."
+#: stonegarden/controllers/users.py:19
+msgid "User was restored."
 msgstr ""
 
-#: urbansystem/controller/auth.py:23
+#: stonegarden/controllers/users.py:20
 #, python-format
 msgid "User restored: %s."
 msgstr ""
 
-#: urbansystem/controller/auth.py:24
+#: stonegarden/controllers/users.py:21
 msgid "Self delete forbidden."
 msgstr ""
 
-#: urbansystem/controller/auth.py:25
-msgid "User with this email doesn't exist."
-msgstr ""
-
-#: urbansystem/controller/auth.py:29 urbansystem/controller/auth.py:35
-#: urbansystem/controller/auth.py:45
-msgid "Email"
-msgstr ""
-
-#: urbansystem/controller/auth.py:30
-msgid "Password"
-msgstr ""
-
-#: urbansystem/controller/auth.py:39
-msgid "New password"
-msgstr ""
-
-#: urbansystem/controller/auth.py:40
-msgid "Repeat"
-msgstr ""
-
-#: urbansystem/controller/auth.py:46 urbansystem/controller/pages.py:17
+#: stonegarden/controllers/users.py:27
+#: stonegarden/templates/html/pages/js_templates.html:26
 msgid "Name"
 msgstr ""
 
-#: urbansystem/controller/auth.py:47
+#: stonegarden/controllers/users.py:30
 msgid "Role"
 msgstr ""
 
-#: urbansystem/controller/auth.py:48
+#: stonegarden/controllers/users.py:31
 msgid "Is active"
 msgstr ""
 
-#: urbansystem/controller/blocks.py:42 urbansystem/controller/documents.py:24
-#: urbansystem/controller/pages.py:28 urbansystem/static/js/blocks.js:177
-#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:21
-#: urbansystem/static/js/documents.min.js:1
-msgid "Show on site"
+#: stonegarden/models/blocks.py:23 stonegarden/models/blocks.py:215
+msgid "Cannot edit or delete system blocks."
 msgstr ""
 
-#: urbansystem/controller/buildings.py:127
-msgid "Not implemented yet."
+#: stonegarden/models/documents.py:43
+msgid "Untitled Folder"
 msgstr ""
 
-#: urbansystem/controller/documents.py:19
-msgid "Cannot download this document"
+#: stonegarden/models/documents.py:59
+msgid "File upload error."
 msgstr ""
 
-#: urbansystem/controller/documents.py:278 urbansystem/controller/documents.py:302
+#: stonegarden/models/documents.py:81 stonegarden/models/documents.py:129
 msgid "Cannot edit or delete system files and folders."
 msgstr ""
 
-#: urbansystem/controller/pages.py:18 urbansystem/static/js/documents.js:21
-#: urbansystem/static/js/documents.min.js:1
-msgid "Title"
+#: stonegarden/models/documents.py:191
+msgid "Images"
 msgstr ""
 
-#: urbansystem/controller/pages.py:20
-msgid "Parent"
+#: stonegarden/models/documents.py:193
+msgid "Folders"
 msgstr ""
 
-#: urbansystem/controller/pages.py:21
-msgid "Path"
+#: stonegarden/models/documents.py:196
+msgid "Documents"
 msgstr ""
 
-#: urbansystem/controller/pages.py:25
-msgid "Page template"
+#: stonegarden/models/documents.py:198
+msgid "Archives"
 msgstr ""
 
-#: urbansystem/controller/pages.py:29
-msgid "Show in navigation"
+#: stonegarden/models/documents.py:200
+msgid "Files"
 msgstr ""
 
-#: urbansystem/controller/pages.py:31 urbansystem/static/js/documents.js:21
-#: urbansystem/static/js/documents.min.js:1
-msgid "Description"
+#: stonegarden/models/documents.py:205
+msgid "kb"
 msgstr ""
 
-#: urbansystem/controller/pages.py:32
-msgid "Keywords"
+#: stonegarden/models/documents.py:222
+msgid "Cannot download this document"
 msgstr ""
 
-#: urbansystem/controller/pages.py:36
-msgid "CSS"
+#: stonegarden/models/pages.py:246
+msgid "Cannot delete root and system pages."
 msgstr ""
 
-#: urbansystem/controller/pages.py:37
-msgid "Javascript"
+#: stonegarden/modules/dbauth.py:46
+msgid "You don’t have permission to access this page."
 msgstr ""
 
-#: urbansystem/controller/pages.py:40
-msgid "Page access forbidden."
+#: stonegarden/modules/dbauth.py:47
+msgid "User with this email already exists."
 msgstr ""
 
-#: urbansystem/controller/pages.py:41
-msgid "Page was deleted."
-msgstr ""
-
-#: urbansystem/controller/pages.py:42
-msgid "Cannot delete root page."
-msgstr ""
-
-#: urbansystem/modules/form.py:147 urbansystem/modules/form.py:217
+#: stonegarden/modules/form.py:99 stonegarden/modules/form.py:177
 msgid "placeholder"
 msgstr ""
 
-#: urbansystem/templates/html/auth/form.html:14
-#: urbansystem/templates/html/auth/list.html:14
-#: urbansystem/templates/html/ui/menu.html:43
-#: urbansystem/templates/html/ui/users.html:7
-msgid "Users"
+#: stonegarden/modules/form.py:272
+msgid "Cannot be empty."
 msgstr ""
 
-#: urbansystem/templates/html/auth/form.html:19
-#: urbansystem/templates/html/auth/list.html:19
-msgid "Create user"
+#: stonegarden/modules/form.py:274
+msgid "From 6 to 180 characters"
 msgstr ""
 
-#: urbansystem/templates/html/auth/form.html:31
-msgid "Edit user"
+#: stonegarden/modules/form.py:278
+msgid "Password and confirmation do not match."
 msgstr ""
 
-#: urbansystem/templates/html/auth/form.html:34
-#: urbansystem/templates/html/auth/list.html:34
-#: urbansystem/templates/html/auth/reset_change.html:12
-#: urbansystem/templates/html/buildings/edit.html:133
-#: urbansystem/templates/html/buildings/new.html:113
-#: urbansystem/templates/html/contacts/form_edit.html:50
-#: urbansystem/templates/html/contacts/form_new.html:40
-#: urbansystem/templates/html/notes/form_.html:31
-#: urbansystem/templates/html/pages/edit_code.html:32
-#: urbansystem/templates/html/pages/form.html:48
-msgid "Save"
+#: stonegarden/modules/form.py:283
+msgid "Incorrect email."
 msgstr ""
 
-#: urbansystem/templates/html/auth/list.html:15
-#: urbansystem/templates/html/auth/list.html:31
-msgid "New user"
+#: stonegarden/modules/form.py:287
+msgid "Incorrect price value."
 msgstr ""
 
-#: urbansystem/templates/html/auth/login.html:10
-#: urbansystem/static/js/documents.js:133 urbansystem/static/js/documents.js:182
-#: urbansystem/static/js/documents.js:219 urbansystem/static/js/documents.min.js:1
-msgid "Close"
+#: stonegarden/modules/form.py:301
+msgid "Incorrect date value."
 msgstr ""
 
-#: urbansystem/templates/html/auth/login.html:13
+#: stonegarden/templates/html/auth/login.html:9
 msgid "Login"
 msgstr ""
 
-#: urbansystem/templates/html/auth/login.html:17
+#: stonegarden/templates/html/auth/login.html:23
 msgid "Reset forgotten password"
 msgstr ""
 
-#: urbansystem/templates/html/auth/login.html:18
+#: stonegarden/templates/html/auth/login.html:26
 msgid "Log in"
 msgstr ""
 
-#: urbansystem/templates/html/auth/reset_change.html:10
-#: urbansystem/templates/html/auth/reset_token.html:10
+#: stonegarden/templates/html/auth/reset_change.html:9
+#: stonegarden/templates/html/auth/reset_token.html:9
 msgid "Password reset"
 msgstr ""
 
-#: urbansystem/templates/html/auth/reset_token.html:12
+#: stonegarden/templates/html/auth/reset_change.html:16
+#: stonegarden/templates/html/blocks/js_templates.html:23
+#: stonegarden/templates/html/blocks/js_templates.html:70
+#: stonegarden/templates/html/blocks/js_templates.html:89
+#: stonegarden/templates/html/blocks/js_templates.html:117
+#: stonegarden/templates/html/blocks/js_templates.html:145
+#: stonegarden/templates/html/blocks/js_templates.html:187
+#: stonegarden/templates/html/documents/js_templates.html:58
+#: stonegarden/templates/html/documents/js_templates.html:74
+#: stonegarden/templates/html/pages/js_templates.html:17
+#: stonegarden/templates/html/pages/js_templates.html:49
+#: stonegarden/templates/html/users/form.html:16
+#: stonegarden/templates/html/users/list.html:15
+#: stonegarden/static/js/views/blocks/attributes.js:38
+#: stonegarden/static/js/views/blocks/form.js:30
+#: stonegarden/static/js/views/documents/attributes.js:27
+#: stonegarden/static/js/views/documents/form.js:30
+#: stonegarden/static/js/views/pages/code_form.js:30
+msgid "Save"
+msgstr ""
+
+#: stonegarden/templates/html/auth/reset_token.html:13
 msgid "For example: name@example.com. Will send you link to reset your password."
 msgstr ""
 
-#: urbansystem/templates/html/auth/reset_token.html:13
+#: stonegarden/templates/html/auth/reset_token.html:18
 msgid "Send"
 msgstr ""
 
-#: urbansystem/templates/html/buildings/edit.html:73
-#: urbansystem/templates/html/buildings/edit.html:76
-#: urbansystem/templates/html/contacts/form_edit.html:28
-#: urbansystem/templates/html/contacts/form_edit.html:31
-#: urbansystem/static/js/blocks.js:254 urbansystem/static/js/blocks.js:260
-#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/buildings.js:28
-#: urbansystem/static/js/buildings.js:72 urbansystem/static/js/buildings.js:97
-#: urbansystem/static/js/buildings.min.js:1 urbansystem/static/js/contacts.js:39
-#: urbansystem/static/js/contacts.js:166 urbansystem/static/js/contacts.js:191
-#: urbansystem/static/js/contacts.min.js:1 urbansystem/static/js/documents.js:74
-#: urbansystem/static/js/documents.js:84 urbansystem/static/js/documents.min.js:1
-#: urbansystem/static/js/notes.js:76 urbansystem/static/js/notes.js:111
-#: urbansystem/static/js/notes.min.js:1 urbansystem/static/js/users.js:18
-#: urbansystem/static/js/users.min.js:1
-msgid "Delete"
+#: stonegarden/templates/html/blocks/js_templates.html:9
+msgid "CSS class"
 msgstr ""
 
-#: urbansystem/templates/html/buildings/view.html:165
-#: urbansystem/templates/html/ui/documents.html:22
-msgid "Create folder"
+#: stonegarden/templates/html/blocks/js_templates.html:19
+#: stonegarden/templates/html/documents/js_templates.html:70
+#: stonegarden/templates/html/pages/js_templates.html:42
+msgid "Show on site"
 msgstr ""
 
-#: urbansystem/templates/html/contacts/form_edit.html:51
-#: urbansystem/templates/html/contacts/form_new.html:41
-#: urbansystem/templates/html/notes/form_.html:32
-#: urbansystem/static/js/admin.js:611 urbansystem/static/js/admin.min.js:1
-#: urbansystem/static/js/blocks.js:162 urbansystem/static/js/blocks.js:195
-#: urbansystem/static/js/blocks.js:266 urbansystem/static/js/blocks.js:300
-#: urbansystem/static/js/blocks.js:345 urbansystem/static/js/blocks.min.js:1
-#: urbansystem/static/js/buildings.js:46 urbansystem/static/js/buildings.min.js:1
-#: urbansystem/static/js/contacts.js:57 urbansystem/static/js/contacts.js:93
-#: urbansystem/static/js/contacts.min.js:1 urbansystem/static/js/documents.js:38
-#: urbansystem/static/js/documents.js:90 urbansystem/static/js/documents.min.js:1
-#: urbansystem/static/js/notes.js:85 urbansystem/static/js/notes.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:24
+#: stonegarden/templates/html/blocks/js_templates.html:71
+#: stonegarden/templates/html/blocks/js_templates.html:90
+#: stonegarden/templates/html/blocks/js_templates.html:118
+#: stonegarden/templates/html/blocks/js_templates.html:146
+#: stonegarden/templates/html/blocks/js_templates.html:188
+#: stonegarden/templates/html/documents/js_templates.html:59
+#: stonegarden/templates/html/documents/js_templates.html:75
+#: stonegarden/templates/html/pages/js_templates.html:18
+#: stonegarden/templates/html/pages/js_templates.html:50
+#: stonegarden/templates/html/site/js_templates.html:15
 msgid "Cancel"
 msgstr ""
 
-#: urbansystem/templates/html/pages/edit_code.html:14
-#: urbansystem/templates/html/pages/form.html:14
-#: urbansystem/templates/html/pages/tree.html:39
-msgid "Sitemap"
-msgstr ""
-
-#: urbansystem/templates/html/pages/edit_code.html:16
-#: urbansystem/templates/html/pages/edit_code.html:28
-#: urbansystem/templates/html/ui/menu.html:26
-msgid "Style and scripts"
-msgstr ""
-
-#: urbansystem/templates/html/pages/edit_code.html:29
-#: urbansystem/templates/html/pages/tree.html:54
-#: urbansystem/templates/html/ui/menu.html:19
-msgid "Page"
-msgstr ""
-
-#: urbansystem/templates/html/pages/form.html:19
-#: urbansystem/templates/html/pages/form.html:40
-msgid "New page"
-msgstr ""
-
-#: urbansystem/templates/html/pages/form.html:23
-#: urbansystem/templates/html/pages/sitemap.html:32
-#: urbansystem/templates/html/ui/menu.html:29
-#: urbansystem/templates/html/ui/menu.html:31
-msgid "Create page"
-msgstr ""
-
-#: urbansystem/templates/html/pages/form.html:36
-#: urbansystem/templates/html/ui/menu.html:24
-msgid "Page properties"
-msgstr ""
-
-#: urbansystem/templates/html/pages/form.html:44
-msgid "Short name for navigation menu"
-msgstr ""
-
-#: urbansystem/templates/html/pages/form.html:46
-msgid "Browser title"
-msgstr ""
-
-#: urbansystem/templates/html/pages/sitemap.html:29
-#: urbansystem/templates/html/pages/sitemap.html:43
-#: urbansystem/templates/html/ui/menu.html:33 urbansystem/static/js/admin.js:603
-#: urbansystem/static/js/admin.min.js:1
-msgid "Site map"
-msgstr ""
-
-#: urbansystem/templates/html/pages/tree.html:16
-msgid "Block"
-msgstr ""
-
-#: urbansystem/templates/html/pages/tree.html:23
-msgid "Container"
-msgstr ""
-
-#: urbansystem/templates/html/pages/tree.html:41
-#: urbansystem/templates/html/pages/tree.html:53
-#: urbansystem/templates/html/ui/menu.html:27
-msgid "Page tree"
-msgstr ""
-
-#: urbansystem/templates/html/pages/tree.html:54
-msgid "template"
-msgstr ""
-
-#: urbansystem/templates/html/ui/container.html:17
-#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:30
 msgid "This text is not written yet."
 msgstr ""
 
-#: urbansystem/templates/html/ui/container.html:17
-#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:31
 msgid "Click to write the text."
 msgstr ""
 
-#: urbansystem/templates/html/ui/container.html:18
-#: urbansystem/static/js/blocks.js:418 urbansystem/static/js/blocks.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:34
 msgid ""
 "Do not worry, such placeholder texts are not visible on the public website "
 "until you edit them."
 msgstr ""
 
-#: urbansystem/templates/html/ui/insert.html:9 urbansystem/static/js/blocks.js:102
-#: urbansystem/static/js/blocks.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:59
 msgid "Paste"
 msgstr ""
 
-#: urbansystem/templates/html/ui/insert.html:10
-msgid "Insert text"
+#: stonegarden/templates/html/blocks/js_templates.html:77
+msgid "Select navigation type"
 msgstr ""
 
-#: urbansystem/templates/html/ui/insert.html:24
-msgid "htmlcode"
+#: stonegarden/templates/html/blocks/js_templates.html:96
+msgid "Insert columns"
 msgstr ""
 
-#: urbansystem/templates/html/ui/menu.html:8
-msgid "Buildings"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:16
-msgid "Staff and partners"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:37
-msgid "Are you sure to delete this page and its subpages?"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:37
-msgid "Delete this page"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:41
-msgid "Storage"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:46
-msgid "User accounts"
-msgstr ""
-
-#: urbansystem/templates/html/ui/menu.html:48
-msgid "Logout"
-msgstr ""
-
-#: urbansystem/templates/html/ui/users.html:16
-msgid "Last visit"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:292 urbansystem/static/js/admin.js:308
-#: urbansystem/static/js/admin.js:732 urbansystem/static/js/admin.min.js:1
-#: urbansystem/static/js/documents.js:422 urbansystem/static/js/documents.min.js:1
-msgid "Error"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:309 urbansystem/static/js/admin.min.js:1
-msgid "Network error."
-msgstr ""
-
-#: urbansystem/static/js/admin.js:424 urbansystem/static/js/admin.min.js:1
-msgid "Insert image"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:429 urbansystem/static/js/admin.min.js:1
-msgid "Sizes"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:459 urbansystem/static/js/admin.min.js:1
-msgid "Insert"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.min.js:1
-msgid "URL"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.js:545
-#: urbansystem/static/js/admin.min.js:1
-msgid "Hint"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:490 urbansystem/static/js/admin.js:545
-#: urbansystem/static/js/admin.min.js:1
-msgid "Class"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:535 urbansystem/static/js/admin.min.js:1
-msgid "Hyperlink"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:545 urbansystem/static/js/admin.min.js:1
-msgid "Text"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:545 urbansystem/static/js/admin.min.js:1
-msgid "Link"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:554 urbansystem/static/js/admin.min.js:1
-msgid "Create"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:727 urbansystem/static/js/admin.min.js:1
-#: urbansystem/static/js/documents.js:417 urbansystem/static/js/documents.min.js:1
-msgid "Processing"
-msgstr ""
-
-#: urbansystem/static/js/admin.js:743 urbansystem/static/js/admin.js:752
-#: urbansystem/static/js/admin.min.js:1 urbansystem/static/js/documents.js:433
-#: urbansystem/static/js/documents.js:441 urbansystem/static/js/documents.min.js:1
-msgid "File upload error!"
-msgstr ""
-
-#: urbansystem/static/js/blocks.js:125 urbansystem/static/js/blocks.js:212
-#: urbansystem/static/js/blocks.min.js:1
+#: stonegarden/templates/html/blocks/js_templates.html:103
 msgid "Columns"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:131 urbansystem/static/js/blocks.min.js:1
-msgid "No columns"
+#: stonegarden/templates/html/blocks/js_templates.html:127
+#: stonegarden/templates/html/documents/js_templates.html:54
+#: stonegarden/templates/html/documents/js_templates.html:67
+msgid "Description"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:146 urbansystem/static/js/blocks.js:180
-#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:25
-#: urbansystem/static/js/documents.min.js:1
-msgid "Apply"
+#: stonegarden/templates/html/blocks/js_templates.html:134
+msgid "Show description"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:175 urbansystem/static/js/blocks.js:222
-#: urbansystem/static/js/blocks.min.js:1 urbansystem/static/js/documents.js:16
-#: urbansystem/static/js/documents.js:68 urbansystem/static/js/documents.min.js:1
-msgid "Properties"
+#: stonegarden/templates/html/blocks/js_templates.html:141
+msgid "Make responsive"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:177 urbansystem/static/js/blocks.min.js:1
-msgid "CSS class"
+#: stonegarden/templates/html/blocks/js_templates.html:175
+msgid "Images below will be inserted as a gallery."
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:229 urbansystem/static/js/blocks.min.js:1
-msgid "Container properties"
+#: stonegarden/templates/html/blocks/js_templates.html:183
+msgid "Autoplay"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:239 urbansystem/static/js/blocks.min.js:1
-msgid "Copy"
+#: stonegarden/templates/html/documents/js_templates.html:13
+msgid "Upload files"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:245 urbansystem/static/js/blocks.min.js:1
-msgid "Cut"
+#: stonegarden/templates/html/documents/js_templates.html:19
+msgid "Create folder"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:257 urbansystem/static/js/blocks.min.js:1
-msgid "Delete this block?"
+#: stonegarden/templates/html/documents/js_templates.html:52
+#: stonegarden/templates/html/documents/js_templates.html:65
+#: stonegarden/templates/html/pages/js_templates.html:24
+msgid "Title"
 msgstr ""
 
-#: urbansystem/static/js/blocks.js:257 urbansystem/static/js/blocks.min.js:1
-msgid "It will also delete all the nested blocks."
-msgstr ""
-
-#: urbansystem/static/js/blocks.js:295 urbansystem/static/js/blocks.js:340
-#: urbansystem/static/js/blocks.min.js:1
-msgid "OK"
-msgstr ""
-
-#: urbansystem/static/js/blocks.js:374 urbansystem/static/js/blocks.min.js:1
-#: urbansystem/static/js/buildings.js:69 urbansystem/static/js/buildings.js:94
-#: urbansystem/static/js/buildings.min.js:1 urbansystem/static/js/contacts.js:160
-#: urbansystem/static/js/contacts.js:188 urbansystem/static/js/contacts.min.js:1
-#: urbansystem/static/js/notes.js:108 urbansystem/static/js/notes.min.js:1
-#: urbansystem/static/js/users.js:15 urbansystem/static/js/users.min.js:1
-msgid "Edit"
-msgstr ""
-
-#: urbansystem/static/js/documents.js:77 urbansystem/static/js/documents.min.js:1
-msgid "Delete this document?"
-msgstr ""
-
-#: urbansystem/static/js/documents.js:77 urbansystem/static/js/documents.min.js:1
-msgid "Deleting folder will also delete all nested documents."
-msgstr ""
-
-#: urbansystem/static/js/documents.js:120 urbansystem/static/js/documents.js:169
-#: urbansystem/static/js/documents.js:172 urbansystem/static/js/documents.min.js:1
+#: stonegarden/templates/html/documents/js_templates.html:80
+#: stonegarden/static/js/models/documents/document.js:56
 msgid "Copy link"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:123 urbansystem/static/js/documents.min.js:1
-msgid "Copy download link"
+#: stonegarden/templates/html/pages/js_templates.html:9
+msgid "CSS code"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:143 urbansystem/static/js/documents.min.js:1
+#: stonegarden/templates/html/pages/js_templates.html:13
+msgid "JS code"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:30
+#: stonegarden/static/js/models/blocks/block.js:106
+msgid "Parent"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:38
+msgid "Slug"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:45
+msgid "Show in navigation"
+msgstr ""
+
+#: stonegarden/templates/html/pages/js_templates.html:56
+#: stonegarden/static/js/models/pages/page.js:108
+msgid "Sort subpages"
+msgstr ""
+
+#: stonegarden/templates/html/pages/sitemap.html:27
+#: stonegarden/templates/html/site/topbar.html:25
+#: stonegarden/static/js/models/pages/page.js:149
+msgid "Site map"
+msgstr ""
+
+#: stonegarden/templates/html/site/js_templates.html:14
+#: stonegarden/static/js/models/blocks/block.js:98
+#: stonegarden/static/js/models/documents/document.js:45
+msgid "Delete"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:12
+msgid "Stonegarden"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:23
+msgid "Pages"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:29
+#: stonegarden/static/js/models/pages/page.js:153
+msgid "Storage"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:32
+msgid "Export catalog"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:35
+#: stonegarden/templates/html/users/p_list.html:7
+#: stonegarden/static/js/models/pages/page.js:157
+msgid "Users"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:42
+msgid "My account"
+msgstr ""
+
+#: stonegarden/templates/html/site/topbar.html:46
+#: stonegarden/static/js/models/pages/page.js:164
+msgid "Exit"
+msgstr ""
+
+#: stonegarden/templates/html/users/form.html:9
+msgid "Edit user"
+msgstr ""
+
+#: stonegarden/templates/html/users/list.html:8
+msgid "New user"
+msgstr ""
+
+#: stonegarden/templates/html/users/p_list.html:16
+msgid "Last visit"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:55
+msgid "Delete this block?"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:56
+msgid "It will also delete all the nested blocks."
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:71
+#: stonegarden/static/js/models/blocks/block.js:307
+msgid "Edit"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:76
+#: stonegarden/static/js/models/documents/document.js:38
+msgid "Attributes"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:85
+msgid "Cut"
+msgstr ""
+
+#: stonegarden/static/js/models/blocks/block.js:89
+msgid "Copy"
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:22
+msgid "Delete this file or folder?"
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:23
+msgid "It will also delete all the nested files."
+msgstr ""
+
+#: stonegarden/static/js/models/documents/document.js:52
+#: stonegarden/static/js/models/documents/document.js:63
 msgid "Download"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:214 urbansystem/static/js/documents.min.js:1
-msgid "Image preview"
+#: stonegarden/static/js/models/pages/page.js:83
+msgid "Exit edit mode"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:254 urbansystem/static/js/documents.min.js:1
-msgid "Preview"
+#: stonegarden/static/js/models/pages/page.js:92
+msgid "Enter edit mode"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:274 urbansystem/static/js/documents.min.js:1
-msgid "Preview sizes"
+#: stonegarden/static/js/models/pages/page.js:103
+msgid "Page attributes"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:388 urbansystem/static/js/documents.min.js:1
-msgid "New folder"
+#: stonegarden/static/js/models/pages/page.js:113
+msgid "Style and scripts"
 msgstr ""
 
-#: urbansystem/static/js/documents.js:412 urbansystem/static/js/documents.min.js:1
-msgid "Uploading"
+#: stonegarden/static/js/models/pages/page.js:122
+msgid "Create page"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:128
+msgid "Delete this page"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:186
+msgid "Delete this page?"
+msgstr ""
+
+#: stonegarden/static/js/models/pages/page.js:187
+msgid "Are you sure to delete this page and its subpages?"
+msgstr ""
+
+#: stonegarden/static/js/views/blocks/form.js:34
+#: stonegarden/static/js/views/documents/form.js:34
+#: stonegarden/static/js/views/pages/code_form.js:34
+msgid "Add"
 msgstr ""
 

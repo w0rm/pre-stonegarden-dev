@@ -1,25 +1,38 @@
+
+
 @import "blocks/inserter";
 @import "blocks/placeholder";
 @import "blocks/row_block";
+@import "blocks/css_class";
 
 
-.block {
-  // Prevent collapsing margins
-  padding-top: 1px;
-  padding-bottom: 1px;
-  // Allow context menu positioning
-  position: relative;
-  // Set min height
-  min-height: 40px;
-}
+.sg-page-edit {
 
-.blocks {
-  // Allow inserter positioning
-  position: relative;
-  // Increase vertical space between inserters
-  padding: 5px 0;
-}
+  .block {
+    // Prevent collapsing margins
+    // @extend %cf;
+    // Allow context menu positioning
+    position: relative;
+    // Set min height
+    min-height: 36px;
+  }
 
-.sg-block-highlight {
-  @include box-shadow;
+  .blocks {
+    // Allow inserter positioning
+    position: relative;
+    // Increase vertical space between inserters
+    padding: 5px 0;
+    // Prevent collapsing margins
+    @extend %cf;
+  }
+
+  .sg-block-highlight {
+    @include box-shadow;
+  }
+
+  .pullout.block {
+    > .sg-contextmenu-show {
+      left: 15px;
+    }
+  }
 }

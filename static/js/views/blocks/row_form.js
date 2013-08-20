@@ -99,7 +99,7 @@ define(["jquery"
       this.$columns.each(function(i, col) {
         var $col = $(col)
           , $size = $col.find("input");
-        $col.attr("class", "sg-block-column-" + sizes[i]);
+        $col.attr("class", "sg-block-col-" + sizes[i]);
         $col.toggleClass("sg-hidden", i >= sizes.length);
         $size.val(sizes[i]);
       });

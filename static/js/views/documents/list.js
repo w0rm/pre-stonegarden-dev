@@ -3,10 +3,13 @@ define(["jquery"
       , "backbone"
       , "stonegarden"
       , "models/documents/document"
-      , "views/documents/document"], function ($, _, Backbone, sg) {
+      , "models/documents/documents"
+      , "views/documents/document"
+      , "jquery.ui"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
+    , collections = sg.collections
     , models = sg.models;
 
 
@@ -15,15 +18,44 @@ define(["jquery"
     loaderTemplate: _.template($("#document-loader-template").html()),
     backTemplate: _.template($("#document-back-template").html()),
 
+    className: "sg-document-tiles",
+    tagName: "ul",
+
     events: {
-      "dblclick .js-back": "openParent"
+      "dblclick .js-back": "openParent",
+      "sortupdate": "sortupdateEvent",
+      "sortstart": "sortstartEvent"
     },
 
     initialize: function() {
+
+      this.filter = this.options.filter || {};
+
+      this.collection = this.collection || new collections.Documents;
+
       this.collection
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
         .on("document:open", this.openDocument, this)
+
+      if (this.options.isSelectable) {
+        this.collection
+          .on("document:select", this.selectDocument, this)
+          .on("document:unselect", this.unselectDocument, this)
+      }
+
+    },
+
+    selectDocument: function(model) {
+      if (this.filter.type === model.get("type")) {
+        this.trigger("document:select", model);
+      } else {
+        model.unselect();
+      }
+    },
+
+    unselectDocument: function(model) {
+      this.trigger("document:unselect", model);
     },
 
     render: function() {
@@ -32,11 +64,20 @@ define(["jquery"
         this.$el.append(this.backTemplate())
       };
       this.collection.each(this.appendDocument, this);
+
+      if (this.options.isSortable) {
+        this.$el.sortable({forcePlaceholderSize: true, items: '.sg-document'})
+      }
+
       return this;
     },
 
     makeItemView: function(model) {
-      return new views.Document({model: model}).render()
+      return new views.Document({
+        model: model,
+        isSelectable: this.options.isSelectable,
+        isContextMenuEnabled: this.options.isContextMenuEnabled
+      }).render()
     },
 
     appendDocument: function(model, collection, options) {
@@ -77,11 +118,15 @@ define(["jquery"
     },
 
     openDocument: function(model) {
+      var data;
       if (model.get("type") === "folder") {
         this.collection.remove(model);
         this.model = model;
-        this.collection.fetch({data: {parent_id: model.get("id")}});
+        this.collection.fetch({
+          data: _.extend({parent_id: model.get("id")}, this.filter)
+        });
       };
+      this.trigger("document:open", model);
       return this;
     },
 
@@ -92,6 +137,25 @@ define(["jquery"
               this.collection.trigger("document:open", model);
             }, this)
             .fetch();
+    },
+
+    sortstartEvent: function(e, ui) {
+      // Fix the bug when placeholder doesn't get its height
+      ui.placeholder.height(ui.helper.height())
+    },
+
+    sortupdateEvent: function(e, ui) {
+      var docId = ui.item.data("id")
+        , position = this.$el.children('.sg-document').index(ui.item) + 1
+        , doc = this.collection.get(docId)
+
+      this.collection
+        .remove(doc, {silent: true})
+        .add(doc, {at: position - 1, silent: true})
+        .each(function(m, index) {
+          m.set({position: index + 1})
+        })
+      doc.save();
     }
 
   });

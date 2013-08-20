@@ -1,6 +1,6 @@
 web.py
 PIL
-MySQLdb
+MySQL-python
 python-dateutil
 pytils
 babel

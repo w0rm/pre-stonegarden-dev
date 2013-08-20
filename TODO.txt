@@ -1,33 +1,29 @@
 
-1. New page types (catalog, category, product) and their forms
-	Templates for new page types (in config)
-	Config entry to specify page dependencies (do we need this?)
+1. Cut/copy/paste on documents
 
-	Models for catalog/category/product pages
-	Custom front-end menu and forms for catalog/category/product
+2. Edit page code dialog
 
-2. New block types:
-
-    в каталоге после заголовка выводить блок
-
-	Page title block
-
-	Categories list with descriptions for catalog page
-	Subcategories list (simple dot-separated) for category page
-	Products list grouped by subcategories for category page
-
-
-3. Cut/copy/paste on blocks and documents
-
-4. Edit page code dialog
-
-5. Render the following forms in templates by parts:
+3. Render the following forms in templates by parts:
 	user forms
 	login form
 	password reset form
 	password change form
 
 
+INSERT INTO `blocks` (`user_id`, `level`, `name`, `position`, `template`, `size`, `is_published`) VALUES ('1', '0', 'news_contact', '1', 'column', '12', '1');
+ALTER TABLE `pages` ADD COLUMN `params` INTEGER  DEFAULT '0'  AFTER `path`;
+UPDATE pages SET published_at = CURRENT_TIMESTAMP WHERE is_published;
 
-Fix: ensure correct position for created pages from .json
-	 improve default pages creation.
+
+UPDATE `pages` SET `params`='1' WHERE `type`='news_archive';
+
+
+<% if (!page.id) { %>
+    <p>
+        <label>$_("Page type")</label>
+        <select name="type">
+        $for page in config.page_types.keys():
+            <option value="$page">$page</option>
+        </select>
+    </p>
+<% };%>

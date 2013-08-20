@@ -31,7 +31,7 @@ define(["jquery"
       var $menu = $('<ul class="sg-contextmenu"/>');
       _.each(menu.items, function(item) {
         var $item = $('<li/>').appendTo($menu);
-        if (item.is_separator) {
+        if (item.isSeparator) {
           $item.addClass("sg-contextmenu-separator");
         } else {
           $item.addClass("sg-contextmenu-item");
@@ -41,10 +41,12 @@ define(["jquery"
               this.renderMenu(item)
             );
           } else {
-            $item.hover(
-              function(){ menu.context.highlight(); },
-              function(){ menu.context.lowlight(); }
-            );
+            if (menu.context) {
+              $item.hover(
+                function(){ menu.context.highlight(); },
+                function(){ menu.context.lowlight(); }
+              );
+            }
             if (item.click) {
               $item.append(
                 $('<a href="#">' + item.text + '</a>').click(function(e){
@@ -58,7 +60,16 @@ define(["jquery"
               );
             }
           }
+        };
+
+        if (item.title) {
+          $item.children(":first").attr("title", item.title)
         }
+
+        if (item.className) {
+          $item.children(":first").addClass(item.className)
+        }
+
       }, this);
       return $menu;
     }

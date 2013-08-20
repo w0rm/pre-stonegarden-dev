@@ -24,6 +24,9 @@
     text-decoration: none;
     color: #000;
   }
+  [class*="sg-ico-"]:before {
+    margin-right: 4px;
+  }
 }
 
 .sg-contextmenu-item {

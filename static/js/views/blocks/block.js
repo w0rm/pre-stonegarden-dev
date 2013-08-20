@@ -4,10 +4,11 @@ define(["jquery"
       , "stonegarden"
       , "views/mixins/has_contextmenu"
       , "views/modal"
+      , "views/delete_modal"
       , "views/blocks/list"
       , "views/blocks/editable_list"
       , "views/blocks/attributes"
-      , "views/blocks/delete"], function ($, _, Backbone, sg) {
+      , "plugins/jquery.gallery"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -18,6 +19,13 @@ define(["jquery"
   // then views.Block and views.Blocks subclass it.
 
   views.Block = Backbone.View.extend(_.extend({}, mixins.hasContextMenu, {
+
+    events: _.extend({
+
+      "dblclick" : "editOnDoubleClick"
+
+    }, mixins.hasContextMenu.events),
+
     initialize: function() {
       this.model
         .on("block:highlight", this.highlightBlock, this)
@@ -25,6 +33,7 @@ define(["jquery"
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("block:attributes", this.editAttributes, this)
+        .on("block:copy", this.hideContextMenu, this)
         .on("destroy", this.remove, this)
         .on("change", this.updateBlock, this);
     },
@@ -37,10 +46,14 @@ define(["jquery"
       this.$el.removeClass("sg-block-highlight");
     },
 
+    editOnDoubleClick: function() {
+      if (this.model.isEditableOnDoubleClick()) {
+        this.model.edit()
+      }
+    },
+
     deleteBlock: function() {
-      new views.Modal({
-        contentView: new views.BlockDelete({model: this.model})
-      }).open();
+      new views.DeleteModal({model: this.model}).open();
     },
 
     editAttributes: function() {
@@ -48,7 +61,7 @@ define(["jquery"
         contentView: new views.BlockAttributes({
           model: this.model,
           attrs: {
-            page_id: sgData.pageId
+            page_id: sg.page.get("id")
           }
         })
       }).open();
@@ -59,7 +72,7 @@ define(["jquery"
                                 "BlockForm"]({
         model: this.model,
         attrs: {
-          page_id: sgData.pageId
+          page_id: sg.page.get("id")
         }
       })
         .on("success reset", function() {
@@ -70,7 +83,7 @@ define(["jquery"
       this.hideContextMenu();
       this.propagateInserter();
       this.$el.after(blockForm.el)
-      if (this.model.get("template") === "content") {
+      if (_.contains(["html", "wysiwyg"], this.model.get("type"))) {
         // Hide block only if editing inline
         this.$el.hide();
       }
@@ -115,6 +128,11 @@ define(["jquery"
           .on("inserter:show", this.propagateInserter, this)
           .render();
       };
+
+      // TODO: review for better implementation
+      setTimeout(function(){
+        self.$(".js-gallery").gallery();
+      }, 0)
 
       return this;
     },

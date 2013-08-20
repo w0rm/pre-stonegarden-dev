@@ -9,6 +9,7 @@ from config import config
 from modules.translation import N_, _
 from base import db, auth, flash, mailer, applog
 from template import render, render_partial, render_email, link_to
+from modules.dbauth import AuthError, make_token, check_token, temp_password
 from modules.form import *
 
 new_user_text = N_("New user in system: %s.")
@@ -48,9 +49,9 @@ class NewUser:
         if user_form.valid:
             user = user_form.d
             email = user.pop("email")
-            password = tempPassword()
+            password = temp_password()
             user.update(password=password)
-            user = auth.get_user(user_id=auth.create_user(email, **user))
+            user = auth.create_user(email, **user)
             mailer.send(
                 user.email,
                 render_email.register(user, password),
@@ -78,7 +79,7 @@ class EditUser:
             user = user_form.d
             if not user.is_active:
                 auth.delete_session(user_id)
-            auth.updateUser(user_id, **user)
+            auth.update_user(user_id, **user)
             applog.info(edit_user_text % user.title, "users", user_id)
             raise web.seeother("/a/users")
         else:
@@ -91,7 +92,7 @@ class DeleteUser:
     def GET(self, user_id, method):
         user = auth.get_user(user_id=user_id, is_deleted=True)
         if user.id != auth.get_user().id:
-            auth.updateUser(user.id, is_deleted=method == "delete")
+            auth.update_user(user.id, is_deleted=method == "delete")
             if method == "delete":
                 flash.set(_(undo_user_text) %
                           link_to("users", user, "undelete"))

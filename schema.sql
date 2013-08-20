@@ -1,9 +1,3 @@
-DROP TABLE `blocks`;
-DROP TABLE `pages`;
-DROP TABLE `messages`;
-DROP TABLE `sessions`;
-DROP TABLE `documents`;
-DROP TABLE `users`;
 
 
 
@@ -50,6 +44,7 @@ CREATE TABLE sessions (
 CREATE TABLE pages (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	path VARCHAR(255),
+	params INTEGER DEFAULT '0',
 	slug VARCHAR(255),
 	parent_id INTEGER,
 	user_id INTEGER,
@@ -150,3 +145,22 @@ CREATE TABLE documents (
 	CHECK (is_system IN (0, 1)),
 	CHECK (is_deleted IN (0, 1))
 );
+
+
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `obj_type` varchar(10) DEFAULT NULL,
+  `obj_id` int(11) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `browser` varchar(255) DEFAULT NULL,
+  `message` text,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `level` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(user_id) REFERENCES users (id)
+);
+
+
+

@@ -2,7 +2,7 @@ import web
 import json
 from base import db, auth, flash
 from modules.utils import dthandler
-from template import render_block, smarty, sanitize
+from template import smarty, sanitize, template_global, render_partial
 from models.tree import *
 
 
@@ -22,10 +22,16 @@ def update_block_by_id(block_id, data):
         raise flash.error(
             _("Cannot edit or delete system blocks."))
 
-    data.update(
-        content_cached=smarty(sanitize(data.content)),
-        updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
-    )
+    data.updated_at = web.SQLLiteral("CURRENT_TIMESTAMP")
+
+    # Cannot change type and template of block
+    del data["template"]
+    del data["type"]
+
+    if block.type == "wysiwyg":
+        data.content_cached = smarty(sanitize(data.content))
+    else:
+        data.content_cached = smarty(data.content)
 
     # Get column sizes from data
     sizes = data.pop("sizes")
@@ -59,9 +65,14 @@ def create_block(block):
         position=int(block.position),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
-        content_cached=smarty(sanitize(block.content)),
+
         is_published=True,
     )
+
+    if block.type == "wysiwyg":
+        block.content_cached = smarty(sanitize(block.content))
+    else:
+        block.content_cached = smarty(block.content)
 
     # TODO: wrap the code below in transaction
     if block.get("parent_id"):
@@ -163,7 +174,7 @@ def remove_columns(block, columns):
 
     for column in columns:
         orphans += get_blocks_by_parent_id(column.id)
-        delete_block_by_id(column.id)
+        delete_block_by_id(column.id, delete_system=True)
 
     # Shift positions of the blocks after orphans
     # Positions before:
@@ -193,13 +204,13 @@ def remove_columns(block, columns):
     return orphans
 
 
-def delete_block_by_id(block_id):
+def delete_block_by_id(block_id, delete_system=False):
     """Deletes block and returns deleted block."""
 
     block = get_block_by_id(block_id)
 
     # Cannot delete system blocks
-    if block.is_system:
+    if block.is_system and not delete_system:
         raise flash.error(
             _("Cannot edit or delete system blocks."))
 
@@ -281,11 +292,30 @@ def template_blocks_to_json():
     """Renders template blocks"""
     return json.dumps(
         build_template_blocks_tree(with_render=True),
-        default=dthandler, sort_keys=True, indent=2)
+        default=dthandler, sort_keys=True, indent=2).replace('</', '<\/')
 
 
 def block_to_json(block):
     """Renders block in JSON format."""
     page_blocks = get_page_blocks_by_page_id(block.page_id)
     build_block_tree(block, page_blocks, with_render=True)
-    return json.dumps(block, default=dthandler, sort_keys=True, indent=2)
+    return json.dumps(block, default=dthandler,
+                      sort_keys=True, indent=2).replace('</', '<\/')
+
+
+@template_global
+def render_block(block):
+    return render_partial.blocks.block(
+        block,
+        getattr(render_partial.blocks, block.template)(block)
+    )
+
+
+@template_global
+def render_template_block(block_name):
+    return render_partial.blocks.template_block(block_name)
+
+
+@template_global
+def render_blocks(blocks):
+    return render_partial.blocks.blocks(blocks)

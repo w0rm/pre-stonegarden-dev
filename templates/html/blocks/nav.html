@@ -1,11 +1,14 @@
 $def with(block)
 $# Navigation block renders different kinds of navigations
-<nav class="nav-$block.type">
-	<ul>
-	$for p in ctx.nav.get(block.type):
-	    $if p.id == ctx.page.id:
-	        <li class="active"><span>$p.name</span></li>
-	    $else:
-	        <li><a href="$p.path">$p.name</a></li>
-	</ul>
-</nav>
+$if ctx.nav.get(block.type):
+    <nav class="nav-$block.type">
+        <ul>
+        $for p in ctx.nav.get(block.type):
+            $if p.id == ctx.page.id:
+                <li><span class="active $page_unpublished_class(p)">$p.name</span>
+            $elif ctx.page.ids and p.id in ctx.page.ids:
+                <li><a class="active $page_unpublished_class(p)" href="$p.path" title="$p.title">$p.name</a>
+            $else:
+                <li><a class="$page_unpublished_class(p)" href="$p.path" title="$p.title">$p.name</a>
+        </ul>
+    </nav>

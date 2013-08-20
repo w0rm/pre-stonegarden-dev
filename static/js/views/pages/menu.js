@@ -8,53 +8,64 @@ define(["jquery"
     , views = sg.views;
 
 
-  views.PageMenu = Backbone.View.extend({
+  views.PageMenu = views.ContextMenu.extend({
 
-    tagName: "nav",
-
-    className: "sg-pagemenu",
-
-    template: _.template($("#page-menu-template").html()),
-
-    events: {
-      "click .js-create": "createPage",
-      "click .js-edit": "editPage",
-      "click .js-delete": "deletePage",
-      "click .js-code": "editPageCode"
-    },
-
-    getTemplateAttributes: function() {
-      return {
-        isEdit: window.location.search.indexOf("edit") >= 0
-      }
-    },
+    className: "sg-pagemenu-show",
 
     render: function() {
-      this.$el.html(this.template(this.getTemplateAttributes()));
-      return this
+      this.$el.empty().append(
+        this.renderParentMenu(this.model.getContextMenu())
+      );
+      return this;
     },
 
-    createPage: function(e) {
-      e.preventDefault();
-      this.model.create();
-    },
+    // TODO: refractor this and contextmenu.renderMenu
+    renderParentMenu: function(menu) {
+      var $menu = $('<ul class="sg-pagemenu"/>');
+      _.each(menu.items, function(item) {
+        var $item = $('<li/>').appendTo($menu);
+        if (item.is_separator) {
+          $item.addClass("sg-pagemenu-separator");
+        } else {
+          $item.addClass("sg-pagemenu-item");
+          if (item.items) {
+            $item.append(
+              "<span>" + item.text + "</span>",
+              this.renderMenu(item)
+            );
+          } else {
+            if (menu.context) {
+              $item.hover(
+                function(){ menu.context.highlight(); },
+                function(){ menu.context.lowlight(); }
+              );
+            }
+            if (item.click) {
+              $item.append(
+                $('<a href="#">' + item.text + '</a>').click(function(e){
+                  e.preventDefault();
+                  item.click.call(menu.context);
+                })
+              )
+            } else {
+              $item.append(
+                $('<a>' + item.text + '</a>').attr("href", item.href)
+              );
+            }
+          }
+        };
 
-    editPage: function(e) {
-      e.preventDefault();
-      this.model.edit();
-    },
+        if (item.title) {
+          $item.children(":first").attr("title", item.title)
+        }
 
-    editPageCode: function(e) {
-      e.preventDefault();
-      this.model.editCode();
-    },
+        if (item.className) {
+          $item.children(":first").addClass(item.className)
+        }
 
-    deletePage: function(e) {
-      e.preventDefault();
-      this.model.delete();
+      }, this);
+      return $menu;
     }
-
-
 
 
   });

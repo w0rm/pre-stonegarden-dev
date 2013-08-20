@@ -1,5 +1,6 @@
 
 .sg-pagemenu {
+  margin: 0;
   position: fixed;
   z-index: 30;
   left: -25px;
@@ -7,26 +8,31 @@
   font-size: 0;
   background: hsl(0, 0, 33%);
   @include transition(left 0.2s ease-in-out);
-  &:hover { left: 0; };
+  &:hover, .sg-page-edit & { left: 0; };
   @include border-right-radius;
   @include box-shadow;
   padding: 5px 0;
 }
 
-.sg-pagemenu-item, .sg-pagemenu-item > a {
+.sg-pagemenu-item {
   @extend .sg-contextmenu-item;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-  vertical-align: middle;
-  font-size: 16px;
-  text-decoration: none;
-  color: hsl(0, 0, 90%);
+
+  > a, > span {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    font-size: 16px;
+    text-decoration: none;
+    color: hsl(0, 0, 90%);
+  }
   &:hover, &.sg-active {
-    color: #fff;
-    background: hsl(0, 0, 20%);
+    > a, > span {
+      color: #fff;
+      background: hsl(0, 0, 20%);
+    }
   }
 }

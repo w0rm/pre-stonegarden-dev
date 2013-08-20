@@ -4,8 +4,9 @@ define(["jquery"
       , "stonegarden"
       , "views/mixins/has_contextmenu"
       , "views/modal"
-      , "views/documents/attributes"
-      , "views/documents/delete"], function ($, _, Backbone, sg) {
+      , "views/delete_modal"
+      , "views/documents/copy_link"
+      , "views/documents/attributes"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -21,7 +22,8 @@ define(["jquery"
 
     events: _.extend({
 
-      "dblclick": "openDocument"
+      "dblclick": "openDocument",
+      "click": "toggleSelected"
 
     }, mixins.hasContextMenu.events),
 
@@ -29,6 +31,9 @@ define(["jquery"
       this.model
         .on("document:delete", this.deleteDocument, this)
         .on("document:attributes", this.editAttributes, this)
+        .on("document:copyLink", this.copyLink, this)
+        .on("document:select document:unselect", this.changeSelected, this)
+        .on("document:unselect", this.unselectDocument, this)
         .on("destroy", this.remove, this)
         .on("change:title", this.render, this)
         .on("change:is_published", this.changePublished, this)
@@ -40,9 +45,20 @@ define(["jquery"
     render: function() {
       this.$el
         .attr("class", "sg-document sg-document-" + this.model.get("type"))
-        .html(this.template({"document": this.model.toJSON()}));
+        .html(this.template({"document": this.model.toJSON()}))
+        .data({id: this.model.get('id')})
       this.changePublished();
       return this;
+    },
+
+    toggleSelected: function() {
+      if (this.options.isSelectable) {
+        this.model.toggleSelected();
+      }
+    },
+
+    changeSelected: function() {
+      this.$el.toggleClass("sg-selected", this.model.isSelected);
     },
 
     changePublished: function() {
@@ -50,9 +66,7 @@ define(["jquery"
     },
 
     deleteDocument: function() {
-      new views.Modal({
-        contentView: new views.DocumentDelete({model: this.model})
-      }).open();
+      new views.DeleteModal({model: this.model}).open();
     },
 
     editAttributes: function() {
@@ -61,10 +75,15 @@ define(["jquery"
       }).open();
     },
 
+    copyLink: function() {
+      new views.Modal({
+        contentView: new views.DocumentCopyLink({model: this.model})
+      }).open();
+    },
+
     openDocument: function() {
       this.model.trigger("document:open", this.model);
     }
-
 
   }));
 

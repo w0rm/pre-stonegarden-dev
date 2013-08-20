@@ -1,0 +1,92 @@
+/* ============================================
+   Helpers are placeholder selectors and mixins
+
+   Please don't put actual selectors
+   in this file
+   ============================================ */
+
+/* --------------------------------------------
+   Clearfix
+   -------------------------------------------- */
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+%cf:before,
+%cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+%cf:after {
+    clear: both;
+}
+
+
+/* --------------------------------------------
+   Image replacement
+   -------------------------------------------- */
+
+%image-replacement {
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+}
+
+
+/* --------------------------------------------
+   Lists
+   -------------------------------------------- */
+
+%unstyled-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+  li { margin-left: 0; padding-left: 0}
+}
+
+%inline-block-list {
+  @extend %unstyled-list;
+  li {
+    display: inline-block;
+  }
+}
+
+
+
+/* --------------------------------------------
+   PNG Sprites
+   -------------------------------------------- */
+$png-layout: smart;
+@import "png/*.png";
+
+@mixin svg-sprite($sprite) {
+  @include png-sprite-dimensions($sprite);
+  background: inline-image("svg/#{$sprite}.svg");
+  .no-svg & {
+    content: " "; // force ie8 redraw pseudo element
+    @include png-sprite($sprite);
+  }
+}
+
+/* Icon font */
+%sg-ico {
+  &:before {
+    font-family: "StoneIcon";
+    font-weight: normal;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-smooth: always;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+

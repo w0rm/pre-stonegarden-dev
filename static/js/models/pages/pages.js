@@ -25,12 +25,16 @@ define(["jquery"
       })
     },
 
-    getIndentedList: function() {
-      return this.map(function(page) {
+    getIndentedList: function(options, context) {
+      var pages = _.filter(this.models, options.filter, context)
+        , minLevel = _.min(pages, function(p){return p.get("level")}).get("level");
+
+      return _.map(pages, function(page) {
         return {
           id: page.get("id"),
-          name: page.getIndentedName(),
-          ids: page.getIds()
+          name: page.getIndentedName(minLevel),
+          selected: options.selectedFilter.call(context, page) ? "selected" : "",
+          disabled: options.disabledFilter.call(context, page) ? "disabled" : ""
         }
       });
     }
