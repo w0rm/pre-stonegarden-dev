@@ -17,10 +17,13 @@
     position: absolute;
     z-index: 1;
     width: 100%;
-    border-bottom: 2px dashed $grey80;
+    border-bottom: 2px dashed $grey10;
     .js-template-block & {
       border-bottom-style: dotted
     }
+  }
+  &:hover .sg-block-inserter-line {
+    border-color: $grey80;
   }
 
   .sg-block-inserter-menu {

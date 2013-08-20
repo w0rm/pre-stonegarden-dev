@@ -62,24 +62,37 @@ define(["jquery"
     },
 
     showInserter: function(e) {
+      // we use $proximity to show inserter only x pixels close to top|bottom 
+      // we'll recalculate $proximity for small (<$proximity *2) blocks
+      // TODO move $proximity varible to more appropriate place
       var $block = $(e.currentTarget)
-        , top = $block.is(".js-placeholder") || (e.pageY - $block.offset().top) < $block.height() / 2
-        , $el = $block[top ? "prev" : "next"]();
+        , proximity = 50 
+        , proxy = ($block.height() / 2) > 50 ? 50 : $block.height() / 2
+        , istop = $block.is(".js-placeholder") || ((e.pageY - $block.offset().top) < proxy)
+        , isbottom = $block.is(".js-placeholder") || (e.pageY > ($block.offset().top + $block.height() - proxy))
+        , $el = $block[istop ? "prev" : "next"]();
 
+       
       if (this._isCreatingBlock) {
         return;
       }
 
       e.stopPropagation();
 
-      if (!$el.is(".js-inserter") && $block.parent().is(".js-blocks") &&
-          !$block.parent().parent().is(".row")) {
-        this.inserter.render().$el["insert" + (top ? "Before" : "After") ]($block);
-      }
+      if ( (istop || isbottom)
+          && !$el.is(".js-inserter") 
+          && $block.parent().is(".js-blocks") 
+          && !$block.parent().parent().is(".row")) {
+        this.inserter.render().$el["insert" + (istop ? "Before" : "After") ]($block);
 
-      // Trigger inserter event so parent blocks views
-      // will remove their inserters
-      this.trigger("inserter:show");
+      }
+      if (istop || isbottom){
+         // Trigger inserter event so parent blocks views
+        // will remove their inserters
+        this.trigger("inserter:show")
+      } else {
+        this.hideInserter()
+      }
 
     },
 
