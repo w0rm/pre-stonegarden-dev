@@ -48,8 +48,7 @@ def create_application():
         # this is required to work with reloader
         web.config._session = web.session.Session(
             app,
-            DBUserStore(db, "sessions"),
-            dict(forms=dict(), venues=0, is_searching=False, search=None),
+            DBUserStore(db, "sessions")
         )
     app.add_processor(web.loadhook(locale_hook))
     app.add_processor(web.loadhook(session_hook))
