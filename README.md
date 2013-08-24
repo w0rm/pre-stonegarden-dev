@@ -10,7 +10,7 @@ Simple CMS powered by web.py framework.
 3. Create `siteconfig.py` and set at least `database_url` to `mysql://user:password@host/database`
 4. Execute `python setup.py` to fill database with initial data
 5. Install node.js with coffeescript
-6. Install sass, compass and zurb-foundation rubygems
+6. Install sass, compass and zurb-foundation (version 3) rubygems
 7. Watch and compile coffee and scss files with `cake watch`
 8. Compile translations with `cake i18n:compile`
 
@@ -27,6 +27,11 @@ To run the website enter `python code.py`
 	curl http://npmjs.org/install.sh | sh
 	#install coffee
 	npm install -g coffee-script
+
+## Rubygems installation
+
+	gem install zurb-foundation -v 3.0.3
+
 
 ## Cakefile options
 

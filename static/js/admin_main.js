@@ -1,5 +1,4 @@
 require.config({
-  urlArgs: window.environment === "development" ? 'bust=' + (new Date).getTime() : "",
   paths: {
     stonegarden: '/a/config',
     jquery: '../vendor/js/jquery-1.8.1',

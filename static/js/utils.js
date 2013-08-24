@@ -63,13 +63,13 @@ define(["jquery"
           } else if (attrs.type === "gallery") {
             return "Gallery"
           } else {
-            return "" 
+            return ""
           }
       }
     },
 
     guessPageType: function(attrs) {
-      if (attrs.type === "page") {
+      if (attrs.type === "page" || attrs.type === "index_page") {
         return ""
       } else {
         var t = attrs.type.charAt(0).toUpperCase() + attrs.type.slice(1)
