@@ -42,15 +42,41 @@ config = web.storage(
         page={
             "block": {
                 "template": "page",
-                "is_system": True
+                "is_system": True,
+                "blocks": [
+                    {
+                        "template": "row",
+                        "blocks": [
+                            {
+                            "template": "column",
+                            "size": 12,
+                            "css_class": "twelve",
+                            "is_system": True
+                            }
+                        ]
+                    }
+                ]
             }
         },
         index_page={
             "block": {
                 "template": "index_page",
-                "is_system": True
+                "is_system": True,
+                "blocks": [
+                    {
+                        "template": "row",
+                        "blocks": [
+                            {
+                            "template": "column",
+                            "size": 12,
+                            "css_class": "twelve",
+                            "is_system": True
+                            }
+                        ]
+                    }
+                ]
             }
-        }        
+        }
     ),
     image={
         # dst_width, dst_height, crop, sharp, watermark, quality, progressive

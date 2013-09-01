@@ -1,29 +1,4 @@
 
-$leftPagePadding: 120px !default;
-$rightPagePadding: 20px !default;
-$maxPageWidth: 1400px;
-
-.row {
-  width: auto;
-  min-width: $screenSmall - $leftPagePadding - $rightPagePadding;
-}
-
-.page, .index_page {
-  margin: auto;
-  max-width: $maxPageWidth;
-  padding: 0 $rightPagePadding 0 $leftPagePadding;
-}
-
-.pullout {
-  margin-right: #{- $rightPagePadding - $columnGutter / 2};
-  margin-left: #{- $leftPagePadding - $columnGutter / 2};
-}
-
-.padin {
-  padding-right: #{$rightPagePadding + $columnGutter / 2};
-  padding-left: #{$leftPagePadding + $columnGutter / 2};
-}
-
 .padtop {
   @extend %clearfix;
   padding-top: ms(1);
@@ -31,23 +6,6 @@ $maxPageWidth: 1400px;
     margin-top: 0
   };
   position: relative;
-}
-
-@include respondTo(smallScreen) {
-  .pullout {
-    margin: 0 #{- $columnGutter / 2};
-  }
-  .padin {
-    padding-right: $columnGutter / 2;
-    padding-left: $columnGutter / 2;
-  }
-  .page, .index_page {
-    padding: 0;
-    overflow: visible;
-  }
-  .row {
-    min-width: 0;
-  }
 }
 
 .pullup {

@@ -1,32 +1,28 @@
 $def with(block, contents)
 $# This file renders basic wrapping of the block
 $# Is used internally from template.py render_block
-$code:
-    if block.template == "column":
-        css_class = ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve")[block.size - 1]
-    else:
-        css_class = ""
 $if block.css_class and block.template == "row":
+    $# if a block is row and has css_class then wrap inside div with such class
     $if auth.get_user():
         <div data-position="$block.position"
              class="block $block.css_class ${not block.is_published and "sg-not-published" or ""} js-block">
-            <div class="$block.template $css_class">
+            <div class="$block.template">
                 $:contents
             </div>
         </div>
     $elif block.is_published:
         <div class="block $block.css_class">
-            <div class="$block.template $css_class">
+            <div class="$block.template">
                 $:contents
             </div>
         </div>
 $else:
     $if auth.get_user():
-    	<div data-position="$block.position"
-             class="block $block.template $css_class $block.css_class ${not block.is_published and "sg-not-published" or ""} js-block">
-    		$:contents
-    	</div>
+        <div data-position="$block.position"
+             class="block $block.template $block.css_class ${not block.is_published and "sg-not-published" or ""} js-block">
+            $:contents
+        </div>
     $elif block.is_published:
-    	<div class="block $block.template $css_class $block.css_class">
-    		$:contents
-    	</div>
+        <div class="block $block.template $block.css_class">
+            $:contents
+        </div>

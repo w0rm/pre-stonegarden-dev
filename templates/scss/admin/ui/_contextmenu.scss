@@ -94,12 +94,15 @@
   font-size: 16px;
   text-decoration: none;
   color: hsl(0, 0, 90%);
+  @include opacity(.4);
   &:hover, &.sg-active {
     color: #fff;
+    @include opaque;
     background: hsl(0, 0, 20%);
   }
   position: absolute;
   z-index: 20;
-  left: -32px;
-  top: 6px;
+  //left: -32px;
+  left: 0;
+  top: 0;
 }

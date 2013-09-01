@@ -4,11 +4,7 @@ $def with(block)
         $:render_template_block("global_header")
     </div>
 </header>
-<section class="row">
-	<div class="twelve columns">
-	   $:render_blocks(block.get("blocks"))
-	</div>
-</section>
+$:render_blocks(block.get("blocks"))
 <footer>
     <div class="row">
         $:render_template_block("global_footer")

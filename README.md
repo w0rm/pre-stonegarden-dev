@@ -30,7 +30,7 @@ To run the website enter `python code.py`
 
 ## Rubygems installation
 
-	gem install zurb-foundation -v 3.0.3
+	gem install zurb-foundation -v 3.2
 
 
 ## Cakefile options

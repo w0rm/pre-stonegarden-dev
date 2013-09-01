@@ -1,162 +1,183 @@
 {
-	"user": {
-		"password": "111111",
-        "title": "Adminstrator",
-        "role": "admin",
-        "is_active": true
-	},
-	"pages": [
-		{
-			"id": 1,
-			"level": 0,
-            "slug": "",
-	        "path": "/",
-	        "title": "Index page",
-	        "name": "Index page",
-        	"is_system": true,
-        	"type": "index_page",
-	        "block": {
-	        	"template": "page",
-	        	"is_system": true
-	        }
-		}
-	],
-
-	"template_blocks": [
-		{
-			"name": "global_header",
-			"template": "column",
-			"size": 12,
-	        "is_system": true,
-			"blocks": [
-				{
-					"template": "row",
-					"blocks": [
-						{
-							"template": "column",
-							"size": 4,
-							"is_system": true,
-							"blocks": [{
-								"template": "content",
-								"type": "wysiwyg",
-								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-								"content_cached": "<p><a href='/'><strong>Stonegarden welcomes you</strong></a></p>"
-							}]
-						},
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true,
-							"blocks": [{
-								"template": "nav",
-								"type": "root"
-							}]
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "index_header",
-			"template": "column",
-			"size": 12,
-	        "is_system": true,
-			"blocks": [
-				{
-					"template": "row",
-					"blocks": [
-						{
-							"template": "column",
-							"size": 4,
-							"is_system": true,
-							"blocks": [{
-								"template": "content",
-								"type": "wysiwyg",
-								"content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-								"content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
-							}]
-						},
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true,
-							"blocks": [{
-								"template": "nav",
-								"type": "root"
-							}]
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "global_footer",
-			"template": "column",
-			"size": 12,
-	        "is_system": true,
-			"blocks": [
-				{
-					"template": "row",
-					"blocks": [
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true
-						},
-						{
-							"template": "column",
-							"size": 4,
-							"is_system": true,
-							"blocks": [{
-								"template": "content",
-								"type": "wysiwyg",
-								"content": "<p>© Site Authors</p>",
-								"content_cached": "<p>© Site Authors</p>"
-							}]
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "index_footer",
-			"template": "column",
-			"size": 12,
-	        "is_system": true,
-			"blocks": [
-				{
-					"template": "row",
-					"blocks": [
-						{
-							"template": "column",
-							"size": 8,
-							"is_system": true
-						},
-						{
-							"template": "column",
-							"size": 4,
-							"is_system": true,
-							"blocks": [{
-								"template": "content",
-								"type": "wysiwyg",
-								"content": "<p>© Site Authors</p>",
-								"content_cached": "<p>© Site Authors</p>"
-							}]
-						}
-					]
-				}
-			]
-		}
-	],
-
-	"documents_root": {
-		"id": 1,
-        "level": 0,
-		"title": "Storage",
-        "type": "folder",
-        "is_navigatable": true,
-        "is_published": true,
-        "is_system": true
-	}
-
+  "user": {
+    "email": "user@example.com",
+    "password": "111111",
+    "title": "Adminstrator",
+    "role": "admin",
+    "is_active": true
+  },
+  "pages": [
+    {
+      "id": 1,
+      "level": 0,
+      "slug": "",
+      "path": "/",
+      "title": "Index page",
+      "name": "Index page",
+      "is_system": true,
+      "type": "index_page",
+      "block": {
+        "template": "page",
+        "is_system": true,
+        "blocks": [
+          {
+            "template": "row",
+            "blocks": [
+              {
+                "template": "column",
+                "size": 12,
+                "css_class": "twelve",
+                "is_system": true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "template_blocks": [
+    {
+      "name": "global_header",
+      "template": "column",
+      "size": 12,
+      "css_class": "twelve",
+      "is_system": true,
+      "blocks": [
+        {
+          "template": "row",
+          "blocks": [
+            {
+              "template": "column",
+              "size": 4,
+              "is_system": true,
+              "blocks": [{
+                "template": "content",
+                "type": "wysiwyg",
+                "content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
+                "content_cached": "<p><a href='/'><strong>Stonegarden welcomes you</strong></a></p>"
+              }]
+            },
+            {
+              "template": "column",
+              "size": 8,
+              "is_system": true,
+              "blocks": [{
+                "template": "nav",
+                "type": "root"
+              }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "index_header",
+      "template": "column",
+      "size": 12,
+      "css_class": "twelve",
+      "is_system": true,
+      "blocks": [
+        {
+          "template": "row",
+          "blocks": [
+            {
+              "template": "column",
+              "size": 4,
+              "css_class": "four",
+              "is_system": true,
+              "blocks": [{
+                "template": "content",
+                "type": "wysiwyg",
+                "content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
+                "content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
+              }]
+            },
+            {
+              "template": "column",
+              "size": 8,
+              "css_class": "eight",
+              "is_system": true,
+              "blocks": [{
+                "template": "nav",
+                "type": "root"
+              }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "global_footer",
+      "template": "column",
+      "size": 12,
+      "css_class": "twelve",
+      "is_system": true,
+      "blocks": [
+        {
+          "template": "row",
+          "blocks": [
+            {
+              "template": "column",
+              "size": 8,
+              "css_class": "eight",
+              "is_system": true
+            },
+            {
+              "template": "column",
+              "size": 4,
+              "css_class": "four",
+              "is_system": true,
+              "blocks": [{
+                "template": "content",
+                "type": "wysiwyg",
+                "content": "<p>© Site Authors</p>",
+                "content_cached": "<p>© Site Authors</p>"
+              }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "index_footer",
+      "template": "column",
+      "size": 12,
+      "css_class": "twelve",
+      "is_system": true,
+      "blocks": [
+        {
+          "template": "row",
+          "blocks": [
+            {
+              "template": "column",
+              "size": 8,
+              "css_class": "eight",
+              "is_system": true
+            },
+            {
+              "template": "column",
+              "size": 4,
+              "css_class": "four",
+              "is_system": true,
+              "blocks": [{
+                "template": "content",
+                "type": "wysiwyg",
+                "content": "<p>© Site Authors</p>",
+                "content_cached": "<p>© Site Authors</p>"
+              }]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "documents_root": {
+    "id": 1,
+    "level": 0,
+    "title": "Storage",
+    "type": "folder",
+    "is_navigatable": true,
+    "is_published": true,
+    "is_system": true
+  }
 }

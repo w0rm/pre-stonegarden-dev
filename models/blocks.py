@@ -65,7 +65,6 @@ def create_block(block):
         position=int(block.position),
         created_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
         user_id=auth.get_user().id,
-
         is_published=True,
     )
 
@@ -103,6 +102,13 @@ def create_block(block):
     return block
 
 
+def column_css_class(size):
+    """"""
+    return ("one", "two", "three", "four", "five",
+            "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve")[int(size) - 1]
+
+
 def create_columns(block, sizes, start_index=0):
 
     # Basic column data
@@ -119,8 +125,10 @@ def create_columns(block, sizes, start_index=0):
         position=start_index + 1,
     )
     for size in sizes:
-        column.size = size
-        db.insert("blocks", **column)
+        db.insert("blocks",
+                  size=size,
+                  css_class=column_css_class(size),
+                  **column)
         column.position += 1
 
 
@@ -139,6 +147,7 @@ def update_columns(block, sizes):
             vars=col,
             updated_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
             size=size,
+            css_class=column_css_class(size),
             position=i + 1,
         )
 

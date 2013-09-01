@@ -25,7 +25,6 @@ if __name__ == "__main__":
     now = web.db.SQLLiteral("CURRENT_TIMESTAMP")
 
     user = auth.create_user(
-        web.config.email_from,
         **data.user
     )
 

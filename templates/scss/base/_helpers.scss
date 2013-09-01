@@ -62,9 +62,9 @@
 
 /* --------------------------------------------
    PNG Sprites
-   -------------------------------------------- */
+   --------------------------------------------
 $png-layout: smart;
-@import "png/*.png";
+@import "png/*.png";*/
 
 @mixin svg-sprite($sprite) {
   @include png-sprite-dimensions($sprite);
