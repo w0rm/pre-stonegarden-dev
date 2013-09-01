@@ -1,12 +1,12 @@
-@import "config";
-@import "base/helpers";
-@import "admin/ui";
-@import "admin/form";
-@import "admin/documents";
-@import "admin/blocks"; // extends contextmenu from ui
+@import 'config',
+        'base/helpers',
+        'admin/ui',
+        'admin/form',
+        'admin/documents',
+        'admin/blocks';
 
-.debug {
-  @import "admin/debug";
+.sg-debug {
+  @import 'admin/debug';
 }
 
 .sg-hidden {

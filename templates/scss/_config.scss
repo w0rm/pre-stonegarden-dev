@@ -27,5 +27,5 @@ $bodyFontColor: $grey80;
 $headerFontColor: $txtColor;
 $navBarHeight: 40px;
 
-@import 'compass/css3';
-@import 'compass/css3/user-interface';
+@import 'compass/css3',
+        'compass/css3/user-interface';
