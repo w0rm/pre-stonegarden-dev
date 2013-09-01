@@ -44,9 +44,9 @@
       }
     };
     &.sg-selected {
-      background: $bg-selected;
+      background: $blueBackgroundColor;
       &:hover {
-        background: lighten($bg-selected, 2%)
+        background: lighten($blueBackgroundColor, 2%)
       };
     }
 

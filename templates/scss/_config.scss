@@ -1,11 +1,9 @@
 $default-border-radius: 4px;
-$sprite-default-size: 20px;
-
-$black: rgb(0, 0, 0);
-$white: rgb(255, 255, 255);
-$link: rgb(0, 110, 255);
-$hover: rgb(0, 0, 195);
-$wrong: #ea3d45;
+$default-box-shadow-h-offset: 2px;
+$default-box-shadow-v-offset: 2px;
+$default-box-shadow-blur: 9px;
+$default-box-shadow-spread: false;
+$default-box-shadow-color: rgba(88, 88, 88, 0.6);
 
 $grey05: darken(white, 5%);
 $grey10: darken(white, 10%);
@@ -14,39 +12,20 @@ $grey40: darken(white, 40%);
 $grey60: darken(white, 60%);
 $grey80: darken(white, 80%);
 
-$bg-green: rgb(255, 255, 234);
-$bg-blue: rgb(239, 250, 255);
-$bg-grey: rgb(237, 237, 237);
-$bg-red: rgb(255, 229, 204);
-
-$bg-selected: $bg-blue;
-
-$greyBackgroundColor: #f5f5f5;
-$blueBackgroundColor: #f3f8ff;
-
-
-$default-box-shadow-h-offset: 2px;
-$default-box-shadow-v-offset: 2px;
-$default-box-shadow-blur: 9px;
-$default-box-shadow-spread: false;
-$default-box-shadow-color: rgba(88, 88, 88, 0.6);
-
+$greyBackgroundColor: $grey05;
+$greenBackgroundColor: rgb(255, 255, 234);
+$blueBackgroundColor: rgb(239, 250, 255);
 
 $mobileTotalColumns: 3;
-
-$txtColor: $black;
-
 $headerFontFamily: 'Open Sans', sans-serif;
 $headerFontWeight: 700;
 $bodyFontFamily: $headerFontFamily;
 $bodyFontWeight: 400;
-$bodyFontColor: darken(white, 75%);
-
-$headerFontColor: $txtColor;
 $mainColor: #0082ff;
+$txtColor: #000;
+$bodyFontColor: $grey80;
+$headerFontColor: $txtColor;
+$navBarHeight: 40px;
 
-$navBarHeight : 40px;
-
-
-@import "compass/css3";
-@import "compass/css3/user-interface";
+@import 'compass/css3';
+@import 'compass/css3/user-interface';

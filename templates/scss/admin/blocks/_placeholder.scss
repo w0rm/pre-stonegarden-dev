@@ -1,7 +1,7 @@
 
 .sg-block-placeholder {
   @include opacity(.4);
-  background: $bg-green;
+  background: $greenBackgroundColor;
   cursor: pointer;
   @extend %cf;
 }

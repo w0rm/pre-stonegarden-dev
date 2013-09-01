@@ -46,14 +46,14 @@ a.sg-page-unpublished {
 .mceExternalToolbar {
   z-index: 100;
   @include box-shadow;
-  background-color: $bg-grey !important;
+  background-color: $grey10 !important;
   padding: 5px!important;
   position: fixed!important;
   top: 0!important;
   left: 0!important;
   .mceToolbar {
-    border:none!important;
-    background-color: $bg-grey !important;
+    border: none !important;
+    background-color: $grey10 !important;
   }
 }
 .defaultSkin table.mceLayout {
