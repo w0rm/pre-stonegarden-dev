@@ -30,9 +30,4 @@
     @include box-shadow;
   }
 
-  .pullout.block {
-    > .sg-contextmenu-show {
-      left: 15px;
-    }
-  }
 }

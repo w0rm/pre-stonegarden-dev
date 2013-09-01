@@ -30,7 +30,7 @@
 
 .sg-page-unpublished {
   @extend %sg-ico;
-  &:before{content: "\e009"};
+  &:before {content: "\e009"};
   color: #aaa;
   &:before {
     margin-right: .2em;
