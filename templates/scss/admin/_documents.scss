@@ -1,12 +1,12 @@
 
 
 .sg-document-storage {
-  background-color: #f2f2f2;
+  background-color: $greyBackgroundColor;
   min-height: 180px * 3;
 }
 
 .sg-documents-scroller {
-  background-color: #f2f2f2;
+  background-color: $greyBackgroundColor;
   padding: 10px;
   max-height: 500px;
   overflow: auto;
@@ -29,7 +29,7 @@
 
   .sg-document, .sg-document-back {
 
-    @include box-sizing(botder-box);
+    @include box-sizing(border-box);
     position: relative;
 
     &:hover {
@@ -37,7 +37,7 @@
       @include box-shadow;
       background: #fff;
       .sg-ico-folder {
-        color: #f2f2f2;
+        color: $greyBackgroundColor;
       }
       .sg-ico-arrow-l {
         color: #fff;
@@ -108,7 +108,7 @@
     text-align: center;
     left: 15px;
     font-size: 80px;
-    color: #e5e5e5;
+    color: $grey10;
   }
 
   .sg-ico-folder {
