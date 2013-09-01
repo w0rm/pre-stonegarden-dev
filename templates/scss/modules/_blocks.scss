@@ -1,5 +1,5 @@
 
-.padtop {
+.sg-padtop {
   @extend %clearfix;
   padding-top: ms(1);
   > *:first-child {
@@ -8,8 +8,20 @@
   position: relative;
 }
 
-.pullup {
-  position: relative;
-  top: - ms(3);
-  margin-bottom: - ms(3);
+.sg-box {
+  @extend .sg-padtop;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.sg-rounded {
+  @include border-radius(10px);
+}
+
+.sg-grey {
+  background-color: $greyBackgroundColor;
+}
+
+.sg-blue {
+  background: $blueBackgroundColor;
 }

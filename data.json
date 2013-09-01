@@ -17,7 +17,7 @@
       "is_system": true,
       "type": "index_page",
       "block": {
-        "template": "page",
+        "template": "index_page",
         "is_system": true,
         "blocks": [
           {
@@ -49,17 +49,19 @@
             {
               "template": "column",
               "size": 4,
+              "css_class": "four",
               "is_system": true,
               "blocks": [{
                 "template": "content",
                 "type": "wysiwyg",
                 "content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-                "content_cached": "<p><a href='/'><strong>Stonegarden welcomes you</strong></a></p>"
+                "content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
               }]
             },
             {
               "template": "column",
               "size": 8,
+              "css_class": "eight",
               "is_system": true,
               "blocks": [{
                 "template": "nav",
@@ -88,8 +90,8 @@
               "blocks": [{
                 "template": "content",
                 "type": "wysiwyg",
-                "content": "<p><a href='/'><strong>Stonegarden</strong></a></p>",
-                "content_cached": "<p><a href='/'><strong>Stonegarden</strong></a></p>"
+                "content": "<p><strong>Stonegarden</strong></p>",
+                "content_cached": "<p><strong>Stonegarden</strong></p>"
               }]
             },
             {

@@ -11,15 +11,16 @@
 
 .nav-root {
   a, span {
-    display: block;
     padding: 7px 10px;
+  }
+  .active {
+    background: $greyBackgroundColor;
   }
 }
 
 .nav-secondary {
   padding: 7px 0;
   a, span {
-    display: block;
     padding: 0 10px;
   }
 }
