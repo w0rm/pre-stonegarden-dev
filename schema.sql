@@ -134,7 +134,7 @@ CREATE TABLE documents (
     description TEXT,
     type VARCHAR(512) NOT NULL,
     filename VARCHAR(512),
-    extension VARCHAR(4),
+    extension VARCHAR(5),
     mimetype VARCHAR(512),
     filesize INTEGER,
     sizes VARCHAR(512),

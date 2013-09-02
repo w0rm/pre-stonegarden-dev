@@ -35,11 +35,8 @@ require(["blocks", "documents"]);
 require(["jquery"
        , "jquery.ui"
        , "plugins/jquery.responsive"
-       , "plugins/jquery.splash"
        , "plugins/jquery.gallery"
        , "jquery.foundation.topbar"], function($) {
-
-  $(document).foundation('topbar');
 
   $.datepicker.regional[ "ru" ] = {
     closeText: "Закрыть",
@@ -63,10 +60,9 @@ require(["jquery"
 
   $.datepicker.setDefaults( $.datepicker.regional[ document.documentElement.lang ] );
 
-
   $(function() {
+    $(document).foundation('topbar');
     $(".responsive").responsiveImage()
-    $(".js-splash").splash()
     $(".js-gallery").gallery()
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
