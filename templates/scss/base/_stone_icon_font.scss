@@ -1,20 +1,18 @@
 
 @include font-face(
-  "StoneIcon",
+  'StoneIcon',
   font-files('stoneicon-regular.woff',
              'stoneicon-regular.ttf',
              'stoneicon-regular.otf',
              'stoneicon-regular.svg#stoneiconregular'
              ),
   'stoneicon-regular.eot',
-  "normal",
-  "normal"
+  'normal',
+  'normal'
 );
 
 
-[class*="sg-ico-"] {
-  @extend %sg-ico;
-}
+[class*="sg-ico-"] { @extend %sg-ico; }
 
 .sg-ico-edzo:before{content: "\0070"}
 .sg-ico-empty:before{content: "\0061"; color: red!important;}
@@ -78,5 +76,3 @@
 .sg-ico-bracket-u:before{content: "\e123"}
 .sg-ico-handle:before{content: "\e116"}
 .sg-ico-close:before{content: "\e128"}
-
-

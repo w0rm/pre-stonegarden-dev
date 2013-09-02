@@ -1,28 +1,18 @@
 #!/usr/bin/python
 # coding: utf-8
 """
-    Extract Messages
-    ~~~~~~~~~~~~~~~~
-    Extract messages into a PO-Template.
-    :copyright: 2008 by Armin Ronacher.
-    :license: GNU GPL.
-
-    pybabel init -i i18n/messages.pot -d i18n/ -l ru
-    pybabel init -i i18n/messages.pot -d i18n/ -l en
-    pybabel update -i i18n/messages.pot -d i18n/
-    pybabel compile  -d i18n/ -f --statistics
-
+Extract messages into a PO-Template.
 """
 from os import path, makedirs
 from babel.messages import Catalog
-from babel.messages.extract import extract_from_dir, extract_python, DEFAULT_KEYWORDS
+from babel.messages.extract import extract_from_dir, extract_python
 from babel.messages.pofile import write_po
 from web.template import Template
 import StringIO
 from itertools import chain
 import sys
 sys.path.append("..")
-BUGS_ADDRESS = "andreivk@gmail.com"
+BUGS_ADDRESS = "unsoundscapes@gmail.com"
 COPYRIGHT = "Andrey Kuzmin"
 
 PY_METHODS = [
@@ -46,6 +36,7 @@ JS_KEYWORDS = {
 
 COMMENT_TAGS = []
 
+
 def extract_webpy(fileobj, keywords, comment_tags, options):
     """Extract messages from webpy templates files.
     :param fileobj: the file-like object the messages should be extracted
@@ -59,9 +50,9 @@ def extract_webpy(fileobj, keywords, comment_tags, options):
              tuples
     :rtype: ``iterator``
     """
-
     code = Template.generate_code(fileobj.read().decode("utf-8"), fileobj.name)
-    return extract_python(StringIO.StringIO(code), keywords, comment_tags, options)
+    return extract_python(StringIO.StringIO(code), keywords,
+                          comment_tags, options)
 
 
 def strip_path(filename, base):
@@ -71,24 +62,27 @@ def strip_path(filename, base):
 
 
 def main():
-    print "Extracting core strings"
+    print "Extracting messages"
     root = path.abspath(path.join(path.dirname(__file__), '..'))
-    catalog = Catalog(msgid_bugs_address=BUGS_ADDRESS, copyright_holder=COPYRIGHT, charset="utf-8")
+    catalog = Catalog(msgid_bugs_address=BUGS_ADDRESS,
+                      copyright_holder=COPYRIGHT,
+                      charset="utf-8")
 
     def callback(filename, method, options):
         if method != "ignore":
             print strip_path(filename, root)
 
     extracted_py = extract_from_dir(root, PY_METHODS, {}, PY_KEYWORDS,
-                                COMMENT_TAGS, callback=callback,
-                                strip_comment_tags=True)
+                                    COMMENT_TAGS, callback=callback,
+                                    strip_comment_tags=True)
 
-    # TODO: extract only from unminified files
-    extracted_js = extract_from_dir(root, [("static/js/**.js", "javascript")], {}, JS_KEYWORDS,
-                                COMMENT_TAGS, callback=callback,
-                                strip_comment_tags=True)
+    extracted_js = extract_from_dir(root, [("static/js/**.js", "javascript")],
+                                    {}, JS_KEYWORDS,
+                                    COMMENT_TAGS, callback=callback,
+                                    strip_comment_tags=True)
 
-    for filename, lineno, message, comments in chain(extracted_py, extracted_js):
+    for filename, lineno, message, comments in chain(extracted_py,
+                                                     extracted_js):
         catalog.add(message, None, [(strip_path(filename, root), lineno)],
                     auto_comments=comments)
 

@@ -27,21 +27,17 @@ $def with (page=None)
         $:render.documents.js_templates()
         $:render.pages.js_templates()
     $else:
-        <script data-main="$asset_url("js/public_main.js", False)"
-                src="$asset_url("vendor/js/require-2.1.1.js")"></script>
-    <style>$:page.get("css_code")</style>
+        <script data-main="$asset_url('js/public_main.js', False)"
+                src="$asset_url('vendor/js/require-2.1.1.js')"></script>
+    <style>$:page.get('css_code')</style>
 </head>
-<body class="$page.get("class")">
+<body class="$page.get('class')">
     $:flash.render()
     $if auth.get_user() and not ctx.get("page"):
         $:render.site.topbar(page)
-        <div class="page">
-            $:page
-        </div>
+        <div class="page">$:page</div>
     $else:
         $:page
-    <script>
-        $:page.get("js_code", None)
-    </script>
+    <script>$:page.get('js_code')</script>
 </body>
 </html>

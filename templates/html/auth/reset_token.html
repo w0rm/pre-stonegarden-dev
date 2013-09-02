@@ -1,17 +1,15 @@
 $def with (form)
 <div class="row">
-    <div class="eight columns">
-	    <form action="/password_reset" method="post">
-	        <h1>$_("Password reset")</h1>
+    <form class="large-8 large-centered columns" action="/password_reset" method="post">
+        <h1>$_("Password reset")</h1>
 
-            $:form.render_css()
+        $:form.render_css()
 
-	        <p>$_("For example: name@example.com. Will send you link to reset your password.")</p>
+        <p>$_("For example: name@example.com. Will send you link to reset your password.")</p>
 
-            $if not form.valid:
-                $:form.render_errors()
+        $if not form.valid:
+            $:form.render_errors()
 
-            <p><button class="right button" type="submit">$_("Send")</button></p>
-	    </form>
-	</div>
+        <p><button class="right button" type="submit">$_("Send")</button></p>
+    </form>
 </div>

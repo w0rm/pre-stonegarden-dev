@@ -1,38 +1,26 @@
 $def with(page)
 <div class="contain-to-grid sticky">
     <nav class="top-bar">
-      <ul class="title-area">
-        <li class="name">
-          <h1><a href="/a">$_("Stonegarden")</a></h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-      </ul>
-
-      <section class="top-bar-section">
-        <!-- Left Nav Section -->
-        <ul class="left">
-          <li class="divider"></li>
-          <li>
-            <a href="/a/sitemap">$_("Site map")</a>
-          </li>
-          <li>
-            <a href="/a/storage">$_("Storage")</a>
-          </li>
-          <li>
-            <a href="/a/users">$_("Users")</a>
-          </li>
+        <ul class="title-area">
+            <li class="name">
+              <h1><a href="/a">$_("Stonegarden")</a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
-
-        <!-- Right Nav Section -->
-        <ul class="right">
-          <li>
-            <a href="$link_to("users", auth.get_user(), "edit")">$_("My account")</a>
-          </li>
-          <li class="divider show-for-medium-and-up"></li>
-          <li>
-            <a href="/logout">$_("Exit")</a>
-          </li>
-        </ul>
+        <section class="top-bar-section">
+            <!-- Left Nav Section -->
+            <ul class="left">
+                <li class="divider"></li>
+                <li><a href="/a/sitemap">$_("Site map")</a></li>
+                <li><a href="/a/storage">$_("Storage")</a></li>
+                <li><a href="/a/users">$_("Users")</a></li>
+            </ul>
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li><a href="$link_to("users", auth.get_user(), "edit")">$_("My account")</a></li>
+                <li class="divider show-for-medium-and-up"></li>
+                <li><a href="/logout">$_("Exit")</a></li>
+            </ul>
       </section>
     </nav>
 </div>

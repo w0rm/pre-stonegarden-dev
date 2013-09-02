@@ -28,13 +28,13 @@ config = web.storage(
         "smtp_starttls": True,
     },
     reserved=[
+        # Reserved page slugs
         "a",
         "to",
         "login",
         "logout",
         "password_reset",
         "uploads",
-        "newsfeed.rss",
     ],
     user_roles=["admin"],  # "editor", "user"
     page_types=dict(
