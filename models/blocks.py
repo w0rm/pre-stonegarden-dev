@@ -2,7 +2,8 @@ import web
 import json
 from base import db, auth, flash
 from modules.utils import dthandler
-from template import smarty, sanitize, template_global, render_partial
+from modules.sanitizer import sanitize
+from template import smarty, template_global, render_partial
 from models.tree import *
 
 

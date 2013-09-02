@@ -1,6 +1,6 @@
 # coding: utf-8
 """
-Provides helper methods to template
+Provides helper methods to templates
 """
 import os
 import pytils
@@ -12,7 +12,6 @@ from config import config
 from base import flash, auth, db
 from modules.translation import _, n_
 from modules import smartypants
-from modules.sanitizer import sanitize
 from dateutil import parser, tz
 
 TZ_LOCAL = tz.tzlocal()
@@ -69,23 +68,19 @@ def link_to(obj_type, obj=None, method=None, **kw):
     return web.url(link, **params)
 
 
-template_globals = {
+TEMPLATE_GLOBALS = {
     'link_to': link_to,
     'flash': flash,
     'asset_url': asset_url,
     'auth': auth,
     'config': config,
     'datify': datify,
-    'get_plural': pytils.numeral.get_plural,
-    'choose_plural': pytils.numeral.choose_plural,
-    'sanitize': sanitize,
     'smarty': smarty,
     'to_json': json.dumps,
     'ctx': ctx,
     '_': _,
     'n_': n_,
     'url': web.url,
-    'changequery': web.changequery,
 }
 
 
@@ -93,20 +88,15 @@ class template_global(object):
     """Registers func for use in templates"""
 
     def __init__(self, f):
-        name = f.__name__
-        #if name in template_globals:
-        #    raise Exception("Name already registered: %s" % name)
-        #else:
-        template_globals[name] = f
-        self.f = f
+        self.f = TEMPLATE_GLOBALS[f.__name__] = f
 
     def __call__(self, *k, **kw):
         return self.f(*k, **kw)
 
 
-render_partial = template.render(config.template_dir, globals=template_globals)
-render = template.render(config.template_dir, globals=template_globals,
+render_partial = template.render(config.template_dir, globals=TEMPLATE_GLOBALS)
+render = template.render(config.template_dir, globals=TEMPLATE_GLOBALS,
                          base="layout")
 render_email = template.render(config.template_dir + "/email",
-                               globals=template_globals, base="layout")
-template_globals.update(render=render_partial)
+                               globals=TEMPLATE_GLOBALS, base="layout")
+TEMPLATE_GLOBALS.update(render=render_partial)
