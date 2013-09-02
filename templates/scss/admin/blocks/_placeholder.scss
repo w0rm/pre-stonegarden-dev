@@ -4,4 +4,6 @@
   background: $greenBackgroundColor;
   cursor: pointer;
   @extend %clearfix;
+  overflow: hidden;
+  max-height: 6.05em;
 }
