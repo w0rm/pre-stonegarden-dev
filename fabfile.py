@@ -47,6 +47,7 @@ def server(port='8080'):
 
 @task
 def setup():
+    '''Creates database schema and fills website with initial data'''
 
     shutil.rmtree(config.upload_dir, True)
     os.mkdir(config.upload_dir)
