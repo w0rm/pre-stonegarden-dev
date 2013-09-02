@@ -8,6 +8,7 @@ from base import db, auth
 from pytils.translit import slugify
 from config import config
 from models.tree import *
+from modules.sanitizer import sanitize
 from modules.utils import dthandler
 from template import smarty, template_global
 
@@ -173,10 +174,10 @@ def update_page_by_id(page_id, data):
         if (data.position != page.position or
                 data.parent_id != page.parent_id):
 
-            # Collapse positions for the removed document
+            # Collapse positions for the removed page
             collapse_tree_siblings("pages", page)
 
-            # Shift positions to free the space to insert document
+            # Shift positions to free the space to insert page
             expand_tree_siblings("pages", data)
 
         db.update(
