@@ -6,36 +6,22 @@ Simple CMS powered by web.py framework.
 ## Installation
 
 1. Install all required modules with `pip install -r requirements.txt`
-2. Create mysql database with `schema.sql`
+2. Create mysql database
 3. Create `siteconfig.py` and set at least `database_url` to `mysql://user:password@host/database`
 4. Execute `python setup.py` to fill database with initial data
-5. Install node.js with coffeescript
-6. Install sass, compass and zurb-foundation (version 3) rubygems
-7. Watch and compile coffee and scss files with `cake watch`
-8. Compile translations with `cake i18n:compile`
-
+5. Install sass, compass and zurb-foundation (version 4) rubygems with `gem install compass zurb-foundation`
+6. Compile scss files with `fab compile`
+7. Compile translations with `fab i18n_compile`
 
 ## Running
 
-To run the website enter `python code.py`
+To run the webserver enter `python code.py`
 
-## Node.js and coffeescript installation
+## Fab commands
 
-	#install node
-	brew install node
-	#install npm
-	curl http://npmjs.org/install.sh | sh
-	#install coffee
-	npm install -g coffee-script
-
-## Rubygems installation
-
-	gem install zurb-foundation -v 3.2
-
-
-## Cakefile options
-
-1. `cake watch` to watch and compile coffee and scss
-2. `cake i18n:extract` to extract strings from code
-3. `cake i18n:update` to update messages.po files
-4. `cake i18n:compile` to compile translations to messages.mo files
+1. `fab watch` to watch and compile scss
+2. `fab compile` to compile scss
+3. `fab i18n_extract` to extract strings from code
+4. `fab i18n_update` to update messages.po files
+5. `fab i18n_compile` to compile translations to messages.mo files
+6. `fab server` to run webserver
