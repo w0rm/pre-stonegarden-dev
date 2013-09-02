@@ -13,6 +13,7 @@ Simple CMS powered by web.py framework.
 6. Compile translations with `fab i18n_compile`
 7. Execute `fab setup` to init database schema and fill website with initial data
 8. Run `fab server` to start webserver
+9. Navigate to [http://localhost:8080/login](http://localhost:8080/login) and use these credentials to login: user@example.com:111111
 
 ## Fab commands
 
