@@ -68,7 +68,7 @@ def link_to(obj_type, obj=None, method=None, **kw):
     return web.url(link, **params)
 
 
-TEMPLATE_GLOBALS = {
+template_globals = {
     'link_to': link_to,
     'flash': flash,
     'asset_url': asset_url,
@@ -88,15 +88,15 @@ class template_global(object):
     """Registers func for use in templates"""
 
     def __init__(self, f):
-        self.f = TEMPLATE_GLOBALS[f.__name__] = f
+        self.f = template_globals[f.__name__] = f
 
     def __call__(self, *k, **kw):
         return self.f(*k, **kw)
 
 
-render_partial = template.render(config.template_dir, globals=TEMPLATE_GLOBALS)
-render = template.render(config.template_dir, globals=TEMPLATE_GLOBALS,
+render_partial = template.render(config.template_dir, globals=template_globals)
+render = template.render(config.template_dir, globals=template_globals,
                          base="layout")
 render_email = template.render(config.template_dir + "/email",
-                               globals=TEMPLATE_GLOBALS, base="layout")
-TEMPLATE_GLOBALS.update(render=render_partial)
+                               globals=template_globals, base="layout")
+template_globals.update(render=render_partial)

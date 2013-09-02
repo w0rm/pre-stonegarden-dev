@@ -2,22 +2,22 @@
 """
 Simple authentication module for web.py
 Needs a user table with at least the following columns:
-CREATE TABLE users (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255),
-    email VARCHAR(64) NOT NULL,
-    password VARCHAR(180) NOT NULL,
-    role VARCHAR(10) NOT NULL,
-    last_login_at TIMESTAMP NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    is_active BOOL DEFAULT '0',
-    is_deleted BOOL DEFAULT '0',
-    PRIMARY KEY (id),
-    UNIQUE (email),
-    CHECK (is_active IN (0, 1)),
-    CHECK (is_deleted IN (0, 1))
-)
+    CREATE TABLE users (
+        id INTEGER NOT NULL AUTO_INCREMENT,
+        title VARCHAR(255),
+        email VARCHAR(64) NOT NULL,
+        password VARCHAR(180) NOT NULL,
+        role VARCHAR(10) NOT NULL,
+        last_login_at TIMESTAMP NULL,
+        created_at TIMESTAMP NULL,
+        updated_at TIMESTAMP NULL,
+        is_active BOOL DEFAULT '0',
+        is_deleted BOOL DEFAULT '0',
+        PRIMARY KEY (id),
+        UNIQUE (email),
+        CHECK (is_active IN (0, 1)),
+        CHECK (is_deleted IN (0, 1))
+    );
 """
 import json
 import web

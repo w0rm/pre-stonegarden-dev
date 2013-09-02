@@ -15,18 +15,18 @@ from base import create_application
 app = create_application()
 
 # Display pretty error pages in production
-if config.environment == "production":
+if config.environment == 'production':
     import web
     import template
     #app.internalerror = web.emailerrors(
-    #    config.email["email_from"],
+    #    config.email['email_from'],
     #    lambda: web.internalerror(template.render.site.e500()),
     #)
     app.internalerror = lambda: web.internalerror(template.render.site.e500())
     app.notfound = lambda: web.notfound(template.render.site.e404())
 
-if __name__ == "__main__":
-    if config.environment != "test":
+if __name__ == '__main__':
+    if config.environment != 'test':
         app.run()
 else:
     application = app.wsgifunc()

@@ -26,33 +26,33 @@ def locale_hook():
 
 
 def session_hook():
-    """Saves session in ctx"""
+    '''Saves session in ctx'''
     #TODO: review cache-control
-    web.header("Cache-Control", "no-cache, must-revalidate")
+    web.header('Cache-Control', 'no-cache, must-revalidate')
     web.ctx.session = web.config._session
 
 
 def timezone_hook():
-    """Sets timezone for mysql database."""
+    '''Sets timezone for mysql database.'''
     try:
-        db.query("SET time_zone = $timezone;", vars=config)
+        db.query('SET time_zone = $timezone;', vars=config)
     except:
         pass
 
 
 def create_application():
-    """Initializes web.py application"""
+    '''Initializes web.py application'''
     app = web.application(urls, globals())
     # Session initialization
-    if web.config.get("_session") is None:
+    if web.config.get('_session') is None:
         # this is required to work with reloader
         web.config._session = web.session.Session(
             app,
-            DBUserStore(db, "sessions"),
+            DBUserStore(db, 'sessions'),
             dict(forms=dict(), venues=0, is_searching=False, search=None),
         )
     app.add_processor(web.loadhook(locale_hook))
     app.add_processor(web.loadhook(session_hook))
-    if db.dbname == "mysql":
+    if db.dbname == 'mysql':
         app.add_processor(web.loadhook(timezone_hook))
     return app

@@ -164,11 +164,6 @@ class Checkbox(web.form.Checkbox):
 
 
 class Textarea(web.form.Input):
-    """Textarea input.
-
-        >>> Textarea(name='foo', value='bar').render()
-        '<textarea id="foo" name="foo">bar</textarea>'
-    """
 
     def render(self):
         attrs = self.attrs.copy()
@@ -201,39 +196,6 @@ class Radio(web.form.Radio):
         return x
 
 
-class CheckboxList(web.form.Input):
-    """CheckboxList input. """
-
-    def __init__(self, name, args, *validators, **attrs):
-        self.args = args
-        self.name = name
-        self.item_pre = attrs.pop("item_pre", None)
-        self.item_post = attrs.pop("item_post", None)
-        super(CheckboxList, self).__init__(name, *validators, **attrs)
-
-    def render(self):
-        attrs = self.attrs.copy()
-        x = ''  # '<fieldset %s>\n' % attrs
-        for arg in self.args:
-            if self.item_pre:
-                x += self.item_pre
-            if isinstance(arg, (tuple, list)):
-                value, desc = arg
-            else:
-                value, desc = arg, arg
-            chk_attrs = web.form.AttributeList(name=self.name, type="checkbox",
-                                               value=value)
-            if (isinstance(self.value, (tuple, list, set)) and
-                    value in self.value):
-                chk_attrs["checked"] = "checked"
-            x += (' <label class="after"><input %s/>  %s</label>\n' %
-                  (chk_attrs, web.net.websafe(desc)))
-            if self.item_post:
-                x += self.item_post
-        #x += '</fieldset>\n'
-        return x
-
-
 class DateInput(Textbox):
 
     def get_value(self):
@@ -260,15 +222,6 @@ class EmailInput(Textbox):
             return None
 
 
-class PriceInput(Textbox):
-
-    def get_value(self):
-        try:
-            return float(self.value.replace(",", ".", 1))
-        except:
-            return None
-
-
 notnull = web.form.Validator(N_("Cannot be empty."), bool)
 validPassword = web.form.Validator(
     N_("From 6 to 180 characters"),
@@ -283,10 +236,6 @@ validEmail = web.form.regexp(
     N_("Incorrect email.")
 )
 price_regexp = re.compile(r"^\s*\d{1,11}([.,]\d{1,3})?\s*$")
-validPrice = web.form.Validator(
-    N_("Incorrect price value."),
-    lambda x: not x or bool(price_regexp.match(str(x)))
-)
 
 
 def valid_date(code):
