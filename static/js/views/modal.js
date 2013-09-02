@@ -28,15 +28,19 @@ define(["jquery"
       this.$el.appendTo("body");
       // Render content widget only when attached to body
       this.contentView.render();
-      this.$el.reveal({
-        opened: function(){ self.opened(); },
-        closed: function(){ self.closed(); }
-      });
+      this.$el
+        .foundation('reveal', {
+          opened: function(){ self.opened(); },
+          closed: function(){ self.closed(); }
+        })
+        .foundation('reveal', 'open')
+
+
       return this;
     },
 
     close: function() {
-      this.$el.trigger('reveal:close');
+      this.$el.foundation('reveal', 'close')
     },
 
     opened: function() {

@@ -15,6 +15,7 @@ $def with (page=None)
     <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="$asset_url("vendor/js/custom.modernizr.js")"></script>
     $if config.environment == "development":
         <script>var environment = "$config.environment";</script>
     $if auth.get_user():

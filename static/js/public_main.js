@@ -2,22 +2,22 @@ require.config({
   urlArgs: window.environment === "development" ? 'bust=' + (new Date).getTime() : "",
   paths: {
     jquery: '../vendor/js/jquery-1.8.1',
-    'jquery.foundation.orbit': '../vendor/js/foundation/jquery.foundation.orbit',
+    'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
+    'jquery.foundation': '../vendor/js/foundation/foundation'
   },
   shim: {
-    'jquery.foundation.orbit': ['jquery']
+    'jquery.foundation': ['jquery'],
+    'jquery.foundation.orbit': ['jquery.foundation']
   }
 });
 
 require(["jquery"
        , "plugins/jquery.responsive"
-       , "plugins/jquery.splash"
        , "plugins/jquery.gallery"], function($) {
 
   $(function() {
 
     $(".responsive").responsiveImage()
-    $(".js-splash").splash()
     $(".js-gallery").gallery()
 
     var svg = !!('createElementNS' in document &&

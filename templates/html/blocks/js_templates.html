@@ -185,12 +185,16 @@
     </form>
 </script>
 <script type="text/template" id="block-gallery-template">
-    <div class="gallery js-gallery"
-         data-options='<%= JSON.stringify(gallery) %>'
+    <div class="slideshow-wrapper js-gallery"
          <%= gallery.autoplay && "data-timer='true'" || "" %>
-    >
+         data-options='<%= JSON.stringify(gallery) %>'>
+        <div class="preloader"></div>
+        <ul data-orbit>
         <% _.each(gallery.images, function(image) { %>
-            <img src="<%= image.sizes.l %>">
+            <li>
+                <img src="<%= image.sizes.l %>">
+            </li>
         <% }) %>
+        </ul>
     </div>
 </script>

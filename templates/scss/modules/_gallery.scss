@@ -1,10 +1,8 @@
 
-.gallery {
-  background: image-url('loader.gif') center center no-repeat;
-  height: 200px;
+.orbit-container .orbit-bullets {
+  text-align: center;
+  li {
+    display: inline-block;
+    float: none
+  }
 }
-
-.gallery img { display: none; }
-
-.gallery.orbit { background: none; }
-.gallery.orbit img { display: block; }

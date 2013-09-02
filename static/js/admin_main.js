@@ -3,9 +3,10 @@ require.config({
     stonegarden: '/a/config',
     jquery: '../vendor/js/jquery-1.8.1',
     'jquery.ui': '../vendor/js/jquery-ui-1.10.1.custom',
-    'jquery.foundation.reveal': '../vendor/js/foundation/jquery.foundation.reveal',
-    'jquery.foundation.orbit': '../vendor/js/foundation/jquery.foundation.orbit',
-    'jquery.foundation.topbar': '../vendor/js/foundation/jquery.foundation.topbar',
+    'jquery.foundation': '../vendor/js/foundation/foundation',
+    'jquery.foundation.reveal': '../vendor/js/foundation/foundation.reveal',
+    'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
+    'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
     'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
     'ace': '../vendor/js/ace',
     backbone: '../vendor/js/backbone-0.9.2',
@@ -15,9 +16,10 @@ require.config({
     'stonegarden': ['jquery'],
     'jquery.ui': ['jquery'],
     'jquery.tinymce': ['jquery'],
-    'jquery.foundation.reveal': ['jquery'],
-    'jquery.foundation.orbit': ['jquery'],
-    'jquery.foundation.topbar': ['jquery'],
+    'jquery.foundation': ['jquery'],
+    'jquery.foundation.reveal': ['jquery.foundation'],
+    'jquery.foundation.orbit': ['jquery.foundation'],
+    'jquery.foundation.topbar': ['jquery.foundation'],
     underscore: {
       exports: '_'
     },
@@ -37,7 +39,7 @@ require(["jquery"
        , "plugins/jquery.gallery"
        , "jquery.foundation.topbar"], function($) {
 
-  $(document).foundationTopBar();
+  $(document).foundation('topbar');
 
   $.datepicker.regional[ "ru" ] = {
     closeText: "Закрыть",

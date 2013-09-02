@@ -10,9 +10,8 @@ define(["jquery", "jquery.foundation.orbit"], function ($) {
     if (this.hasThumbs()) {
       this.options.bulletThumbs = true
     }
-
-    this.$element.orbit(this.options)
-
+    this.$element.foundation('orbit', this.options)
+    $(window).trigger('load')
   }
 
   Gallery.prototype = {
@@ -41,7 +40,9 @@ define(["jquery", "jquery.foundation.orbit"], function ($) {
 
   $.fn.gallery.defaults = {
     bullets: true,
-    timer: false
+    timer: false,
+    slide_number: false,
+    variable_height: true
   }
 
   $.fn.gallery.Constructor = Gallery
