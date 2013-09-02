@@ -50,7 +50,7 @@ config = web.storage(
                             {
                             "template": "column",
                             "size": 12,
-                            "css_class": "twelve",
+                            "css_class": "large-12",
                             "is_system": True
                             }
                         ]
@@ -69,7 +69,7 @@ config = web.storage(
                             {
                             "template": "column",
                             "size": 12,
-                            "css_class": "twelve",
+                            "css_class": "large-12",
                             "is_system": True
                             }
                         ]

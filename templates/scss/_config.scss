@@ -17,15 +17,16 @@ $greenBackgroundColor: rgb(255, 255, 234);
 $blueBackgroundColor: rgb(239, 250, 255);
 
 $mobileTotalColumns: 3;
-$headerFontFamily: 'Open Sans', sans-serif;
-$headerFontWeight: 700;
-$bodyFontFamily: $headerFontFamily;
-$bodyFontWeight: 400;
-$mainColor: #0082ff;
-$txtColor: #000;
-$bodyFontColor: $grey80;
-$headerFontColor: $txtColor;
-$navBarHeight: 40px;
+
+$body-font-family: 'Open Sans', sans-serif;
+$body-font-weight: 400;
+$body-font-color: $grey80;
+
+$header-font-family: 'Open Sans', sans-serif;
+$header-font-weight: 700;
+$header-font-color: $grey80;
+
+$primary-color: #0082ff;
 
 @import 'compass/css3',
         'compass/css3/user-interface';

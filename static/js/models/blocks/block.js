@@ -42,6 +42,10 @@ define(["jquery"
       return false;
     },
 
+    isTemplate: function () {
+      return !! this.get("name")
+    },
+
     isSystem: function() {
       return !!this.get("is_system");
     },
@@ -94,10 +98,12 @@ define(["jquery"
         });
       }
 
-      items.push({
-        text: t_("Delete"),
-        click: this.delete
-      });
+      if (!this.isTemplate()) {
+        items.push({
+          text: t_("Delete"),
+          click: this.delete
+        });
+      }
 
       if (this.hasParent()) {
         parentMenu = this.parentBlock.getContextMenu();

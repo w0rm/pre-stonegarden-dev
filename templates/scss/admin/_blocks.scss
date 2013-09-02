@@ -23,7 +23,7 @@
     // Increase vertical space between inserters
     padding: 5px 0;
     // Prevent collapsing margins
-    @extend %cf;
+    @extend %clearfix;
   }
 
   .sg-block-highlight {

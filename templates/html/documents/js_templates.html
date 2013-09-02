@@ -1,22 +1,24 @@
 <script type="text/template" id="document-storage-template">
     <div class="row">
-        <div class="twelve columns">
+        <div class="large-12 columns">
             <p></p>
-            <ul class="right button-group">
-                <li>
-                    <button class="button sg-ico-upload sg-file-input">
-                        $_("Upload files")
-                        <input type="file" multiple name="upload">
-                    </button>
-                </li>
-                <li>
-                    <button class="button sg-ico-folder-add js-create-folder">
-                        $_("Create folder")
-                    </button>
-                </li>
-            </p>
+            <div class="right">
+                <ul class="button-group">
+                    <li>
+                        <button class="button sg-ico-upload sg-file-input">
+                            $_("Upload files")
+                            <input type="file" multiple name="upload">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button sg-ico-folder-add js-create-folder">
+                            $_("Create folder")
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <ul class="twelve columns sg-document-tiles js-documents"></ul>
+        <ul class="large-12 columns sg-document-tiles js-documents"></ul>
     </div>
 </script>
 <script type="text/template" id="document-loader-template">

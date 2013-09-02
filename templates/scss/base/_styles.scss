@@ -13,12 +13,16 @@ a {
   text-decoration: none
 }
 
+figure {
+  margin: 0
+}
+
 figcaption {
-  margin-bottom: ms(1);
+  margin-bottom: emCalc(20);
 }
 
 ul, ol {
-  margin-left: 20px;
+  margin-left: emCalc(20);
 }
 
 table {
@@ -72,15 +76,15 @@ table {
 }
 
 header, footer {
-  padding-top: ms(1);
+  padding-top: emCalc(20);
 }
 
 header {
-  margin-bottom: ms(1);
+  margin-bottom: emCalc(20);
 }
 
 footer {
-  margin-top: ms(1);
+  margin-top: emCalc(20);
   border-top: 1px solid $grey10;
 }
 

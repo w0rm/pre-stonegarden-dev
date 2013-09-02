@@ -103,10 +103,7 @@ def create_block(block):
 
 
 def column_css_class(size):
-    """"""
-    return ("one", "two", "three", "four", "five",
-            "six", "seven", "eight", "nine", "ten",
-            "eleven", "twelve")[int(size) - 1]
+    return 'large-%d' % int(size)
 
 
 def create_columns(block, sizes, start_index=0):

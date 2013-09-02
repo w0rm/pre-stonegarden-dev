@@ -1,6 +1,6 @@
 $def with (users, form, user)
 <div class="row">
-    <div class="eight columns">
+    <div class="large-8 columns">
         <form action="$link_to("users", user, "edit")" method="post">
             <h1>$_("Edit user")</h1>
 
@@ -12,7 +12,7 @@ $def with (users, form, user)
             <p><button class="right button" type="submit">$_("Save")</button></p>
         </form>
     </div>
-    <aside class="four columns">
+    <aside class="large-4 columns">
         $:render.users.p_list(users)
     </aside>
 </div>

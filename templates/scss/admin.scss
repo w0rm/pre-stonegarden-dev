@@ -17,10 +17,6 @@
   @include opacity(.5);
 }
 
-.sg-top-bar-spacer {
-  height: $navBarHeight;
-}
-
 .sg-ace {
   @include box-shadow;
   position: relative !important;

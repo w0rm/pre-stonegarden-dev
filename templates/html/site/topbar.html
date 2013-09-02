@@ -1,25 +1,19 @@
 $def with(page)
-<div class="fixed contain-to-grid">
+<div class="contain-to-grid sticky">
     <nav class="top-bar">
-      <ul>
-        <!-- Title Area -->
+      <ul class="title-area">
         <li class="name">
-          <h1>
-            <a href="/a">$_("Stonegarden")</a>
-          </h1>
+          <h1><a href="/a">$_("Stonegarden")</a></h1>
         </li>
-        <li class="toggle-topbar"><a href="#"></a></li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
       </ul>
 
-      <section>
+      <section class="top-bar-section">
         <!-- Left Nav Section -->
         <ul class="left">
           <li class="divider"></li>
-          <li class="has-dropdown">
-            <a href="/a/sitemap">$_("Pages")</a>
-            <ul class="dropdown">
-              <li><a href="/a/sitemap">$_("Site map")</a></li>
-            </ul>
+          <li>
+            <a href="/a/sitemap">$_("Site map")</a>
           </li>
           <li>
             <a href="/a/storage">$_("Storage")</a>

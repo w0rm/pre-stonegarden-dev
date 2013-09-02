@@ -3,5 +3,5 @@
   @include opacity(.4);
   background: $greenBackgroundColor;
   cursor: pointer;
-  @extend %cf;
+  @extend %clearfix;
 }

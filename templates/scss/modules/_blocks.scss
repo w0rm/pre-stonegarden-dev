@@ -1,7 +1,7 @@
 
 .sg-padtop {
   @extend %clearfix;
-  padding-top: ms(1);
+  padding-top: emCalc(20);
   > *:first-child {
     margin-top: 0
   };
@@ -10,8 +10,8 @@
 
 .sg-box {
   @extend .sg-padtop;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: emCalc(20);
+  padding-right: emCalc(20);
 }
 
 .sg-rounded {

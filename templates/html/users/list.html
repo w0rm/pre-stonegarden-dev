@@ -1,6 +1,6 @@
 $def with (users, form)
 <div class="row">
-    <div class="eight columns">
+    <div class="large-8 columns">
         <h1>$_("New user")</h1>
         <form action="/a/users/new" method="post">
             $:form.render_css()
@@ -11,7 +11,7 @@ $def with (users, form)
             <p><button class="right button" type="submit">$_("Save")</button></p>
         </form>
     </div>
-    <aside class="four columns">
+    <aside class="large-4 columns">
 		$:render.users.p_list(users)
     </aside>
 </div>

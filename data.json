@@ -26,7 +26,7 @@
               {
                 "template": "column",
                 "size": 12,
-                "css_class": "twelve",
+                "css_class": "large-12",
                 "is_system": true
               }
             ]
@@ -40,7 +40,7 @@
       "name": "global_header",
       "template": "column",
       "size": 12,
-      "css_class": "twelve",
+      "css_class": "large-12",
       "is_system": true,
       "blocks": [
         {
@@ -49,7 +49,7 @@
             {
               "template": "column",
               "size": 4,
-              "css_class": "four",
+              "css_class": "large-4",
               "is_system": true,
               "blocks": [{
                 "template": "content",
@@ -61,7 +61,7 @@
             {
               "template": "column",
               "size": 8,
-              "css_class": "eight",
+              "css_class": "large-8",
               "is_system": true,
               "blocks": [{
                 "template": "nav",
@@ -76,7 +76,7 @@
       "name": "index_header",
       "template": "column",
       "size": 12,
-      "css_class": "twelve",
+      "css_class": "large-12",
       "is_system": true,
       "blocks": [
         {
@@ -85,7 +85,7 @@
             {
               "template": "column",
               "size": 4,
-              "css_class": "four",
+              "css_class": "large-4",
               "is_system": true,
               "blocks": [{
                 "template": "content",
@@ -97,7 +97,7 @@
             {
               "template": "column",
               "size": 8,
-              "css_class": "eight",
+              "css_class": "large-8",
               "is_system": true,
               "blocks": [{
                 "template": "nav",
@@ -112,7 +112,7 @@
       "name": "global_footer",
       "template": "column",
       "size": 12,
-      "css_class": "twelve",
+      "css_class": "large-12",
       "is_system": true,
       "blocks": [
         {
@@ -121,13 +121,13 @@
             {
               "template": "column",
               "size": 8,
-              "css_class": "eight",
+              "css_class": "large-8",
               "is_system": true
             },
             {
               "template": "column",
               "size": 4,
-              "css_class": "four",
+              "css_class": "large-4",
               "is_system": true,
               "blocks": [{
                 "template": "content",
@@ -144,7 +144,7 @@
       "name": "index_footer",
       "template": "column",
       "size": 12,
-      "css_class": "twelve",
+      "css_class": "large-12",
       "is_system": true,
       "blocks": [
         {
@@ -153,13 +153,13 @@
             {
               "template": "column",
               "size": 8,
-              "css_class": "eight",
+              "css_class": "large-8",
               "is_system": true
             },
             {
               "template": "column",
               "size": 4,
-              "css_class": "four",
+              "css_class": "large-4",
               "is_system": true,
               "blocks": [{
                 "template": "content",

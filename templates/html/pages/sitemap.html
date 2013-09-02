@@ -16,11 +16,10 @@ $def render_page(page, pages):
             <li>$:render_page(p, pages)</li>
         </ul>
 <div class="row">
-    <div class="eight columns">
+    <div class="large-8 columns">
         <h1>$_("Site map")</h1>
         <div class="sitemap">
             $:render_page(root, pages)
         </div>
     </div>
-    <aside class="four columns"></aside>
 </div>
