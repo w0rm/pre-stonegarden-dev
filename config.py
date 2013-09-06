@@ -27,6 +27,7 @@ config = web.storage(
         "smtp_password": "",
         "smtp_starttls": True,
     },
+    sendmail=True,
     reserved=[
         # Reserved page slugs
         "a",
@@ -308,10 +309,8 @@ else:
         cookie_name="tasty_cookie",
     )
     if config.environment == "development":
-        config.sendmail = False
         web.config.debug = True
         web.config.debug_sql = True
     elif config.environment == "production":
-        config.sendmail = True
         web.config.debug = False
         web.config.debug_sql = False
