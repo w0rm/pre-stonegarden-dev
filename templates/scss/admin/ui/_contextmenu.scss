@@ -38,6 +38,7 @@
     background: $grey60;
     > .sg-contextmenu {
       @include opaque;
+      @include transition(opacity 0.5s ease-in-out);
       height: auto;
       width: auto;
       overflow: visible;
@@ -83,7 +84,8 @@
 
 .sg-contextmenu-show {
   @include border-radius;
-  background: hsl(0, 0, 33%);
+  @include box-shadow;
+  background: hsla(0, 0, 33%);
   width: 32px;
   height: 32px;
   line-height: 32px;
@@ -95,6 +97,7 @@
   text-decoration: none;
   color: hsl(0, 0, 90%);
   @include opacity(.4);
+  @include transition(opacity 0.5s ease-in-out);
   &:hover, &.sg-active {
     color: #fff;
     @include opaque;
