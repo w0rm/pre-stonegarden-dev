@@ -85,7 +85,7 @@
 .sg-contextmenu-show {
   @include border-radius;
   @include box-shadow;
-  background: hsla(0, 0, 33%);
+  background: hsl(0, 0, 33%);
   width: 32px;
   height: 32px;
   line-height: 32px;
@@ -97,7 +97,7 @@
   text-decoration: none;
   color: hsl(0, 0, 90%);
   @include opacity(.4);
-  @include transition(opacity 0.5s ease-in-out);
+  @include transition(opacity 0.1s ease-in-out);
   &:hover, &.sg-active {
     color: #fff;
     @include opaque;
