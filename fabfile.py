@@ -1,12 +1,11 @@
-from fabric.api import task, run, local
-
+import os
+import shutil
+import json
 import web
 from config import config
 from base import db, auth
 from models.tree import create_tree_branch
-import json
-import shutil
-import os
+from fabric.api import task, local
 
 
 @task
@@ -43,6 +42,12 @@ def i18n_compile():
 def server(port='8080'):
     '''Runs server'''
     local('python code.py %s' % port)
+
+
+@task
+def lint():
+    '''Runs flake8'''
+    local('flake8 .')
 
 
 @task

@@ -38,7 +38,8 @@ sequence into a decimal-encoded HTML entity:
 
 (FIXME:  table here.)
 
-.. comment    It sucks that there's a disconnect between the visual layout and table markup when special characters are involved.
+.. comment    It sucks that there's a disconnect between the visual layout
+.. comment    and table markup when special characters are involved.
 .. comment ======  =====  =========
 .. comment Escape  Value  Character
 .. comment ======  =====  =========
@@ -143,7 +144,6 @@ smartypants.py license::
 
 import re
 import htmlentitydefs
-import unicodedata
 
 
 def entity(name):
@@ -185,27 +185,33 @@ sym = {
 
 tags_to_skip_regex = re.compile(r"<(/)?(pre|code|kbd|script|math)[^>]*>", re.I)
 
-prepos = u'а|в|во|и|к|о|с|у|о|со|об|от|то|на|не|ни|но|из|за|уж|на|по|да|до|их|ко|я'
+prepos = (u'а|в|во|и|к|о|с|у|о|со|об|от|то|на|не|ни|но|из|за|уж|на|'
+          u'по|да|до|их|ко|я')
 postpos = u'ж|бы|б|же|ли|ль'
 hypopos = u'х|й'
 metrics = u'мм|см|м|км|кг|г|б|кб|мб|гб|dpi|px'
-shortages = u'гн|гжа|гр|г|тов|пос|c|ул|д|наб|пр|пер|м|Гн|Гжа|Гр|Г|Тов|Пос|С|Ул|Д|Пер|М|Dj|DJ|Mc|MC|Vj|VJ'
+shortages = (u'гн|гжа|гр|г|тов|пос|c|ул|д|наб|пр|пер|м|Гн|'
+             u'Гжа|Гр|Г|Тов|Пос|С|Ул|Д|Пер|М|Dj|DJ|Mc|MC|Vj|VJ')
 rur = u'руб|rub'
 
 rur_regex = re.compile(u'(\d+)[\s%s]+(%s)\.' % (sym['nbsp'], rur), re.I)
 
-prepos_regex = re.compile(u'(?<=\s|\W)(%s)(\s+)' % prepos, re.I|re.U)
-prepos_regex2 = re.compile(u'(?<=^)(%s)(\s+)' % prepos, re.I|re.U)
-mdash_regex = re.compile(u'(\s+)(%s)(?=\s)' % sym['mdash'], re.I|re.U)
+prepos_regex = re.compile(u'(?<=\s|\W)(%s)(\s+)' % prepos, re.I | re.U)
+prepos_regex2 = re.compile(u'(?<=^)(%s)(\s+)' % prepos, re.I | re.U)
+mdash_regex = re.compile(u'(\s+)(%s)(?=\s)' % sym['mdash'], re.I | re.U)
 postpos_regex = re.compile(u'(?<=\S)\s+(%s)(?!\w)' % postpos, re.U)
 
-metrics_regex = re.compile(u'(\d+)[\s*%s](%s)\.?(?=[\s%s]|\.$)' % (sym['nbsp'], metrics, sym['nbsp']))
-metrics_regex2 = re.compile(u'(?<!\d)(\d{1,2})[\s*%s](?=\w)' % sym['nbsp'], re.U)
+metrics_regex = re.compile(
+    u'(\d+)[\s*%s](%s)\.?(?=[\s%s]|\.$)' % (sym['nbsp'], metrics, sym['nbsp']))
+metrics_regex2 = re.compile(
+    u'(?<!\d)(\d{1,2})[\s*%s](?=\w)' % sym['nbsp'], re.U)
 
 hypopos_regex = re.compile(u'(?<!\d)(\d+)-(%s)(?=\s|\W|$)' % hypopos, re.U)
 
-initials_regex = re.compile(u'([А-ЯA-Z]\.)\s?([А-ЯA-Z]\.)\s?([А-Яа-яA-Za-z]+)', re.S)
-shortages_regex = re.compile(u'(\s|\W|^)(%s)(\.?)\s+(?=[А-ЯA-Z\d])' % shortages, re.U)
+initials_regex = re.compile(
+    u'([А-ЯA-Z]\.)\s?([А-ЯA-Z]\.)\s?([А-Яа-яA-Za-z]+)', re.S)
+shortages_regex = re.compile(
+    u'(\s|\W|^)(%s)(\.?)\s+(?=[А-ЯA-Z\d])' % shortages, re.U)
 apostrophe_regex = re.compile(u'(?<=\w)(%s)(?=\w)' % sym["ru"]['rquote'], re.U)
 
 
@@ -215,16 +221,17 @@ def rusTypography(st):
     st = metrics_regex.sub(r'\1%s\2' % sym['nbsp'], st)
     st = metrics_regex2.sub(r'\1' + sym['nbsp'], st)
     st = hypopos_regex.sub(r'<span class="nobr">\1-\2</span>', st)
-    st = rur_regex.sub(r'\1%s<em class="rur"><em>\2.</em></em>' % sym['nbsp'], st)
-    st = prepos_regex.sub(r'\1'+sym['nbsp'], st)
-    st = prepos_regex2.sub(r'\1'+sym['nbsp'], st)
+    st = rur_regex.sub(
+        r'\1%s<em class="rur"><em>\2.</em></em>' % sym['nbsp'], st)
+    st = prepos_regex.sub(r'\1' + sym['nbsp'], st)
+    st = prepos_regex2.sub(r'\1' + sym['nbsp'], st)
     st = postpos_regex.sub(sym['nbsp'] + r'\1', st)
     st = mdash_regex.sub(sym['nbsp'] + sym['mdash'], st)
     st = apostrophe_regex.sub(sym['apos'], st)
     return st
 
 
-def smartyPants(text, lang="ru"):
+def smartyPants(text, lang="en"):
 
     if text is None:
         return None
@@ -243,7 +250,8 @@ def smartyPants(text, lang="ru"):
 
     for cur_token in tokens:
         if cur_token[0] == "tag":
-            # Don't mess with quotes inside some tags.  This does not handle self <closing/> tags!
+            # Don't mess with quotes inside some tags.  This does not handle
+            # self <closing/> tags!
             result.append(cur_token[1])
             skip_match = tags_to_skip_regex.match(cur_token[1])
             if skip_match is not None:
@@ -252,18 +260,20 @@ def smartyPants(text, lang="ru"):
                     in_pre = True
                 else:
                     if len(skipped_tag_stack) > 0:
-                        if skip_match.group(2).lower() == skipped_tag_stack[-1]:
+                        if (skip_match.group(2).lower() ==
+                           skipped_tag_stack[-1]):
                             skipped_tag_stack.pop()
                         else:
                             pass
-                            # This close doesn't match the open.  This isn't XHTML.  We should barf here.
+                            # This close doesn't match the open.  This isn't
+                            # XHTML.  We should barf here.
                     if len(skipped_tag_stack) == 0:
                         in_pre = False
         else:
             t = cur_token[1]
-            last_char = t[-1:] # Remember last char of this token before processing.
+            # Remember last char of this token before processing.
+            last_char = t[-1:]
             if not in_pre:
-                oldstr = t
                 t = processEscapes(t)
 
                 t = re.sub('&quot;', '"', t)
@@ -304,18 +314,22 @@ def educateQuotes(str, lang):
     Example output: &#8220;Isn&#8217;t this fun?&#8221;
     """
 
-    oldstr = str
     punct_class = r"""[!"#\$\%'()*+,-.\/:;<=>?\@\[\\\]\^_`{|}~]"""
 
     # Special case if the very first character is a quote
-    # followed by punctuation at a non-word-break. Close the quotes by brute force:
-    str = re.sub(r"""^'(?=%s\\B)""" % (punct_class, ), sym[lang]['rquote'], str)
-    str = re.sub(r"""^"(?=%s\\B)""" % (punct_class, ), sym[lang]['rduote'], str)
+    # followed by punctuation at a non-word-break. Close the quotes by brute
+    # force:
+    str = re.sub(r"""^'(?=%s\\B)""" %
+                 (punct_class, ), sym[lang]['rquote'], str)
+    str = re.sub(r"""^"(?=%s\\B)""" %
+                 (punct_class, ), sym[lang]['rduote'], str)
 
     # Special case for double sets of quotes, e.g.:
     #   <p>He said, "'Quoted' words in a larger quote."</p>
-    str = re.sub(r""""'(?=\w)""", sym[lang]['lduote']+sym[lang]['lquote'], str)
-    str = re.sub(r"""'"(?=\w)""", sym[lang]['lquote']+sym[lang]['lduote'], str)
+    str = re.sub(r""""'(?=\w)""", sym[lang][
+                 'lduote'] + sym[lang]['lquote'], str)
+    str = re.sub(r"""'"(?=\w)""", sym[lang][
+                 'lquote'] + sym[lang]['lduote'], str)
 
     # Special case for decade abbreviations (the '80s):
     str = re.sub(r"""\b'(?=\d{2}s)""", r"""&#8217;""", str)
@@ -335,22 +349,23 @@ def educateQuotes(str, lang):
             )
             '                 # the quote
             (?=\w)            # followed by a word character
-            """ % (dec_dashes, ), re.VERBOSE|re.U)
-    str = opening_single_quotes_regex.sub(r"""\1"""+sym[lang]['lquote'], str)
+            """ % (dec_dashes, ), re.VERBOSE | re.U)
+    str = opening_single_quotes_regex.sub(r"""\1""" + sym[lang]['lquote'], str)
 
     closing_single_quotes_regex = re.compile(r"""
             (%s)
             '
             (?!\s | s\b | \d)
-            """ % (close_class, ), re.VERBOSE|re.U)
-    str = closing_single_quotes_regex.sub(r"""\1"""+sym[lang]['rquote'], str)
+            """ % (close_class, ), re.VERBOSE | re.U)
+    str = closing_single_quotes_regex.sub(r"""\1""" + sym[lang]['rquote'], str)
 
     closing_single_quotes_regex = re.compile(r"""
             (%s)
             '
             (\s | s\b)
-            """ % (close_class, ), re.VERBOSE|re.U)
-    str = closing_single_quotes_regex.sub(r"""\1""" + sym[lang]['rquote'] + r"""\2""", str)
+            """ % (close_class, ), re.VERBOSE | re.U)
+    str = closing_single_quotes_regex.sub(
+        r"""\1""" + sym[lang]['rquote'] + r"""\2""", str)
 
     # Any remaining single quotes should be opening ones:
     str = re.sub(r"""'""", sym[lang]['lquote'], str)
@@ -367,22 +382,22 @@ def educateQuotes(str, lang):
             )
             "                 # the quote
             (?=\w)            # followed by a word character
-            """ % (dec_dashes, ), re.VERBOSE|re.U)
-    str = opening_double_quotes_regex.sub(r"""\1"""+sym[lang]['lduote'], str)
+            """ % (dec_dashes, ), re.VERBOSE | re.U)
+    str = opening_double_quotes_regex.sub(r"""\1""" + sym[lang]['lduote'], str)
 
     # Double closing quotes:
     closing_double_quotes_regex = re.compile(r"""
             #(%s)?   # character that indicates the quote should be closing
             "
             (?=\s)
-            """ % (close_class, ), re.VERBOSE|re.U)
+            """ % (close_class, ), re.VERBOSE | re.U)
     str = closing_double_quotes_regex.sub(sym[lang]['rduote'], str)
 
     closing_double_quotes_regex = re.compile(r"""
             (%s)   # character that indicates the quote should be closing
             "
-            """ % (close_class, ), re.VERBOSE|re.U)
-    str = closing_double_quotes_regex.sub(r"""\1"""+sym[lang]['rduote'], str)
+            """ % (close_class, ), re.VERBOSE | re.U)
+    str = closing_double_quotes_regex.sub(r"""\1""" + sym[lang]['rduote'], str)
 
     # Any remaining quotes should be opening ones.
     str = re.sub(r'"', sym[lang]['lduote'], str)
@@ -398,8 +413,8 @@ def educateDashes(str):
                 an em-dash HTML entity.
     """
 
-    str = re.sub(r"""---""", sym["ndash"], str) # en  (yes, backwards)
-    str = re.sub(r"""--""", sym["mdash"], str) # em (yes, backwards)
+    str = re.sub(r"""---""", sym["ndash"], str)  # en  (yes, backwards)
+    str = re.sub(r"""--""", sym["mdash"], str)  # em (yes, backwards)
     return str
 
 
@@ -458,20 +473,11 @@ def _tokenize(str):
         <http://www.bradchoate.com/past/mtregex.php>
     """
 
-    pos = 0
-    length = len(str)
     tokens = []
-
-    depth = 6
-    nested_tags = "|".join(['(?:<(?:[^<>]', ] * depth) + (')*>)' * depth)
-    #match = r"""(?: <! ( -- .*? -- \s* )+ > ) |  # comments
-    #       (?: <\? .*? \?> ) |  # directives
-    #       %s  # nested tags       """ % (nested_tags,)
     tag_soup = re.compile(r"""([^<]*)(<[^>]*>)""")
-
     token_match = tag_soup.search(str)
-
     previous_end = 0
+
     while token_match is not None:
         if token_match.group(1):
             tokens.append(['text', token_match.group(1)])

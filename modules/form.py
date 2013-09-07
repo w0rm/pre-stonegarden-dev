@@ -242,7 +242,7 @@ def valid_date(code):
     if code is None or type(code) in (datetime.datetime, datetime.date):
         return True
     try:
-        date = parser.parse(code)
+        parser.parse(code)
         return True
     except:
         return False

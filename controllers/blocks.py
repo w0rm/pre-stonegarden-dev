@@ -31,7 +31,7 @@ class Blocks(RESTfulController):
         ]
     )
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def get(self, block_id):
         d = web.input(page_id=None)
         page = get_page_by_id(d.page_id)
@@ -40,7 +40,7 @@ class Blocks(RESTfulController):
         web.header("Content-Type", "application/json")
         return block_to_json(block)
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def create(self):
         d = web.input(page_id=None, sizes=[])
         form = self.form()
@@ -49,7 +49,7 @@ class Blocks(RESTfulController):
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def update(self, block_id):
         d = web.input(page_id=None, sizes=[])
         form = self.form()
@@ -58,7 +58,7 @@ class Blocks(RESTfulController):
             raise web.seeother(link_to("blocks", block, page_id=d.page_id))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def delete(self, block_id):
         delete_block_by_id(block_id)
         web.header("Content-Type", "application/json")

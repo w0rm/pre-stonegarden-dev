@@ -1,15 +1,11 @@
 # coding: utf-8
 
 import web
-import os
-import json
-import datetime
-from time import sleep
 from config import config
 from modules.translation import N_, _
 from base import db, auth, flash, mailer, applog
-from template import render, render_partial, render_email, link_to
-from modules.dbauth import AuthError, make_token, check_token, temp_password
+from template import render, render_email, link_to
+from modules.dbauth import temp_password
 from modules.form import *
 
 new_user_text = N_("New user in system: %s.")

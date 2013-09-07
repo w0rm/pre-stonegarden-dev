@@ -1,18 +1,16 @@
 # coding: utf-8
 
 import web
-import datetime
-from base import db, auth, flash
-from modules.translation import N_, _, load_translation
-from template import render, render_partial
+from base import auth
+from modules.translation import load_translation
+from template import render_partial
 from config import config
-from modules.form import *
 import json
 
 
 class Config:
 
-    @auth.restrict('admin', 'editor', 'user')
+    @auth.restrict('admin')
     def GET(self):
         web.header('Content-Type', 'text/javascript; charset=utf-8')
         conf = dict(

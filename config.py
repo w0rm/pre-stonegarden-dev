@@ -18,7 +18,7 @@ config = web.storage(
     analytics="",
     static_url="",
     asset_version="v00",
-    database_url="mysql://",  # should be set in siteconfig.py
+    database=dict(dbn='mysql', db='stonegarden'),
     email={
         "email_from": "user@example.com",
         "smtp_server": "smtp.example.com",
@@ -37,7 +37,7 @@ config = web.storage(
         "password_reset",
         "uploads",
     ],
-    user_roles=["admin"],  # "editor", "user"
+    user_roles=["admin"],
     page_types=dict(
         # Page constructors
         page={
@@ -47,14 +47,12 @@ config = web.storage(
                 "blocks": [
                     {
                         "template": "row",
-                        "blocks": [
-                            {
+                        "blocks": [{
                             "template": "column",
                             "size": 12,
                             "css_class": "large-12",
                             "is_system": True
-                            }
-                        ]
+                        }]
                     }
                 ]
             }
@@ -66,14 +64,12 @@ config = web.storage(
                 "blocks": [
                     {
                         "template": "row",
-                        "blocks": [
-                            {
+                        "blocks": [{
                             "template": "column",
                             "size": 12,
                             "css_class": "large-12",
                             "is_system": True
-                            }
-                        ]
+                        }]
                     }
                 ]
             }
@@ -98,8 +94,6 @@ config = web.storage(
     labels=dict(
         # User Roles
         admin=N_("Administrator"),
-        editor=N_("Editor"),
-        user=N_("User"),
         # Page blocks
         page=N_("Page"),
         # Content blocks
@@ -305,9 +299,6 @@ if config.environment == "test":
     web.config.debug = False
     web.config.debug_sql = False
 else:
-    web.config.session_parameters.update(
-        cookie_name="tasty_cookie",
-    )
     if config.environment == "development":
         web.config.debug = True
         web.config.debug_sql = True

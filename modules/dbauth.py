@@ -19,7 +19,6 @@ Needs a user table with at least the following columns:
         CHECK (is_deleted IN (0, 1))
     );
 """
-import json
 import web
 from web.session import SessionExpired
 from os import urandom
@@ -109,7 +108,6 @@ class DBAuth(object):
         def decorator(func):
             def proxyfunc(iself, *args, **kw):
                 try:
-                    user = web.ctx.session.user
                     if not self.has_role(*roles):
                         raise AuthError
                 except (AttributeError, AuthError, SessionExpired):
@@ -249,10 +247,10 @@ class DBAuth(object):
         Update the user's data taking care of the password hashing if
         one is provided.
         """
-        if 'password' in data:
-            self.set_password(email, data['password'])
-            del data['password']
         auth_user = self.get_user()
+        if 'password' in data:
+            self.set_password(auth_user.email, data['password'])
+            del data['password']
         self._db.update(
             'users',
             where='id = $user_id',

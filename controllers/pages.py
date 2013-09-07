@@ -1,13 +1,8 @@
 # coding: utf-8
 
 import web
-import os
-import datetime
-import json
-from config import config
 from base import db, auth, flash
 from modules.translation import _, N_
-from modules.utils import dthandler
 from template import render, render_partial, link_to
 from modules.form import ApiForm, DateInput, Checkbox, validDate, notnull
 from modules.restful_controller import RESTfulController
@@ -23,7 +18,7 @@ page_access_forbidden_text = N_("Page access forbidden.")
 
 class Sitemap:
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def GET(self):
         pages = db.select("pages", where="NOT is_deleted")
         return render.pages.sitemap(pages)
@@ -52,7 +47,7 @@ class Pages(RESTfulController):
         web.form.Input("parent_id"),
     )
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def list(self):
         """List pages (filtered by @parent_id)"""
         form = self.filter_form()
@@ -66,7 +61,7 @@ class Pages(RESTfulController):
             return pages_to_json(pages)
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def create(self):
         """Create new page"""
         d = web.input(type="page")
@@ -76,14 +71,14 @@ class Pages(RESTfulController):
             raise web.seeother(link_to("pages", page))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def get(self, page_id):
         """Get page by id"""
         page = get_page_by_id(page_id)
         web.header("Content-Type", "application/json")
         return page_to_json(page)
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def update(self, page_id):
         """Update page by id"""
         form = self.form()
@@ -92,7 +87,7 @@ class Pages(RESTfulController):
             raise web.seeother(link_to("pages", page))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def delete(self, page_id):
         """Delete page by id"""
         delete_page_by_id(page_id)
@@ -135,7 +130,7 @@ class ViewPage:
                 raise flash.redirect(_(page_access_forbidden_text), "/login")
             load_page_data(page)
 
-            if auth.has_role("admin", "editor"):
+            if auth.has_role("admin"):
                 json_data = web.storage(
                     page=page_to_json(page),
                     pages=pages_to_json(get_pages_in_tree_order()),
@@ -143,7 +138,7 @@ class ViewPage:
             else:
                 json_data = web.storage()
 
-            if "edit" in web.input() and auth.has_role("admin", "editor"):
+            if "edit" in web.input() and auth.has_role("admin"):
                 json_data.update(
                     page_block=block_to_json(
                         get_page_block_by_page_id(page.id)),

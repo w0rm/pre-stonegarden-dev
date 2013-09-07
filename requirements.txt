@@ -6,3 +6,4 @@ pytils
 babel
 BeautifulSoup
 fabric
+flake8

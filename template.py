@@ -2,14 +2,13 @@
 """
 Provides helper methods to templates
 """
-import os
 import pytils
 import json
 import datetime
 import web
-from web import template, ctx, storage, form
+from web import template, ctx
 from config import config
-from base import flash, auth, db
+from base import flash, auth
 from modules.translation import _, n_
 from modules import smartypants
 from dateutil import parser, tz

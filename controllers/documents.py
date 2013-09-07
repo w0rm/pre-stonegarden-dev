@@ -4,13 +4,12 @@ from base import auth
 from template import link_to, render
 from modules.form import ApiForm, notnull, Checkbox
 from modules.restful_controller import RESTfulController
-from modules.translation import N_
 from models.documents import *
 
 
 class Storage:
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def GET(self):
         document = get_document_by_id(web.input(document_id=1).document_id)
         json_data = web.storage(
@@ -43,7 +42,7 @@ class Documents(RESTfulController):
         web.form.Input("type"),
     )
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def list(self):
         """Lists documents by specified @parent_id"""
         form = self.filter_form()
@@ -55,7 +54,7 @@ class Documents(RESTfulController):
             return documents_to_json(documents)
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def create(self):
         d = web.input(upload={})
         form = self.form()
@@ -64,13 +63,13 @@ class Documents(RESTfulController):
             raise web.seeother(link_to("documents", document))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def get(self, document_id):
         document = get_document_by_id(document_id)
         web.header("Content-Type", "application/json")
         return document_to_json(document)
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def update(self, document_id):
         form = self.form()
         if form.validates():
@@ -78,7 +77,7 @@ class Documents(RESTfulController):
             raise web.seeother(link_to("documents", document))
         raise form.validation_error()
 
-    @auth.restrict("admin", "editor")
+    @auth.restrict("admin")
     def delete(self, document_id):
         delete_document_by_id(document_id)
         web.header("Content-Type", "application/json")
@@ -88,7 +87,7 @@ class Documents(RESTfulController):
 #TODO: Better api for image resize
 class GetImageSize:
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def GET(self, image_id):
         image = get_document_by_id(image_id)
         size = web.input(size="_").size

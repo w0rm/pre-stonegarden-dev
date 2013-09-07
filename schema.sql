@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS
     blocks,
     pages,
@@ -7,6 +6,7 @@ DROP TABLE IF EXISTS
     messages,
     sessions,
     users;
+
 
 
 CREATE TABLE users (

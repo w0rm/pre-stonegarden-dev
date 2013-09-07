@@ -14,27 +14,18 @@ from modules.logger import Logger
 
 
 # Core objects:
-db = web.database(config.database_url)
+db = web.database(**config.database)
 flash = Flash()
 auth = DBAuth(db, flash)
 mailer = Mailer(db, config.sendmail)
 applog = Logger(db, auth)
 
 
-def locale_hook():
+def load_hook():
     web.ctx.lang = config.default_locale
-
-
-def session_hook():
-    '''Saves session in ctx'''
-    #TODO: review cache-control
-    web.header('Cache-Control', 'no-cache, must-revalidate')
     web.ctx.session = web.config._session
-
-
-def timezone_hook():
-    '''Sets timezone for mysql database.'''
     try:
+        # Sets timezone for mysql database
         db.query('SET time_zone = $timezone;', vars=config)
     except:
         pass
@@ -51,8 +42,5 @@ def create_application():
             DBUserStore(db, 'sessions'),
             dict(forms=dict(), venues=0, is_searching=False, search=None),
         )
-    app.add_processor(web.loadhook(locale_hook))
-    app.add_processor(web.loadhook(session_hook))
-    if db.dbname == 'mysql':
-        app.add_processor(web.loadhook(timezone_hook))
+    app.add_processor(web.loadhook(load_hook))
     return app

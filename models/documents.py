@@ -18,7 +18,6 @@ from models.tree import *
 import Image
 import ImageFilter
 import shutil
-from StringIO import StringIO
 import ImageFile
 ImageFile.MAXBLOCK = 1500 * 1500  # default is 64k
 

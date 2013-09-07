@@ -154,7 +154,6 @@ def update_columns(block, sizes):
         create_columns(block, sizes[edit_len:], edit_len)
     else:
         # Remove columns
-        position = block.position
         orphan_blocks = remove_columns(block, columns[create_len:])
 
     return orphan_blocks
@@ -163,9 +162,6 @@ def update_columns(block, sizes):
 def remove_columns(block, columns):
 
     # TODO: fix CURRENT_TIMESTAMP
-
-    column_ids = (c.id for c in columns)
-    print type(block.position)
 
     # Orphan update data
     orphan_data = web.storage(

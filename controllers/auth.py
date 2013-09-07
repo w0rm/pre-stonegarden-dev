@@ -1,15 +1,11 @@
 # coding: utf-8
 
 import web
-import os
-import json
-import datetime
 from time import sleep
-from config import config
 from modules.translation import N_, _
-from base import db, auth, flash, mailer, applog
-from template import render, render_partial, render_email, link_to
-from modules.dbauth import AuthError, make_token, check_token, temp_password
+from base import auth, flash, mailer
+from template import render, render_partial, render_email
+from modules.dbauth import AuthError, make_token, check_token
 from modules.form import *
 
 sent_text = N_("We've sent you the link to reset your password. "
@@ -70,7 +66,7 @@ class Login:
 
 class Logout:
 
-    @auth.restrict("admin", "editor", "user")
+    @auth.restrict("admin")
     def GET(self):
         auth.logout()
         raise web.seeother("/login")
