@@ -14,8 +14,7 @@ N_ = lambda x: x
 config = web.storage(
     environment="development",
     default_locale="en",
-    timezone="Europe/Moscow",
-    analytics="",
+    timezone="",
     static_url="",
     asset_version="v00",
     database=dict(dbn='mysql', db='stonegarden'),
@@ -255,8 +254,9 @@ except ImportError:
     pass
 
 # Set timezone
-os.environ["TZ"] = config.timezone
-time.tzset()
+if config.timezone:
+    os.environ["TZ"] = config.timezone
+    time.tzset()
 
 
 def tinymce_sanitizer(s):
