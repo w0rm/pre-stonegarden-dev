@@ -3,17 +3,36 @@ Stonegarden
 
 Simple CMS powered by web.py framework.
 
+
 ## Installation
 
-1. Install all required modules with `pip install -r requirements.txt`
-2. Install sass, compass and zurb-foundation (version 4) rubygems with `gem install compass zurb-foundation`
-3. Create mysql database
-4. Create `siteconfig.py` and set at least `database` to `dict(dbn='mysql', user='user', pw='password', db='database')`
-5. Compile scss files with `fab compile`
-6. Compile translations with `fab i18n_compile`
-7. Execute `fab setup` to init database schema and fill website with initial data
-8. Run `fab server` to start webserver
-9. Navigate to [http://localhost:8080/login](http://localhost:8080/login) and use these default credentials to login: user@example.com:111111
+### Install Python modules
+
+1. `virtualenv venv` to init virual environment
+2. `source venv/bin/activate` to activate virtual environment, note: you will have to run this everytime before working with CMS.
+3. `pip install -r requirements.txt` to install required modules
+
+### Install rubygems
+
+Run `gem install bundler` and `bundle install --path venv/gems --binstubs venv/bin`, it will install required rubygems into your environment, so activating environment will enable `compass` console command.
+
+### Configure database
+
+Execute `fab setup` to init database schema and fill website with initial data, it will use sqlite by default.
+
+To change database set DATABASE_URL environment variable like this: `DATABASE_URL=postgres://localhost/stonegarden fab setup`.
+
+Setup will create user with the following credentials: user@example.com:111111.
+
+
+## Running server
+
+Run `fab server` to start webserver. It will start server with development environment on 8080 port.
+
+To change environment and port set environment variables `WEBPY_ENV=production PORT=3333 fab server`.
+
+Navigate to [http://localhost:8080/login](http://localhost:8080/login).
+
 
 ## Fab commands
 

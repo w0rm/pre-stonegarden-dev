@@ -26,3 +26,7 @@ static/img/sprites/*
 # Sublime Text 2 project files
 *.sublime-project
 *.sublime-workspace
+
+
+# Bundler
+.bundle
