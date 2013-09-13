@@ -111,3 +111,9 @@ def setup():
             created_at=now,
             published_at=now,
         )
+
+
+@task
+def deploy():
+    setup()
+    compile()
