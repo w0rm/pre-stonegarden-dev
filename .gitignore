@@ -20,7 +20,7 @@ siteconfig.py
 upload/*
 static/static.tar
 static/i/*
-static/css/*
+static/css/*.css
 static/img/sprites/*
 
 # Sublime Text 2 project files
