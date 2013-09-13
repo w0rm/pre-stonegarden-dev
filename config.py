@@ -286,7 +286,7 @@ if 'WEBPY_ENV' in os.environ:
 
 
 if 'PORT' in os.environ:
-    config.port = os.environ['PORT']
+    config.port = int(os.environ['PORT'])
 
 
 def tinymce_sanitizer(s):
