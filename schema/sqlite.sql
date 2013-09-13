@@ -1,27 +1,23 @@
-DROP TABLE IF EXISTS
-    blocks,
-    pages,
-    documents,
-    logs,
-    messages,
-    sessions,
-    users;
-
+DROP TABLE IF EXISTS blocks;
+DROP TABLE IF EXISTS pages;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS logs;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR(255),
-    email VARCHAR(64) NOT NULL,
+    email VARCHAR(64) NOT NULL UNIQUE,
     password VARCHAR(180) NOT NULL,
     role VARCHAR(10) NOT NULL,
     last_login_at TIMESTAMP NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL,
-    is_active BOOL DEFAULT '0',
-    is_deleted BOOL DEFAULT '0',
-    PRIMARY KEY (id),
-    UNIQUE (email),
+    is_active BOOLEAN DEFAULT '0',
+    is_deleted BOOLEAN DEFAULT '0',
     CHECK (is_active IN (0, 1)),
     CHECK (is_deleted IN (0, 1))
 );
@@ -29,29 +25,27 @@ CREATE TABLE users (
 
 
 CREATE TABLE messages (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     message TEXT,
     created_at TIMESTAMP NULL,
-    sent_at TIMESTAMP NULL,
-    PRIMARY KEY (id)
+    sent_at TIMESTAMP NULL
 );
 
 
 
 CREATE TABLE sessions (
-    session_id VARCHAR(128) NOT NULL,
+    session_id VARCHAR(128) NOT NULL PRIMARY KEY,
     user_id INTEGER,
     atime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data TEXT,
-    PRIMARY KEY (session_id),
-    FOREIGN KEY(user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 
 
 CREATE TABLE pages (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    path VARCHAR(255),
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    path VARCHAR(255) UNIQUE,
     params INTEGER DEFAULT '0',
     slug VARCHAR(255),
     parent_id INTEGER,
@@ -73,12 +67,10 @@ CREATE TABLE pages (
     updated_at TIMESTAMP NULL,
     published_at TIMESTAMP NULL,
     deleted_at TIMESTAMP NULL,
-    is_system BOOL DEFAULT '0',
-    is_navigatable BOOL DEFAULT '0',
-    is_published BOOL DEFAULT '0',
-    is_deleted BOOL DEFAULT '0',
-    PRIMARY KEY (id),
-    UNIQUE (path),
+    is_system BOOLEAN DEFAULT '0',
+    is_navigatable BOOLEAN DEFAULT '0',
+    is_published BOOLEAN DEFAULT '0',
+    is_deleted BOOLEAN DEFAULT '0',
     FOREIGN KEY(parent_id) REFERENCES pages (id),
     FOREIGN KEY(user_id) REFERENCES users (id),
     CHECK (is_system IN (0, 1)),
@@ -90,13 +82,13 @@ CREATE TABLE pages (
 
 
 CREATE TABLE blocks (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     page_id INTEGER,
     parent_id INTEGER,
     user_id INTEGER,
     ids TEXT,
     level INTEGER,
-    name VARCHAR(20),
+    name VARCHAR(20) UNIQUE,
     position INTEGER,
     template VARCHAR(255),
     type VARCHAR(255),
@@ -108,14 +100,12 @@ CREATE TABLE blocks (
     updated_at TIMESTAMP NULL,
     published_at TIMESTAMP NULL,
     deleted_at TIMESTAMP NULL,
-    is_published BOOL DEFAULT '0',
-    is_system BOOL DEFAULT '0',
-    is_deleted BOOL DEFAULT '0',
-    PRIMARY KEY (id),
-    UNIQUE (name),
-    FOREIGN KEY(page_id) REFERENCES pages (id),
-    FOREIGN KEY(parent_id) REFERENCES blocks (id),
-    FOREIGN KEY(user_id) REFERENCES users (id),
+    is_published BOOLEAN DEFAULT '0',
+    is_system BOOLEAN DEFAULT '0',
+    is_deleted BOOLEAN DEFAULT '0',
+    FOREIGN KEY (page_id) REFERENCES pages (id),
+    FOREIGN KEY (parent_id) REFERENCES blocks (id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
     CHECK (is_published IN (0, 1)),
     CHECK (is_system IN (0, 1)),
     CHECK (is_deleted IN (0, 1))
@@ -124,7 +114,7 @@ CREATE TABLE blocks (
 
 
 CREATE TABLE documents (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     parent_id INTEGER,
     user_id INTEGER,
     ids TEXT,
@@ -141,13 +131,12 @@ CREATE TABLE documents (
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL,
     deleted_at TIMESTAMP NULL,
-    is_navigatable BOOL DEFAULT '0',
-    is_published BOOL DEFAULT '0',
-    is_system BOOL DEFAULT '0',
-    is_deleted BOOL DEFAULT '0',
-    PRIMARY KEY (id),
-    FOREIGN KEY(parent_id) REFERENCES documents (id),
-    FOREIGN KEY(user_id) REFERENCES users (id),
+    is_navigatable BOOLEAN DEFAULT '0',
+    is_published BOOLEAN DEFAULT '0',
+    is_system BOOLEAN DEFAULT '0',
+    is_deleted BOOLEAN DEFAULT '0',
+    FOREIGN KEY (parent_id) REFERENCES documents (id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
     CHECK (is_navigatable IN (0, 1)),
     CHECK (is_published IN (0, 1)),
     CHECK (is_system IN (0, 1)),
@@ -157,18 +146,14 @@ CREATE TABLE documents (
 
 
 CREATE TABLE logs (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) DEFAULT NULL,
-  obj_type varchar(10) DEFAULT NULL,
-  obj_id int(11) DEFAULT NULL,
-  ip varchar(255) DEFAULT NULL,
-  browser varchar(255) DEFAULT NULL,
-  message text,
-  created_at timestamp NULL DEFAULT NULL,
-  level varchar(10) DEFAULT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY(user_id) REFERENCES users (id)
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER DEFAULT NULL,
+  obj_type VARCHAR(10) DEFAULT NULL,
+  obj_id INTEGER DEFAULT NULL,
+  ip VARCHAR(255) DEFAULT NULL,
+  browser VARCHAR(255) DEFAULT NULL,
+  message TEXT,
+  created_at TIMESTAMP NULL DEFAULT NULL,
+  level VARCHAR(10) DEFAULT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
-
-
-

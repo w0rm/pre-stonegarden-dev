@@ -8,7 +8,6 @@
   },
   "pages": [
     {
-      "id": 1,
       "level": 0,
       "slug": "",
       "path": "/",
@@ -174,7 +173,6 @@
     }
   ],
   "documents_root": {
-    "id": 1,
     "level": 0,
     "title": "Storage",
     "type": "folder",

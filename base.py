@@ -11,7 +11,7 @@ from modules.flash import Flash
 from modules.dbauth import DBAuth, DBUserStore
 from modules.mailer import Mailer
 from modules.logger import Logger
-
+from modules.application import Application
 
 # Core objects:
 db = web.database(**config.database)
@@ -33,7 +33,7 @@ def load_hook():
 
 def create_application():
     '''Initializes web.py application'''
-    app = web.application(urls, globals())
+    app = Application(urls, globals())
     # Session initialization
     if web.config.get('_session') is None:
         # this is required to work with reloader

@@ -18,8 +18,6 @@ from models.tree import *
 import Image
 import ImageFilter
 import shutil
-import ImageFile
-ImageFile.MAXBLOCK = 1500 * 1500  # default is 64k
 
 
 def create_document(document):

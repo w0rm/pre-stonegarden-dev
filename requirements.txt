@@ -1,6 +1,7 @@
 web.py
-PIL
+pillow
 MySQL-python
+psycopg2
 python-dateutil
 pytils
 babel

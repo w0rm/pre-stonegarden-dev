@@ -6,6 +6,9 @@ venv
 #Translations
 *.mo
 
+# Sqlite database
+db.sqlite
+
 #Temp and garbage files
 ._*
 *~

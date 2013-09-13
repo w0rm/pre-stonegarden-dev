@@ -27,6 +27,6 @@ if config.environment == 'production':
 
 if __name__ == '__main__':
     if config.environment != 'test':
-        app.run()
+        app.run(port=config.port)
 else:
     application = app.wsgifunc()

@@ -3,21 +3,24 @@
 This file is for configuration storage
 To override configurations, simply create siteconfig.py file,
 and define your overrides in "config" dictionary
+
 """
 
 import os
 import time
 import web
+import urlparse
 
 N_ = lambda x: x
 
 config = web.storage(
     environment="development",
     default_locale="en",
+    port=8080,
     timezone="",
     static_url="",
     asset_version="v00",
-    database=dict(dbn='mysql', db='stonegarden'),
+    database=dict(dbn='sqlite', db='db.sqlite'),
     email={
         "email_from": "user@example.com",
         "smtp_server": "smtp.example.com",
@@ -259,6 +262,33 @@ if config.timezone:
     time.tzset()
 
 
+# Update database from os.environ
+if 'DATABASE_URL' in os.environ:
+    url = urlparse.urlparse(os.environ['DATABASE_URL'])
+    config.database = dict(
+        dbn=url.scheme,
+        user=url.username,
+        db=url.path[1:],
+        password=url.password,
+        host=url.hostname,
+        port=url.port,
+    )
+    if config.database['port'] is None:
+        del config.database['port']
+    if config.database['password'] is None:
+        del config.database['password']
+    print config.database
+
+
+# Update environment from os.environ
+if 'WEBPY_ENV' in os.environ:
+    config.environment = os.environ['WEBPY_ENV']
+
+
+if 'PORT' in os.environ:
+    config.port = os.environ['PORT']
+
+
 def tinymce_sanitizer(s):
     s["allowed_elements"] = s["allowed_attributes"].keys()
     s["allowed_elements"].remove("*")
@@ -281,18 +311,15 @@ config.sanitizer = tinymce_sanitizer(config.sanitizer)
 # Set directories
 config.rootdir = os.path.abspath(os.path.dirname(__file__))
 config.update(
-    static_dir=config.get("static_dir", config.rootdir + "/static"),
-    upload_dir=config.rootdir + "/upload",
-    template_dir=config.rootdir + "/templates/html",
-    locale_dir=config.rootdir + "/i18n",
+    upload_dir=config.get('upload_dir', config.rootdir + '/upload'),
+    locale_dir=config.get('locale_dir', config.rootdir + '/i18n'),
+    static_dir=config.get('static_dir', config.rootdir + '/static'),
+    template_dir=config.get('template_dir',
+                            config.rootdir + '/templates/html'),
 )
 
 # Email settings
 web.config.update(config.email)
-
-# Update config based on current environment
-if os.environ.get('WEBPY_ENV') == 'test':
-    config.environment = "test"
 
 if config.environment == "test":
     config.sendmail = False

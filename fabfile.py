@@ -39,15 +39,15 @@ def i18n_compile():
 
 
 @task
-def server(port='8080'):
+def server():
     '''Runs server'''
-    local('python code.py %s' % port)
+    local('python code.py')
 
 
 @task
 def lint():
-    '''Runs flake8'''
-    local('flake8 .')
+    '''Runs flake8 lint'''
+    local('flake8 . --exclude venv')
 
 
 @task
@@ -59,12 +59,18 @@ def setup():
     shutil.rmtree(config.static_dir + '/i', True)
     os.mkdir(config.static_dir + '/i')
 
-    schema_commands = open('schema.sql', 'r').read().split(';')
-    for cmd in schema_commands:
+    database = config.database['dbn']
+    if database == 'sqlite':
+        try:
+            os.remove('db.sqlite')
+        except OSError:
+            pass
+    schema_commands = open('schema/' + database + '.sql', 'r').read()
+    for cmd in schema_commands.split(';'):
         if cmd.strip():
             db.query(cmd)
 
-    data = web.storage(json.loads(open('data.json', 'r').read()))
+    data = web.storage(json.loads(open('schema/data.json', 'r').read()))
     now = web.db.SQLLiteral('CURRENT_TIMESTAMP')
     user = auth.create_user(**data.user)
 
