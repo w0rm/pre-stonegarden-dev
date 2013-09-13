@@ -277,7 +277,6 @@ if 'DATABASE_URL' in os.environ:
         del config.database['port']
     if config.database['password'] is None:
         del config.database['password']
-    print config.database
 
 
 # Update environment from os.environ
