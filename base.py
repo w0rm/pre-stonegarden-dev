@@ -40,7 +40,7 @@ def create_application():
         web.config._session = web.session.Session(
             app,
             DBUserStore(db, 'sessions'),
-            dict(forms=dict(), venues=0, is_searching=False, search=None),
+            dict(forms={}),
         )
     app.add_processor(web.loadhook(load_hook))
     return app
