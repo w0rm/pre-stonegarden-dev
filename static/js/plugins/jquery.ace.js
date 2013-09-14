@@ -20,7 +20,7 @@ define(["jquery"], function ($) {
       this.editorSession.setMode('ace/mode/' + this.options.mode);
       this.editorSession.setValue(this.$element.val());
       this.editorSession.on('change', function(){
-        self.$element.val(self.editorSession.getValue());
+        self.$element.val(self.editorSession.getValue()).change();
       });
     }
   }
