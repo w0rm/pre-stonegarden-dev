@@ -1,26 +1,28 @@
-define(["jquery", "ace"], function ($, ace) {
+define(["jquery"], function ($) {
 
 
   // Class definition
 
   var Ace = function(element, options) {
-    var self = this;
     this.options = options
     this.$element = $(element)
     this.$ace = $("<div class='sg-ace'></div>")
     this.$element.hide().after(this.$ace)
-    this.editor = ace.edit(this.$ace.get(0))
-    this.editor.setFontSize(options.fontSize)
-    this.editorSession = this.editor.getSession()
-    this.editorSession.setMode("ace/mode/" + options.mode);
-    this.editorSession.setValue(this.$element.val());
-    this.editorSession.on('change', function(){
-      self.$element.val(self.editorSession.getValue());
-    });
+    require(['ace'], $.proxy(this.init, this))
   }
 
   Ace.prototype = {
-
+    init: function (ace) {
+      var self = this;
+      this.editor = ace.edit(this.$ace.get(0))
+      this.editor.setFontSize(this.options.fontSize)
+      this.editorSession = this.editor.getSession()
+      this.editorSession.setMode('ace/mode/' + this.options.mode);
+      this.editorSession.setValue(this.$element.val());
+      this.editorSession.on('change', function(){
+        self.$element.val(self.editorSession.getValue());
+      });
+    }
   }
 
   // Plugin definition
