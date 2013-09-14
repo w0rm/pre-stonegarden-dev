@@ -1,4 +1,4 @@
-define(["jquery", "ace/ace"], function ($, ace) {
+define(["jquery", "ace"], function ($, ace) {
 
 
   // Class definition

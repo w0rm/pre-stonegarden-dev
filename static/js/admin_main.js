@@ -8,7 +8,7 @@ require.config({
     'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
     'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
     'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
-    'ace': '../vendor/js/ace',
+    ace: '../vendor/js/ace/ace',
     backbone: '../vendor/js/backbone-0.9.2',
     underscore: '../vendor/js/underscore-1.4.2'
   },
@@ -20,6 +20,7 @@ require.config({
     'jquery.foundation.reveal': ['jquery.foundation'],
     'jquery.foundation.orbit': ['jquery.foundation'],
     'jquery.foundation.topbar': ['jquery.foundation'],
+    ace: {exports: 'ace'},
     underscore: {
       exports: '_'
     },
