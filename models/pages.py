@@ -261,27 +261,30 @@ def normalize_page_ids(page):
 
 def load_page_data(page):
     page = normalize_page_ids(page)
+    where = page_where()
     web.ctx.page = page
     web.ctx.nav = web.storage(
         root=db.select(
             "pages",
-            where="level=1 AND NOT is_deleted AND is_navigatable",
+            where="level=1 AND NOT is_deleted AND is_navigatable" + where,
             order="position").list(),
         secondary=db.select(
             "pages",
             where="(parent_id in $ids OR parent_id = $id) AND "
-                  "level=2 AND NOT is_deleted AND is_navigatable",
+                  "level=2 AND NOT is_deleted AND is_navigatable" + where,
             order="position",
             vars=page).list() if page.level > 0 else [],
         children=get_page_children(page.id, True),
         siblings=db.select(
             "pages", page,
-            where="parent_id=$parent_id AND NOT is_deleted AND is_navigatable",
+            where="parent_id=$parent_id AND "
+                  "NOT is_deleted AND is_navigatable" + where,
             order="position").list(),
         breadcrumbs=(
             db.select(
                 "pages",
-                where="id in $ids AND NOT is_deleted AND is_navigatable",
+                where="id in $ids AND NOT is_deleted AND "
+                      "is_navigatable" + where,
                 vars=page).list() + [page]
             if page.ids else [])
     )
