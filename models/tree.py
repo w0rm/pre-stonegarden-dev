@@ -56,7 +56,7 @@ def delete_tree_branch(table_name, parent_obj, func=None):
         table_name,
         where="id = $id AND NOT is_deleted",
         vars=parent_obj,
-        is_deleted=1,
+        is_deleted=True,
         deleted_at=web.SQLLiteral("CURRENT_TIMESTAMP"),
     )
 
