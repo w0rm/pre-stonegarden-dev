@@ -15,8 +15,7 @@ from pytils.translit import slugify
 from models.tree import *
 
 # Image resize
-import Image
-import ImageFilter
+from PIL import Image, ImageFilter
 import shutil
 
 
