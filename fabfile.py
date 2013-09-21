@@ -51,20 +51,11 @@ def lint():
 
 
 @task
-def setup():
+def schema():
     '''Creates database schema and fills website with initial data'''
 
-    shutil.rmtree(config.upload_dir, True)
-    os.mkdir(config.upload_dir)
-    shutil.rmtree(config.static_dir + '/i', True)
-    os.mkdir(config.static_dir + '/i')
-
     database = config.database['dbn']
-    if database == 'sqlite':
-        try:
-            os.remove('db.sqlite')
-        except OSError:
-            pass
+
     schema_commands = open('schema/' + database + '.sql', 'r').read()
     for cmd in schema_commands.split(';'):
         if cmd.strip():
@@ -114,6 +105,22 @@ def setup():
 
 
 @task
+def structure():
+    '''Creates necessary directories'''
+    shutil.rmtree(config.upload_dir, True)
+    os.mkdir(config.upload_dir)
+    shutil.rmtree(config.static_dir + '/i', True)
+    os.mkdir(config.static_dir + '/i')
+
+
+@task
+def setup():
+    structure()
+    schema()
+    compile()
+
+
+@task
 def deploy():
-    setup()
+    structure()
     compile()
