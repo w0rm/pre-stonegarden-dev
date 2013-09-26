@@ -1,5 +1,10 @@
+var scripts = document.getElementsByTagName("script")
+  , src = scripts[scripts.length - 1].src
+  , baseUrl = src.substring(src.indexOf(document.location.pathname), src.lastIndexOf('/'))
+
+
 require.config({
-  urlArgs: window.environment === "development" ? 'bust=' + (new Date).getTime() : "",
+  baseUrl: baseUrl,
   paths: {
     jquery: '../vendor/js/jquery-1.8.1',
     'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',

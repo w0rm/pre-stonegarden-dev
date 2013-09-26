@@ -1,4 +1,10 @@
+var scripts = document.getElementsByTagName("script")
+  , src = scripts[scripts.length - 1].src
+  , baseUrl = src.substring(src.indexOf(document.location.pathname), src.lastIndexOf('/'))
+
+
 require.config({
+  baseUrl: baseUrl,
   paths: {
     stonegarden: '/a/config',
     jquery: '../vendor/js/jquery-1.8.1',

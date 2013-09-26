@@ -24,6 +24,18 @@ define(["jquery"
       this.initBlock()
     },
 
+    getHTML: function () {
+      var html = this.get("html");
+      var div = document.createElement('div');
+      div.innerHTML = html;
+      var scripts = div.getElementsByTagName('script');
+      var i = scripts.length;
+      while (i--) {
+        scripts[i].parentNode.removeChild(scripts[i]);
+      }
+      return div.innerHTML
+    },
+
     initBlock: function() {},
 
     updateBlocks: function() {

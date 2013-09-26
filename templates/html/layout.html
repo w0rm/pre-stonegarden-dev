@@ -17,20 +17,19 @@ $def with (page=None)
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="$asset_url('vendor/js/custom.modernizr.js')"></script>
+    <script src="$asset_url('vendor/js/require-2.1.1.js')"></script>
     $if config.environment == 'development':
         <script>var environment = '$config.environment';</script>
     $if auth.get_user():
         <link rel="stylesheet" href="$asset_url('css/admin.css')">
-        <script data-main="$asset_url('js/admin_main.js', False)"
-                src="$asset_url('vendor/js/require-2.1.1.js')"></script>
+        <script src="$asset_url('js/admin_main.js', False)"></script>
         $#TODO: conditional load of required templates
         $:render.site.js_templates()
         $:render.blocks.js_templates()
         $:render.documents.js_templates()
         $:render.pages.js_templates()
     $else:
-        <script data-main="$asset_url('js/public_main.js', False)"
-                src="$asset_url('vendor/js/require-2.1.1.js')"></script>
+        <script src="$asset_url('js/public_main.js', False)"></script>
     <style>$:page.get('css_code')</style>
 </head>
 <body class="$page.get('class')">

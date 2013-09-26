@@ -51,7 +51,7 @@ define(['jquery'
         // init main view
         new views.Block({
           model: sg.pageBlock,
-          el: sg.pageBlock.get("html")
+          el: sg.pageBlock.getHTML()
         }).render().$el.appendTo("body");
 
       }

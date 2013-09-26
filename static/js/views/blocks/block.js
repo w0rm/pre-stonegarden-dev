@@ -91,14 +91,14 @@ define(["jquery"
     },
 
     updateBlock: function() {
-      var $newEl = $(this.model.get("html"));
+      var $newEl = $(this.model.getHTML());
       this.hideContextMenu(); // detach context menu
       this.setElement($newEl.replaceAll(this.el)); // replace element
       return this.render(); // render nested blocks
     },
 
     makeBlockView: function(block) {
-      return new views.Block({model: block, el: block.get("html")})
+      return new views.Block({model: block, el: block.getHTML()})
         .on("contextmenu:show", this.propagateContextMenu, this)
         .on("inserter:show", this.propagateInserter, this)
         .render()
