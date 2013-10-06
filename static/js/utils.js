@@ -130,4 +130,6 @@ define(["jquery"
 
   window.t_ = utils.translate;
 
+  return utils;
+
 });

@@ -124,3 +124,10 @@ def setup():
 def deploy():
     structure()
     compile()
+
+
+@task
+def clean():
+    '''Removes all .pyc files'''
+    local('find . -name "*.pyc" -exec rm -rf {} \;')
+    local('rm static/css/*.css')
