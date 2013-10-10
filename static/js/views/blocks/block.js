@@ -25,22 +25,18 @@ define(["jquery"
 
     initialize: function() {
       this.model
-        .on("block:highlight", this.highlightBlock, this)
-        .on("block:lowlight", this.lowlightBlock, this)
+        .on("change:isHighlighted", this.highlightBlock, this)
         .on("block:delete", this.deleteBlock, this)
         .on("block:edit", this.editBlock, this)
         .on("block:attributes", this.editAttributes, this)
         .on("block:copy", this.hideContextMenu, this)
         .on("destroy", this.remove, this)
-        .on("change", this.updateBlock, this);
+        .on("change:html change:is_published",
+            this.updateBlock, this);
     },
 
-    highlightBlock: function() {
-      this.$el.addClass("sg-block-highlight");
-    },
-
-    lowlightBlock: function() {
-      this.$el.removeClass("sg-block-highlight");
+    highlightBlock: function(block, isHighlighted) {
+      this.$el.toggleClass("sg-block-highlight", isHighlighted);
     },
 
     editOnDoubleClick: function() {
@@ -74,7 +70,7 @@ define(["jquery"
       })
         .on("success reset", function() {
           blockForm.remove();
-          this.lowlightBlock();
+          this.model.set('isHighlighted', false)
           this.$el.show();
         }, this);
       this.hideContextMenu();

@@ -43,8 +43,8 @@ define(["jquery"
           } else {
             if (menu.context) {
               $item.hover(
-                function(){ menu.context.highlight(); },
-                function(){ menu.context.lowlight(); }
+                function(){ menu.context.set('isHighlighted', true) },
+                function(){ menu.context.set('isHighlighted', false) }
               );
             }
             if (item.click) {

@@ -13,10 +13,6 @@ define(["jquery"
 
     urlRoot: "/a/pages",
 
-    highlight: function(){},
-
-    lowlight: function(){},
-
     edit: function() {
       this.trigger("page:edit");
     },

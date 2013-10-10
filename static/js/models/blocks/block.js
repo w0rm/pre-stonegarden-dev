@@ -146,14 +146,6 @@ define(["jquery"
       this.trigger("block:attributes");
     },
 
-    highlight: function() {
-      this.trigger("block:highlight");
-    },
-
-    lowlight: function() {
-      this.trigger("block:lowlight");
-    },
-
     copy: function() {
       var data = {};
       _.each(this.attributes, function(value, key) {

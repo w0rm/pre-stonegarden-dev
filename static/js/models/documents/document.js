@@ -76,14 +76,6 @@ define(["jquery"
       window.open(this.get("sizes").l, "_blank")
     },
 
-    highlight: function() {
-      this.trigger("document:highlight");
-    },
-
-    lowlight: function() {
-      this.trigger("document:lowlight");
-    },
-
     select: function() {
       this.isSelected = true;
       this.trigger("document:select", this);
