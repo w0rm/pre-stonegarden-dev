@@ -38,9 +38,8 @@ define(["jquery"
         .on("document:attributes", this.editAttributes, this)
         .on("document:copyLink", this.copyLink, this)
         .on("destroy", this.remove, this)
-        .on("change:isSelected", this.changeSelected, this)
-        .on("change:title", this.render, this)
-        .on("change:is_published", this.changePublished, this)
+        .on("change:title change:is_published change:isSelected",
+            this.render, this)
         .on("change:position", function(m, pos) {
           this.$el.attr("data-position", pos);
         }, this);
@@ -58,14 +57,6 @@ define(["jquery"
       if (this.options.isSelectable) {
         this.model.set('isSelected', !this.model.get('isSelected'));
       }
-    },
-
-    changeSelected: function(model, isSelected) {
-      this.$el.toggleClass("sg-selected", isSelected);
-    },
-
-    changePublished: function(model, isPublished) {
-      this.$el.toggleClass("sg-not-published", !isPublished);
     },
 
     deleteDocument: function() {
