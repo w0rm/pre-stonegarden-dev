@@ -40,10 +40,9 @@ define(["jquery"
       })
 
       if (!this.isSystem()) {
-        // System and container blocks cannot be deleted
         items.push({
           text: t_("Delete"),
-          click: this.delete
+          click: this.deleteDocument
         })
       }
 
@@ -76,7 +75,7 @@ define(["jquery"
       window.open(this.get("sizes").l, "_blank")
     },
 
-    delete: function() {
+    deleteDocument: function() {
       this.trigger("document:delete");
     },
 

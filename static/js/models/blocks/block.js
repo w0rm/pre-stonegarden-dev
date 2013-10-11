@@ -113,7 +113,7 @@ define(["jquery"
       if (!this.isTemplate()) {
         items.push({
           text: t_("Delete"),
-          click: this.delete
+          click: this.deleteBlock
         });
       }
 
@@ -138,7 +138,7 @@ define(["jquery"
       this.trigger("block:edit");
     },
 
-    delete: function() {
+    deleteBlock: function() {
       this.trigger("block:delete");
     },
 

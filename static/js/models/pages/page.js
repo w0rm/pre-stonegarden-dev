@@ -17,7 +17,7 @@ define(["jquery"
       this.trigger("page:edit");
     },
 
-    delete: function() {
+    deletePage: function() {
       this.trigger("page:delete");
     },
 
@@ -122,7 +122,7 @@ define(["jquery"
       if (!this.isSystem()) {
         items.push({
           text: t_("Delete this page"),
-          click: this.delete
+          click: this.deletePage
         });
       };
 
