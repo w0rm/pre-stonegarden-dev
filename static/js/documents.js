@@ -49,7 +49,7 @@ define(['jquery'
         var folder;
         if (folder_id) {
           folder = new models.Document({id: folder_id})
-            .on("change", function(model) {
+            .on("reset", function(model) {
               this.view.open(model)
             }, this)
             .fetch();

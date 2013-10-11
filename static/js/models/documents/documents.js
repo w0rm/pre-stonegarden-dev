@@ -18,14 +18,15 @@ define(["jquery"
     initialize: function() {
       this
         .on("add remove", this.updatePositions, this)
-        .on("document:select", this.unselectDocuments, this);
+        .on("change:isSelected", this.unselectDocuments, this);
       this.ajaxQueue = $({});
     },
 
-    unselectDocuments: function(selectedModel) {
+    unselectDocuments: function(selectedModel, isSelected) {
+      if (!isSelected) return;
       this.each(function(model) {
         if (selectedModel !== model) {
-          model.unselect();
+          model.set('isSelected', false);
         }
       })
     },

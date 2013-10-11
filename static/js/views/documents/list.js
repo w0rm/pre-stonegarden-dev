@@ -39,23 +39,21 @@ define(["jquery"
         .on("document:open", this.openDocument, this)
 
       if (this.options.isSelectable) {
-        this.collection
-          .on("document:select", this.selectDocument, this)
-          .on("document:unselect", this.unselectDocument, this)
+        this.collection.on('change:isSelected', this.selectDocument, this)
       }
 
     },
 
-    selectDocument: function(model) {
-      if (this.filter.type === model.get("type")) {
-        this.trigger("document:select", model);
-      } else {
-        model.unselect();
+    selectDocument: function(model, isSelected) {
+      if (isSelected) {
+        if (this.filter.type === model.get("type")) {
+          this.trigger("document:select", model);
+        } else {
+          model.set('isSelected', false)
+        }
+      } else  {
+        this.trigger("document:unselect", model)
       }
-    },
-
-    unselectDocument: function(model) {
-      this.trigger("document:unselect", model);
     },
 
     render: function() {

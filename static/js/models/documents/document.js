@@ -27,67 +27,53 @@ define(["jquery"
     // Contextmenu items
 
     hasContextMenu: function() {
-      return true;
+      return true
     },
 
     getContextMenu: function() {
       var items = []
-        , parentMenu;
+        , parentMenu
 
       items.push({
         text: t_("Attributes"),
         click: this.editAttributes
-      });
+      })
 
       if (!this.isSystem()) {
         // System and container blocks cannot be deleted
         items.push({
           text: t_("Delete"),
           click: this.delete
-        });
-      };
+        })
+      }
 
       if(this.get("type") === "document") {
         items.push({
           text: t_("Download"),
           href: this.get("src")
-        });
+        })
         items.push({
           text: t_("Copy link"),
           click: this.copyLink
-        });
+        })
       }
 
       if(this.get("type") === "image") {
         items.push({
           text: t_("Download"),
           click: this.openImage
-        });
+        })
       }
 
       return {
         items: items,
         context: this
-      };
+      }
 
     },
 
     openImage: function() {
       window.open(this.get("sizes").l, "_blank")
-    },
-
-    select: function() {
-      this.isSelected = true;
-      this.trigger("document:select", this);
-    },
-
-    unselect: function() {
-      this.isSelected = false;
-      this.trigger("document:unselect", this);
-    },
-
-    toggleSelected: function() {
-      this.isSelected ? this.unselect() : this.select();
     },
 
     delete: function() {

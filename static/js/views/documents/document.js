@@ -14,9 +14,14 @@ define(["jquery"
 
   views.Document = Backbone.View.extend(_.extend({}, mixins.hasContextMenu, {
 
-    tagName: "li",
+    tagName: 'li',
 
-    className: "sg-document",
+    getClassName: function () {
+      var className = 'sg-document'
+      if (!this.model.get('is_published')) className += " sg-not-published"
+      if (this.model.get('type')) className += " sg-document-" + this.model.get("type")
+      return className
+    },
 
     template: _.template($("#document-template").html()),
 
@@ -32,9 +37,8 @@ define(["jquery"
         .on("document:delete", this.deleteDocument, this)
         .on("document:attributes", this.editAttributes, this)
         .on("document:copyLink", this.copyLink, this)
-        .on("document:select document:unselect", this.changeSelected, this)
-        .on("document:unselect", this.unselectDocument, this)
         .on("destroy", this.remove, this)
+        .on("change:isSelected", this.changeSelected, this)
         .on("change:title", this.render, this)
         .on("change:is_published", this.changePublished, this)
         .on("change:position", function(m, pos) {
@@ -44,25 +48,24 @@ define(["jquery"
 
     render: function() {
       this.$el
-        .attr("class", "sg-document sg-document-" + this.model.get("type"))
+        .attr('class', this.getClassName())
         .html(this.template({"document": this.model.toJSON()}))
         .data({id: this.model.get('id')})
-      this.changePublished();
       return this;
     },
 
     toggleSelected: function() {
       if (this.options.isSelectable) {
-        this.model.toggleSelected();
+        this.model.set('isSelected', !this.model.get('isSelected'));
       }
     },
 
-    changeSelected: function() {
-      this.$el.toggleClass("sg-selected", this.model.isSelected);
+    changeSelected: function(model, isSelected) {
+      this.$el.toggleClass("sg-selected", isSelected);
     },
 
-    changePublished: function() {
-      this.$el.toggleClass("sg-not-published", !this.model.get("is_published"));
+    changePublished: function(model, isPublished) {
+      this.$el.toggleClass("sg-not-published", !isPublished);
     },
 
     deleteDocument: function() {
