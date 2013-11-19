@@ -18,7 +18,8 @@ define(["jquery"
     template: _.template($("#block-gallery-form-template").html()),
     galleryTemplate: _.template($("#block-gallery-template").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs || {};
       this.folderId = 1; //TODO: change this setting;
       this.documents = new collections.Documents;
@@ -100,7 +101,8 @@ define(["jquery"
 
   views.GalleryBlockForm = Backbone.View.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.formView = new _GalleryBlockForm({
         model: this.model,
         collection: this.collection,

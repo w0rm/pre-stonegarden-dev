@@ -12,7 +12,8 @@ define(["jquery"
 
     template: _.template($("#page-code-form-template").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs || {};
     },
 

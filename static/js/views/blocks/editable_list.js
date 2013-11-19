@@ -20,18 +20,24 @@ define(["jquery"
     events: {
       "mousemove .js-block": "showInserter",
       "mousemove .js-placeholder": "showInserter",
-      "mouseleave": "hideInserter"
+      "mouseleave": "hideInserter",
     },
 
-    initialize: function() {
-      this.inserter = (new views.BlockInserter)
+    initialize: function(options) {
+      this.options = options || {};
+
+      this.inserter = new views.BlockInserter()
         .on("block:create", this.createBlock, this)
-        .on("block:paste", this.pasteBlock, this);
+        .on("block:paste", this.pasteBlock, this)
+        .render();
+
       this.placeholder = (new views.BlockPlaceholder)
         .on("block:create", this.createBlock, this);
+
       this.collection
         .on("remove", this.showPlaceholder, this)
         .on("add", this.addBlock, this);
+
       this._isCreatingBlock = false;
     },
 
@@ -39,7 +45,8 @@ define(["jquery"
       // Detach inserter and placeholder
       // to ensure new block is inserted
       // in correct position
-      this.hideInserter();
+     
+      this.removeInserter();
       this.hidePlaceholder();
       return views.BlockList.prototype.addBlock.apply(this, arguments);
     },
@@ -62,49 +69,52 @@ define(["jquery"
     },
 
     showInserter: function(e) {
-      // we use $proximity to show inserter only x pixels close to top|bottom 
-      // we'll recalculate $proximity for small (<$proximity *2) blocks
-      // TODO move $proximity varible to more appropriate place
-      var $block = $(e.currentTarget)
-        , proximity = 50 
-        , proxy = ($block.height() / 2) > 50 ? 50 : $block.height() / 2
+      
+      var inserter = this.inserter;
+      // pass if inserter-menu is displayed 
+      if (inserter._isInserting) return;
+      if (this._isCreatingBlock) return;
+      
+      var $block = $(e.currentTarget);
+      var proximity = inserter.proximity || 50 
+        , proxy = ($block.height() / 2) > proximity ? proximity : $block.height() / 2
         , istop = $block.is(".js-placeholder") || ((e.pageY - $block.offset().top) < proxy)
         , isbottom = $block.is(".js-placeholder") || (e.pageY > ($block.offset().top + $block.height() - proxy))
         , $el = $block[istop ? "prev" : "next"]();
 
-       
-      if (this._isCreatingBlock) {
+      e.stopPropagation();
+
+      // do nothing while hovering hot area if alredy rendered
+      if ( $el.is(".js-inserter") ) return; 
+        
+      // display inserter only %proximity% pixels from top and bottom edge of te block  
+      // detach inserter while we move mouse in the center of the block
+      if(!istop && !isbottom) {
+        inserter.trigger("inserter:detach");
         return;
       }
 
-      e.stopPropagation();
-
-      if ( (istop || isbottom)
-          && !$el.is(".js-inserter") 
-          && $block.parent().is(".js-blocks") 
-          && !$block.parent().parent().is(".row")) {
-        this.inserter.render().$el["insert" + (istop ? "Before" : "After") ]($block);
-
-      }
-      if (istop || isbottom){
-         // Trigger inserter event so parent blocks views
-        // will remove their inserters
-        this.trigger("inserter:show")
-      } else {
-        this.hideInserter()
+      if ( 
+        (istop || isbottom)
+        && $block.parent().is(".js-blocks")
+        && !$block.parent().parent().is(".row")
+      ){
+        sg.vent.trigger("inserter:detachOthers", inserter);
+        inserter.$el["insert" + (istop ? "Before" : "After")]($block);
       }
 
     },
-
     hideInserter: function() {
-      this.inserter.$el.detach();
-      return this;
+      // to hide inserter we detach it 
+       if (this.inserter._isInserting) return;
+       this.inserter.trigger("inserter:detach");
+    },
+    // remove  will detach inserter and reset View varibles to default 
+    removeInserter: function(){
+      this.inserter.trigger("inserter:detach");
+      sg.vent.trigger("inserter:uninsert");
     },
 
-    propagateInserter: function() {
-      this.hideInserter();
-      this.trigger("inserter:show");
-    },
 
     pasteBlock: function(attrs) {
 
@@ -121,7 +131,7 @@ define(["jquery"
         page_id: sg.page.get("id")
       });
 
-      this.hideInserter();
+      this.removeInserter();
 
       this.collection.create(attrs, {
         at: attrs.position - 1,
@@ -142,6 +152,8 @@ define(["jquery"
       } else {
         this._isCreatingBlock = true;
       }
+      // These should be hidden to enforce correct position
+      this.removeInserter();
 
       _.extend(attrs, {
         parent_id: this.collection.parentBlock.get("id"),
@@ -157,9 +169,6 @@ define(["jquery"
           this._isCreatingBlock = false;
           this.showPlaceholder();
         }, this);
-
-      // These should be hidden to enforce correct position
-      this.hideInserter();
 
       if (attrs.template === "content") {
         // Hide placeholder only for inline editing

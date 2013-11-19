@@ -13,25 +13,28 @@
   .sg-block-inserter-line {
     zoom: 1;
     overflow: hidden;
-    margin-top: 4px;
+    margin-top: 3px;
     position: absolute;
     z-index: 1;
     width: 100%;
-    border-bottom: 2px dashed $grey10;
+    height: 4px;
+    @include background-image(linear-gradient(left, $grey30 60%, white 60%));
+    background-size: 20px 20px;
+    border-top: 1px solid rgba(255,255,255, .5);
+    border-bottom: 1px solid rgba(255,255,255, .5);
     .js-template-block & {
-      border-bottom-style: dotted
+      background-size: 6px 6px;
     }
   }
   &:hover .sg-block-inserter-line {
-    border-color: $grey80;
+    @include background-image(linear-gradient(left, $grey80 60%, white 60%));
+    cursor: pointer;
   }
 
   .sg-block-inserter-menu {
 
     @include border-radius;
-    @include transition(opacity 0.5s 0.3s ease-in-out);
-    @include transparent;
-
+    @include transition(position 1.15s 1.3s ease-in-out);
     float: left;
     position: relative;
     left: -5px;
@@ -73,10 +76,5 @@
       }
     }
 
-  }
-  &:hover {
-    .sg-block-inserter-menu {
-      @include opaque;
-    }
   }
 }

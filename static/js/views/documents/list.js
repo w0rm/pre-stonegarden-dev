@@ -27,8 +27,8 @@ define(["jquery"
       "sortstart": "sortstartEvent"
     },
 
-    initialize: function() {
-
+    initialize: function(options) {
+      this.options = options || {};
       this.filter = this.options.filter || {};
 
       this.collection = this.collection || new collections.Documents;

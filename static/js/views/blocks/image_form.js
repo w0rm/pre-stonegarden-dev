@@ -18,7 +18,8 @@ define(["jquery"
     template: _.template($("#block-image-form-template").html()),
     imageTemplate: _.template($("#block-image-template").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs || {};
       this.folderId = 1; //TODO: change this setting;
       if (this.hasModel()) {
@@ -103,7 +104,8 @@ define(["jquery"
 
   views.ImageBlockForm = Backbone.View.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.formView = new _ImageBlockForm({
         model: this.model,
         collection: this.collection,

@@ -12,7 +12,8 @@ define(["jquery"
 
     template: _.template($("#block-form-template").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs || {};
     },
 

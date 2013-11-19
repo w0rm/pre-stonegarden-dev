@@ -16,6 +16,7 @@ define(['jquery'
       , models = sg.models
       , collections = sg.collections
       , utils = sg.utils;
+      sg.vent = _.extend({}, Backbone.Events);
 
 
     if (window.sgData && window.sgData.page ) {

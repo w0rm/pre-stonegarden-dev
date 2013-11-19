@@ -1,5 +1,17 @@
 @import "foundation";
 
+/* override foundation */
+*:before, *:after{  
+  // disable selection on dummy layput fixtures
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* end override foundation */
 
 strong { font-weight: 700; }
 

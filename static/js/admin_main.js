@@ -15,8 +15,8 @@ require.config({
     'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
     'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
     ace: '../vendor/js/ace/ace',
-    backbone: '../vendor/js/backbone-0.9.2',
-    underscore: '../vendor/js/underscore-1.4.2'
+    backbone: '../vendor/js/backbone-1.1.0',
+    underscore: '../vendor/js/underscore-1.5.2'
   },
   shim: {
     'stonegarden': ['jquery'],

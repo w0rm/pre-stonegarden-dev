@@ -17,7 +17,8 @@ define(["jquery"
       "change [name=css_class]": "updateLabels"
     }, views.AlertForm.prototype.events),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs || {};
     },
 

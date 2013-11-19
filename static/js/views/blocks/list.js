@@ -21,16 +21,22 @@ define(["jquery"
         isContextMenuEnabled: true
       })
         .on("contextmenu:show", this.propagateContextMenu, this)
-        .on("inserter:show", this.propagateInserter, this)
+        //.on("inserter:show", this.propagateInserter, this)
         .render()
     },
 
     addBlock: function (model, collection, options) {
-      this.appendBlock(model, options.index);
+      // This is weird: ufter upgrade Backbone to 1.1.0 
+      // previously used options.index became UNDEFINED
+      // I replace it to options.at , but I have a feeling 
+      // that something important missed over here
+      // this.appendBlock(model, options.index);
+      this.appendBlock(model, options.at);
     },
 
     appendBlock: function(block, index) {
       var b = this.makeBlockView(block);
+      // console.log('append Block from list.view', index)
       if (_.isNumber(index)) {
         if (index === 0) {
           this.$el.prepend(b.el);
@@ -48,9 +54,9 @@ define(["jquery"
       this.trigger("contextmenu:show");
     },
 
-    propagateInserter: function() {
-      this.trigger("inserter:show");
-    }
+    // propagateInserter: function() {
+    //   this.trigger("inserter:show");
+    // }
 
   });
 

@@ -19,7 +19,8 @@ define(["jquery"
       "change [name=sizes]": "changeSize"
     }, views.AlertForm.prototype.events),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.attrs = this.options.attrs;
     },
 
@@ -129,7 +130,8 @@ define(["jquery"
 
   views.RowBlockForm = Backbone.View.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.formView = new _RowBlockForm({
         model: this.model,
         collection: this.collection,

@@ -23,7 +23,8 @@ define(["jquery"
 
     }, mixins.hasContextMenu.events),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.model
         .on("change:isHighlighted", this.highlightBlock, this)
         .on("block:delete", this.deleteBlock, this)
@@ -74,7 +75,7 @@ define(["jquery"
           this.$el.show();
         }, this);
       this.hideContextMenu();
-      this.propagateInserter();
+      // this.propagateInserter();
       this.$el.after(blockForm.el)
       if (_.contains(["html", "wysiwyg"], this.model.get("type"))) {
         // Hide block only if editing inline
@@ -93,7 +94,7 @@ define(["jquery"
     makeBlockView: function(block) {
       return new views.Block({model: block, el: block.getHTML()})
         .on("contextmenu:show", this.propagateContextMenu, this)
-        .on("inserter:show", this.propagateInserter, this)
+        // .on("inserter:show", this.propagateInserter, this)
         .render()
     },
 
@@ -118,7 +119,7 @@ define(["jquery"
           collection: this.model.blocks
         })
           .on("contextmenu:show", this.propagateContextMenu, this)
-          .on("inserter:show", this.propagateInserter, this)
+          // .on("inserter:show", this.propagateInserter, this)
           .render();
       };
 
@@ -135,9 +136,9 @@ define(["jquery"
       this.trigger("contextmenu:show");
     },
 
-    propagateInserter: function() {
-      this.trigger("inserter:show");
-    }
+    // propagateInserter: function() {
+    //   this.trigger("inserter:show");
+    // }
 
   }));
 

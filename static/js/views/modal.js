@@ -13,7 +13,8 @@ define(["jquery"
 
     template: _.template($("#modal-template").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.contentView = this.options.contentView
         .on("success reset modal:close", this.close, this);
       this.$el.addClass(this.options.sizeClass || "medium");

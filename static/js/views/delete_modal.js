@@ -38,7 +38,8 @@ define(["jquery"
 
   views.DeleteModal = views.Modal.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.contentView = new _Delete(this.options);
       this.contentView
         .on("success reset modal:close", this.close, this);
