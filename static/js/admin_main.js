@@ -30,20 +30,9 @@ require.config({
     'jquery.tinymce':{
       exports: 'jquery.tinymce',
       init: function () {
-            console.log('jqTMCE',  this.tinymce);
-            // this.tinyMCE.Dom.Event.domLoaded = true;
             return this.tinymce;
             }
      },
-    // 'jquery.tinymce':{
-    //   deps: ['jquery'],
-    //   exports: 'jquery.tinymce',
-    //   init: function () {
-    //         // console.log('jqTMCE',  $.tinymce, $.tinyMCE);
-    //         // this.tinyMCE.Dom.Event.domLoaded = true;
-    //         return this.tinymce;
-    //         }
-    //  },
     underscore: {
       exports: '_'
     },
