@@ -6,7 +6,7 @@ var scripts = document.getElementsByTagName("script")
 require.config({
   baseUrl: baseUrl,
   paths: {
-    jquery: '../vendor/js/jquery-1.8.1',
+    jquery: '../vendor/js/jquery-1.10.2',
     'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
     'jquery.foundation': '../vendor/js/foundation/foundation'
   },

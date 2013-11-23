@@ -25,7 +25,9 @@ define(["jquery"
       "dragmove": "dragenterEvent",
       "drop": "dropEvent"
     },
-
+    initialize: function(options) {
+      this.options = options || {};
+    },
     render: function() {
       this.$el.html(this.template());
 

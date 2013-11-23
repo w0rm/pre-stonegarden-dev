@@ -325,8 +325,14 @@ def pages_to_json(pages):
 
 
 def pages_to_tinymce_link_list_json(pages):
-    return json.dumps([(u"   " * page.level + page.name, u"/to/%d" % page.id)
-                       for page in pages])
+    # return json.dumps([(u"   " * page.level + page.name,  u"/to/%d" % page.id)
+    #                    for page in pages])
+    return json.dumps(
+        [
+        {'title' : u"   " * page.level + page.name, 'value': u"/to/%d" % page.id} 
+        for page in pages
+        ])
+
 
 
 def replace_links_match(match):

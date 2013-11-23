@@ -2,9 +2,10 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
+      , "jquery.tinymce"
       , "views/modal"
       , "views/alert_form"
-      , "jquery.tinymce"], function ($, _, Backbone, sg) {
+      ], function ($, _, Backbone, sg, tinymce) {
 
   var views = sg.views
     , _RowBlockForm;

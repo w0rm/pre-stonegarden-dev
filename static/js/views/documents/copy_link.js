@@ -2,7 +2,7 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "jquery.tinymce"], function ($, _, Backbone, sg) {
+      , "jquery.tinymce"], function ($, _, Backbone, sg, tinymce) {
 
   var views = sg.views;
 

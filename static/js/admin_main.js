@@ -7,13 +7,13 @@ require.config({
   baseUrl: baseUrl,
   paths: {
     stonegarden: '/a/config',
-    jquery: '../vendor/js/jquery-1.8.1',
+    jquery: '../vendor/js/jquery-1.10.2',
     'jquery.ui': '../vendor/js/jquery-ui-1.10.1.custom',
     'jquery.foundation': '../vendor/js/foundation/foundation',
     'jquery.foundation.reveal': '../vendor/js/foundation/foundation.reveal',
     'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
     'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
-    'jquery.tinymce': '../vendor/js/tiny_mce/jquery.tinymce',
+    'jquery.tinymce': '../vendor/js/tinymce/tinymce.min',
     ace: '../vendor/js/ace/ace',
     backbone: '../vendor/js/backbone-1.1.0',
     underscore: '../vendor/js/underscore-1.5.2'
@@ -21,12 +21,29 @@ require.config({
   shim: {
     'stonegarden': ['jquery'],
     'jquery.ui': ['jquery'],
-    'jquery.tinymce': ['jquery'],
     'jquery.foundation': ['jquery'],
     'jquery.foundation.reveal': ['jquery.foundation'],
     'jquery.foundation.orbit': ['jquery.foundation'],
     'jquery.foundation.topbar': ['jquery.foundation'],
     ace: {exports: 'ace'},
+
+    'jquery.tinymce':{
+      exports: 'jquery.tinymce',
+      init: function () {
+            console.log('jqTMCE',  this.tinymce);
+            // this.tinyMCE.Dom.Event.domLoaded = true;
+            return this.tinymce;
+            }
+     },
+    // 'jquery.tinymce':{
+    //   deps: ['jquery'],
+    //   exports: 'jquery.tinymce',
+    //   init: function () {
+    //         // console.log('jqTMCE',  $.tinymce, $.tinyMCE);
+    //         // this.tinyMCE.Dom.Event.domLoaded = true;
+    //         return this.tinymce;
+    //         }
+    //  },
     underscore: {
       exports: '_'
     },

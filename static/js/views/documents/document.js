@@ -32,7 +32,8 @@ define(["jquery"
 
     }, mixins.hasContextMenu.events),
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options || {};
       this.model
         .on("document:delete", this.deleteDocument, this)
         .on("document:attributes", this.editAttributes, this)

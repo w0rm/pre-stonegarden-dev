@@ -25,9 +25,6 @@
         $_("This text is not written yet.")
         <strong>$_("Click to write the text.")</strong><br>
     </p>
-    <p>
-        $_("Do not worry, such placeholder texts are not visible on the public website until you edit them.")
-    </p>
 </script>
 <script type="text/template" id="block-inserter-template">
     <div class="sg-block-inserter-menu">
@@ -62,9 +59,9 @@
 <script type="text/template" id="block-form-template">
     <form>
         <p><textarea name="content"><%= block.content || "" %></textarea></p>
-        <p>
+        <p class="text-right">
             <button class="button" type="submit">$_("Save")</button>
-            <button class="button" type="reset">$_("Cancel")</button>
+            <button class="button secondary" type="reset">$_(u"×")</button>
         </p>
     </form>
 </script>

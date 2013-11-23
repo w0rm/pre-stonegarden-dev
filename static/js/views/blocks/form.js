@@ -2,9 +2,9 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "views/form"
       , "jquery.tinymce"
-      , "plugins/jquery.ace"], function ($, _, Backbone, sg) {
+      , "views/form"
+      , "plugins/jquery.ace"], function ($, _, Backbone, sg, tinymce) {
 
   var views = sg.views;
 
@@ -47,7 +47,11 @@ define(["jquery"
       this.$textarea = this.$("[name=content]");
 
       if (this.getBlockType() === "wysiwyg") {
+        
         this.$textarea.tinymce(sg.config.tinymce);
+        // cf = _.extend(sg.config.tinymce, {selector:this.$("[name=content]")})
+        // console.log('cf', cf)
+        // tinymce.init(cf)
       } else {
         this.$textarea.ace()
       }
