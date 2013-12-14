@@ -32,7 +32,7 @@ define(["jquery"
         .on("block:attributes", this.editAttributes, this)
         .on("block:copy", this.hideContextMenu, this)
         .on("destroy", this.remove, this)
-        .on("change:html change:is_published",
+        .on("change:html change:is_published change:blocks",
             this.updateBlock, this);
     },
 
