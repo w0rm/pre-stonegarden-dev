@@ -121,6 +121,7 @@ define(["jquery"
         this.collection.remove(model);
         this.model = model;
         this.collection.fetch({
+          reset: true,
           data: _.extend({parent_id: model.get("id")}, this.filter)
         });
       };
