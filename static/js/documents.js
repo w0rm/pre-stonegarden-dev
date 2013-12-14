@@ -41,7 +41,7 @@ define(['jquery'
 
       navigateToFolder: function(folder) {
         if (folder.get("type") === "folder") {
-          this.navigate("//" + folder.get("id"), {trigger: false});
+          this.navigate("/" + folder.get("id"), {trigger: false});
         }
       },
 
