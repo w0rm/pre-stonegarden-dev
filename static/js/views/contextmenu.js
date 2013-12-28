@@ -41,12 +41,6 @@ define(["jquery"
               this.renderMenu(item)
             );
           } else {
-            if (menu.context) {
-              $item.hover(
-                function(){ menu.context.set('isHighlighted', true) },
-                function(){ menu.context.set('isHighlighted', false) }
-              );
-            }
             if (item.click) {
               $item.append(
                 $('<a href="#">' + item.text + '</a>').click(function(e){
@@ -61,6 +55,18 @@ define(["jquery"
             }
           }
         };
+
+        if (menu.context && !item.items) {
+          $item.hover(
+            function(){ menu.context.set('isHighlighted', true) },
+            function(){ menu.context.set('isHighlighted', false) }
+          );
+        } else if (item.items && item.context) {
+          $item.hover(
+            function(){ item.context.set('isHighlighted', true) },
+            function(){ item.context.set('isHighlighted', false) }
+          );
+        }
 
         if (item.title) {
           $item.children(":first").attr("title", item.title)

@@ -61,8 +61,11 @@
 .sg-contextmenu-separator {
   list-style-type: none;
   padding: 0;
-  border-bottom: 1px solid $grey10;
-  margin: 5px 0;
+  height: 11px;
+  background-color: $grey10;
+  border-color: white;
+  border-width: 5px 0;
+  border-style: solid none;
 }
 
 .sg-contextmenu-left {
