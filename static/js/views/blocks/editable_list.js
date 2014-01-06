@@ -20,7 +20,7 @@ define(["jquery"
     events: {
       "mousemove .js-block": "showInserter",
       "mousemove .js-placeholder": "showInserter",
-      "mouseleave": "hideInserter",
+      "mouseleave": "hideInserter"
     },
 
     initialize: function(options) {
@@ -45,7 +45,7 @@ define(["jquery"
       // Detach inserter and placeholder
       // to ensure new block is inserted
       // in correct position
-     
+
       this.removeInserter();
       this.hidePlaceholder();
       return views.BlockList.prototype.addBlock.apply(this, arguments);
@@ -69,14 +69,14 @@ define(["jquery"
     },
 
     showInserter: function(e) {
-      
+
       var inserter = this.inserter;
-      // pass if inserter-menu is displayed 
+      // pass if inserter-menu is displayed
       if (inserter._isInserting) return;
       if (this._isCreatingBlock) return;
-      
+
       var $block = $(e.currentTarget);
-      var proximity = inserter.proximity || 50 
+      var proximity = inserter.proximity || 50
         , proxy = ($block.height() / 2) > proximity ? proximity : $block.height() / 2
         , istop = $block.is(".js-placeholder") || ((e.pageY - $block.offset().top) < proxy)
         , isbottom = $block.is(".js-placeholder") || (e.pageY > ($block.offset().top + $block.height() - proxy))
@@ -85,16 +85,16 @@ define(["jquery"
       e.stopPropagation();
 
       // do nothing while hovering hot area if alredy rendered
-      if ( $el.is(".js-inserter") ) return; 
-        
-      // display inserter only %proximity% pixels from top and bottom edge of te block  
+      if ( $el.is(".js-inserter") ) return;
+
+      // display inserter only %proximity% pixels from top and bottom edge of te block
       // detach inserter while we move mouse in the center of the block
       if(!istop && !isbottom) {
         inserter.trigger("inserter:detach");
         return;
       }
 
-      if ( 
+      if (
         (istop || isbottom)
         && $block.parent().is(".js-blocks")
         && !$block.parent().parent().is(".row")
@@ -105,11 +105,11 @@ define(["jquery"
 
     },
     hideInserter: function() {
-      // to hide inserter we detach it 
+      // to hide inserter we detach it
        if (this.inserter._isInserting) return;
        this.inserter.trigger("inserter:detach");
     },
-    // remove  will detach inserter and reset View varibles to default 
+    // remove  will detach inserter and reset View varibles to default
     removeInserter: function(){
       this.inserter.trigger("inserter:detach");
       sg.vent.trigger("inserter:uninsert");

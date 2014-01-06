@@ -101,8 +101,7 @@ class TinyMCELinkList:
 
     def GET(self):
         link_list = pages_to_tinymce_link_list_json(get_pages_in_tree_order())
-        web.header("Content-Type", "text/javascript; charset=utf-8")
-        # return render_partial.site.tinymce_link_list(link_list)
+        web.header("Content-Type", "application/json")
         return link_list
 
 
