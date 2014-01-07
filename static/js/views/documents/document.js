@@ -58,6 +58,10 @@ define(["jquery"
       if (this.options.isSelectable) {
         this.model.set('isSelected', !this.model.get('isSelected'));
       }
+      console.log('Element — this collection', this.collection)
+      console.log('Element — click model', this.model)
+      console.log('Element —  click $el', this.$el)
+      window.that = this;
     },
 
     deleteDocument: function() {

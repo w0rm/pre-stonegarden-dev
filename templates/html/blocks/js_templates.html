@@ -163,18 +163,20 @@
         <% } %>
     </figure>
 </script>
+
+
 <script type="text/template" id="block-gallery-form-template">
     <form>
-        <p>$_("Images below will be inserted as a gallery.")</p>
+        <p>$_("Images in the folder below will be displayed as a gallery.")</p>
         <div class="sg-documents-scroller">
             <ul class="sg-document-tiles js-documents"></ul>
         </div>
         <p>
-            <label>
-                <input name="autoplay"
-                       <%= gallery.autoplay && "checked" || "" %>
-                       type="checkbox" >$_("Autoplay")
-            </label>
+             <label>
+                <input name="caption"
+                        <%= gallery.caption && "checked" || "" %>
+                       type="checkbox" > $_("Show captions")
+             </label>
         </p>
         <p>
             <button class="button" type="submit">$_("Save")</button>
@@ -182,17 +184,27 @@
         </p>
     </form>
 </script>
+
+
 <script type="text/template" id="block-gallery-template">
-    <div class="slideshow-wrapper js-gallery"
-         <%= gallery.autoplay && "data-timer='true'" || "" %>
-         data-options='<%= JSON.stringify(gallery) %>'>
-        <div class="preloader"></div>
-        <ul data-orbit>
+    <div class="js-gallery"
+        <% if (gallery.caption) { %>
+           data-iscaption="true" 
+        <% } %>
+        // TODO Refine to keep intimacy below away from frontend
+        data-options='<%= JSON.stringify(gallery) %>'
+        > 
         <% _.each(gallery.images, function(image) { %>
-            <li>
-                <img src="<%= image.sizes.l %>">
-            </li>
+
+            <a href="<%= image.sizes.l %>" 
+                 <% if (gallery.caption) { %>
+                    data-caption="<%= image.title %>" 
+                    data-description="<%= image.description %>"
+                <% } %>
+                data-id="gimg<%= image.id %>"
+            ></a>
         <% }) %>
-        </ul>
     </div>
+    <figcaption class="gallery-caption"></figcaption>
+
 </script>

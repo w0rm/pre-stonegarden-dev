@@ -11,9 +11,9 @@ require.config({
     'jquery.ui': '../vendor/js/jquery-ui-1.10.1.custom',
     'jquery.foundation': '../vendor/js/foundation/foundation',
     'jquery.foundation.reveal': '../vendor/js/foundation/foundation.reveal',
-    'jquery.foundation.orbit': '../vendor/js/foundation/foundation.orbit',
     'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
     'jquery.tinymce': '../vendor/js/tinymce/tinymce.min',
+    'fotorama': '../vendor/js/fotorama',
     ace: '../vendor/js/ace/ace',
     backbone: '../vendor/js/backbone-1.1.0',
     underscore: '../vendor/js/underscore-1.5.2'
@@ -23,8 +23,8 @@ require.config({
     'jquery.ui': ['jquery'],
     'jquery.foundation': ['jquery'],
     'jquery.foundation.reveal': ['jquery.foundation'],
-    'jquery.foundation.orbit': ['jquery.foundation'],
     'jquery.foundation.topbar': ['jquery.foundation'],
+    'fotorama': ['jquery'],
     ace: {exports: 'ace'},
 
     'jquery.tinymce':{
@@ -48,7 +48,7 @@ require(["blocks", "documents"]);
 require(["jquery"
        , "jquery.ui"
        , "plugins/jquery.responsive"
-       , "plugins/jquery.gallery"
+       , "plugins/sg.gallery"
        , "jquery.foundation.topbar"], function($) {
 
   $.datepicker.regional[ "ru" ] = {
@@ -75,8 +75,9 @@ require(["jquery"
 
   $(function() {
     $(document).foundation('topbar');
-    $(".responsive").responsiveImage()
-    $(".js-gallery").gallery()
+    $(".responsive").responsiveImage();
+    $(".js-gallery").gallery();
+
     var svg = !!('createElementNS' in document &&
       document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect)
     if (!svg) document.body.className += ' no-svg'

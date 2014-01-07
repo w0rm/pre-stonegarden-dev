@@ -84,7 +84,9 @@ define(["jquery"
         return {
           id: image.get("id"),
           sizes: image.get("sizes"),
-          src: image.get("src")
+          src: image.get("src"),
+          title: image.get("title"),
+          description: image.get("description")
         }
       })
       this.gallery.set("images", images)

@@ -24,7 +24,8 @@ define(["jquery"
     events: {
       "dblclick .js-back": "openParent",
       "sortupdate": "sortupdateEvent",
-      "sortstart": "sortstartEvent"
+      "sortstart": "sortstartEvent",
+      "click": "testListEvent"
     },
 
     initialize: function(options) {
@@ -42,6 +43,13 @@ define(["jquery"
         this.collection.on('change:isSelected', this.selectDocument, this)
       }
 
+    },
+
+    testListEvent: function(e,v,n,t,i) {
+      console.log('this collection', this.collection)
+      console.log('click model', this.model)
+      console.log('click $el', this.$el)
+      window.that = this;
     },
 
     selectDocument: function(model, isSelected) {
@@ -69,7 +77,6 @@ define(["jquery"
 
       return this;
     },
-
     makeItemView: function(model) {
       return new views.Document({
         model: model,

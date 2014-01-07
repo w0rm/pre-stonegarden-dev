@@ -1,8 +1,11 @@
+// default Image Gallery styles
 
-.orbit-container .orbit-bullets {
-  text-align: center;
-  li {
-    display: inline-block;
-    float: none
-  }
+@import 'fotorama/fotorama';
+
+.fotorama__caption{
+	display: none;
+}
+body > .block > .blocks > .content > .gallery-caption {
+	padding-right: 1em;
+	padding-left: 1em;
 }

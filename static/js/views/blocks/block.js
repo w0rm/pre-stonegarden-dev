@@ -8,7 +8,7 @@ define(["jquery"
       , "views/blocks/list"
       , "views/blocks/editable_list"
       , "views/blocks/attributes"
-      , "plugins/jquery.gallery"], function ($, _, Backbone, sg) {
+      , "fotorama"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
     , views = sg.views
@@ -126,7 +126,7 @@ define(["jquery"
       // TODO: review for better implementation
       setTimeout(function(){
         self.$(".js-gallery").gallery();
-      }, 0)
+      }, 0);
 
       return this;
     },
