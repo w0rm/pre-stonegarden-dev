@@ -24,8 +24,7 @@ define(["jquery"
     events: {
       "dblclick .js-back": "openParent",
       "sortupdate": "sortupdateEvent",
-      "sortstart": "sortstartEvent",
-      "click": "testListEvent"
+      "sortstart": "sortstartEvent"
     },
 
     initialize: function(options) {
@@ -45,12 +44,6 @@ define(["jquery"
 
     },
 
-    testListEvent: function(e,v,n,t,i) {
-      console.log('this collection', this.collection)
-      console.log('click model', this.model)
-      console.log('click $el', this.$el)
-      window.that = this;
-    },
 
     selectDocument: function(model, isSelected) {
       if (isSelected) {
@@ -131,7 +124,10 @@ define(["jquery"
           reset: true,
           data: _.extend({parent_id: model.get("id")}, this.filter)
         });
-      };
+      } else if (model.get("type") === "image") {
+        // trigger event on model
+        model.trigger("document:preview", model, this.collection);
+      }
       this.trigger("document:open", model);
       return this;
     },

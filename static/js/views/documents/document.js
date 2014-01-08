@@ -6,6 +6,7 @@ define(["jquery"
       , "views/modal"
       , "views/delete_modal"
       , "views/documents/copy_link"
+      , "views/documents/preview"
       , "views/documents/attributes"], function ($, _, Backbone, sg) {
 
   var utils = sg.utils
@@ -34,8 +35,11 @@ define(["jquery"
 
     initialize: function(options) {
       this.options = options || {};
+
+
       this.model
         .on("document:delete", this.deleteDocument, this)
+        .on("document:preview", this.displayPreview, this)
         .on("document:attributes", this.editAttributes, this)
         .on("document:copyLink", this.copyLink, this)
         .on("destroy", this.remove, this)
@@ -54,14 +58,18 @@ define(["jquery"
       return this;
     },
 
-    toggleSelected: function() {
+
+    displayPreview: function(model,collection) {
+      new views.Modal({
+        contentView: new views.DocumentPreview({model: this.model})
+      }).open();
+
+    },
+
+    toggleSelected: function(e,t,a) {
       if (this.options.isSelectable) {
         this.model.set('isSelected', !this.model.get('isSelected'));
       }
-      console.log('Element — this collection', this.collection)
-      console.log('Element — click model', this.model)
-      console.log('Element —  click $el', this.$el)
-      window.that = this;
     },
 
     deleteDocument: function() {
@@ -83,6 +91,19 @@ define(["jquery"
     openDocument: function() {
       this.model.trigger("document:open", this.model);
     }
+    , dummyTest: function(model,collection) {
+      console.log('Element — this model passed', model)
+      console.log('Element —  this.model', this.model)
+      console.log('Element — collection passed', collection)
+      var m = this.model
+      console.log('Element —  model collection', model.collection)
+      // console.log('Element —  click $el', this.$el)
+      this.model.collection.each(function(doc){
+        console.log('each > ', doc.get('type'), doc.get('src'), doc.get('title'))
+        var isThis = (model.get('id') == doc.get('id')) ? true : false ;
+        if (isThis) console.log('this', model.get('id') , doc.get('id'), doc.$el)
+      })
+    }   
 
   }));
 

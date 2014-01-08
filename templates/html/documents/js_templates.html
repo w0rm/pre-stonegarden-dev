@@ -57,6 +57,7 @@
         </p>
     </form>
 </script>
+
 <script type="text/template" id="document-attributes-template">
     <form>
         <label>$_("Title")</label>
@@ -73,6 +74,22 @@
         </p>
     </form>
 </script>
+
+<script type="text/template" id="document-preview-template">
+    <div class="previewGallery">
+        <% _.each(documents, function(image) { %>
+            <% if (image.type === "image") { %>
+            <a href="<%= image.sizes.m %>" 
+                data-thumb = "<%= image.sizes.s %>" 
+                data-full = "<%= image.sizes.l %>" 
+                data-caption = "<%= image.title %>" 
+                id="frame<%= image.id %>"></a>
+            <% } %>
+         <% }); %>
+    </div>
+</script>
+
+
 <script type="text/template" id="document-copy-link-template">
     <label>$_("Copy link")</label>
     <input name="link" type="text" value="<%= document.src %>">
