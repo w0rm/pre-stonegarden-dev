@@ -148,13 +148,14 @@ define(["jquery"
 
     sortupdateEvent: function(e, ui) {
       var docId = ui.item.data("id")
+        , collection = this.collection
         , position = this.$el.children('.sg-document').index(ui.item) + 1
-        , doc = this.collection.get(docId)
-
-      this.collection
-        .remove(doc, {silent: true})
-        .add(doc, {at: position - 1, silent: true})
-        .each(function(m, index) {
+        , doc = collection.get(docId)
+        // in backbone 1.1  The Collection methods add, remove, set, push, 
+        // and shift now return the model (or models) added or removed from the collection 
+        collection.remove(doc, {silent: true})
+        collection.add(doc, {at: position - 1, silent: true})
+        collection.each(function(m, index) {
           m.set({position: index + 1})
         })
       doc.save();
