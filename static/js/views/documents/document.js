@@ -59,7 +59,7 @@ define(["jquery"
     },
 
 
-    displayPreview: function(model,collection) {
+    displayPreview: function(model) {
       new views.Modal({
         contentView: new views.DocumentPreview({model: this.model})
       }).open();

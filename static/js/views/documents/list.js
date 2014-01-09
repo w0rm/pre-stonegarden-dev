@@ -125,8 +125,8 @@ define(["jquery"
           data: _.extend({parent_id: model.get("id")}, this.filter)
         });
       } else if (model.get("type") === "image") {
-        // trigger event on model
-        model.trigger("document:preview", model, this.collection);
+        // trigger event on model to preview
+        model.trigger("document:preview", model);
       }
       this.trigger("document:open", model);
       return this;
