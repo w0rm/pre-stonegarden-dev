@@ -59,20 +59,33 @@
 </script>
 
 <script type="text/template" id="document-attributes-template">
-    <form>
-        <label>$_("Title")</label>
-        <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
-        <label>$_("Description")</label>
-        <textarea name="description"><%= document.description || "" %></textarea>
-        <p>
-            <label><input <%= document.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
-        </p>
-        <div class="js-alert"></div>
-        <p>
-            <button class="button" type="submit">$_("Save")</button>
-            <button class="button" type="reset">$_("Cancel")</button>
-        </p>
-    </form>
+    <div class="row">
+        <div class="small-6 columns">
+            <% if (document.type === "image") { %>
+                    <img src ="<%= document.sizes.m %>" 
+                        alt = "<%= document.title %>" 
+                        class="arttibutesPreview" />
+            <% } %>
+
+        </div>
+        <div class="small-6 columns">
+
+            <form>
+                <label>$_("Title")</label>
+                <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
+                <label>$_("Description")</label>
+                <textarea name="description"><%= document.description || "" %></textarea>
+                <p>
+                    <label><input <%= document.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
+                </p>
+                <div class="js-alert"></div>
+                <p>
+                    <button class="button" type="submit">$_("Save")</button>
+                    <button class="button" type="reset">$_("Cancel")</button>
+                </p>
+            </form>
+        </div> 
+    </div>
 </script>
 
 <script type="text/template" id="document-preview-template">
