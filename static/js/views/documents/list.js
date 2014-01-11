@@ -30,8 +30,8 @@ define(["jquery"
     initialize: function(options) {
       this.options = options || {};
       this.filter = this.options.filter || {};
-
       this.collection = this.collection || new collections.Documents;
+      this.breadcrambs = {}; // reference tree of passed folders
 
       this.collection
         .on("add", this.appendDocument, this)
@@ -67,7 +67,8 @@ define(["jquery"
       if (this.options.isSortable) {
         this.$el.sortable({forcePlaceholderSize: true, items: '.sg-document'})
       }
-
+      
+      this.$el.parent().find('.sg-storage-title p').text(this.model.get('title'))
       return this;
     },
     makeItemView: function(model) {

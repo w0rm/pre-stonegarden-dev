@@ -173,7 +173,7 @@ def document_src(document):
     if document.type == "image":
         document.src = image_url(document, "t")
         document.sizes = dict(
-            (size, image_url(document, size)) for size in ("s", "m", "l")
+            (size, image_url(document, size)) for size in ("s", "m", "l","x")
         )
 
     elif document.type == "document":

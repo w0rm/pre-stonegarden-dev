@@ -84,6 +84,7 @@ config = web.storage(
         "s": [400, 400, False, True, False, 80, 0],
         "m": [800, 800, False, True, False, 75, 0],
         "l": [1200, 1200, False, True, False, 70, 0],
+        "x": [1600, 1600, False, True, False, 66, 0],
     },
     css_classes=[
         ("sg-padtop", N_("Top padding"), N_("Adds top padding")),
@@ -116,6 +117,7 @@ config = web.storage(
         s=N_("Small"),
         m=N_("Medium"),
         l=N_("Large"),
+        x=N_("ExtraLarge"),
     ),
     sanitizer=dict(
         allowed_attributes={

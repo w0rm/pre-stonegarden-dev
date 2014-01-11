@@ -1,18 +1,18 @@
 <script type="text/template" id="document-storage-template">
     <div class="row">
         <div class="large-12 columns">
-            <p></p>
+            <div class="left sg-storage-title"><p>Storage</p></div>
             <div class="right">
                 <ul class="button-group">
                     <li>
-                        <button class="button sg-ico-upload sg-file-input">
-                            $_("Upload files")
+                        <button class="secondary button sg-file-input">
+                            $_("Upload")
                             <input type="file" multiple name="upload">
                         </button>
                     </li>
                     <li>
-                        <button class="button sg-ico-folder-add js-create-folder">
-                            $_("Create folder")
+                        <button class="secondary button js-create-folder">
+                            $_("New folder")
                         </button>
                     </li>
                 </ul>
@@ -44,6 +44,7 @@
         <span class="sg-document-image-container"><img src="<%= document.src %>" alt="<%= document.title %>"></span>
     <% } %>
 </script>
+
 <script type="text/template" id="document-form-template">
     <form>
         <label>$_("Title")</label>
@@ -59,18 +60,26 @@
 </script>
 
 <script type="text/template" id="document-attributes-template">
-    <div class="row">
-        <div class="small-6 columns">
-            <% if (document.type === "image") { %>
-                    <img src ="<%= document.sizes.m %>" 
-                        alt = "<%= document.title %>" 
+    <form>
+        <% if (document.type === "image") { %>
+            <div class="row">
+                
+            <div class="small-6 columns">
+                <p>
+                <img src ="<%= document.sizes.m %>" 
+                       alt = "<%= document.title %>" 
                         class="arttibutesPreview" />
+                </p>
+                <p class="button-group">
+                    <a class="button tiny secondary" href="<%= document.sizes.s %>" title="Resized to fit 400×400 px">Small</a> 
+                    <a class="button tiny secondary" href="<%= document.sizes.m %>" title="Resized to fit 800×800 px">Medium</a>
+                    <a class="button tiny secondary" href="<%= document.sizes.l %>" title="Resized to fit 1200×1200 px">Large</a>
+                    <a class="button tiny secondary" href="<%= document.sizes.x %>" title="Resized to fit 1600×1600 px">Extra Large</a> 
+                </p>
+            </div>
+            <div class="small-6 columns">
             <% } %>
 
-        </div>
-        <div class="small-6 columns">
-
-            <form>
                 <label>$_("Title")</label>
                 <input name="title" type="text" value="<%= document.title || t_("Untitled Folder") %>">
                 <label>$_("Description")</label>
@@ -78,14 +87,21 @@
                 <p>
                     <label><input <%= document.is_published && "checked" || "" %> type="checkbox" name="is_published">$_("Show on site")</label>
                 </p>
-                <div class="js-alert"></div>
-                <p>
-                    <button class="button" type="submit">$_("Save")</button>
-                    <button class="button" type="reset">$_("Cancel")</button>
-                </p>
-            </form>
-        </div> 
+                
+        <% if (document.type === "image") { %>
+            </div> 
+            </div>
+        <% } %>
+    <div class="row">
+        <div class="columns clearfix">
+            <div class="js-alert"></div>
+            <p class="right">
+                <button class="button" type="submit">$_("Save")</button>
+                <button class="button secondary" type="reset">$_(u"×")</button>
+            </p>
+        </div>
     </div>
+    </form>
 </script>
 
 <script type="text/template" id="document-preview-template">
@@ -93,7 +109,7 @@
         <% _.each(documents, function(image) { %>
             <% if (image.type === "image") { %>
             <a href="<%= image.sizes.m %>" 
-                data-thumb = "<%= image.sizes.s %>" 
+                data-thumb = "<%= image.src %>" 
                 data-full = "<%= image.sizes.l %>" 
                 data-caption = "<%= image.title %>" 
                 id="frame<%= image.id %>"></a>
