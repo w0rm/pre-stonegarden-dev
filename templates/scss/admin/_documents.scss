@@ -1,8 +1,8 @@
-
+$tileWidth: 140;
 
 .sg-document-storage {
   background-color: $greyBackgroundColor;
-  min-height: 180px * 3;
+  min-height: ($tileWidth + 30) * 3+px;
 }
 
 .sg-documents-scroller {
@@ -25,10 +25,12 @@
     @include user-select(none);
     display: inline-block;
     vertical-align: top;
-    width: 190px;
-    padding: 170px 15px 10px;
+    width: $tileWidth+px;
+    padding: $tileWidth+px 0 0 0;
+    margin: 10px;
     position: relative;
-    @include border-radius;
+    @include box-shadow(rgba(#aaa, 0.4) 0 0 3px);
+    background: #fff;
   }
 
   .sg-document, .sg-document-back {
@@ -38,13 +40,12 @@
 
     &:hover {
       z-index: 3;
-      @include box-shadow;
-      background: #fff;
+      @include box-shadow(rgba($primary-color, 0.4) 0 0 10px);
       .sg-ico-folder {
-        color: $greyBackgroundColor;
+        @include text-shadow(rgba($primary-color, 0.4) 0 0  16px);
       }
       .sg-ico-arrow-l {
-        color: #fff;
+        color: $grey60;
       }
     };
     &.sg-selected {
@@ -55,22 +56,38 @@
     }
 
     .sg-contextmenu-show {
-      top: 125px;
-      left: 25px;
+      top: 100px;
+      left: 10px;
     }
   }
 
+  // folders and back button are inverted
+  .sg-document-back, 
+  .sg-document-back:hover, 
+  .sg-document-folder,
+  .sg-document-folder:hover {@include box-shadow(rgba(#FFF, 0.0) 0 0 0px);}
+  .sg-document-back, 
+  .sg-document-folder {
+    background-color: $greyBackgroundColor;
+    .sg-document-title {
+      padding-left: 0; 
+      border-top: 0px solid;
+      font-weight: 600;
+    }
+    .sg-ico-folder {left:0;}
+  }
   .sg-document-loader  {
     background: image-url("loader.gif") center center no-repeat;
   }
 
   .sg-document-image-container {
     position: absolute;
-    top: 10px;
-    left: 15px;
-    width: 160px;
-    height: 160px;
-    line-height: 160px;
+    top: 0px;
+    left: 0px;
+    width: $tileWidth+px;
+    height: $tileWidth+px;
+    line-height: $tileWidth+px;
+    background-color: #fafafa;
     img {
       vertical-align: bottom;
     }
@@ -108,31 +125,35 @@
   .sg-ico-arrow-l {
     position: absolute;
     top: 50px;
-    width: 160px;
+    width: 60px;
     text-align: center;
-    left: 15px;
-    font-size: 80px;
+    left: 20px;
+    font-size: 60px;
     color: $grey10;
   }
 
   .sg-ico-folder {
     position: absolute;
     top: 10px;
-    color: #fff;
-    left: 15px;
-    font-size: 160px;
-    line-height: 160px;
-    height: 160px;
-    overflow: hidden;
+    color: white;
+    left: 10px;
+    font-size: 100px;
+    line-height: 100px;
+    height: $tileWidth+px;
+    // overflow: hidden;
     &:before {
-      vertical-align: -32px;
+      vertical-align: -48px;
     };
   }
 
   .sg-document-title {
+    display: inline-block;
+    width:100%;
+    padding: 10px;
+    border-top: 1px solid #ddd;
     @include user-select(text);
     font-size: 12px;
-    word-break: break-all
+    word-break: break-all;
   }
 
 }
