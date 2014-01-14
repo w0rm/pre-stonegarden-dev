@@ -23,6 +23,7 @@ define(["jquery"
 
     events: {
       "dblclick .js-back": "openParent",
+      // "dblclick .sg-document-folder": "openDocument",
       "sortupdate": "sortupdateEvent",
       "sortstart": "sortstartEvent"
     },
@@ -37,6 +38,10 @@ define(["jquery"
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
         .on("document:open", this.openDocument, this)
+        // .on("all", function(eventName) {
+        //   console.log('Collection event triggerred > ',eventName);
+        // });
+
 
       if (this.options.isSelectable) {
         this.collection.on('change:isSelected', this.selectDocument, this)
@@ -117,6 +122,7 @@ define(["jquery"
     },
 
     openDocument: function(model) {
+      //model = model || this.model;
       var data;
       if (model.get("type") === "folder") {
         this.collection.remove(model);

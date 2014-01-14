@@ -47,7 +47,10 @@ define(["jquery"
             this.render, this)
         .on("change:position", function(m, pos) {
           this.$el.attr("data-position", pos);
-        }, this);
+        }, this)
+        //  .on("all", function(eventName) {
+        //   console.log('Document event triggerred > ',eventName);
+        // });
     },
 
     render: function() {
@@ -91,6 +94,7 @@ define(["jquery"
     openDocument: function() {
       this.model.trigger("document:open", this.model);
     }
+
     , dummyTest: function(model,collection) {
       console.log('Element — this model passed', model)
       console.log('Element —  this.model', this.model)

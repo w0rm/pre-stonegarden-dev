@@ -45,7 +45,7 @@ define(["jquery"
       return this;
     },
 
-    open: function(model) {
+    openDoc: function(model) {
       this.documentListView.openDocument(model)
     },
 

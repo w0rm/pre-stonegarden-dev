@@ -90,19 +90,25 @@ $tileWidth: 140;
     background-color: #fafafa;
     img {
       vertical-align: bottom;
+      max-width: $tileWidth+px;
+      max-height: $tileWidth+px;
+      
     }
   }
-
+  :hover .sg-document-extension em {
+      background-color: $primary-color;
+    
+  }
   .sg-document-extension {
     position: absolute;
-    top: 80px;
-    left: 90px;
+    top:  $tileWidth/2+px;
+    left:  $tileWidth/2+px;
     margin-top: -24px;
     margin-left: -24px;
 
     &:before {
       font-size: 48px;
-      color: #808285;
+      color: $grey30;
     };
 
     em {
@@ -114,11 +120,12 @@ $tileWidth: 140;
       top: -10px;
       left: -25px;
       color: #fff;
-      background-color: #80c73a;
+      background-color: $grey60;
       font-size: 12px;
-      font-weight: bold;
+      font-weight: normal;
       font-style: normal;
       padding: 0 2px;
+
     }
   }
 

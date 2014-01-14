@@ -33,7 +33,6 @@ define(['jquery'
         this.view = new views.DocumentStorage({
           collection: this.documents
         });
-
         this.view
           .render()
           .$el.appendTo("body");
@@ -41,7 +40,7 @@ define(['jquery'
 
       navigateToFolder: function(folder) {
         if (folder.get("type") === "folder") {
-          this.navigate("/" + folder.get("id"), {trigger: false});
+          this.navigate("/" + folder.get("id"), {trigger:false, replace:true});
         }
       },
 
@@ -49,12 +48,12 @@ define(['jquery'
         var folder;
         if (folder_id) {
           folder = new models.Document({id: folder_id})
-            .on("reset", function(model) {
-              this.view.open(model)
+            .once("sync", function(model) {
+              this.view.openDoc(model)
             }, this)
             .fetch();
         } else {
-          this.view.open(this.rootFolder);
+          this.view.openDoc(this.rootFolder);
         }
       }
 
