@@ -30,3 +30,5 @@ static/img/sprites/*
 
 # Bundler
 .bundle
+
+*.temp

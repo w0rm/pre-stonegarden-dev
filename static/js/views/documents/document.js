@@ -28,8 +28,20 @@ define(["jquery"
 
     events: _.extend({
 
-      "dblclick": "openDocument",
-      "click": "toggleSelected"
+      // "dblclick": "openDocument",
+      // "click": "toggleSelected",
+      "mouseup" : _.debounce(function(e) {
+            if (this.doucleckicked) {
+                this.doucleckicked = false;
+            } else {
+                this.toggleSelected.call(this, e);
+            }
+        }, 300),
+
+        "dblclick": function(e) {
+            this.doucleckicked = true;
+            this.openDocument.call(this, e);
+        }
 
     }, mixins.hasContextMenu.events),
 
@@ -63,10 +75,15 @@ define(["jquery"
 
 
     displayPreview: function(model) {
-      new views.Modal({
-        contentView: new views.DocumentPreview({model: this.model})
-      }).open();
 
+      // only for full-feature mode (standalon app)
+      // (low-feature mode = we also use it to select files in dialog)
+      if (this.options.isContextMenuEnabled) {
+        new views.Modal({
+          contentView: new views.DocumentPreview({model: this.model})
+          , sizeClass: "xlarge"
+        }).open();
+      }
     },
 
     toggleSelected: function(e,t,a) {
