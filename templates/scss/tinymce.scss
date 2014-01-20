@@ -1,6 +1,25 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700&subset=latin,cyrillic);
 
-@import "config";
-@import "base/helpers";
-@import "base/styles";
-@import "modules/wysiwyg";
+@import 'config',
+	'modules/foundation/foundation',
+	
+  // "modules/foundation/components/global",
+  "modules/foundation/components/type",
+  // "components/buttons",
+  // "components/button-groups",
+  // "components/section",
+  // "components/breadcrumbs",
+  // "components/keystrokes",
+  "modules/foundation/components/labels",
+  // "components/inline-lists",
+  // "components/pagination",
+  // "components/panels",
+  "modules/foundation/components/tables",
+
+	'base/helpers',
+	'base/styles',
+	'modules/wysiwyg'
+	;
+
+// current project custom styles
+// @import "this/project";

@@ -1,4 +1,4 @@
-require 'zurb-foundation'
+# require 'zurb-foundation'
 
 # Set this to the root of your project when deployed:
 sass_dir = "."
@@ -18,5 +18,6 @@ http_stylesheets_path = "/static/css"
 # To enable relative paths to assets via compass helper functions. Uncomment:
 relative_assets = true
 environment = :development
-#output_style = :expanded # :compressed
+output_style = :expanded
+# output_style =  :compressed
 #line_comments = false

@@ -2,6 +2,7 @@
 
 @import 'fotorama/fotorama';
 
+// hide native fotorama captions because we'll use customly made ones
 .block .content .fotorama__caption{
 	display: none;
 }
