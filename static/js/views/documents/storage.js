@@ -17,6 +17,13 @@ define(["jquery"
     className: "sg-document-storage",
 
     events: {
+      // "click .js-toolbar .js-selected-counter": "getSelectedGroup",
+      "click .js-toolbar .js-deselect-all": "deselectAll",
+      "click .js-toolbar .js-selected-counter": "selectAll",
+      "click .js-toolbar .js-cut": "cutSelected",
+      "click .js-toolbar .js-paste": "pasteSelected",
+      "click .js-toolbar .js-delete": "deleteSelected",
+
       "click .js-create-folder": "createFolder",
       "change input[name=upload]": "changeEvent",
       "dragover": "dragoverEvent",
@@ -43,6 +50,25 @@ define(["jquery"
       });
 
       return this;
+    },
+
+    selectAll: function(){
+      this.collection.trigger("documents:selectAll")
+    },
+    deselectAll: function(){
+      this.collection.trigger("documents:deselectAll")
+    },
+    getSelectedGroup: function(){
+      this.collection.trigger("selected:test")
+    },
+    cutSelected: function(){
+      this.collection.trigger("selected:cut")
+    },
+    pasteSelected: function(){
+      this.collection.trigger("selected:paste")
+    },
+    deleteSelected: function(){
+      this.collection.trigger("selected:delete")
     },
 
     openDoc: function(model) {

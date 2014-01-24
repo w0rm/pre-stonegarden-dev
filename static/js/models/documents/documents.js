@@ -18,22 +18,27 @@ define(["jquery"
     initialize: function() {
       this
         .on("add remove", this.updatePositions, this)
-        .on("change:isSelected", this.unselectDocuments, this);
+        .on("change:chosen", this.unselectDocuments, this);
       this.ajaxQueue = $({});
     },
 
-    unselectDocuments: function(selectedModel, isSelected) {
-      if (!isSelected) return;
+    unselectDocuments: function(selectedModel, chosen) {
+      if (!chosen) return;
       this.each(function(model) {
         if (selectedModel !== model) {
-          model.set('isSelected', false);
+          model.set('chosen', false);
+          model.trigger('document:deselect');
+        } else {
+          model.set('chosen', true);
+          model.trigger('document:select');
+          model.trigger('document:chosen');
         }
-      })
+      });
     },
 
     getSelectedDocument: function() {
       return this.find(function(model) {
-        return model.isSelected;
+        return model.chosen;
       });
     },
 

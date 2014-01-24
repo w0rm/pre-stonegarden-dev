@@ -34,7 +34,7 @@ define(["jquery"
             if (this.doucleckicked) {
                 this.doucleckicked = false;
             } else {
-                this.toggleSelected.call(this, e);
+                this.elections.call(this, e);
             }
         }, 300),
 
@@ -54,30 +54,33 @@ define(["jquery"
         .on("document:preview", this.displayPreview, this)
         .on("document:attributes", this.editAttributes, this)
         .on("document:copyLink", this.copyLink, this)
+
+        .on("document:select", this.selectDocument, this)
+        .on("document:deselect", this.deselectDocument, this)
+        
+     
+       
         .on("destroy", this.remove, this)
-        .on("change:title change:is_published change:isSelected",
+        .on("change:title change:is_published",
             this.render, this)
         .on("change:position", function(m, pos) {
           this.$el.attr("data-position", pos);
-        }, this)
-        //  .on("all", function(eventName) {
-        //   console.log('Document event triggerred > ',eventName);
-        // });
-    },
+        }, this);
+      },
 
     render: function() {
       this.$el
         .attr('class', this.getClassName())
         .html(this.template({"document": this.model.toJSON()}))
-        .data({id: this.model.get('id')})
+        .data({id: this.model.get('id')});
       return this;
     },
+  
+    selectDocument: function(){this.$el.addClass('sg-selected');},
+    deselectDocument: function(){ this.$el.removeClass('sg-selected');},
 
-
+    // only for app mode
     displayPreview: function(model) {
-
-      // only for full-feature mode (standalon app)
-      // (low-feature mode = we also use it to select files in dialog)
       if (this.options.isContextMenuEnabled) {
         new views.Modal({
           contentView: new views.DocumentPreview({model: this.model})
@@ -86,11 +89,32 @@ define(["jquery"
       }
     },
 
-    toggleSelected: function(e,t,a) {
-      if (this.options.isSelectable) {
-        this.model.set('isSelected', !this.model.get('isSelected'));
+    elections: function(event) {
+
+      if (this.model.get('type') !== "folder"){
+
+        if (this.options.isSelectable) {
+          // widget mode
+          this.model.set('chosen', true);
+          this.model
+            .trigger('document:chosen', this.model);
+            // coresponding "document:select/deselect" will be triggered by model
+        } else {
+          // app mode = multiselect
+          if (this.model.get('selected')) {
+            this.model.set('selected', false);
+            this.model.trigger('document:deselect');
+          } else {
+            this.model.set('selected', true);
+            this.model.trigger('document:select');
+          }
+        }
+
       }
+
+   
     },
+
 
     deleteDocument: function() {
       new views.DeleteModal({model: this.model}).open();
@@ -112,7 +136,7 @@ define(["jquery"
       this.model.trigger("document:open", this.model);
     }
 
-    , dummyTest: function(model,collection) {
+    ,dummyTest: function(model,collection) {
       console.log('Element — this model passed', model)
       console.log('Element —  this.model', this.model)
       console.log('Element — collection passed', collection)

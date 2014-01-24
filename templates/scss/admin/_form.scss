@@ -1,6 +1,7 @@
 
 .sg-file-input {
   position: relative;
+  overflow: hidden; //otherwise messing with sorrounded buttons
   input {
     position: absolute;
     cursor: pointer;

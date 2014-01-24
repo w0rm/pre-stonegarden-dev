@@ -50,6 +50,7 @@ $tileWidth: 140;
     };
     &.sg-selected {
       background: $blueBackgroundColor;
+      outline: 2px solid $primary-color;
       &:hover {
         background: lighten($blueBackgroundColor, 2%)
       };

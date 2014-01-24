@@ -1,17 +1,27 @@
 <script type="text/template" id="document-storage-template">
     <div class="row">
-        <div class="large-12 columns">
+        <div class="large-12 columns js-toolbar">
             <div class="left sg-storage-title"><p>Storage</p></div>
-            <div class="right">
+            <div class="right button-bar">
+
+                <ul class="button-group js-selection-state">
+                    <li><span class="js-selected-counter button secondary small" icon="sg-ico-cut" title="Click to select all files">Select all</span></li>
+                    <li><span class="js-deselect-all button secondary small disabled" title="Deselect all">&otimes;</span></li>
+                </ul>
+                <ul class="button-group js-selection-operations">
+                    <li><span class="js-cut button secondary small disabled" icon="sg-ico-cut">Cut</span></li>
+                    <li><span class="js-paste button secondary small disabled" icon="sg-ico-paste">Paste<ins></ins></span></li>
+                    <li><span class="js-delete button secondary small disabled" icon="sg-ico-trash">Delete</span></li>
+                </ul>
                 <ul class="button-group">
                     <li>
-                        <button class="secondary button sg-file-input">
+                        <button class="secondary small button sg-file-input">
                             $_("Upload")
                             <input type="file" multiple name="upload">
                         </button>
                     </li>
                     <li>
-                        <button class="secondary button js-create-folder">
+                        <button class="secondary small button js-create-folder">
                             $_("New folder")
                         </button>
                     </li>

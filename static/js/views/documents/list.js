@@ -10,8 +10,8 @@ define(["jquery"
   var utils = sg.utils
     , views = sg.views
     , collections = sg.collections
-    , models = sg.models;
-
+    , models = sg.models
+    ;
 
   views.DocumentList = Backbone.View.extend({
 
@@ -21,6 +21,8 @@ define(["jquery"
     className: "sg-document-tiles",
     tagName: "ul",
 
+    shadow_buffer: {}, //keep cutted documents here
+    
     events: {
       "dblclick .js-back": "openParent",
       // "dblclick .sg-document-folder": "openDocument",
@@ -32,61 +34,172 @@ define(["jquery"
       this.options = options || {};
       this.filter = this.options.filter || {};
       this.collection = this.collection || new collections.Documents;
-      this.breadcrambs = {}; // reference tree of passed folders
 
       this.collection
         .on("add", this.appendDocument, this)
         .on("reset", this.render, this)
         .on("document:open", this.openDocument, this)
-        // .on("all", function(eventName) {
-        //   console.log('Collection event triggerred > ',eventName);
-        // });
-
 
       if (this.options.isSelectable) {
-        this.collection.on('change:isSelected', this.selectDocument, this)
+        // for widget mode
+        // pass event from model to collection 
+        this.collection.on('change:chosen', this.chooseDocument, this);
+           
+      } else {
+        // for app mode
+        this.collection.on("document:select document:deselect", this.toolbarReflection, this)
+        .on("documents:selectAll", this.selectAll, this)
+        .on("documents:deselectAll", this.deselectAll, this)
+        .on("selected:cut", this.cutSelected, this)
+        .on("selected:paste", this.pasteSelected, this)
+        .on("selected:delete", this.deleteSelected, this)
+      }
+    },
+
+    selectAll: function(){
+      this.collection.forEach(function(model){
+        if(model.get('type') !== 'folder'){
+                model.set('selected',true);
+                model.trigger('document:select');
+          }
+      })
+    },
+    deselectAll: function(){
+      this.collection.forEach(function(model){
+        model.set('selected',false);
+        model.trigger('document:deselect');
+      })
+    },
+    
+    getSelected: function(){
+      return this.collection.filter(function(doc){
+        return doc.get('selected')
+      });
+    },
+
+    cutSelected: function(){
+      if(this.getSelected().length > 0){
+        var e = this.$el.parent()
+          , cut = e.find('.js-toolbar .js-cut')
+          , paste = e.find('.js-toolbar .js-paste')
+          , selected = this.getSelected();
+        
+        this.shadow_buffer = this.getSelected();
+        paste.removeClass('disabled').find('ins').text('('+selected.length+')');
+        cut.addClass('disabled');
+      }
+    },
+
+    pasteSelected: function(){
+      if(this.shadow_buffer.length > 0){
+
+        // var newParent = this.collection.at(0)
+        var newParent = this.model;
+        var offset = this.collection.where({'type':'folder'}).length
+        var selected = this.shadow_buffer;
+        console.log('Paste selected files', newParent, offset, this.shadow_buffer.length)
+        selected.forEach(function(model, c){
+          _position = offset+c;
+          console.log('iterate', c, _position)
+          model.set({
+            'parent_id': newParent.get('id'),
+            'ids': newParent.get('ids'),
+            'position': _position+1,
+          });
+          model.save();
+          this.collection.add(model,{at:_position})
+        },this);
+       this.collection.trigger('reset')
+
+        //cleanup
+        this.collection.trigger('documents:deselectAll');
+        this.$el.parent().find('.js-toolbar .js-paste').addClass('disabled').find('ins').text('');
+        this.$el.parent().find('.js-toolbar .js-cut').removeClass('disabled');
+        this.shadow_buffer = {};
+      }  
+    },
+
+    deleteSelected: function(){
+    var sentenced = this.getSelected();
+      if (sentenced.length > 0 && confirm('Delete all selected files?')){
+        sentenced.forEach(function(model){
+          if(!model.isSystem()){
+            model.destroy({wait: true});            
+          }
+        });
+        this.collection.trigger('documents:deselectAll');
+      }
+    },
+ 
+
+    toolbarReflection: function(){
+      var counter = this.collection.where({'selected':true})
+          , e = this.$el.parent()
+          , select_all =  e.find('.js-toolbar .js-selected-counter')
+          , deselect_all = e.find('.js-toolbar .js-deselect-all')    
+          , cut = e.find('.js-toolbar .js-cut')    
+          , paste = e.find('.js-toolbar .js-paste')    
+          , del_selected =e.find('.js-toolbar .js-delete')
+
+      if (counter.length > 0){
+        deselect_all.removeClass('disabled');
+        cut.removeClass('disabled');
+        // paste.removeClass('disabled');
+        del_selected.removeClass('disabled');
+        e.find('.js-selected-counter').text('Selected ('+counter.length+')');
+
+      } else {
+        deselect_all.addClass('disabled');
+        cut.addClass('disabled');
+        e.find('.js-selected-counter').text('Select all');
+         if(!this.shadow_buffer.length > 0){
+            paste.addClass('disabled');
+            del_selected.addClass('disabled');
+          }
       }
 
     },
 
+    //chooseDocument for widget mode only (for image_form.js & co) 
+    // → only trigger choose event
+    // corresponding select / deselect events triggered in model.documents
+    chooseDocument: function(model, isChosen) {
+      if (isChosen && this.filter.type === model.get("type")) {
+          this.trigger("document:chosen", model);
 
-    selectDocument: function(model, isSelected) {
-      if (isSelected) {
-        if (this.filter.type === model.get("type")) {
-          this.trigger("document:select", model);
-        } else {
-          model.set('isSelected', false)
-        }
-      } else  {
-        this.trigger("document:unselect", model)
       }
     },
+
 
     render: function() {
       this.$el.empty();
       if (this.model.get("parent_id")) {
-        this.$el.append(this.backTemplate())
-      };
+        this.$el.append(this.backTemplate());
+      }
       this.collection.each(this.appendDocument, this);
 
       if (this.options.isSortable) {
-        this.$el.sortable({forcePlaceholderSize: true, items: '.sg-document'})
+        this.$el.sortable({forcePlaceholderSize: true, items: '.sg-document'});
       }
-      
-      this.$el.parent().find('.sg-storage-title p').text(this.model.get('title'))
+      // write folder name 
+      var storageTitle = this.$el.parent().find('.sg-storage-title p');
+      storageTitle.text(this.model.get('title'));
+
+      // clear selection on change folder (but not CUT|Paste Buffer)
+      this.collection.trigger('documents:deselectAll');
       return this;
     },
+
     makeItemView: function(model) {
       return new views.Document({
         model: model,
         isSelectable: this.options.isSelectable,
         isContextMenuEnabled: this.options.isContextMenuEnabled
-      }).render()
+      }).render();
     },
 
     appendDocument: function(model, collection, options) {
-      var view
-        , index;
+      var view, index;
       if (model.get("parent_id") === this.model.get("id")) {
         view = this.makeItemView(model);
         index = options.index;
@@ -106,8 +219,8 @@ define(["jquery"
     },
 
     uploadFile: function(file, position) {
-      var filename = file.name.substr(0, file.name.lastIndexOf("."))
-        , $load = $(this.loaderTemplate({filename: filename}));
+      var filename = file.name.substr(0, file.name.lastIndexOf(".")),
+         $load = $(this.loaderTemplate({filename: filename}));
       this.insertAt($load, position - 1);
       this.collection.create({
         upload: file,
@@ -132,7 +245,6 @@ define(["jquery"
           data: _.extend({parent_id: model.get("id")}, this.filter)
         });
       } else if (model.get("type") === "image") {
-        // trigger event on model to preview
         model.trigger("document:preview", model);
       }
       this.trigger("document:open", model);

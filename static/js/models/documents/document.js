@@ -9,6 +9,13 @@ define(["jquery"
 
 
   models.Document =  models.Model.extend({
+    // group operation on objects (=selected) are for application mode
+    // single operation (=chosen) are for wige mode (select one file to insert)
+
+    defaults: {
+      'selected':false,   // elected by user to perform group operations on (multyple) elements 
+      'chosen':false      // elected to perform single operation (where group operation is not possible) 
+    },
 
     urlRoot: "/a/documents",
 
@@ -45,6 +52,12 @@ define(["jquery"
           click: this.deleteDocument
         })
       }
+      if (!this.isSystem()) {
+        items.push({
+          text: t_("Move to root"),
+          click: this.moveDocument
+        })
+      }
 
       if(this.get("type") === "document") {
         items.push({
@@ -77,6 +90,9 @@ define(["jquery"
 
     deleteDocument: function() {
       this.trigger("document:delete");
+    },
+    moveDocument: function() {
+      this.trigger("document:move");
     },
 
     editAttributes: function() {

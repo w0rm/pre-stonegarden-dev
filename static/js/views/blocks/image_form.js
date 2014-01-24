@@ -66,10 +66,9 @@ define(["jquery"
         isContextMenuEnabled: false,
         isSelectable: true
       })
-        .on("document:open", this.openDocument, this)
-        .on("document:select", this.selectDocument, this)
-        .on("document:unselect", this.unselectDocument, this);
-
+        .on("document:open", this.openDocument, this)  //double-click shortcut
+        .on("document:chosen", this.chooseDocument, this)  //click  
+        
       new models.Document({id: this.folderId})
         .on("change", function(model) {
           this.documentListView.openDocument(model);
@@ -80,19 +79,20 @@ define(["jquery"
 
     },
 
+
     openDocument: function(model) {
       if (model.get("type") === "image") {
-        this.selectDocument(model);
+        this.chooseDocument(model);
         this.submit();
       }
     },
 
-    selectDocument: function(model) {
+    chooseDocument: function(model) {
       this.image = model;
       this.$("[name=description]").val(model.get("title"));
     },
 
-    unselectDocument: function(model) {
+    unchooseDocument: function(model) {
       if (this.image === model) {
         this.image = null;
         this.$("[name=description]").val("");
