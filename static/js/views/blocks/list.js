@@ -36,7 +36,6 @@ define(["jquery"
 
     appendBlock: function(block, index) {
       var b = this.makeBlockView(block);
-      // console.log('append Block from list.view', index)
       if (_.isNumber(index)) {
         if (index === 0) {
           this.$el.prepend(b.el);

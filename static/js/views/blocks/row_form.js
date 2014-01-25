@@ -89,9 +89,6 @@ define(["jquery"
         },
         0
       );
-
-      console.log(correctValues, sum)
-
       return correctValues && sum === 12;
 
     },

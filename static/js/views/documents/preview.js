@@ -18,7 +18,6 @@ define(["jquery"
     },
 
     render: function() {
-      // console.log('from render Preview', this.options.list, this.options.list.toJSON());
       var id = this.model.get('id')
       this.$el.html(this.template({
         documents: this.model.collection.toJSON(),

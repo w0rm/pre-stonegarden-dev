@@ -97,10 +97,8 @@ define(["jquery"
         var newParent = this.model;
         var offset = this.collection.where({'type':'folder'}).length
         var selected = this.shadow_buffer;
-        console.log('Paste selected files', newParent, offset, this.shadow_buffer.length)
         selected.forEach(function(model, c){
           _position = offset+c;
-          console.log('iterate', c, _position)
           model.set({
             'parent_id': newParent.get('id'),
             'ids': newParent.get('ids'),
