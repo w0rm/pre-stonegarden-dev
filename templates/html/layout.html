@@ -1,4 +1,13 @@
 $def with (page=None)
+$code:
+    if page is None:
+        bodyClass = "" 
+    elif ctx and ctx.get("page") and ctx.get("page").get("slug") == "":
+        bodyClass = "front"
+    elif ctx.get("page"):
+        bodyClass = ctx.page.slug
+    else:
+        bodyClass = "" 
 <!doctype html>
 <html lang="$ctx.lang">
 <head>
@@ -32,7 +41,7 @@ $def with (page=None)
         <script src="$asset_url('js/public_main.js', False)"></script>
     <style>$:page.get('css_code')</style>
 </head>
-<body class="$page.get('class')">
+<body class="page_$bodyClass $page.get('class')">
     $:flash.render()
     $if auth.get_user() and not ctx.get('page'):
         $:render.site.topbar(page)
