@@ -173,8 +173,10 @@ def document_src(document):
     if document.type == "image":
         document.src = image_url(document, "t")
         document.sizes = dict(
-            (size, image_url(document, size)) for size in ("s", "m", "l","x")
+            (size, image_url(document, size)) for size in ("s", "m", "l")
         )
+        # x-size we will generate later on, when first use it from Storage
+        document.sizes["x"] = "/a/documents/"+ str(document.id)+"/image_size?size=x"
 
     elif document.type == "document":
         document.src = "/uploads/" + document.filename
