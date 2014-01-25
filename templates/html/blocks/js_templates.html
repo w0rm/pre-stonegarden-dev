@@ -112,41 +112,47 @@
         </p>
     </form>
 </script>
+
 <script type="text/template" id="block-image-form-template">
     <form>
         <div class="sg-documents-scroller">
             <ul class="sg-document-tiles js-documents"></ul>
         </div>
         <label>$_("Description")</label>
-        <input name="description" type="text"
-               value="<%= image.description || "" %>">
-        <p>
-            <label>
+        <input name="description" type="text" value="<%= image.description || "" %>">
+        
+        <label>$_("Link")</label>
+        <input name="link" type="text" value="<%= image.link || "" %>">
+        
+        <label>
                 <input name="show_description"
                        <%= image.show_description && "checked" || "" %>
                        type="checkbox" >$_("Show description")
             </label>
-        </p>
-        <p>
             <label>
                 <input name="is_responsive"
                        <%= image.is_responsive && "checked" || "" %>
                        type="checkbox" >$_("Make responsive")
             </label>
-        </p>
         <p>
             <button class="button" type="submit">$_("Save")</button>
             <button class="button" type="reset">$_("Cancel")</button>
         </p>
     </form>
 </script>
+
 <script type="text/template" id="block-image-template">
     <figure data-id="<%= image.id %>"
             data-parent_id="<%= image.parent_id %>"
             data-description="<%= image.description %>"
             data-show_description="<%= image.show_description %>"
             data-is_responsive="<%= image.is_responsive %>"
+            data-link="<%= image.link %>"
     >
+        <% if (image.link != '') { %>
+            <a href="<%= image.link %>" title="<%= image.description %>">
+        <% } %>
+
         <% if (image.is_responsive) { %>
             <img class="responsive"
                  src="<%= image.sizes.s %>"
@@ -158,6 +164,9 @@
                  alt="<%= image.description %>">
         <% } %>
 
+        <% if (image.link) { %> 
+            </a>
+        <% } %>
         <% if (image.show_description) { %>
             <figcaption><%= image.description %></figcaption>
         <% } %>
