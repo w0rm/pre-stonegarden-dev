@@ -2,9 +2,9 @@ define(["jquery"
       , "underscore"
       , "backbone"
       , "stonegarden"
-      , "jquery.tinymce"
+      // , "jquery.tinymce"
       , "views/alert_form"
-      ], function ($, _, Backbone, sg, tinymce) {
+      ], function ($, _, Backbone, sg) {
 
   var views = sg.views;
 

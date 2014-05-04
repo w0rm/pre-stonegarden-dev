@@ -1,7 +1,7 @@
 Stonegarden
 ===========
 
-Simple CMS powered by web.py framework.
+Simple CMS powered by web.py framework. Work-in progress/
 
 
 ## Installation

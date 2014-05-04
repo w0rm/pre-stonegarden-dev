@@ -14,6 +14,7 @@ require.config({
     'jquery.foundation.topbar': '../vendor/js/foundation/foundation.topbar',
     'jquery.tinymce': '../vendor/js/tinymce/tinymce.min',
     'fotorama': '../vendor/js/fotorama',
+    'medium-editor': '../vendor/js/medium-editor/medium-editor',
     ace: '../vendor/js/ace/ace',
     backbone: '../vendor/js/backbone-1.1.0',
     underscore: '../vendor/js/underscore-1.5.2'
@@ -27,12 +28,12 @@ require.config({
     'fotorama': ['jquery'],
     ace: {exports: 'ace'},
 
-    'jquery.tinymce':{
-      exports: 'jquery.tinymce',
-      init: function () {
-            return this.tinymce;
-            }
-     },
+    // 'jquery.tinymce':{
+    //   exports: 'jquery.tinymce',
+    //   init: function () {
+    //         return this.tinymce;
+    //         }
+    //  },
     underscore: {
       exports: '_'
     },
