@@ -1,8 +1,15 @@
-Stonegarden
-===========
+# Stonegarden
 
 Simple CMS powered by web.py framework. Work-in progress/
 
+## Local development with nix
+
+1. install [nix](https://nixos.org/download/) and add `experimental-features = nix-command flakes` to `~/.config/nix/nix.conf`
+2. `nix develop` to enter nix shell
+3. `pip install -r frozen-requirements.txt` to install python packages
+4. `bundle install` to install rubygems
+5. `fab setup` to create the db and compile assets
+6. `fab server` to start the local server (open http://localhost:8080/login and login with user@example.com:111111)
 
 ## Installation
 
@@ -24,7 +31,6 @@ To change database set DATABASE_URL environment variable like this: `DATABASE_UR
 
 Setup will create user with the following credentials: user@example.com:111111.
 
-
 ## Running server
 
 Run `fab server` to start webserver. It will start server with development environment on 8080 port.
@@ -32,7 +38,6 @@ Run `fab server` to start webserver. It will start server with development envir
 To change environment and port set environment variables `WEBPY_ENV=production PORT=3333 fab server`.
 
 Navigate to [http://localhost:8080/login](http://localhost:8080/login).
-
 
 ## Fab commands
 

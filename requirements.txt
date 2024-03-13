@@ -1,10 +1,10 @@
 web.py
 pillow
-MySQL-python
+mysqlclient
 psycopg2
 python-dateutil
 pytils
 babel
 BeautifulSoup
-fabric
+fabric==1.15.0
 flake8
