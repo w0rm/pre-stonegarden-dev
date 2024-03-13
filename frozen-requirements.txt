@@ -6,7 +6,7 @@ cffi==1.15.1
 cheroot==8.6.0
 configparser==4.0.2
 contextlib2==0.6.0.post1
-cryptography==3.3.2
+cryptography==42.0.4
 enum34==1.1.10
 Fabric==1.15.0
 flake8==3.9.2
